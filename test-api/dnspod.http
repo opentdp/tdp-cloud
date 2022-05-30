@@ -1,0 +1,16 @@
+# Dnspod Api
+
+@origin = http://localhost:8080
+@baseapi = http://localhost:8080/api
+
+@secretId = your-secret-id
+@secretKey = your-secret-key
+
+### 获取域名列表
+
+GET {{baseapi}}/dnspod/describeDomainList
+Origin: {{origin}}
+secretId: {{secretId}}
+secretKey: {{secretKey}}
+
+###

@@ -1,0 +1,28 @@
+# Lighthouse Api
+
+@origin = http://localhost:8080
+@baseapi = http://localhost:8080/api
+
+@secretId = your-secret-id
+@secretKey = your-secret-key
+
+### 查询地域列表
+
+GET {{baseapi}}/lighthouse/describeRegions
+Origin: {{origin}}
+secretId: {{secretId}}
+secretKey: {{secretKey}}
+
+### 查看实例列表
+
+GET {{baseapi}}/lighthouse/describeInstances?region=ap-guangzhou
+Origin: {{origin}}
+secretId: {{secretId}}
+secretKey: {{secretKey}}
+
+### 查看实例流量包详情
+
+GET {{baseapi}}/lighthouse/describeInstancesTrafficPackages?region=ap-guangzhou
+Origin: {{origin}}
+secretId: {{secretId}}
+secretKey: {{secretKey}}

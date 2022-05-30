@@ -1,0 +1,16 @@
+# Dnspod Api
+
+@origin = http://localhost:8080
+@baseapi = http://localhost:8080/api
+
+@secretId = your-secret-id
+@secretKey = your-secret-key
+
+### 获取账号信息
+
+GET {{baseapi}}/cam/getAccountSummary
+Origin: {{origin}}
+secretId: {{secretId}}
+secretKey: {{secretKey}}
+
+###
