@@ -15,14 +15,14 @@ secretKey: {{secretKey}}
 
 ### 查看实例列表
 
-GET {{baseapi}}/lighthouse/describeInstances?region=ap-guangzhou
+GET {{baseapi}}/lighthouse/describeInstances/ap-guangzhou
 Origin: {{origin}}
 secretId: {{secretId}}
 secretKey: {{secretKey}}
 
 ### 查看实例流量包详情
 
-GET {{baseapi}}/lighthouse/describeInstancesTrafficPackages?region=ap-guangzhou
+GET {{baseapi}}/lighthouse/describeInstancesTrafficPackages/ap-guangzhou
 Origin: {{origin}}
 secretId: {{secretId}}
 secretKey: {{secretKey}}
