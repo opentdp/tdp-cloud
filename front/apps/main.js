@@ -38,7 +38,7 @@ app.component('app-home', {
                 <a class="navbar-brand">
                    <img src="assets/images/tdp-logo.png" style="height: 50px" />
                 </a>
-                <div class="text-secondary">TDP Cloud Panel</div>
+                <div class="text-secondary">TDP Cloud</div>
             </div>
         </nav>
         <div class="container-xxl mt-3">
