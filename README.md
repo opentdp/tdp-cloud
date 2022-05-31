@@ -33,3 +33,9 @@
 ```
 
 2、创建一个用户，并关联策略 `TDPCloudAccess`。
+
+# License
+
+[MIT](https://opensource.org/licenses/MIT)
+
+Copyright (c) 2022 TDP Cloud
