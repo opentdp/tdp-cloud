@@ -13,14 +13,16 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func Init(engine *gin.Engine) {
+func Init(engine *gin.Engine, addr string) {
 
 	server := &http.Server{
-		Addr:         ":8080",
+		Addr:         addr,
 		Handler:      engine,
 		ReadTimeout:  30 * time.Second,
 		WriteTimeout: 30 * time.Second,
 	}
+
+	log.Printf("Web server listen on " + addr)
 
 	// Initializing the server in a goroutine so that
 	// it won't block the graceful shutdown handling below

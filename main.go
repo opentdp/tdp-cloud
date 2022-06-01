@@ -1,6 +1,8 @@
 package main
 
 import (
+	"os"
+
 	"github.com/gin-gonic/gin"
 
 	"tdp-cloud/api"
@@ -10,11 +12,15 @@ import (
 
 func main() {
 
+	if os.Getenv("GIN_MODE") != "debug" {
+		gin.SetMode(gin.ReleaseMode)
+	}
+
 	engine := gin.Default()
 
 	api.Router(engine)
 	front.Router(engine)
 
-	serve.Init(engine)
+	serve.Init(engine, ":8080")
 
 }

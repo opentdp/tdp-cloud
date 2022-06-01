@@ -32,7 +32,9 @@
 }
 ```
 
-2、创建一个用户，并关联策略 `TDPCloudAccess`。
+2、创建一个用户，允许 `编程访问`，并关联策略 `TDPCloudAccess`
+
+3、使用生成的 `SecretId` 和 `SecretId` 登录面板
 
 # License
 
