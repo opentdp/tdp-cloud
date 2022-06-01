@@ -54,6 +54,6 @@ go run main.go
 
 # License
 
-[MIT](https://opensource.org/licenses/MIT)
+[GPL-3.0](https://opensource.org/licenses/GPL-3.0)
 
 Copyright (c) 2022 TDP Cloud
