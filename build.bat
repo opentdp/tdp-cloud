@@ -19,6 +19,7 @@ CALL :build windows amd64 .exe
 CALL :build windows arm64 .exe
 
 cmd /k
+
 GOTO :EOF
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::

@@ -16,18 +16,20 @@
 
 ## 运行开发服务
 
-- 如果需要调试，请设置环境变量 `GIN_MODE=debug`
-- 如果启动失败，可尝试设置 `GOPROXY` 和 `GO111MODULE`
+在项目目录运行  `serve.bat` 或 `./serve.sh`
 
-```shell
-go get -u
-go run main.go
-```
 
 ## 编译为二进制
 
+在项目目录运行  `build.bat` 或 `./build.sh`
+
+## 额外参数设置
+
+如果你的项目无法运行，请尝试如下设置：
+
 ```shell
-./build
+go env -w GO111MODULE=on
+go env -w GOPROXY=https://goproxy.cn,direct
 ```
 
 ## 获取登录密钥
