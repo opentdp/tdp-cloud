@@ -34,7 +34,7 @@ func getAllRegionsInstances(c *gin.Context) {
 		}
 
 		result["RegionSet"] = regionsResponse.Response.RegionSet
-		result["instanceSet"] = instanceSet
+		result["InstanceSet"] = instanceSet
 	}
 
 	c.Set("Payload", result)
