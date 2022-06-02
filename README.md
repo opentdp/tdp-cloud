@@ -16,8 +16,11 @@
 
 ## 运行开发服务
 
+- 如果需要调试，请设置环境变量 `GIN_MODE=debug`
+- 如果启动失败，可尝试设置 `GOPROXY` 和 `GO111MODULE`
+
 ```shell
-SET GIN_MODE=debug
+go get -u
 go run main.go
 ```
 
