@@ -14,8 +14,6 @@ import (
 
 func getAllRegionsInstances(c *gin.Context) {
 
-	var result = make(map[string]interface{})
-
 	// 获取所有地域
 	regionsClient := qcloud.NewLighthouseClient(c, "")
 	regionsRequest := lighthouse.NewDescribeRegionsRequest()
@@ -48,6 +46,7 @@ func getAllRegionsInstances(c *gin.Context) {
 
 	wg.Wait()
 
+	var result = make(map[string]interface{})
 	result["RegionSet"] = regionsResponse.Response.RegionSet
 	result["InstanceSet"] = instanceSet
 
