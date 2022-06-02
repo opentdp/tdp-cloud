@@ -32,9 +32,7 @@ func NewDnspodClient(c *gin.Context) *dnspod.Client {
 
 }
 
-func NewLighthouseClient(c *gin.Context) *lighthouse.Client {
-
-	region := c.Param("region")
+func NewLighthouseClient(c *gin.Context, region string) *lighthouse.Client {
 
 	credential, cpf := NewCredentialProfile(c)
 

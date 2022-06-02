@@ -12,7 +12,7 @@ import (
 
 func describeRegions(c *gin.Context) {
 
-	client := qcloud.NewLighthouseClient(c)
+	client := qcloud.NewLighthouseClient(c, "")
 
 	request := lighthouse.NewDescribeRegionsRequest()
 	response, err := client.DescribeRegions(request)
@@ -26,7 +26,8 @@ func describeRegions(c *gin.Context) {
 
 func describeInstances(c *gin.Context) {
 
-	client := qcloud.NewLighthouseClient(c)
+	region := c.Param("region")
+	client := qcloud.NewLighthouseClient(c, region)
 
 	request := lighthouse.NewDescribeInstancesRequest()
 	response, err := client.DescribeInstances(request)
@@ -40,7 +41,8 @@ func describeInstances(c *gin.Context) {
 
 func describeInstancesTrafficPackages(c *gin.Context) {
 
-	client := qcloud.NewLighthouseClient(c)
+	region := c.Param("region")
+	client := qcloud.NewLighthouseClient(c, region)
 
 	request := lighthouse.NewDescribeInstancesTrafficPackagesRequest()
 	response, err := client.DescribeInstancesTrafficPackages(request)
