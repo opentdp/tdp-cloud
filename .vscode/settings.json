@@ -1,0 +1,8 @@
+{
+    "editor.renderWhitespace": "all",
+    "editor.detectIndentation": false,
+    "diffEditor.ignoreTrimWhitespace": false,
+    "files.eol": "\n",
+    "files.insertFinalNewline": true,
+    "files.trimFinalNewlines": true,
+}
