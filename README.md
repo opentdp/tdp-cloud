@@ -18,7 +18,6 @@
 
 在项目目录运行  `serve.bat` 或 `./serve.sh`
 
-
 ## 编译为二进制
 
 在项目目录运行  `build.bat` 或 `./build.sh`
