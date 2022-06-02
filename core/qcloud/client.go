@@ -36,7 +36,11 @@ func NewLighthouseClient(c *gin.Context, region string) *lighthouse.Client {
 
 	credential, cpf := NewCredentialProfile(c)
 
-	cpf.HttpProfile.Endpoint = "lighthouse.tencentcloudapi.com"
+	if region == "" {
+		cpf.HttpProfile.Endpoint = "lighthouse.tencentcloudapi.com"
+	} else {
+		cpf.HttpProfile.Endpoint = "lighthouse." + region + ".tencentcloudapi.com"
+	}
 
 	client, _ := lighthouse.NewClient(credential, region, cpf)
 
