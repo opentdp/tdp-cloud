@@ -1,7 +1,7 @@
 # Lighthouse Api
 
-@origin = http://localhost:8080
-@baseapi = http://localhost:8080/api
+@origin = http://localhost:7800
+@baseapi = http://localhost:7800/api
 
 @secretId = your-secret-id
 @secretKey = your-secret-key
