@@ -19,14 +19,15 @@ func getAllRegionsInstances(c *gin.Context) {
 	regionsRequest := lighthouse.NewDescribeRegionsRequest()
 	regionsResponse, err := regionsClient.DescribeRegions(regionsRequest)
 
-	// 获取所有地域的实例
 	if err == nil && regionsResponse.Response.RegionSet != nil {
 		var instanceSet []*lighthouse.Instance
 
+		// 获取所有地域的实例
 		for _, region := range regionsResponse.Response.RegionSet {
 			regionsClient := qcloud.NewLighthouseClient(c, *region.Region)
 			instancesRequest := lighthouse.NewDescribeInstancesRequest()
 			instanceResponse, er2 := regionsClient.DescribeInstances(instancesRequest)
+
 			if er2 == nil && instanceResponse.Response.InstanceSet != nil {
 				instanceSet = append(instanceSet, instanceResponse.Response.InstanceSet...)
 			}
