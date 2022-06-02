@@ -22,7 +22,7 @@ func Listen(addr string) {
 
 	log.Printf("Web server listen on " + addr)
 
-	// 以协程方式启用监听，防止阻塞后续的系统信号处理
+	// 以协程方式启用监听，防止阻塞后续的中断信号处理
 	go func() {
 		err := server.ListenAndServe()
 		if err != nil && errors.Is(err, http.ErrServerClosed) {
@@ -30,13 +30,13 @@ func Listen(addr string) {
 		}
 	}()
 
-	// 等待中断信号正常关闭服务器
+	// 创建监听中断信号通道
 	quit := make(chan os.Signal)
-	// `kill` 默认发送 SIGTERM 信号
-	// `kill -2` 发送 SIGINT 信号
-	// `kill -9` 发送 SIGKILL 信号，无法捕获，不处理
+	// SIGTERM: `kill`
+	// SIGINT : `kill -2` 或 CTRL + C
+	// SIGKILL: `kill -9`，无法捕获，故而不做处理
 	signal.Notify(quit, syscall.SIGTERM, syscall.SIGINT)
-	// 获取信号，如果没有则保持阻塞
+	// 等待信号，如果没有则保持阻塞
 	<-quit
 
 	log.Println("Server shutting down...")
