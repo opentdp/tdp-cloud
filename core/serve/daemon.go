@@ -22,8 +22,7 @@ func Listen(addr string) {
 
 	log.Printf("Web server listen on " + addr)
 
-	// Initializing the server in a goroutine so that
-	// it won't block the graceful shutdown handling below
+	// 以协程方式启用监听，防止阻塞后续的系统信号处理
 	go func() {
 		err := server.ListenAndServe()
 		if err != nil && errors.Is(err, http.ErrServerClosed) {
@@ -31,22 +30,22 @@ func Listen(addr string) {
 		}
 	}()
 
-	// Wait for interrupt signal to gracefully shutdown the server with
-	// a timeout of 5 seconds.
+	// 等待中断信号正常关闭服务器
 	quit := make(chan os.Signal)
-
-	// kill (no param) default send syscall.SIGTERM
-	// kill -2 is syscall.SIGINT
-	// kill -9 is syscall.SIGKILL but can't be catch, so don't need add it
-	signal.Notify(quit, syscall.SIGINT, syscall.SIGTERM)
+	// `kill` 默认发送 SIGTERM 信号
+	// `kill -2` 发送 SIGINT 信号
+	// `kill -9` 发送 SIGKILL 信号，无法捕获，不处理
+	signal.Notify(quit, syscall.SIGTERM, syscall.SIGINT)
+	// 获取信号，如果没有则保持阻塞
 	<-quit
+
 	log.Println("Server shutting down...")
 
-	// The context is used to inform the server it has 5 seconds to finish
-	// the request it is currently handling
+	// 通知服务器还有5秒的时间完成当前正在处理的请求
 	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 	defer cancel()
 
+	// 优雅地关闭服务器而不中断任何活动连接
 	if err := server.Shutdown(ctx); err != nil {
 		log.Fatal("Server forced to shutdown:", err)
 	}
