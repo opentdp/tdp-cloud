@@ -17,7 +17,7 @@
 ## 运行开发服务
 
 ```shell
-go get -u
+SET GIN_MODE=debug
 go run main.go
 ```
 
