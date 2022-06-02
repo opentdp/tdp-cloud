@@ -9,11 +9,9 @@ import (
 	"os/signal"
 	"syscall"
 	"time"
-
-	"github.com/gin-gonic/gin"
 )
 
-func Init(engine *gin.Engine, addr string) {
+func Listen(addr string) {
 
 	server := &http.Server{
 		Addr:         addr,
