@@ -21,7 +21,6 @@ type Secret struct {
 
 type Session struct {
 	gorm.Model
-	UserID   uint
-	Token    string
-	Dateline uint
+	UserID uint
+	Token  string
 }
