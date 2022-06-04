@@ -7,6 +7,8 @@ import (
 	"tdp-cloud/api/dnspod"
 	"tdp-cloud/api/lighthouse"
 
+	"tdp-cloud/api/user"
+
 	"tdp-cloud/core/midware"
 )
 
@@ -20,6 +22,8 @@ func Router(engine *gin.Engine) {
 		cam.Router(api)
 		dnspod.Router(api)
 		lighthouse.Router(api)
+
+		user.Router(api)
 	}
 
 }

@@ -24,14 +24,14 @@
 
 ## 额外参数设置
 
-如果你的项目无法运行，请尝试如下设置：
-
+如果项目无法运行或编译，请尝试设置系统环境变量或临时环境变量
+  
 ```shell
 go env -w GO111MODULE=on
 go env -w GOPROXY=https://goproxy.cn,direct
 ```
 
-## 获取登录密钥
+## 获取腾讯云密钥
 
 1、创建一个自定义策略 `TDPCloudAccess`，权限JSON如下：
 

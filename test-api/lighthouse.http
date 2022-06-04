@@ -3,8 +3,8 @@
 @origin = http://localhost:7800
 @baseapi = http://localhost:7800/api
 
-@secretId = your-secret-id
-@secretKey = your-secret-key
+@secretId = {{$dotenv SECRET_ID}}
+@secretKey = {{$dotenv SECRET_KEY}}
 
 ### 获取所有区域和实例
 

@@ -1,9 +1,10 @@
 .DS_Store
 
 build
+cloud.db
 
 # local env files
-test-local
+test-api/.env
 
 # Log files
 *.log
