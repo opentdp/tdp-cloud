@@ -16,6 +16,7 @@ func Router(engine *gin.Engine) {
 
 	api := engine.Group("/api")
 
+	api.Use(midware.Auth())
 	api.Use(midware.JSON())
 
 	{
