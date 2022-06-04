@@ -15,7 +15,7 @@ func Auth() gin.HandlerFunc {
 		token := c.Request.Header.Get("Token")
 		dborm.Db.First(&session, "token = ?", token)
 
-		c.Set("uid", session.UserID)
+		c.Set("UserID", session.UserID)
 
 		c.Next()
 
