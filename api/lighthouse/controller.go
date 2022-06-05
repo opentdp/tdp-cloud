@@ -1,24 +1,35 @@
 package lighthouse
 
 import (
-	"github.com/gin-gonic/gin"
+	"tdp-cloud/core/qcloud/lighthouse"
 
-	lighthouse "github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/lighthouse/v20200324"
+	"github.com/gin-gonic/gin"
 )
 
 // 获取所有地域和实例列表
 
-func getAllRegionsInstances(c *gin.Context) {
+func describeRegionsInstances(c *gin.Context) {
 
-	regionSet := DescribeRegions(c)
+	config_, _ := c.Get("Config")
+	config := config_.([3]string)
 
-	instanceSet := DescribeInstances(c, regionSet)
+	regionResponse, err := lighthouse.DescribeRegions(config)
 
-	var result = make(map[string]interface{})
-	result["RegionSet"] = regionSet
-	result["InstanceSet"] = instanceSet
+	if err != nil {
+		c.Set("Error", err)
+		return
+	}
 
-	c.Set("Payload", result)
+	regionSet := regionResponse.Response.RegionSet
+
+	instanceSet, ers := lighthouse.DescribeInstancesAll(config, regionSet)
+	response := gin.H{"RegionSet": regionSet, "InstanceSet": instanceSet}
+
+	c.Set("Payload", response)
+
+	if len(ers) > 0 {
+		c.Set("Error", ers)
+	}
 
 }
 
@@ -26,13 +37,15 @@ func getAllRegionsInstances(c *gin.Context) {
 
 func describeInstancesTrafficPackages(c *gin.Context) {
 
-	region := c.Param("region")
-	client := NewClient(c, region)
+	config_, _ := c.Get("Config")
+	config := config_.([3]string)
 
-	request := lighthouse.NewDescribeInstancesTrafficPackagesRequest()
-	response, err := client.DescribeInstancesTrafficPackages(request)
+	response, err := lighthouse.DescribeInstancesTrafficPackages(config)
 
-	c.Set("Payload", response.Response)
+	if response != nil {
+		c.Set("Payload", response.Response)
+	}
+
 	c.Set("Error", err)
 
 }

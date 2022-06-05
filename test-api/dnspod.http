@@ -1,16 +1,9 @@
 # Dnspod Api
 
-@origin = http://localhost:7800
-@baseapi = http://localhost:7800/api
-
-@secretId = {{$dotenv SECRET_ID}}
-@secretKey = {{$dotenv SECRET_KEY}}
-
 ### 获取域名列表
 
-GET {{baseapi}}/dnspod/describeDomainList
-Origin: {{origin}}
-secretId: {{secretId}}
-secretKey: {{secretKey}}
+GET {{$dotenv baseapi}}/cloud/dnspod/describeDomainList
+Authorization: {{$dotenv authorization}}
+Origin: {{$dotenv origin}}
 
 ###

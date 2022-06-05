@@ -3,19 +3,22 @@ package cam
 import (
 	"github.com/gin-gonic/gin"
 
-	cam "github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/cam/v20190116"
+	"tdp-cloud/core/qcloud/cam"
 )
 
 // 获取账号概要信息
 
 func getAccountSummary(c *gin.Context) {
 
-	client := NewClient(c)
+	config_, _ := c.Get("Config")
+	config := config_.([3]string)
 
-	request := cam.NewGetAccountSummaryRequest()
-	response, err := client.GetAccountSummary(request)
+	response, err := cam.GetAccountSummary(config)
 
-	c.Set("Payload", response.Response)
+	if response != nil {
+		c.Set("Payload", response.Response)
+	}
+
 	c.Set("Error", err)
 
 }

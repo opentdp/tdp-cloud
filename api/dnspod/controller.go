@@ -3,19 +3,22 @@ package dnspod
 import (
 	"github.com/gin-gonic/gin"
 
-	dnspod "github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/dnspod/v20210323"
+	"tdp-cloud/core/qcloud/dnspod"
 )
 
 // 获取域名列表
 
 func describeDomainList(c *gin.Context) {
 
-	client := NewClient(c)
+	config_, _ := c.Get("Config")
+	config := config_.([3]string)
 
-	request := dnspod.NewDescribeDomainListRequest()
-	response, err := client.DescribeDomainList(request)
+	response, err := dnspod.DescribeDomainList(config)
 
-	c.Set("Payload", response.Response)
+	if response != nil {
+		c.Set("Payload", response.Response)
+	}
+
 	c.Set("Error", err)
 
 }

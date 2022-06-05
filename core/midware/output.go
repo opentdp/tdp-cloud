@@ -12,17 +12,17 @@ func JSON() gin.HandlerFunc {
 
 		c.Next()
 
-		if err, _ := c.Get("Error"); err != nil {
-			c.JSON(http.StatusBadRequest, gin.H{
-				"Error": err,
-			})
+		err, _ := c.Get("Error")
+
+		if err != nil && err != "" {
+			c.JSON(http.StatusBadRequest, gin.H{"Error": err})
 			return
 		}
 
-		if res, _ := c.Get("Payload"); res != nil {
-			c.JSON(http.StatusOK, gin.H{
-				"Payload": res,
-			})
+		res, _ := c.Get("Payload")
+
+		if res != nil && res != "" {
+			c.JSON(http.StatusOK, gin.H{"Payload": res})
 			return
 		}
 

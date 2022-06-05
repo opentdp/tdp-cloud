@@ -1,21 +1,13 @@
 # Lighthouse Api
 
-@origin = http://localhost:7800
-@baseapi = http://localhost:7800/api
-
-@secretId = {{$dotenv SECRET_ID}}
-@secretKey = {{$dotenv SECRET_KEY}}
-
 ### 获取所有区域和实例
 
-GET {{baseapi}}/lighthouse/getAllRegionsInstances
-Origin: {{origin}}
-secretId: {{secretId}}
-secretKey: {{secretKey}}
+GET {{$dotenv baseapi}}/cloud/lighthouse/describeRegionsInstances
+Authorization: {{$dotenv authorization}}
+Origin: {{$dotenv origin}}
 
 ### 查看实例流量包详情
 
-GET {{baseapi}}/lighthouse/describeInstancesTrafficPackages/ap-guangzhou
-Origin: {{origin}}
-secretId: {{secretId}}
-secretKey: {{secretKey}}
+GET {{$dotenv baseapi}}/cloud/lighthouse/describeInstancesTrafficPackages/ap-guangzhou
+Authorization: {{$dotenv authorization}}
+Origin: {{$dotenv origin}}

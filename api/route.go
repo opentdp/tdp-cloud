@@ -16,15 +16,29 @@ func Router(engine *gin.Engine) {
 
 	api := engine.Group("/api")
 
-	api.Use(midware.Auth())
 	api.Use(midware.JSON())
 
 	{
-		cam.Router(api)
-		dnspod.Router(api)
-		lighthouse.Router(api)
+		// cloud api
 
-		user.Router(api)
+		cloud := api.Group("/cloud")
+
+		cloud.Use(midware.Auth())
+		cloud.Use(midware.Secret())
+
+		{
+			cam.Router(cloud)
+			dnspod.Router(cloud)
+			lighthouse.Router(cloud)
+		}
+
+		// local api
+
+		local := api.Group("/local")
+
+		{
+			user.Router(local)
+		}
 	}
 
 }

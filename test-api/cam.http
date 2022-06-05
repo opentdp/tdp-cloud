@@ -1,16 +1,9 @@
 # Dnspod Api
 
-@origin = http://localhost:7800
-@baseapi = http://localhost:7800/api
-
-@secretId = {{$dotenv SECRET_ID}}
-@secretKey = {{$dotenv SECRET_KEY}}
-
 ### 获取账号信息
 
-GET {{baseapi}}/cam/getAccountSummary
-Origin: {{origin}}
-secretId: {{secretId}}
-secretKey: {{secretKey}}
+GET {{$dotenv baseapi}}/cloud/cam/getAccountSummary
+Authorization: {{$dotenv authorization}}
+Origin: {{$dotenv origin}}
 
 ###

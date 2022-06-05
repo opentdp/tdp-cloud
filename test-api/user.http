@@ -1,12 +1,9 @@
-# Dnspod Api
-
-@origin = http://localhost:7800
-@baseapi = http://localhost:7800/api
+# User Api
 
 ### 注册账号
 
-POST {{baseapi}}/user/register
-Origin: {{origin}}
+POST {{$dotenv baseapi}}/local/user/register
+Origin: {{$dotenv origin}}
 Content-Type: application/json
 
 {
@@ -16,8 +13,8 @@ Content-Type: application/json
 
 ### 登录账号
 
-POST {{baseapi}}/user/login
-Origin: {{origin}}
+POST {{$dotenv baseapi}}/local/user/login
+Origin: {{$dotenv origin}}
 Content-Type: application/json
 
 {

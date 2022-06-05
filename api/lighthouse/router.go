@@ -9,7 +9,7 @@ func Router(api *gin.RouterGroup) {
 	rg := api.Group("/lighthouse")
 
 	{
-		rg.GET("/getAllRegionsInstances", getAllRegionsInstances)
+		rg.GET("/describeRegionsInstances", describeRegionsInstances)
 		rg.GET("/describeInstancesTrafficPackages/:region", describeInstancesTrafficPackages)
 	}
 
