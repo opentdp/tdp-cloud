@@ -9,8 +9,12 @@ func Router(api *gin.RouterGroup) {
 	rg := api.Group("/user")
 
 	{
-		rg.POST("/login", Login)
-		rg.POST("/register", Register)
+		rg.POST("/login", login)
+		rg.POST("/register", register)
+
+		rg.GET("/secret", fetchSecrets)
+		rg.POST("/secret", createSecret)
+		rg.DELETE("/secret/:id", deleteSecret)
 	}
 
 }

@@ -15,6 +15,7 @@ type User struct {
 type Secret struct {
 	gorm.Model
 	UserID    uint
+	Describe  string
 	SecretId  string
 	SecretKey string
 }

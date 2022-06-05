@@ -8,9 +8,9 @@ import (
 
 // 登录账号
 
-func Login(c *gin.Context) {
+func login(c *gin.Context) {
 
-	var post UserInput
+	var post user.UserInput
 
 	if err := c.BindJSON(&post); err != nil {
 		c.Set("Error", "表单错误")
@@ -25,9 +25,9 @@ func Login(c *gin.Context) {
 
 // 注册账号
 
-func Register(c *gin.Context) {
+func register(c *gin.Context) {
 
-	var post UserInput
+	var post user.UserInput
 
 	if err := c.BindJSON(&post); err != nil {
 		c.Set("Error", "表单错误")
@@ -35,6 +35,60 @@ func Register(c *gin.Context) {
 	}
 
 	ok, err := user.Register(post.Username, post.Password)
+
+	c.Set("Payload", ok)
+	c.Set("Error", err)
+
+}
+
+// 密钥列表
+
+func fetchSecrets(c *gin.Context) {
+
+	userId_, _ := c.Get("UserId")
+
+	list, _ := user.FetchSecrets(userId_.(uint))
+
+	c.Set("Payload", list)
+
+}
+
+// 添加密钥
+
+func createSecret(c *gin.Context) {
+
+	var post user.SecretInput
+
+	if err := c.BindJSON(&post); err != nil {
+		c.Set("Error", "表单错误")
+		return
+	}
+
+	userId, _ := c.Get("UserId")
+	post.UserID = userId.(uint)
+
+	ok, err := user.CreateSecret(&post)
+
+	c.Set("Payload", ok)
+	c.Set("Error", err)
+
+}
+
+// 删除密钥
+
+func deleteSecret(c *gin.Context) {
+
+	var post user.SecretInput
+
+	if err := c.BindJSON(&post); err != nil {
+		c.Set("Error", "表单错误")
+		return
+	}
+
+	userId, _ := c.Get("UserId")
+	post.UserID = userId.(uint)
+
+	ok, err := user.CreateSecret(&post)
 
 	c.Set("Payload", ok)
 	c.Set("Error", err)
