@@ -37,8 +37,8 @@ func login(c *gin.Context) {
 
 	token, err := user.Login(post.Username, post.Password)
 
-	c.Set("Payload", gin.H{"token": token})
-	c.Set("Error", gin.H{"message": err})
+	c.Set("Payload", token)
+	c.Set("Error", err)
 }
 
 // 添加密钥
@@ -57,8 +57,8 @@ func createSecret(c *gin.Context) {
 
 	result, err := user.CreateSecret(&post)
 
-	c.Set("Payload", gin.H{"result": result})
-	c.Set("Error", gin.H{"message": err})
+	c.Set("Payload", result)
+	c.Set("Error", err)
 
 }
 
@@ -70,8 +70,8 @@ func deleteSecret(c *gin.Context) {
 
 	result, err := user.DeleteSecret(id)
 
-	c.Set("Payload", gin.H{"result": result})
-	c.Set("Error", gin.H{"message": err})
+	c.Set("Payload", result)
+	c.Set("Error", err)
 
 }
 
