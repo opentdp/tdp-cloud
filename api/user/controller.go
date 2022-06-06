@@ -35,9 +35,9 @@ func login(c *gin.Context) {
 		return
 	}
 
-	token, err := user.Login(post.Username, post.Password)
+	token, keyid, err := user.Login(post.Username, post.Password)
 
-	c.Set("Payload", token)
+	c.Set("Payload", gin.H{"token": token, "keyid": keyid})
 	c.Set("Error", err)
 }
 

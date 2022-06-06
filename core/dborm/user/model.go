@@ -9,16 +9,17 @@ import (
 
 // 登录账号
 
-func Login(username string, password string) (string, string) {
+func Login(username string, password string) (string, uint, string) {
 
 	var user dborm.User
+	var secret dborm.Secret
 
 	// 验证账号
 
 	dborm.Db.First(&user, "username = ?", username)
 
 	if user.ID == 0 {
-		return "", "账号错误"
+		return "", 0, "账号错误"
 	}
 
 	// 验证密码
@@ -26,7 +27,7 @@ func Login(username string, password string) (string, string) {
 	err := bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(password))
 
 	if err != nil {
-		return "", "密码错误"
+		return "", 0, "密码错误"
 	}
 
 	// 创建令牌
@@ -34,7 +35,11 @@ func Login(username string, password string) (string, string) {
 	token := utils.RandString(32)
 	dborm.Db.Create(&dborm.Session{UserID: user.ID, Token: token})
 
-	return token, ""
+	// 获取密钥
+
+	dborm.Db.First(&secret, "user_id = ?", user.ID)
+
+	return token, secret.ID, ""
 }
 
 // 注册账号
