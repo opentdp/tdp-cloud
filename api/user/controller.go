@@ -6,23 +6,6 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-// 登录账号
-
-func login(c *gin.Context) {
-
-	var post user.UserInput
-
-	if err := c.BindJSON(&post); err != nil {
-		c.Set("Error", "表单错误")
-		return
-	}
-
-	ok, err := user.Login(post.Username, post.Password)
-
-	c.Set("Payload", ok)
-	c.Set("Error", err)
-}
-
 // 注册账号
 
 func register(c *gin.Context) {
@@ -41,16 +24,21 @@ func register(c *gin.Context) {
 
 }
 
-// 密钥列表
+// 登录账号
 
-func fetchSecrets(c *gin.Context) {
+func login(c *gin.Context) {
 
-	userId_, _ := c.Get("UserId")
+	var post user.UserInput
 
-	list, _ := user.FetchSecrets(userId_.(uint))
+	if err := c.BindJSON(&post); err != nil {
+		c.Set("Error", "表单错误")
+		return
+	}
 
-	c.Set("Payload", list)
+	ok, err := user.Login(post.Username, post.Password)
 
+	c.Set("Payload", ok)
+	c.Set("Error", err)
 }
 
 // 添加密钥
@@ -84,5 +72,17 @@ func deleteSecret(c *gin.Context) {
 
 	c.Set("Payload", ok)
 	c.Set("Error", err)
+
+}
+
+// 密钥列表
+
+func fetchSecrets(c *gin.Context) {
+
+	userId_, _ := c.Get("UserId")
+
+	list, _ := user.FetchSecrets(userId_.(uint))
+
+	c.Set("Payload", list)
 
 }

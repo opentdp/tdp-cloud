@@ -7,8 +7,8 @@ Origin: {{$dotenv origin}}
 Content-Type: application/json
 
 {
-    "username":"admin",
-    "password": "admin"
+    "username":"{{$dotenv username}}",
+    "password": "{{$dotenv password}}"
 }
 
 ### 登录账号
@@ -18,10 +18,9 @@ Origin: {{$dotenv origin}}
 Content-Type: application/json
 
 {
-    "username":"admin",
-    "password": "admin"
+    "username":"{{$dotenv username}}",
+    "password": "{{$dotenv password}}"
 }
-
 
 ### 添加密钥
 
@@ -32,8 +31,8 @@ Origin: {{$dotenv origin}}
 
 {
     "describe":  "测试1",
-    "secretId":  "new-secretId",
-    "secretKey": "new-SecretKey"
+    "secretId":  "{{$dotenv secret_id}}",
+    "secretKey": "{{$dotenv secret_key}}"
 }
 
 ### 获取密钥

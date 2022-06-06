@@ -72,6 +72,43 @@ func FetchSession(token string) dborm.Session {
 
 }
 
+// 添加密钥
+
+func CreateSecret(post *SecretInput) (string, string) {
+
+	var secret dborm.Secret
+
+	// 验证密钥
+
+	dborm.Db.First(&secret, "secret_id = ?", post.SecretId)
+
+	if secret.ID > 0 {
+		return "", "密钥已存在"
+	}
+
+	// 添加密钥
+
+	dborm.Db.Create(&dborm.Secret{
+		UserID:    post.UserID,
+		Describe:  post.Describe,
+		SecretId:  post.SecretId,
+		SecretKey: post.SecretKey,
+	})
+
+	return "添加成功", ""
+
+}
+
+// 删除密钥
+
+func DeleteSecret(id string) (string, string) {
+
+	dborm.Db.Delete(&dborm.Secret{}, id)
+
+	return "删除成功", ""
+
+}
+
 // 获取密钥
 
 func FetchSecret(keyId string, userId uint) dborm.Secret {
@@ -93,30 +130,5 @@ func FetchSecrets(userId uint) ([]*dborm.Secret, string) {
 	dborm.Db.Find(&secret, "user_id = ?", userId)
 
 	return secret, ""
-
-}
-
-// 添加密钥
-
-func CreateSecret(post *SecretInput) (string, string) {
-
-	dborm.Db.Create(&dborm.Secret{
-		UserID:    post.UserID,
-		Describe:  post.Describe,
-		SecretId:  post.SecretId,
-		SecretKey: post.SecretKey,
-	})
-
-	return "添加成功", ""
-
-}
-
-// 删除密钥
-
-func DeleteSecret(id string) (string, string) {
-
-	dborm.Db.Delete(&dborm.Secret{}, id)
-
-	return "删除成功", ""
 
 }
