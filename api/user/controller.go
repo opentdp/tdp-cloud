@@ -78,17 +78,9 @@ func createSecret(c *gin.Context) {
 
 func deleteSecret(c *gin.Context) {
 
-	var post user.SecretInput
+	id := c.Param("id")
 
-	if err := c.BindJSON(&post); err != nil {
-		c.Set("Error", "表单错误")
-		return
-	}
-
-	userId, _ := c.Get("UserId")
-	post.UserID = userId.(uint)
-
-	ok, err := user.CreateSecret(&post)
+	ok, err := user.DeleteSecret(id)
 
 	c.Set("Payload", ok)
 	c.Set("Error", err)

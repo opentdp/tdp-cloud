@@ -16,6 +16,7 @@ func JSON() gin.HandlerFunc {
 
 		if err != nil && err != "" {
 			c.JSON(http.StatusBadRequest, gin.H{"Error": err})
+			c.Abort()
 			return
 		}
 
@@ -23,6 +24,7 @@ func JSON() gin.HandlerFunc {
 
 		if res != nil && res != "" {
 			c.JSON(http.StatusOK, gin.H{"Payload": res})
+			c.Abort()
 			return
 		}
 

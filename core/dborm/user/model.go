@@ -113,7 +113,7 @@ func CreateSecret(post *SecretInput) (string, string) {
 
 // 删除密钥
 
-func DeleteSecret(id uint) (string, string) {
+func DeleteSecret(id string) (string, string) {
 
 	dborm.Db.Delete(&dborm.Secret{}, id)
 
