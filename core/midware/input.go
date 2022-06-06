@@ -16,16 +16,14 @@ func Auth() gin.HandlerFunc {
 		field := strings.Split(input, ":")
 
 		if len(field) != 2 {
-			c.JSON(400, gin.H{"Error": "请登录后重试"})
-			c.Abort()
+			c.AbortWithStatusJSON(403, newError("登录后重试"))
 			return
 		}
 
 		session := user.FetchSession(field[1])
 
 		if session.UserID == 0 {
-			c.JSON(400, gin.H{"Error": "会话已失效"})
-			c.Abort()
+			c.AbortWithStatusJSON(403, newError("会话已失效"))
 			return
 		}
 
@@ -46,13 +44,18 @@ func Secret() gin.HandlerFunc {
 		secret := user.FetchSecret(keyId.(string), userId.(uint))
 
 		if secret.ID == 0 {
-			c.JSON(400, gin.H{"Error": "无法获取密钥"})
-			c.Abort()
+			c.AbortWithStatusJSON(403, newError("密钥不存在"))
 			return
 		}
 
 		c.Set("Config", [3]string{secret.SecretId, secret.SecretKey, c.Param("region")})
 
 	}
+
+}
+
+func newError(message string) gin.H {
+
+	return gin.H{"Error": gin.H{"message": message}}
 
 }

@@ -17,11 +17,13 @@ func JSON() gin.HandlerFunc {
 		err, _ := c.Get("Error")
 
 		if err != nil && err != "" {
+			if typeof(err) == "error" {
+				err = err.(error).Error()
+			}
 			if typeof(err) == "string" {
 				err = gin.H{"message": err}
 			}
-			c.JSON(400, gin.H{"Error": err})
-			c.Abort()
+			c.AbortWithStatusJSON(400, gin.H{"Error": err})
 			return
 		}
 
@@ -33,8 +35,7 @@ func JSON() gin.HandlerFunc {
 			if typeof(res) == "string" {
 				res = gin.H{"result": res}
 			}
-			c.JSON(200, gin.H{"Payload": res})
-			c.Abort()
+			c.AbortWithStatusJSON(200, gin.H{"Payload": res})
 			return
 		}
 
