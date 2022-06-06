@@ -1,8 +1,6 @@
 package midware
 
 import (
-	"net/http"
-
 	"github.com/gin-gonic/gin"
 )
 
@@ -15,7 +13,7 @@ func JSON() gin.HandlerFunc {
 		err, _ := c.Get("Error")
 
 		if err != nil && err != "" {
-			c.JSON(http.StatusBadRequest, gin.H{"Error": err})
+			c.JSON(400, gin.H{"Error": err})
 			c.Abort()
 			return
 		}
@@ -23,7 +21,7 @@ func JSON() gin.HandlerFunc {
 		res, _ := c.Get("Payload")
 
 		if res != nil && res != "" {
-			c.JSON(http.StatusOK, gin.H{"Payload": res})
+			c.JSON(200, gin.H{"Payload": res})
 			c.Abort()
 			return
 		}

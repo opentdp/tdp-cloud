@@ -35,10 +35,10 @@ func login(c *gin.Context) {
 		return
 	}
 
-	ok, err := user.Login(post.Username, post.Password)
+	token, err := user.Login(post.Username, post.Password)
 
-	c.Set("Payload", ok)
-	c.Set("Error", err)
+	c.Set("Payload", gin.H{"token": token})
+	c.Set("Error", gin.H{"message": err})
 }
 
 // 添加密钥
@@ -55,10 +55,10 @@ func createSecret(c *gin.Context) {
 	userId, _ := c.Get("UserId")
 	post.UserID = userId.(uint)
 
-	ok, err := user.CreateSecret(&post)
+	result, err := user.CreateSecret(&post)
 
-	c.Set("Payload", ok)
-	c.Set("Error", err)
+	c.Set("Payload", gin.H{"result": result})
+	c.Set("Error", gin.H{"message": err})
 
 }
 
@@ -68,10 +68,10 @@ func deleteSecret(c *gin.Context) {
 
 	id := c.Param("id")
 
-	ok, err := user.DeleteSecret(id)
+	result, err := user.DeleteSecret(id)
 
-	c.Set("Payload", ok)
-	c.Set("Error", err)
+	c.Set("Payload", gin.H{"result": result})
+	c.Set("Error", gin.H{"message": err})
 
 }
 

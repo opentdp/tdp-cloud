@@ -15,7 +15,7 @@ func Router(engine *gin.Engine) {
 	engine.StaticFS("/ui", http.FS(vfs))
 
 	engine.GET("/", func(c *gin.Context) {
-		c.Redirect(http.StatusFound, "/ui/")
+		c.Redirect(302, "/ui/")
 	})
 
 }
