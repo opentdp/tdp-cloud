@@ -21,3 +21,29 @@ Content-Type: application/json
     "username":"admin",
     "password": "admin"
 }
+
+
+### 添加密钥
+
+POST {{$dotenv baseapi}}/local/user/secret
+Authorization: {{$dotenv authorization}}
+Content-Type: application/json
+Origin: {{$dotenv origin}}
+
+{
+    "describe":  "测试1",
+    "secretId":  "new-secretId",
+    "secretKey": "new-SecretKey"
+}
+
+### 获取密钥
+
+GET {{$dotenv baseapi}}/local/user/secret
+Authorization: {{$dotenv authorization}}
+Origin: {{$dotenv origin}}
+
+### 删除密钥
+
+DELETE {{$dotenv baseapi}}/local/user/secret/2
+Authorization: {{$dotenv authorization}}
+Origin: {{$dotenv origin}}
