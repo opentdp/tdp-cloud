@@ -20,7 +20,7 @@ func NewClient(config [3]string) (*cam.Client, error) {
 
 }
 
-// 获取账号概要信息
+// 查询账户摘要
 
 func GetAccountSummary(config [3]string) (*cam.GetAccountSummaryResponse, error) {
 

@@ -26,7 +26,7 @@ func NewClient(config [3]string) (*lighthouse.Client, error) {
 
 }
 
-// 获取地域列表
+// 查询地域列表
 
 func DescribeRegions(config [3]string) (*lighthouse.DescribeRegionsResponse, error) {
 
@@ -43,7 +43,7 @@ func DescribeRegions(config [3]string) (*lighthouse.DescribeRegionsResponse, err
 
 }
 
-// 获取实列列表 - 单地域
+// 查看实例列表 - 单地域
 
 func DescribeInstances(config [3]string) (*lighthouse.DescribeInstancesResponse, error) {
 
@@ -60,7 +60,7 @@ func DescribeInstances(config [3]string) (*lighthouse.DescribeInstancesResponse,
 
 }
 
-// 获取实列列表 - 多地域
+// 查看实例列表 - 多地域
 
 func DescribeInstancesAll(config [3]string, regionSet []*lighthouse.RegionInfo) ([]*lighthouse.Instance, []error) {
 
@@ -92,7 +92,7 @@ func DescribeInstancesAll(config [3]string, regionSet []*lighthouse.RegionInfo) 
 
 }
 
-// 查看流量包详情 - 单地域
+// 查看实例流量包详情 - 单地域
 
 func DescribeTrafficPackages(config [3]string) (*lighthouse.DescribeInstancesTrafficPackagesResponse, error) {
 
@@ -109,7 +109,7 @@ func DescribeTrafficPackages(config [3]string) (*lighthouse.DescribeInstancesTra
 
 }
 
-// 查看流量包详情 - 多地域
+// 查看实例流量包详情 - 多地域
 
 func DescribeTrafficPackagesAll(config [3]string, regionSet []*lighthouse.RegionInfo) ([]*lighthouse.InstanceTrafficPackage, []error) {
 

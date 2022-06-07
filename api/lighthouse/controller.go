@@ -6,7 +6,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-// 获取地域列表
+// 获取地域
 
 func describeRegions(c *gin.Context) {
 
@@ -23,9 +23,9 @@ func describeRegions(c *gin.Context) {
 
 }
 
-// 获取地域实例列表
+// 获取地域实例
 
-func DescribeInstances(c *gin.Context) {
+func describeInstances(c *gin.Context) {
 
 	config_, _ := c.Get("Config")
 	config := config_.([3]string)
@@ -40,7 +40,7 @@ func DescribeInstances(c *gin.Context) {
 
 }
 
-// 获取所有地域和实例列表
+// 获取所有地域实例
 
 func describeRegionsInstances(c *gin.Context) {
 

@@ -1,19 +1,31 @@
 # Lighthouse Api
 
-### 获取所有区域和实例
+### 获取地域
+
+GET {{$dotenv baseapi}}/cloud/lighthouse/describeRegions
+Authorization: {{$dotenv authorization}}
+Origin: {{$dotenv origin}}
+
+### 获取地域实例
+
+GET {{$dotenv baseapi}}/cloud/lighthouse/describeInstances/ap-guangzhou
+Authorization: {{$dotenv authorization}}
+Origin: {{$dotenv origin}}
+
+### 获取所有地域实例
 
 GET {{$dotenv baseapi}}/cloud/lighthouse/describeRegionsInstances
 Authorization: {{$dotenv authorization}}
 Origin: {{$dotenv origin}}
 
-### 获取所有区域实例流量包详情
+### 获取实例流量包
 
-GET {{$dotenv baseapi}}/cloud/lighthouse/describeInstancesTrafficPackages
+GET {{$dotenv baseapi}}/cloud/lighthouse/describeTrafficPackages/ap-guangzhou
 Authorization: {{$dotenv authorization}}
 Origin: {{$dotenv origin}}
 
-### 获取实例流量包详情
+### 获取所有地域实例流量包
 
-GET {{$dotenv baseapi}}/cloud/lighthouse/describeInstancesTrafficPackages/ap-guangzhou
+GET {{$dotenv baseapi}}/cloud/lighthouse/describeRegionsTrafficPackages
 Authorization: {{$dotenv authorization}}
 Origin: {{$dotenv origin}}
