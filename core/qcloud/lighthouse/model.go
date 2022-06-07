@@ -94,7 +94,7 @@ func DescribeInstancesAll(config [3]string, regionSet []*lighthouse.RegionInfo) 
 
 // 查看流量包详情 - 单地域
 
-func DescribeInstancesTrafficPackages(config [3]string) (*lighthouse.DescribeInstancesTrafficPackagesResponse, error) {
+func DescribeTrafficPackages(config [3]string) (*lighthouse.DescribeInstancesTrafficPackagesResponse, error) {
 
 	client, err := NewClient(config)
 
@@ -111,7 +111,7 @@ func DescribeInstancesTrafficPackages(config [3]string) (*lighthouse.DescribeIns
 
 // 查看流量包详情 - 多地域
 
-func DescribeInstancesTrafficPackagesAll(config [3]string, regionSet []*lighthouse.RegionInfo) ([]*lighthouse.InstanceTrafficPackage, []error) {
+func DescribeTrafficPackagesAll(config [3]string, regionSet []*lighthouse.RegionInfo) ([]*lighthouse.InstanceTrafficPackage, []error) {
 
 	var ers []error
 
@@ -123,7 +123,7 @@ func DescribeInstancesTrafficPackagesAll(config [3]string, regionSet []*lighthou
 
 		go func(r string) {
 			c := [3]string{config[0], config[1], r}
-			response, err := DescribeInstancesTrafficPackages(c)
+			response, err := DescribeTrafficPackages(c)
 
 			if err != nil {
 				ers = append(ers, err)
