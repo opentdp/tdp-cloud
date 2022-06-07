@@ -7,17 +7,17 @@ import (
 
 var Db *gorm.DB
 
-func Connect() {
-	dsn := "cloud.db"
+func Connect(dsn string) {
 
-	db, err := gorm.Open(sqlite.Open(dsn), &gorm.Config{})
+	var err error
+
+	Db, err = gorm.Open(sqlite.Open(dsn), &gorm.Config{})
 	if err != nil {
 		panic("Failed to connect database")
 	}
 
-	if db.AutoMigrate(&User{}, &Secret{}, &Session{}) != nil {
+	if Db.AutoMigrate(&User{}, &Secret{}, &Session{}) != nil {
 		panic("Failed to migrate database")
 	}
 
-	Db = db
 }
