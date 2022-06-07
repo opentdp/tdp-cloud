@@ -6,7 +6,13 @@ GET {{$dotenv baseapi}}/cloud/lighthouse/describeRegionsInstances
 Authorization: {{$dotenv authorization}}
 Origin: {{$dotenv origin}}
 
-### 查看实例流量包详情
+### 获取所有区域实例流量包详情
+
+GET {{$dotenv baseapi}}/cloud/lighthouse/describeInstancesTrafficPackages
+Authorization: {{$dotenv authorization}}
+Origin: {{$dotenv origin}}
+
+### 获取实例流量包详情
 
 GET {{$dotenv baseapi}}/cloud/lighthouse/describeInstancesTrafficPackages/ap-guangzhou
 Authorization: {{$dotenv authorization}}

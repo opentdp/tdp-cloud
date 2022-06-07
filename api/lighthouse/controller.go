@@ -33,7 +33,7 @@ func describeRegionsInstances(c *gin.Context) {
 
 }
 
-//查看实例流量包详情
+// 获取实例流量包详情
 
 func describeInstancesTrafficPackages(c *gin.Context) {
 
@@ -47,5 +47,32 @@ func describeInstancesTrafficPackages(c *gin.Context) {
 	}
 
 	c.Set("Error", err)
+
+}
+
+// 获取所有地域实例流量包详情
+
+func DescribeInstancesTrafficPackagesAll(c *gin.Context) {
+
+	config_, _ := c.Get("Config")
+	config := config_.([3]string)
+
+	regionResponse, err := lighthouse.DescribeRegions(config)
+
+	if err != nil {
+		c.Set("Error", err)
+		return
+	}
+
+	regionSet := regionResponse.Response.RegionSet
+
+	instanceSet, ers := lighthouse.DescribeInstancesTrafficPackagesAll(config, regionSet)
+	response := gin.H{"RegionSet": regionSet, "InstanceSet": instanceSet}
+
+	c.Set("Payload", response)
+
+	if len(ers) > 0 {
+		c.Set("Error", ers)
+	}
 
 }

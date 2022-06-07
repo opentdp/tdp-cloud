@@ -10,6 +10,8 @@ func Router(api *gin.RouterGroup) {
 
 	{
 		rg.GET("/describeRegionsInstances", describeRegionsInstances)
+
+		rg.GET("/describeInstancesTrafficPackages", DescribeInstancesTrafficPackagesAll)
 		rg.GET("/describeInstancesTrafficPackages/:region", describeInstancesTrafficPackages)
 	}
 
