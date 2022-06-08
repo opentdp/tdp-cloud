@@ -12,20 +12,8 @@ GET {{$dotenv baseapi}}/cloud/lighthouse/describeInstances/ap-guangzhou
 Authorization: {{$dotenv authorization}}
 Origin: {{$dotenv origin}}
 
-### 获取所有地域实例
-
-GET {{$dotenv baseapi}}/cloud/lighthouse/describeRegionsInstances
-Authorization: {{$dotenv authorization}}
-Origin: {{$dotenv origin}}
-
 ### 获取实例流量包
 
-GET {{$dotenv baseapi}}/cloud/lighthouse/describeTrafficPackages/ap-guangzhou
-Authorization: {{$dotenv authorization}}
-Origin: {{$dotenv origin}}
-
-### 获取所有地域实例流量包
-
-GET {{$dotenv baseapi}}/cloud/lighthouse/describeRegionsTrafficPackages
+GET {{$dotenv baseapi}}/cloud/lighthouse/describeInstancesTrafficPackages/ap-guangzhou
 Authorization: {{$dotenv authorization}}
 Origin: {{$dotenv origin}}

@@ -23,9 +23,6 @@ func Router(engine *gin.Engine) {
 
 		cloud := api.Group("/cloud")
 
-		cloud.Use(midware.Auth())
-		cloud.Use(midware.Secret())
-
 		{
 			cam.Router(cloud)
 			dnspod.Router(cloud)

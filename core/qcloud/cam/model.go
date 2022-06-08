@@ -14,9 +14,7 @@ func NewClient(config [3]string) (*cam.Client, error) {
 
 	cpf.HttpProfile.Endpoint = "cam.tencentcloudapi.com"
 
-	client, err := cam.NewClient(credential, "", cpf)
-
-	return client, err
+	return cam.NewClient(credential, "", cpf)
 
 }
 
@@ -24,15 +22,10 @@ func NewClient(config [3]string) (*cam.Client, error) {
 
 func GetAccountSummary(config [3]string) (*cam.GetAccountSummaryResponse, error) {
 
-	client, err := NewClient(config)
-
-	if err != nil {
-		return nil, err
-	}
+	client, _ := NewClient(config)
 
 	request := cam.NewGetAccountSummaryRequest()
-	response, err := client.GetAccountSummary(request)
 
-	return response, err
+	return client.GetAccountSummary(request)
 
 }

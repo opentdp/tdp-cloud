@@ -14,9 +14,7 @@ func NewClient(config [3]string) (*dnspod.Client, error) {
 
 	cpf.HttpProfile.Endpoint = "dnspod.tencentcloudapi.com"
 
-	client, err := dnspod.NewClient(credential, "", cpf)
-
-	return client, err
+	return dnspod.NewClient(credential, "", cpf)
 
 }
 
@@ -24,15 +22,10 @@ func NewClient(config [3]string) (*dnspod.Client, error) {
 
 func DescribeDomainList(config [3]string) (*dnspod.DescribeDomainListResponse, error) {
 
-	client, err := NewClient(config)
-
-	if err != nil {
-		return nil, err
-	}
+	client, _ := NewClient(config)
 
 	request := dnspod.NewDescribeDomainListRequest()
-	response, _ := client.DescribeDomainList(request)
 
-	return response, err
+	return client.DescribeDomainList(request)
 
 }

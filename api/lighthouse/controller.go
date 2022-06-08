@@ -40,73 +40,19 @@ func describeInstances(c *gin.Context) {
 
 }
 
-// 获取所有地域实例
-
-func describeRegionsInstances(c *gin.Context) {
-
-	config_, _ := c.Get("Config")
-	config := config_.([3]string)
-
-	regionResponse, err := lighthouse.DescribeRegions(config)
-
-	if err != nil {
-		c.Set("Error", err)
-		return
-	}
-
-	regionSet := regionResponse.Response.RegionSet
-
-	instanceSet, ers := lighthouse.DescribeInstancesAll(config, regionSet)
-	response := gin.H{"RegionSet": regionSet, "InstanceSet": instanceSet}
-
-	c.Set("Payload", response)
-
-	if len(ers) > 0 {
-		c.Set("Error", ers)
-	}
-
-}
-
 // 获取实例流量包
 
-func describeTrafficPackages(c *gin.Context) {
+func describeInstancesTrafficPackages(c *gin.Context) {
 
 	config_, _ := c.Get("Config")
 	config := config_.([3]string)
 
-	response, err := lighthouse.DescribeTrafficPackages(config)
+	response, err := lighthouse.DescribeInstancesTrafficPackages(config)
 
 	if response != nil {
 		c.Set("Payload", response.Response)
 	}
 
 	c.Set("Error", err)
-
-}
-
-// 获取所有地域实例流量包
-
-func describeRegionsTrafficPackages(c *gin.Context) {
-
-	config_, _ := c.Get("Config")
-	config := config_.([3]string)
-
-	regionResponse, err := lighthouse.DescribeRegions(config)
-
-	if err != nil {
-		c.Set("Error", err)
-		return
-	}
-
-	regionSet := regionResponse.Response.RegionSet
-
-	trafficPackageSet, ers := lighthouse.DescribeTrafficPackagesAll(config, regionSet)
-	response := gin.H{"RegionSet": regionSet, "trafficPackageSet": trafficPackageSet}
-
-	c.Set("Payload", response)
-
-	if len(ers) > 0 {
-		c.Set("Error", ers)
-	}
 
 }
