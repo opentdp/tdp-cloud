@@ -11,7 +11,7 @@ import (
 
 func describeRegions(c *gin.Context) {
 
-	ud := midware.GetUserdata(c)
+	var ud = midware.GetUserdata(c)
 
 	response, err := lighthouse.DescribeRegions(ud)
 
@@ -27,9 +27,12 @@ func describeRegions(c *gin.Context) {
 
 func describeInstances(c *gin.Context) {
 
-	ud := midware.GetUserdata(c)
+	var ud = midware.GetUserdata(c)
+	var rq lighthouse.DescribeInstancesRequest
 
-	response, err := lighthouse.DescribeInstances(ud)
+	c.ShouldBind(&rq)
+
+	response, err := lighthouse.DescribeInstances(ud, &rq)
 
 	if response != nil {
 		c.Set("Payload", response.Response)
@@ -43,9 +46,12 @@ func describeInstances(c *gin.Context) {
 
 func describeInstancesTrafficPackages(c *gin.Context) {
 
-	ud := midware.GetUserdata(c)
+	var ud = midware.GetUserdata(c)
+	var rq lighthouse.DescribeInstancesTrafficPackagesRequest
 
-	response, err := lighthouse.DescribeInstancesTrafficPackages(ud)
+	c.ShouldBind(&rq)
+
+	response, err := lighthouse.DescribeInstancesTrafficPackages(ud, &rq)
 
 	if response != nil {
 		c.Set("Payload", response.Response)

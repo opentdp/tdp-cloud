@@ -9,7 +9,7 @@ import (
 
 // 创建客户端
 
-func NewClient(ud midware.Userdata) (*cam.Client, error) {
+func NewClient(ud *midware.Userdata) (*cam.Client, error) {
 
 	credential, cpf := qcloud.NewCredentialProfile(ud)
 
@@ -19,7 +19,7 @@ func NewClient(ud midware.Userdata) (*cam.Client, error) {
 
 // 查询账户摘要
 
-func GetAccountSummary(ud midware.Userdata) (*cam.GetAccountSummaryResponse, error) {
+func GetAccountSummary(ud *midware.Userdata) (*cam.GetAccountSummaryResponse, error) {
 
 	client, _ := NewClient(ud)
 

@@ -11,9 +11,13 @@ import (
 
 func describeDomainList(c *gin.Context) {
 
-	ud := midware.GetUserdata(c)
+	var ud = midware.GetUserdata(c)
 
-	response, err := dnspod.DescribeDomainList(ud)
+	var rq dnspod.DescribeDomainListRequest
+
+	c.ShouldBind(&rq)
+
+	response, err := dnspod.DescribeDomainList(ud, &rq)
 
 	if response != nil {
 		c.Set("Payload", response.Response)

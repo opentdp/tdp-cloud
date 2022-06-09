@@ -10,14 +10,14 @@ func NewError(message string) gin.H {
 
 }
 
-func GetUserdata(c *gin.Context) Userdata {
+func GetUserdata(c *gin.Context) *Userdata {
 
-	ud := Userdata{
-		c.GetInt("KeyId"),
-		c.GetInt("UserId"),
-		c.GetString("Region"),
-		c.GetString("SecretId"),
-		c.GetString("SecretKey"),
+	ud := &Userdata{
+		KeyId:     c.GetInt("KeyId"),
+		UserId:    c.GetInt("UserId"),
+		Region:    c.GetString("Region"),
+		SecretId:  c.GetString("SecretId"),
+		SecretKey: c.GetString("SecretKey"),
 	}
 
 	return ud

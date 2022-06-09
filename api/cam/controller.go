@@ -11,7 +11,7 @@ import (
 
 func getAccountSummary(c *gin.Context) {
 
-	ud := midware.GetUserdata(c)
+	var ud = midware.GetUserdata(c)
 
 	response, err := cam.GetAccountSummary(ud)
 

@@ -7,7 +7,7 @@ import (
 	"github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/common/profile"
 )
 
-func NewCredentialProfile(ud midware.Userdata) (*common.Credential, *profile.ClientProfile) {
+func NewCredentialProfile(ud *midware.Userdata) (*common.Credential, *profile.ClientProfile) {
 
 	credential := common.NewCredential(ud.SecretId, ud.SecretKey)
 

@@ -9,7 +9,7 @@ import (
 
 // 创建客户端
 
-func NewClient(ud midware.Userdata) (*lighthouse.Client, error) {
+func NewClient(ud *midware.Userdata) (*lighthouse.Client, error) {
 
 	credential, cpf := qcloud.NewCredentialProfile(ud)
 
@@ -23,7 +23,7 @@ func NewClient(ud midware.Userdata) (*lighthouse.Client, error) {
 
 // 查询地域列表
 
-func DescribeRegions(ud midware.Userdata) (*lighthouse.DescribeRegionsResponse, error) {
+func DescribeRegions(ud *midware.Userdata) (*lighthouse.DescribeRegionsResponse, error) {
 
 	client, _ := NewClient(ud)
 
@@ -35,11 +35,27 @@ func DescribeRegions(ud midware.Userdata) (*lighthouse.DescribeRegionsResponse, 
 
 // 查看实例列表
 
-func DescribeInstances(ud midware.Userdata) (*lighthouse.DescribeInstancesResponse, error) {
+func DescribeInstances(ud *midware.Userdata, rq *DescribeInstancesRequest) (*lighthouse.DescribeInstancesResponse, error) {
 
 	client, _ := NewClient(ud)
 
 	request := lighthouse.NewDescribeInstancesRequest()
+
+	if len(rq.InstanceIds) > 0 {
+		request.InstanceIds = rq.InstanceIds
+	}
+
+	if len(rq.Filters) > 0 {
+		request.Filters = rq.Filters
+	}
+
+	if rq.Offset != nil {
+		request.Offset = rq.Offset
+	}
+
+	if rq.Limit != nil {
+		request.Limit = rq.Limit
+	}
 
 	return client.DescribeInstances(request)
 
@@ -47,11 +63,23 @@ func DescribeInstances(ud midware.Userdata) (*lighthouse.DescribeInstancesRespon
 
 // 查看实例流量包详情
 
-func DescribeInstancesTrafficPackages(ud midware.Userdata) (*lighthouse.DescribeInstancesTrafficPackagesResponse, error) {
+func DescribeInstancesTrafficPackages(ud *midware.Userdata, rq *DescribeInstancesTrafficPackagesRequest) (*lighthouse.DescribeInstancesTrafficPackagesResponse, error) {
 
 	client, _ := NewClient(ud)
 
 	request := lighthouse.NewDescribeInstancesTrafficPackagesRequest()
+
+	if len(rq.InstanceIds) > 0 {
+		request.InstanceIds = rq.InstanceIds
+	}
+
+	if rq.Offset != nil {
+		request.Offset = rq.Offset
+	}
+
+	if rq.Limit != nil {
+		request.Limit = rq.Limit
+	}
 
 	return client.DescribeInstancesTrafficPackages(request)
 
