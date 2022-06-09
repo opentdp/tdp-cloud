@@ -13,8 +13,6 @@ func NewClient(ud midware.Userdata) (*cam.Client, error) {
 
 	credential, cpf := qcloud.NewCredentialProfile(ud)
 
-	cpf.HttpProfile.Endpoint = "cam.tencentcloudapi.com"
-
 	return cam.NewClient(credential, "", cpf)
 
 }

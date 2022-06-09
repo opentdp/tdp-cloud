@@ -13,9 +13,7 @@ func NewClient(ud midware.Userdata) (*lighthouse.Client, error) {
 
 	credential, cpf := qcloud.NewCredentialProfile(ud)
 
-	if ud.Region == "" {
-		cpf.HttpProfile.Endpoint = "lighthouse.tencentcloudapi.com"
-	} else {
+	if ud.Region != "" {
 		cpf.HttpProfile.Endpoint = "lighthouse." + ud.Region + ".tencentcloudapi.com"
 	}
 

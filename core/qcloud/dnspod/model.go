@@ -13,8 +13,6 @@ func NewClient(ud midware.Userdata) (*dnspod.Client, error) {
 
 	credential, cpf := qcloud.NewCredentialProfile(ud)
 
-	cpf.HttpProfile.Endpoint = "dnspod.tencentcloudapi.com"
-
 	return dnspod.NewClient(credential, "", cpf)
 
 }
