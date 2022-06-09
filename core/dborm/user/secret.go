@@ -9,10 +9,10 @@ import (
 func CreateSecret(post *SecretInput) error {
 
 	result := dborm.Db.Create(&dborm.Secret{
-		UserId:    post.UserId,
-		SecretId:  post.SecretId,
-		SecretKey: post.SecretKey,
-		Describe:  post.Describe,
+		UserId:      post.UserId,
+		SecretId:    post.SecretId,
+		SecretKey:   post.SecretKey,
+		Description: post.Description,
 	})
 
 	return result.Error

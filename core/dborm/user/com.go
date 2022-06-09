@@ -6,8 +6,8 @@ type UserInput struct {
 }
 
 type SecretInput struct {
-	UserId    int    `json:"userId"`
-	SecretId  string `json:"secretId" binding:"required"`
-	SecretKey string `json:"secretKey" binding:"required"`
-	Describe  string `json:"describe" binding:"required"`
+	UserId      int    `json:"userId"`
+	SecretId    string `json:"secretId" binding:"required"`
+	SecretKey   string `json:"secretKey" binding:"required"`
+	Description string `json:"description" binding:"required"`
 }

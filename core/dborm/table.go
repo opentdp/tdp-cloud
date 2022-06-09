@@ -23,10 +23,10 @@ type User struct {
 
 type Secret struct {
 	TableModel
-	UserId    int    `gorm:"index"`
-	SecretId  string `gorm:"index,unique"`
-	SecretKey string
-	Describe  string
+	UserId      int    `gorm:"index"`
+	SecretId    string `gorm:"index,unique"`
+	SecretKey   string
+	Description string
 }
 
 type Session struct {
