@@ -6,7 +6,7 @@ type UserInput struct {
 }
 
 type SecretInput struct {
-	UserID    uint   `json:"userId"`
+	UserId    int    `json:"userId"`
 	SecretId  string `json:"secretId" binding:"required"`
 	SecretKey string `json:"secretKey" binding:"required"`
 	Describe  string `json:"describe" binding:"required"`

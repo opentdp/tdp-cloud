@@ -1,6 +1,7 @@
 package lighthouse
 
 import (
+	"tdp-cloud/core/midware"
 	"tdp-cloud/core/qcloud/lighthouse"
 
 	"github.com/gin-gonic/gin"
@@ -10,10 +11,9 @@ import (
 
 func describeRegions(c *gin.Context) {
 
-	config_, _ := c.Get("Config")
-	config := config_.([3]string)
+	ud := midware.GetUserdata(c)
 
-	response, err := lighthouse.DescribeRegions(config)
+	response, err := lighthouse.DescribeRegions(ud)
 
 	if response != nil {
 		c.Set("Payload", response.Response)
@@ -27,10 +27,9 @@ func describeRegions(c *gin.Context) {
 
 func describeInstances(c *gin.Context) {
 
-	config_, _ := c.Get("Config")
-	config := config_.([3]string)
+	ud := midware.GetUserdata(c)
 
-	response, err := lighthouse.DescribeInstances(config)
+	response, err := lighthouse.DescribeInstances(ud)
 
 	if response != nil {
 		c.Set("Payload", response.Response)
@@ -44,10 +43,9 @@ func describeInstances(c *gin.Context) {
 
 func describeInstancesTrafficPackages(c *gin.Context) {
 
-	config_, _ := c.Get("Config")
-	config := config_.([3]string)
+	ud := midware.GetUserdata(c)
 
-	response, err := lighthouse.DescribeInstancesTrafficPackages(config)
+	response, err := lighthouse.DescribeInstancesTrafficPackages(ud)
 
 	if response != nil {
 		c.Set("Payload", response.Response)

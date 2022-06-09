@@ -1,16 +1,17 @@
 package dnspod
 
 import (
-	dnspod "github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/dnspod/v20210323"
-
+	"tdp-cloud/core/midware"
 	"tdp-cloud/core/qcloud"
+
+	dnspod "github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/dnspod/v20210323"
 )
 
 // 创建客户端
 
-func NewClient(config [3]string) (*dnspod.Client, error) {
+func NewClient(ud midware.Userdata) (*dnspod.Client, error) {
 
-	credential, cpf := qcloud.NewCredentialProfile(config)
+	credential, cpf := qcloud.NewCredentialProfile(ud)
 
 	cpf.HttpProfile.Endpoint = "dnspod.tencentcloudapi.com"
 
@@ -20,9 +21,9 @@ func NewClient(config [3]string) (*dnspod.Client, error) {
 
 // 获取域名列表
 
-func DescribeDomainList(config [3]string) (*dnspod.DescribeDomainListResponse, error) {
+func DescribeDomainList(ud midware.Userdata) (*dnspod.DescribeDomainListResponse, error) {
 
-	client, _ := NewClient(config)
+	client, _ := NewClient(ud)
 
 	request := dnspod.NewDescribeDomainListRequest()
 

@@ -1,32 +1,33 @@
 package lighthouse
 
 import (
-	lighthouse "github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/lighthouse/v20200324"
-
+	"tdp-cloud/core/midware"
 	"tdp-cloud/core/qcloud"
+
+	lighthouse "github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/lighthouse/v20200324"
 )
 
 // 创建客户端
 
-func NewClient(config [3]string) (*lighthouse.Client, error) {
+func NewClient(ud midware.Userdata) (*lighthouse.Client, error) {
 
-	credential, cpf := qcloud.NewCredentialProfile(config)
+	credential, cpf := qcloud.NewCredentialProfile(ud)
 
-	if config[2] == "" {
+	if ud.Region == "" {
 		cpf.HttpProfile.Endpoint = "lighthouse.tencentcloudapi.com"
 	} else {
-		cpf.HttpProfile.Endpoint = "lighthouse." + config[2] + ".tencentcloudapi.com"
+		cpf.HttpProfile.Endpoint = "lighthouse." + ud.Region + ".tencentcloudapi.com"
 	}
 
-	return lighthouse.NewClient(credential, config[2], cpf)
+	return lighthouse.NewClient(credential, ud.Region, cpf)
 
 }
 
 // 查询地域列表
 
-func DescribeRegions(config [3]string) (*lighthouse.DescribeRegionsResponse, error) {
+func DescribeRegions(ud midware.Userdata) (*lighthouse.DescribeRegionsResponse, error) {
 
-	client, _ := NewClient(config)
+	client, _ := NewClient(ud)
 
 	request := lighthouse.NewDescribeRegionsRequest()
 
@@ -36,9 +37,9 @@ func DescribeRegions(config [3]string) (*lighthouse.DescribeRegionsResponse, err
 
 // 查看实例列表
 
-func DescribeInstances(config [3]string) (*lighthouse.DescribeInstancesResponse, error) {
+func DescribeInstances(ud midware.Userdata) (*lighthouse.DescribeInstancesResponse, error) {
 
-	client, _ := NewClient(config)
+	client, _ := NewClient(ud)
 
 	request := lighthouse.NewDescribeInstancesRequest()
 
@@ -48,9 +49,9 @@ func DescribeInstances(config [3]string) (*lighthouse.DescribeInstancesResponse,
 
 // 查看实例流量包详情
 
-func DescribeInstancesTrafficPackages(config [3]string) (*lighthouse.DescribeInstancesTrafficPackagesResponse, error) {
+func DescribeInstancesTrafficPackages(ud midware.Userdata) (*lighthouse.DescribeInstancesTrafficPackagesResponse, error) {
 
-	client, _ := NewClient(config)
+	client, _ := NewClient(ud)
 
 	request := lighthouse.NewDescribeInstancesTrafficPackagesRequest()
 

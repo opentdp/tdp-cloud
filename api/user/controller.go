@@ -1,6 +1,7 @@
 package user
 
 import (
+	"strconv"
 	"tdp-cloud/core/dborm/user"
 
 	"github.com/gin-gonic/gin"
@@ -17,10 +18,13 @@ func register(c *gin.Context) {
 		return
 	}
 
-	ok, err := user.Register(post.Username, post.Password)
+	err := user.Register(post.Username, post.Password)
 
-	c.Set("Payload", ok)
-	c.Set("Error", err)
+	if err == nil {
+		c.Set("Payload", "注册成功")
+	} else {
+		c.Set("Error", err)
+	}
 
 }
 
@@ -35,10 +39,14 @@ func login(c *gin.Context) {
 		return
 	}
 
-	token, keyid, err := user.Login(post.Username, post.Password)
+	token, keyId, err := user.Login(post.Username, post.Password)
 
-	c.Set("Payload", gin.H{"token": token, "keyid": keyid})
-	c.Set("Error", err)
+	if err == "" {
+		c.Set("Payload", gin.H{"keyId": keyId, "token": token})
+	} else {
+		c.Set("Error", err)
+	}
+
 }
 
 // 添加密钥
@@ -52,13 +60,15 @@ func createSecret(c *gin.Context) {
 		return
 	}
 
-	userId, _ := c.Get("UserId")
-	post.UserID = userId.(uint)
+	post.UserId = c.GetInt("UserId")
 
-	result, err := user.CreateSecret(&post)
+	err := user.CreateSecret(&post)
 
-	c.Set("Payload", result)
-	c.Set("Error", err)
+	if err == nil {
+		c.Set("Payload", "添加成功")
+	} else {
+		c.Set("Error", err)
+	}
 
 }
 
@@ -66,12 +76,17 @@ func createSecret(c *gin.Context) {
 
 func deleteSecret(c *gin.Context) {
 
-	id := c.Param("id")
+	UserId := c.GetInt("UserId")
 
-	result, err := user.DeleteSecret(id)
+	id, _ := strconv.Atoi(c.Param("id"))
 
-	c.Set("Payload", result)
-	c.Set("Error", err)
+	err := user.DeleteSecret(UserId, id)
+
+	if err == nil {
+		c.Set("Payload", "删除成功")
+	} else {
+		c.Set("Error", err)
+	}
 
 }
 
@@ -79,9 +94,9 @@ func deleteSecret(c *gin.Context) {
 
 func fetchSecrets(c *gin.Context) {
 
-	userId_, _ := c.Get("UserId")
+	userId := c.GetInt("UserId")
 
-	list, _ := user.FetchSecrets(userId_.(uint))
+	list := user.FindSecrets(userId)
 
 	c.Set("Payload", list)
 

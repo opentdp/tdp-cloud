@@ -3,6 +3,7 @@ package cam
 import (
 	"github.com/gin-gonic/gin"
 
+	"tdp-cloud/core/midware"
 	"tdp-cloud/core/qcloud/cam"
 )
 
@@ -10,10 +11,9 @@ import (
 
 func getAccountSummary(c *gin.Context) {
 
-	config_, _ := c.Get("Config")
-	config := config_.([3]string)
+	ud := midware.GetUserdata(c)
 
-	response, err := cam.GetAccountSummary(config)
+	response, err := cam.GetAccountSummary(ud)
 
 	if response != nil {
 		c.Set("Payload", response.Response)

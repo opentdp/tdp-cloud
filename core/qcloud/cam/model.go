@@ -1,16 +1,17 @@
 package cam
 
 import (
-	cam "github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/cam/v20190116"
-
+	"tdp-cloud/core/midware"
 	"tdp-cloud/core/qcloud"
+
+	cam "github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/cam/v20190116"
 )
 
 // 创建客户端
 
-func NewClient(config [3]string) (*cam.Client, error) {
+func NewClient(ud midware.Userdata) (*cam.Client, error) {
 
-	credential, cpf := qcloud.NewCredentialProfile(config)
+	credential, cpf := qcloud.NewCredentialProfile(ud)
 
 	cpf.HttpProfile.Endpoint = "cam.tencentcloudapi.com"
 
@@ -20,9 +21,9 @@ func NewClient(config [3]string) (*cam.Client, error) {
 
 // 查询账户摘要
 
-func GetAccountSummary(config [3]string) (*cam.GetAccountSummaryResponse, error) {
+func GetAccountSummary(ud midware.Userdata) (*cam.GetAccountSummaryResponse, error) {
 
-	client, _ := NewClient(config)
+	client, _ := NewClient(ud)
 
 	request := cam.NewGetAccountSummaryRequest()
 

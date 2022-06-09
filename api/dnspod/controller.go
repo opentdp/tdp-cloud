@@ -3,6 +3,7 @@ package dnspod
 import (
 	"github.com/gin-gonic/gin"
 
+	"tdp-cloud/core/midware"
 	"tdp-cloud/core/qcloud/dnspod"
 )
 
@@ -10,10 +11,9 @@ import (
 
 func describeDomainList(c *gin.Context) {
 
-	config_, _ := c.Get("Config")
-	config := config_.([3]string)
+	ud := midware.GetUserdata(c)
 
-	response, err := dnspod.DescribeDomainList(config)
+	response, err := dnspod.DescribeDomainList(ud)
 
 	if response != nil {
 		c.Set("Payload", response.Response)
