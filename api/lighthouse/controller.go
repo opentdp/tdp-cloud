@@ -60,3 +60,41 @@ func describeInstancesTrafficPackages(c *gin.Context) {
 	c.Set("Error", err)
 
 }
+
+// 获取实例流量包
+
+func describeSnapshots(c *gin.Context) {
+
+	var ud = midware.GetUserdata(c)
+	var rq lighthouse.DescribeSnapshotsRequest
+
+	c.ShouldBind(&rq)
+
+	response, err := lighthouse.DescribeSnapshots(ud, &rq)
+
+	if response != nil {
+		c.Set("Payload", response.Response)
+	}
+
+	c.Set("Error", err)
+
+}
+
+// 查询防火墙规则
+
+func describeFirewallRules(c *gin.Context) {
+
+	var ud = midware.GetUserdata(c)
+	var rq lighthouse.DescribeFirewallRulesRequest
+
+	c.ShouldBind(&rq)
+
+	response, err := lighthouse.DescribeFirewallRules(ud, &rq)
+
+	if response != nil {
+		c.Set("Payload", response.Response)
+	}
+
+	c.Set("Error", err)
+
+}
