@@ -6,12 +6,16 @@ import (
 	"gorm.io/gorm"
 )
 
+// 公共模型
+
 type TableModel struct {
 	Id        int `gorm:"primaryKey"`
 	CreatedAt time.Time
 	UpdatedAt time.Time
 	DeletedAt gorm.DeletedAt `gorm:"index"`
 }
+
+// 用户表
 
 type User struct {
 	TableModel
@@ -21,6 +25,8 @@ type User struct {
 	Sessions []Session
 }
 
+// 密钥表
+
 type Secret struct {
 	TableModel
 	UserId      int    `gorm:"index"`
@@ -28,6 +34,8 @@ type Secret struct {
 	SecretKey   string
 	Description string
 }
+
+// 会话表
 
 type Session struct {
 	TableModel
