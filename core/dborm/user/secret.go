@@ -23,9 +23,9 @@ func CreateSecret(post *SecretInput) error {
 
 func DeleteSecret(userId, id int) error {
 
-	var item dborm.Secret
+	var secret dborm.Secret
 
-	result := dborm.Db.Delete(&item, "user_id = ? AND id = ?", userId, id)
+	result := dborm.Db.Delete(&secret, "user_id = ? AND id = ?", userId, id)
 
 	return result.Error
 
@@ -35,11 +35,11 @@ func DeleteSecret(userId, id int) error {
 
 func FindSecrets(userId int) []*dborm.Secret {
 
-	var list []*dborm.Secret
+	var secrets []*dborm.Secret
 
-	dborm.Db.Find(&list, "user_id = ?", userId)
+	dborm.Db.Find(&secrets, "user_id = ?", userId)
 
-	return list
+	return secrets
 
 }
 
@@ -47,10 +47,10 @@ func FindSecrets(userId int) []*dborm.Secret {
 
 func FetchSecret(userId, id int) dborm.Secret {
 
-	var item dborm.Secret
+	var secret dborm.Secret
 
-	dborm.Db.First(&item, "user_id = ? AND id = ?", userId, id)
+	dborm.Db.First(&secret, "user_id = ? AND id = ?", userId, id)
 
-	return item
+	return secret
 
 }

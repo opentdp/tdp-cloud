@@ -51,4 +51,5 @@ func Login(username, password string) (string, int, string) {
 	dborm.Db.First(&secret, "user_id = ?", user.Id)
 
 	return token, secret.Id, ""
+
 }
