@@ -1,6 +1,10 @@
 package cli
 
-import "flag"
+import (
+	"flag"
+	"fmt"
+	"os"
+)
 
 var (
 	Dsn     string
@@ -13,5 +17,18 @@ func Flags() {
 
 	flag.StringVar(&Address, "address", ":7800", "服务器监听地址和端口")
 
+	flag.Usage = usage
+
 	flag.Parse()
+}
+
+func usage() {
+
+	fmt.Fprintf(os.Stderr, `轻量服务器控制面板，项目地址 https://github.com/tdp-resource/tdp-cloud
+
+可选参数:
+
+`)
+
+	flag.PrintDefaults()
 }
