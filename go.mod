@@ -12,6 +12,7 @@ require (
 require (
 	github.com/glebarez/sqlite v1.4.5
 	golang.org/x/crypto v0.0.0-20220525230936-793ad666bf5e
+	gorm.io/driver/mysql v1.3.4
 	gorm.io/gorm v1.23.6
 )
 
@@ -31,6 +32,7 @@ require (
 	github.com/go-playground/locales v0.14.0 // indirect
 	github.com/go-playground/universal-translator v0.18.0 // indirect
 	github.com/go-playground/validator/v10 v10.11.0 // indirect
+	github.com/go-sql-driver/mysql v1.6.0 // indirect
 	github.com/goccy/go-json v0.9.7 // indirect
 	github.com/google/uuid v1.3.0 // indirect
 	github.com/jinzhu/inflection v1.0.0 // indirect

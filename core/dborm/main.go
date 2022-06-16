@@ -1,7 +1,10 @@
 package dborm
 
 import (
+	"strings"
+
 	"github.com/glebarez/sqlite"
+	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 )
 
@@ -11,7 +14,12 @@ func Connect(dsn string) {
 
 	var err error
 
-	Db, err = gorm.Open(sqlite.Open(dsn), &gorm.Config{})
+	if strings.Index(dsn, "@") > 0 {
+		Db, err = gorm.Open(mysql.Open(dsn), &gorm.Config{})
+	} else {
+		Db, err = gorm.Open(sqlite.Open(dsn), &gorm.Config{})
+	}
+
 	if err != nil {
 		panic("Failed to connect database")
 	}
