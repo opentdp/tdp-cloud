@@ -18,8 +18,6 @@ CALL :build windows 386 .exe
 CALL :build windows amd64 .exe
 CALL :build windows arm64 .exe
 
-cmd /k
-
 GOTO :EOF
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
@@ -30,3 +28,5 @@ GOTO :EOF
   echo building for %1/%2
   go build -o build/%1-%2%3 main.go
   GOTO :EOF
+
+IF "%1" == "" CMD /K
