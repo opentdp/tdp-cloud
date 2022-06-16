@@ -21,7 +21,7 @@
 
 ## 编译为二进制
 
-在项目目录运行  `build.bat` 或 `./build.sh`
+在项目目录运行  `build.bat` 或 `./build.sh`，预编译二进制下载地址 http://curl.rpm.im/tdp-cloud
 
 ## 额外参数设置
 
@@ -39,6 +39,12 @@ go env -w GOPROXY=https://goproxy.cn,direct
 2、浏览器打开 `http://localhost:7800`，注册一个账号
 
 3、登录刚注册的账号，添加腾讯云访问密钥
+
+## 支持的数据库
+
+- **SQLite** 数据源格式 `cloud.db`
+
+- **MySQL**  数据源格式 `user:password@tcp(localhost:3306)/dbname?charset=utf8&parseTime=True&loc=Local`
 
 ## 获取腾讯云密钥
 

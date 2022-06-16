@@ -34,11 +34,6 @@ func usage() {
 	flag.PrintDefaults()
 
 	fmt.Fprintf(os.Stdout, `
-
-关于 dsn 参数：
-  SQLite 数据源格式 "cloud.db"
-  MySQL  数据源格式 "user:password@tcp(localhost:3306)/dbname?charset=utf8&parseTime=True&loc=Local"
-
 开源项目 https://github.com/tdp-resource/tdp-cloud
 问题提交 https://github.com/tdp-resource/tdp-cloud/issues
 
