@@ -6,7 +6,7 @@ import (
 
 func NewError(message string) gin.H {
 
-	return gin.H{"Error": gin.H{"message": message}}
+	return gin.H{"Error": gin.H{"Message": message}}
 
 }
 
