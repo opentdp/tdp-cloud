@@ -6,7 +6,14 @@ import (
 
 // 添加密钥
 
-func CreateSecret(post *SecretInput) error {
+type SecretParam struct {
+	UserId      int    `json:"userId"`
+	SecretId    string `json:"secretId" binding:"required"`
+	SecretKey   string `json:"secretKey" binding:"required"`
+	Description string `json:"description" binding:"required"`
+}
+
+func CreateSecret(post *SecretParam) error {
 
 	result := dborm.Db.Create(&dborm.Secret{
 		UserId:      post.UserId,

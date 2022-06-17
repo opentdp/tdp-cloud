@@ -11,14 +11,14 @@ import (
 
 func register(c *gin.Context) {
 
-	var post user.UserInput
+	var param user.RegisterParam
 
-	if err := c.BindJSON(&post); err != nil {
+	if err := c.BindJSON(&param); err != nil {
 		c.Set("Error", "表单错误")
 		return
 	}
 
-	err := user.Register(post.Username, post.Password)
+	err := user.Register(&param)
 
 	if err == nil {
 		c.Set("Payload", "注册成功")
@@ -32,17 +32,38 @@ func register(c *gin.Context) {
 
 func login(c *gin.Context) {
 
-	var post user.UserInput
+	var param user.LoginParam
 
-	if err := c.BindJSON(&post); err != nil {
+	if err := c.BindJSON(&param); err != nil {
 		c.Set("Error", "表单错误")
 		return
 	}
 
-	res, err := user.Login(post.Username, post.Password)
+	res, err := user.Login(&param)
 
 	if err == nil {
 		c.Set("Payload", res)
+	} else {
+		c.Set("Error", err)
+	}
+
+}
+
+// 修改资料
+
+func modify(c *gin.Context) {
+
+	var param user.ModifyParam
+
+	if err := c.BindJSON(&param); err != nil {
+		c.Set("Error", "表单错误")
+		return
+	}
+
+	err := user.Modify(&param)
+
+	if err == nil {
+		c.Set("Payload", "")
 	} else {
 		c.Set("Error", err)
 	}
@@ -53,16 +74,16 @@ func login(c *gin.Context) {
 
 func createSecret(c *gin.Context) {
 
-	var post user.SecretInput
+	var param user.SecretParam
 
-	if err := c.BindJSON(&post); err != nil {
+	if err := c.BindJSON(&param); err != nil {
 		c.Set("Error", "表单错误")
 		return
 	}
 
-	post.UserId = c.GetInt("UserId")
+	param.UserId = c.GetInt("UserId")
 
-	err := user.CreateSecret(&post)
+	err := user.CreateSecret(&param)
 
 	if err == nil {
 		c.Set("Payload", "添加成功")

@@ -24,6 +24,8 @@ func Router(api *gin.RouterGroup) {
 	rg2.Use(midware.Auth())
 
 	{
+		rg1.POST("/modify", modify)
+
 		rg2.GET("/secret", fetchSecrets)
 		rg2.POST("/secret", createSecret)
 		rg2.DELETE("/secret/:id", deleteSecret)

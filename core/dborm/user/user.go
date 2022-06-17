@@ -10,10 +10,15 @@ import (
 
 // 注册账号
 
-func Register(username, password string) error {
+type RegisterParam struct {
+	Username string `json:"username" binding:"required"`
+	Password string `json:"password" binding:"required"`
+}
 
-	hash, _ := bcrypt.GenerateFromPassword([]byte(password), bcrypt.DefaultCost)
-	result := dborm.Db.Create(&dborm.User{Username: username, Password: string(hash)})
+func Register(param *RegisterParam) error {
+
+	hash, _ := bcrypt.GenerateFromPassword([]byte(param.Password), bcrypt.DefaultCost)
+	result := dborm.Db.Create(&dborm.User{Username: param.Username, Password: string(hash)})
 
 	return result.Error
 
@@ -21,12 +26,17 @@ func Register(username, password string) error {
 
 // 登录账号
 
+type LoginParam struct {
+	Username string `json:"username" binding:"required"`
+	Password string `json:"password" binding:"required"`
+}
+
 type LoginResult struct {
 	Keyid int    `json:"keyid"`
 	Token string `json:"token"`
 }
 
-func Login(username, password string) (LoginResult, error) {
+func Login(param *LoginParam) (LoginResult, error) {
 
 	var res LoginResult
 
@@ -35,7 +45,7 @@ func Login(username, password string) (LoginResult, error) {
 
 	// 验证账号
 
-	dborm.Db.First(&user, "username = ?", username)
+	dborm.Db.First(&user, "username = ?", param.Username)
 
 	if user.Id == 0 {
 		return res, errors.New("账号错误")
@@ -43,7 +53,7 @@ func Login(username, password string) (LoginResult, error) {
 
 	// 验证密码
 
-	err := bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(password))
+	err := bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(param.Password))
 
 	if err != nil {
 		return res, errors.New("密码错误")
@@ -67,26 +77,26 @@ func Login(username, password string) (LoginResult, error) {
 
 // 修改资料
 
-type ModifyQuery struct {
-	UserId      int    `json:"user_id"`
-	OldPassword string `json:"old_password"`
-	NewPassword string `json:"new_password"`
+type ModifyParam struct {
+	UserId      int    `json:"userId"`
+	OldPassword string `json:"oldPassword"`
+	NewPassword string `json:"newPassword"`
 	Description string `json:"description"`
 }
 
-func Modify(data ModifyQuery) error {
+func Modify(param *ModifyParam) error {
 
 	var user dborm.User
 
 	// 验证账号
 
-	dborm.Db.First(&user, "user_id = ?", data.UserId)
+	dborm.Db.First(&user, "user_id = ?", param.UserId)
 
 	if user.Id == 0 {
 		return errors.New("账号错误")
 	}
 
-	err := bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(data.OldPassword))
+	err := bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(param.OldPassword))
 
 	if err != nil {
 		return errors.New("密码错误")
@@ -94,12 +104,12 @@ func Modify(data ModifyQuery) error {
 
 	// 更新资料
 
-	if data.NewPassword != "" {
-		password, _ := bcrypt.GenerateFromPassword([]byte(data.NewPassword), bcrypt.DefaultCost)
+	if param.NewPassword != "" {
+		password, _ := bcrypt.GenerateFromPassword([]byte(param.NewPassword), bcrypt.DefaultCost)
 		user.Password = string(password)
 	}
 
-	user.Description = data.Description
+	user.Description = param.Description
 
 	dborm.Db.Save(&user)
 
