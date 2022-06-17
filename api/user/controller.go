@@ -60,6 +60,8 @@ func modify(c *gin.Context) {
 		return
 	}
 
+	param.UserId = c.GetInt("UserId")
+
 	err := user.Modify(&param)
 
 	if err == nil {
