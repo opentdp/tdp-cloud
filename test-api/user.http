@@ -22,6 +22,19 @@ Content-Type: application/json
     "password": "{{$dotenv password}}"
 }
 
+### 修改资料
+
+PATCH {{$dotenv baseapi}}/local/user/info
+Authorization: {{$dotenv authorization}}
+Origin: {{$dotenv origin}}
+Content-Type: application/json
+
+{
+    "oldPassword": "{{$dotenv password}}",
+    "newPassword": "{{$dotenv password}}",
+    "description": "也没所谓"
+}
+
 ### 添加密钥
 
 POST {{$dotenv baseapi}}/local/user/secret
@@ -30,9 +43,9 @@ Content-Type: application/json
 Origin: {{$dotenv origin}}
 
 {
-    "describe":  "测试1",
     "secretId":  "{{$dotenv secret_id}}",
-    "secretKey": "{{$dotenv secret_key}}"
+    "secretKey": "{{$dotenv secret_key}}",
+    "description":  "也没所谓"
 }
 
 ### 获取密钥

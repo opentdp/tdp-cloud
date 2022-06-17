@@ -51,9 +51,9 @@ func login(c *gin.Context) {
 
 // 修改资料
 
-func modify(c *gin.Context) {
+func updateInfo(c *gin.Context) {
 
-	var param user.ModifyParam
+	var param user.UpdateInfoParam
 
 	if err := c.BindJSON(&param); err != nil {
 		c.Set("Error", "表单错误")
@@ -62,10 +62,10 @@ func modify(c *gin.Context) {
 
 	param.UserId = c.GetInt("UserId")
 
-	err := user.Modify(&param)
+	err := user.UpdateInfo(&param)
 
 	if err == nil {
-		c.Set("Payload", "")
+		c.Set("Payload", "操作成功")
 	} else {
 		c.Set("Error", err)
 	}

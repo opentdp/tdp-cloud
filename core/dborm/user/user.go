@@ -77,20 +77,20 @@ func Login(param *LoginParam) (LoginResult, error) {
 
 // 修改资料
 
-type ModifyParam struct {
+type UpdateInfoParam struct {
 	UserId      int    `json:"userId"`
 	OldPassword string `json:"oldPassword"`
 	NewPassword string `json:"newPassword"`
 	Description string `json:"description"`
 }
 
-func Modify(param *ModifyParam) error {
+func UpdateInfo(param *UpdateInfoParam) error {
 
 	var user dborm.User
 
 	// 验证账号
 
-	dborm.Db.First(&user, "user_id = ?", param.UserId)
+	dborm.Db.First(&user, "id = ?", param.UserId)
 
 	if user.Id == 0 {
 		return errors.New("账号错误")

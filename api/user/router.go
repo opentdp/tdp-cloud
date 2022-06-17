@@ -24,7 +24,7 @@ func Router(api *gin.RouterGroup) {
 	rg2.Use(midware.Auth())
 
 	{
-		rg2.POST("/modify", modify)
+		rg2.PATCH("/info", updateInfo)
 
 		rg2.GET("/secret", fetchSecrets)
 		rg2.POST("/secret", createSecret)
