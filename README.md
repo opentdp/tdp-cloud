@@ -21,7 +21,7 @@
 
 ## 编译为二进制
 
-在项目目录运行  `build.bat` 或 `./build.sh`，预编译二进制下载地址 http://curl.rpm.im/tdp-cloud
+在项目目录运行  `build.bat` 或 `./build.sh`，预编译二进制下载地址 https://github.com/tdp-resource/tdp-cloud-ci/releases
 
 ## 额外参数设置
 
