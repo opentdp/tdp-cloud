@@ -21,7 +21,7 @@ type User struct {
 	TableModel
 	Username    string `gorm:"index,unique"`
 	Password    string
-	Description string `gorm:"不可能！我的代码怎么可能会有bug！"`
+	Description string `gorm:"default:不可能！我的代码怎么可能会有bug！"`
 	Secrets     []Secret
 	Sessions    []Session
 }
