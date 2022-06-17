@@ -19,10 +19,11 @@ type TableModel struct {
 
 type User struct {
 	TableModel
-	Username string `gorm:"index,unique"`
-	Password string
-	Secrets  []Secret
-	Sessions []Session
+	Username    string `gorm:"index,unique"`
+	Password    string
+	Description string `gorm:"不可能！我的代码怎么可能会有bug！"`
+	Secrets     []Secret
+	Sessions    []Session
 }
 
 // 密钥表

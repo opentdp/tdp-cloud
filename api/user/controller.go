@@ -39,10 +39,10 @@ func login(c *gin.Context) {
 		return
 	}
 
-	token, keyId, err := user.Login(post.Username, post.Password)
+	res, err := user.Login(post.Username, post.Password)
 
-	if err == "" {
-		c.Set("Payload", gin.H{"keyId": keyId, "token": token})
+	if err == nil {
+		c.Set("Payload", res)
 	} else {
 		c.Set("Error", err)
 	}
