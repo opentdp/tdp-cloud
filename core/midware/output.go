@@ -1,8 +1,6 @@
 package midware
 
 import (
-	"fmt"
-
 	"github.com/gin-gonic/gin"
 )
 
@@ -14,37 +12,23 @@ func JSON() gin.HandlerFunc {
 
 		// 输出错误信息
 
-		err, _ := c.Get("Error")
+		if errAny, exists := c.Get("Error"); exists {
+			if err, ok := errAny.(error); ok {
+				c.AbortWithStatusJSON(400, gin.H{"Error": err.Error()})
+				return
+			}
 
-		if err != nil && err != "" {
-			if typeof(err) == "error" {
-				err = err.(error).Error()
+			if err, ok := errAny.(string); ok {
+				c.AbortWithStatusJSON(400, gin.H{"Error": err})
+				return
 			}
-			if typeof(err) == "string" {
-				err = gin.H{"Message": err}
-			}
-			c.AbortWithStatusJSON(400, gin.H{"Error": err})
-			return
 		}
 
 		// 输出请求结果
 
-		res, _ := c.Get("Payload")
-
-		if res != nil && res != "" {
-			if typeof(res) == "string" {
-				res = gin.H{"Result": res}
-			}
+		if res, exists := c.Get("Payload"); exists {
 			c.AbortWithStatusJSON(200, gin.H{"Payload": res})
 			return
 		}
-
 	}
-
-}
-
-func typeof(v interface{}) string {
-
-	return fmt.Sprintf("%T", v)
-
 }

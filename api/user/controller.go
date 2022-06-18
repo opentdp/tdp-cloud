@@ -67,7 +67,7 @@ func updateInfo(c *gin.Context) {
 	if err == nil {
 		c.Set("Payload", "操作成功")
 	} else {
-		c.Set("Error", err.Error())
+		c.Set("Error", err)
 	}
 
 }
@@ -90,7 +90,7 @@ func updatePassword(c *gin.Context) {
 	if err == nil {
 		c.Set("Payload", "操作成功")
 	} else {
-		c.Set("Error", err.Error())
+		c.Set("Error", err)
 	}
 
 }
