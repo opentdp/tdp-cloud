@@ -30,9 +30,19 @@ Origin: {{$dotenv origin}}
 Content-Type: application/json
 
 {
+    "description": "不可能！我的代码怎么可能会有bug！"
+}
+
+### 修改密码
+
+PATCH {{$dotenv baseapi}}/local/user/password
+Authorization: {{$dotenv authorization}}
+Origin: {{$dotenv origin}}
+Content-Type: application/json
+
+{
     "oldPassword": "{{$dotenv password}}",
-    "newPassword": "{{$dotenv password}}",
-    "description": "也没所谓"
+    "newPassword": "{{$dotenv password}}"
 }
 
 ### 添加密钥
