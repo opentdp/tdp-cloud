@@ -32,8 +32,10 @@ type LoginParam struct {
 }
 
 type LoginResult struct {
-	Keyid int    `json:"keyid"`
-	Token string `json:"token"`
+	Keyid       int    `json:"keyid"`
+	Token       string `json:"token"`
+	Username    string `json:"username"`
+	Description string `json:"description"`
 }
 
 func Login(param *LoginParam) (LoginResult, error) {
@@ -70,6 +72,8 @@ func Login(param *LoginParam) (LoginResult, error) {
 
 	res.Keyid = secret.Id
 	res.Token = token
+	res.Username = user.Username
+	res.Description = user.Description
 
 	return res, nil
 
@@ -79,12 +83,40 @@ func Login(param *LoginParam) (LoginResult, error) {
 
 type UpdateInfoParam struct {
 	UserId      int    `json:"userId"`
-	OldPassword string `json:"oldPassword"`
-	NewPassword string `json:"newPassword"`
 	Description string `json:"description"`
 }
 
 func UpdateInfo(param *UpdateInfoParam) error {
+
+	var user dborm.User
+
+	// 验证账号
+
+	dborm.Db.First(&user, "id = ?", param.UserId)
+
+	if user.Id == 0 {
+		return errors.New("账号错误")
+	}
+
+	// 更新资料
+
+	user.Description = param.Description
+
+	dborm.Db.Select("Description").Save(&user)
+
+	return nil
+
+}
+
+// 修改密码
+
+type UpdatePasswordParam struct {
+	UserId      int    `json:"userId"`
+	OldPassword string `json:"oldPassword"`
+	NewPassword string `json:"newPassword"`
+}
+
+func UpdatePassword(param *UpdatePasswordParam) error {
 
 	var user dborm.User
 
@@ -102,16 +134,14 @@ func UpdateInfo(param *UpdateInfoParam) error {
 		return errors.New("密码错误")
 	}
 
-	// 更新资料
+	// 更新密码
 
 	if param.NewPassword != "" {
 		password, _ := bcrypt.GenerateFromPassword([]byte(param.NewPassword), bcrypt.DefaultCost)
 		user.Password = string(password)
 	}
 
-	user.Description = param.Description
-
-	dborm.Db.Save(&user)
+	dborm.Db.Select("Password").Save(&user)
 
 	return nil
 

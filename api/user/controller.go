@@ -67,7 +67,30 @@ func updateInfo(c *gin.Context) {
 	if err == nil {
 		c.Set("Payload", "操作成功")
 	} else {
-		c.Set("Error", err)
+		c.Set("Error", err.Error())
+	}
+
+}
+
+// 修改密码
+
+func updatePassword(c *gin.Context) {
+
+	var param user.UpdatePasswordParam
+
+	if err := c.BindJSON(&param); err != nil {
+		c.Set("Error", "表单错误")
+		return
+	}
+
+	param.UserId = c.GetInt("UserId")
+
+	err := user.UpdatePassword(&param)
+
+	if err == nil {
+		c.Set("Payload", "操作成功")
+	} else {
+		c.Set("Error", err.Error())
 	}
 
 }
