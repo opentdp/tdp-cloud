@@ -83,7 +83,7 @@ func Login(param *LoginParam) (LoginResult, error) {
 
 type UpdateInfoParam struct {
 	UserId      uint   `json:"userId"`
-	Description string `json:"description"`
+	Description string `json:"description" binding:"required"`
 }
 
 func UpdateInfo(param *UpdateInfoParam) error {
@@ -112,8 +112,8 @@ func UpdateInfo(param *UpdateInfoParam) error {
 
 type UpdatePasswordParam struct {
 	UserId      uint   `json:"userId"`
-	OldPassword string `json:"oldPassword"`
-	NewPassword string `json:"newPassword"`
+	OldPassword string `json:"oldPassword" binding:"required"`
+	NewPassword string `json:"newPassword" binding:"required"`
 }
 
 func UpdatePassword(param *UpdatePasswordParam) error {
@@ -136,10 +136,8 @@ func UpdatePassword(param *UpdatePasswordParam) error {
 
 	// 更新密码
 
-	if param.NewPassword != "" {
-		password, _ := bcrypt.GenerateFromPassword([]byte(param.NewPassword), bcrypt.DefaultCost)
-		user.Password = string(password)
-	}
+	hash, _ := bcrypt.GenerateFromPassword([]byte(param.NewPassword), bcrypt.DefaultCost)
+	user.Password = string(hash)
 
 	dborm.Db.Select("Password").Save(&user)
 
