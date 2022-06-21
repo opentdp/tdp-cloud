@@ -10,6 +10,16 @@ func NewError(message string) gin.H {
 
 }
 
+// 获取会话数据
+
+type Userdata struct {
+	KeyId     int
+	UserId    int
+	Region    string
+	SecretId  string
+	SecretKey string
+}
+
 func GetUserdata(c *gin.Context) *Userdata {
 
 	ud := &Userdata{
@@ -22,12 +32,4 @@ func GetUserdata(c *gin.Context) *Userdata {
 
 	return ud
 
-}
-
-type Userdata struct {
-	KeyId     int
-	UserId    int
-	Region    string
-	SecretId  string
-	SecretKey string
 }

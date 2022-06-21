@@ -13,13 +13,13 @@ func JSON() gin.HandlerFunc {
 		// 输出错误信息
 
 		if errAny, exists := c.Get("Error"); exists {
-			if err, ok := errAny.(error); ok {
-				c.AbortWithStatusJSON(400, gin.H{"Error": err.Error()})
+			if err, ok := errAny.(string); ok {
+				c.AbortWithStatusJSON(400, NewError(err))
 				return
 			}
 
-			if err, ok := errAny.(string); ok {
-				c.AbortWithStatusJSON(400, gin.H{"Error": err})
+			if err, ok := errAny.(error); ok {
+				c.AbortWithStatusJSON(400, NewError(err.Error()))
 				return
 			}
 		}
@@ -31,4 +31,5 @@ func JSON() gin.HandlerFunc {
 			return
 		}
 	}
+
 }
