@@ -122,11 +122,11 @@ func createSecret(c *gin.Context) {
 
 func deleteSecret(c *gin.Context) {
 
-	UserId := c.GetUint("UserId")
+	userId := c.GetUint("UserId")
 
 	id, _ := strconv.Atoi(c.Param("id"))
 
-	err := user.DeleteSecret(UserId, uint(id))
+	err := user.DeleteSecret(userId, uint(id))
 
 	if err == nil {
 		c.Set("Payload", "删除成功")
