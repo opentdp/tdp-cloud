@@ -32,7 +32,7 @@ type LoginParam struct {
 }
 
 type LoginResult struct {
-	Keyid       int    `json:"keyid"`
+	Keyid       uint   `json:"keyid"`
 	Token       string `json:"token"`
 	Username    string `json:"username"`
 	Description string `json:"description"`
@@ -82,7 +82,7 @@ func Login(param *LoginParam) (LoginResult, error) {
 // 修改资料
 
 type UpdateInfoParam struct {
-	UserId      int    `json:"userId"`
+	UserId      uint   `json:"userId"`
 	Description string `json:"description"`
 }
 
@@ -111,7 +111,7 @@ func UpdateInfo(param *UpdateInfoParam) error {
 // 修改密码
 
 type UpdatePasswordParam struct {
-	UserId      int    `json:"userId"`
+	UserId      uint   `json:"userId"`
 	OldPassword string `json:"oldPassword"`
 	NewPassword string `json:"newPassword"`
 }

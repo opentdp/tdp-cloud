@@ -7,13 +7,13 @@ import (
 	"time"
 )
 
-func RandString(length int) string {
+func RandString(length uint) string {
 
 	rand.Seed(time.Now().UnixNano())
 
 	rs := make([]string, length)
 
-	for i := 0; i < length; i++ {
+	for i := uint(0); i < length; i++ {
 		t := rand.Intn(3)
 		if t == 0 {
 			rs = append(rs, strconv.Itoa(rand.Intn(10)))

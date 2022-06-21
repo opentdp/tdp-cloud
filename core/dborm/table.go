@@ -9,7 +9,7 @@ import (
 // 公共模型
 
 type TableModel struct {
-	Id        int `gorm:"primaryKey"`
+	Id        uint `gorm:"primaryKey"`
 	CreatedAt time.Time
 	UpdatedAt time.Time
 	DeletedAt gorm.DeletedAt `gorm:"index"`
@@ -30,7 +30,7 @@ type User struct {
 
 type Secret struct {
 	TableModel
-	UserId      int    `gorm:"index"`
+	UserId      uint   `gorm:"index"`
 	SecretId    string `gorm:"index,unique"`
 	SecretKey   string
 	Description string
@@ -40,6 +40,6 @@ type Secret struct {
 
 type Session struct {
 	TableModel
-	UserId int    `gorm:"index"`
+	UserId uint   `gorm:"index"`
 	Token  string `gorm:"index,unique"`
 }

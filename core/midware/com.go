@@ -13,8 +13,8 @@ func NewError(message string) gin.H {
 // 获取会话数据
 
 type Userdata struct {
-	KeyId     int
-	UserId    int
+	KeyId     uint
+	UserId    uint
 	Region    string
 	SecretId  string
 	SecretKey string
@@ -23,8 +23,8 @@ type Userdata struct {
 func GetUserdata(c *gin.Context) *Userdata {
 
 	ud := &Userdata{
-		KeyId:     c.GetInt("KeyId"),
-		UserId:    c.GetInt("UserId"),
+		KeyId:     c.GetUint("KeyId"),
+		UserId:    c.GetUint("UserId"),
 		Region:    c.GetString("Region"),
 		SecretId:  c.GetString("SecretId"),
 		SecretKey: c.GetString("SecretKey"),

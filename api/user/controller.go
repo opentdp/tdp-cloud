@@ -60,7 +60,7 @@ func updateInfo(c *gin.Context) {
 		return
 	}
 
-	param.UserId = c.GetInt("UserId")
+	param.UserId = c.GetUint("UserId")
 
 	err := user.UpdateInfo(&param)
 
@@ -83,7 +83,7 @@ func updatePassword(c *gin.Context) {
 		return
 	}
 
-	param.UserId = c.GetInt("UserId")
+	param.UserId = c.GetUint("UserId")
 
 	err := user.UpdatePassword(&param)
 
@@ -106,7 +106,7 @@ func createSecret(c *gin.Context) {
 		return
 	}
 
-	param.UserId = c.GetInt("UserId")
+	param.UserId = c.GetUint("UserId")
 
 	err := user.CreateSecret(&param)
 
@@ -122,11 +122,11 @@ func createSecret(c *gin.Context) {
 
 func deleteSecret(c *gin.Context) {
 
-	UserId := c.GetInt("UserId")
+	UserId := c.GetUint("UserId")
 
 	id, _ := strconv.Atoi(c.Param("id"))
 
-	err := user.DeleteSecret(UserId, id)
+	err := user.DeleteSecret(UserId, uint(id))
 
 	if err == nil {
 		c.Set("Payload", "删除成功")
@@ -140,7 +140,7 @@ func deleteSecret(c *gin.Context) {
 
 func fetchSecrets(c *gin.Context) {
 
-	userId := c.GetInt("UserId")
+	userId := c.GetUint("UserId")
 
 	list := user.FindSecrets(userId)
 
