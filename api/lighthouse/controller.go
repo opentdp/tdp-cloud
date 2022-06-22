@@ -28,7 +28,7 @@ func describeRegions(c *gin.Context) {
 func describeInstances(c *gin.Context) {
 
 	var ud = midware.GetUserdata(c)
-	var rq lighthouse.DescribeInstancesRequest
+	var rq lighthouse.DescribeInstancesRequestParams
 
 	c.ShouldBind(&rq)
 
@@ -47,7 +47,7 @@ func describeInstances(c *gin.Context) {
 func describeInstancesTrafficPackages(c *gin.Context) {
 
 	var ud = midware.GetUserdata(c)
-	var rq lighthouse.DescribeInstancesTrafficPackagesRequest
+	var rq lighthouse.DescribeInstancesTrafficPackagesRequestParams
 
 	c.ShouldBind(&rq)
 
@@ -66,7 +66,7 @@ func describeInstancesTrafficPackages(c *gin.Context) {
 func describeSnapshots(c *gin.Context) {
 
 	var ud = midware.GetUserdata(c)
-	var rq lighthouse.DescribeSnapshotsRequest
+	var rq lighthouse.DescribeSnapshotsRequestParams
 
 	c.ShouldBind(&rq)
 
@@ -85,7 +85,7 @@ func describeSnapshots(c *gin.Context) {
 func describeFirewallRules(c *gin.Context) {
 
 	var ud = midware.GetUserdata(c)
-	var rq lighthouse.DescribeFirewallRulesRequest
+	var rq lighthouse.DescribeFirewallRulesRequestParams
 
 	c.ShouldBind(&rq)
 

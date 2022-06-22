@@ -13,7 +13,7 @@ func describeDomainList(c *gin.Context) {
 
 	var ud = midware.GetUserdata(c)
 
-	var rq dnspod.DescribeDomainListRequest
+	var rq dnspod.DescribeDomainListRequestParams
 
 	c.ShouldBind(&rq)
 

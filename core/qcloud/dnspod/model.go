@@ -8,15 +8,9 @@ import (
 
 // 获取域名列表
 
-type DescribeDomainListRequest struct {
-	Type    *string
-	Offset  *int64
-	Limit   *int64
-	GroupId *int64
-	Keyword *string
-}
+type DescribeDomainListRequestParams = dnspod.DescribeDomainListRequestParams
 
-func DescribeDomainList(ud *midware.Userdata, rq *DescribeDomainListRequest) (*dnspod.DescribeDomainListResponse, error) {
+func DescribeDomainList(ud *midware.Userdata, rq *DescribeDomainListRequestParams) (*dnspod.DescribeDomainListResponse, error) {
 
 	client, _ := NewClient(ud)
 

@@ -8,13 +8,9 @@ import (
 
 // 查询防火墙规则
 
-type DescribeFirewallRulesRequest struct {
-	InstanceId *string
-	Offset     *int64
-	Limit      *int64
-}
+type DescribeFirewallRulesRequestParams = lighthouse.DescribeFirewallRulesRequestParams
 
-func DescribeFirewallRules(ud *midware.Userdata, rq *DescribeFirewallRulesRequest) (*lighthouse.DescribeFirewallRulesResponse, error) {
+func DescribeFirewallRules(ud *midware.Userdata, rq *DescribeFirewallRulesRequestParams) (*lighthouse.DescribeFirewallRulesResponse, error) {
 
 	client, _ := NewClient(ud)
 

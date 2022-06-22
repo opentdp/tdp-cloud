@@ -8,14 +8,9 @@ import (
 
 // 查看实例列表
 
-type DescribeInstancesRequest struct {
-	InstanceIds []*string
-	Filters     []*lighthouse.Filter
-	Offset      *int64
-	Limit       *int64
-}
+type DescribeInstancesRequestParams = lighthouse.DescribeInstancesRequestParams
 
-func DescribeInstances(ud *midware.Userdata, rq *DescribeInstancesRequest) (*lighthouse.DescribeInstancesResponse, error) {
+func DescribeInstances(ud *midware.Userdata, rq *DescribeInstancesRequestParams) (*lighthouse.DescribeInstancesResponse, error) {
 
 	client, _ := NewClient(ud)
 
@@ -43,13 +38,9 @@ func DescribeInstances(ud *midware.Userdata, rq *DescribeInstancesRequest) (*lig
 
 // 查看实例流量包详情
 
-type DescribeInstancesTrafficPackagesRequest struct {
-	InstanceIds []*string
-	Offset      *int64
-	Limit       *int64
-}
+type DescribeInstancesTrafficPackagesRequestParams = lighthouse.DescribeInstancesTrafficPackagesRequestParams
 
-func DescribeInstancesTrafficPackages(ud *midware.Userdata, rq *DescribeInstancesTrafficPackagesRequest) (*lighthouse.DescribeInstancesTrafficPackagesResponse, error) {
+func DescribeInstancesTrafficPackages(ud *midware.Userdata, rq *DescribeInstancesTrafficPackagesRequestParams) (*lighthouse.DescribeInstancesTrafficPackagesResponse, error) {
 
 	client, _ := NewClient(ud)
 

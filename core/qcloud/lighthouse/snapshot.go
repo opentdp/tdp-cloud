@@ -8,14 +8,9 @@ import (
 
 // 查看快照列表
 
-type DescribeSnapshotsRequest struct {
-	SnapshotIds []*string
-	Filters     []*lighthouse.Filter
-	Offset      *int64
-	Limit       *int64
-}
+type DescribeSnapshotsRequestParams = lighthouse.DescribeSnapshotsRequestParams
 
-func DescribeSnapshots(ud *midware.Userdata, rq *DescribeSnapshotsRequest) (*lighthouse.DescribeSnapshotsResponse, error) {
+func DescribeSnapshots(ud *midware.Userdata, rq *DescribeSnapshotsRequestParams) (*lighthouse.DescribeSnapshotsResponse, error) {
 
 	client, _ := NewClient(ud)
 
