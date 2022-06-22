@@ -47,7 +47,8 @@ go env -w GOPROXY=https://goproxy.cn,direct
             "action": [
                 "cam:GetAccountSummary",
                 "dnspod:*",
-                "lighthouse:*"
+                "lighthouse:*",
+                "monitor:*"
             ],
             "resource": "*",
             "effect": "allow"

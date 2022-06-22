@@ -6,6 +6,7 @@ import (
 	"tdp-cloud/api/cam"
 	"tdp-cloud/api/dnspod"
 	"tdp-cloud/api/lighthouse"
+	"tdp-cloud/api/monitor"
 
 	"tdp-cloud/api/user"
 
@@ -27,6 +28,7 @@ func Router(engine *gin.Engine) {
 			cam.Router(cloud)
 			dnspod.Router(cloud)
 			lighthouse.Router(cloud)
+			monitor.Router(cloud)
 		}
 
 		// local api
