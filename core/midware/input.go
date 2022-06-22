@@ -4,9 +4,9 @@ import (
 	"strconv"
 	"strings"
 
-	"tdp-cloud/core/dborm/user"
-
 	"github.com/gin-gonic/gin"
+
+	"tdp-cloud/core/dborm/user"
 )
 
 func Auth() gin.HandlerFunc {

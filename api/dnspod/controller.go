@@ -12,7 +12,6 @@ import (
 func describeDomainList(c *gin.Context) {
 
 	var ud = midware.GetUserdata(c)
-
 	var rq dnspod.DescribeDomainListRequestParams
 
 	if err := c.ShouldBind(&rq); err != nil {

@@ -2,10 +2,11 @@ package user
 
 import (
 	"errors"
-	"tdp-cloud/core/dborm"
-	"tdp-cloud/core/utils"
 
 	"golang.org/x/crypto/bcrypt"
+
+	"tdp-cloud/core/dborm"
+	"tdp-cloud/core/utils"
 )
 
 // 注册账号
