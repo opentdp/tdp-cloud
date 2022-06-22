@@ -8,7 +8,7 @@ import (
 
 var engine *gin.Engine
 
-func Create(addr string, useRoute func(*gin.Engine)) {
+func Create(addr string, mids ...func(*gin.Engine)) {
 
 	if os.Getenv("IS_DEBUG") == "" {
 		gin.SetMode(gin.ReleaseMode)
@@ -16,7 +16,9 @@ func Create(addr string, useRoute func(*gin.Engine)) {
 
 	engine = gin.Default()
 
-	useRoute(engine)
+	for _, mid := range mids {
+		mid(engine)
+	}
 
 	Listen(addr)
 
