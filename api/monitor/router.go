@@ -14,7 +14,7 @@ func Router(api *gin.RouterGroup) {
 	rg.Use(midware.Secret())
 
 	{
-		rg.GET("/getMonitorData", getMonitorData)
+		rg.POST("/getMonitorData/:region", getMonitorData)
 	}
 
 }

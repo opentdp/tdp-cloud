@@ -40,20 +40,6 @@ func GetMonitorData(ud *midware.Userdata, rq *GetMonitorDataRequestParams) (*mon
 		request.EndTime = rq.EndTime
 	}
 
-	// request.Namespace = common.StringPtr("QCE/LIGHTHOUSE")
-	// request.MetricName = common.StringPtr("LighthouseOuttraffic")
-
-	// request.Instances = []*monitor.Instance{
-	// 	&monitor.Instance{
-	// 		Dimensions: []*monitor.Dimension{
-	// 			&monitor.Dimension{
-	// 				Name:  common.StringPtr("InstanceId"),
-	// 				Value: common.StringPtr("lhins-noi43mi5"),
-	// 			},
-	// 		},
-	// 	},
-	// }
-
 	return client.GetMonitorData(request)
 
 }

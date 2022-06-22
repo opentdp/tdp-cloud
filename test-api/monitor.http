@@ -1,0 +1,26 @@
+# Lighthouse Api
+
+### 获取监控数据
+
+POST {{$dotenv baseapi}}/cloud/monitor/getMonitorData/ap-guangzhou
+Authorization: {{$dotenv authorization}}
+Content-Type: application/json
+Origin: {{$dotenv origin}}
+
+{
+    "Namespace": "QCE/LIGHTHOUSE",
+    "MetricName": "LighthouseOuttraffic",
+    "Instances": [
+        {
+            "Dimensions": [
+                {
+                    "Name": "InstanceId",
+                    "Value": "lhins-mdwnpgap"
+                }
+            ]
+        }
+    ],
+    "Period": 300,
+    "StartTime": "2022-06-01 00:00:00",
+    "EndTime": "2022-06-30 23:59:59"
+}
