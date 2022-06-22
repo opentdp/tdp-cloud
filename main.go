@@ -2,10 +2,13 @@ package main
 
 import (
 	"tdp-cloud/api"
+	"tdp-cloud/front"
+
 	"tdp-cloud/core/cli"
 	"tdp-cloud/core/dborm"
 	"tdp-cloud/core/serve"
-	"tdp-cloud/front"
+
+	"github.com/gin-gonic/gin"
 )
 
 func main() {
@@ -18,11 +21,9 @@ func main() {
 
 	// 创建HTTP服务
 
-	engine := serve.Create()
-
-	api.Router(engine)
-	front.Router(engine)
-
-	serve.Listen(cli.Address)
+	serve.Create(cli.Address, func(engine *gin.Engine) {
+		api.Router(engine)
+		front.Router(engine)
+	})
 
 }

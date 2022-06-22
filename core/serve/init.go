@@ -8,14 +8,16 @@ import (
 
 var engine *gin.Engine
 
-func Create() *gin.Engine {
+func Create(addr string, useRoute func(*gin.Engine)) {
 
-	if os.Getenv("GIN_MODE") != "debug" {
+	if os.Getenv("IS_DEBUG") == "" {
 		gin.SetMode(gin.ReleaseMode)
 	}
 
 	engine = gin.Default()
 
-	return engine
+	useRoute(engine)
+
+	Listen(addr)
 
 }
