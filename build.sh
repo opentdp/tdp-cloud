@@ -7,7 +7,7 @@ build() {
     GOOS=$1
     GOARCH=$2
     echo building for $1/$2
-    go build -o build/$1-$2$3 main.go
+    go build -o build/tdpc-$1-$2$3 main.go
 }
 
 ####################################################################

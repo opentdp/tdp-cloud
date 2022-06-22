@@ -26,7 +26,7 @@ GOTO :EOF
   SET GOOS=%1
   SET GOARCH=%2
   echo building for %1/%2
-  go build -o build/%1-%2%3 main.go
+  go build -o build/tdpc-%1-%2%3 main.go
   GOTO :EOF
 
 IF "%1" == "" CMD /K
