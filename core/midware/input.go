@@ -30,7 +30,7 @@ func Auth() gin.HandlerFunc {
 
 		keyId, _ := strconv.Atoi(field[0])
 
-		c.Set("KeyId", keyId)
+		c.Set("KeyId", uint(keyId))
 		c.Set("UserId", session.UserId)
 
 	}
