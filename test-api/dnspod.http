@@ -2,7 +2,7 @@
 
 ### 获取域名列表
 
-GET {{$dotenv baseapi}}/cloud/dnspod/describeDomainList
+POST {{$dotenv baseapi}}/cloud/dnspod/describeDomainList
 Authorization: {{$dotenv authorization}}
 Origin: {{$dotenv origin}}
 

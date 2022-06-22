@@ -14,7 +14,7 @@ func Router(api *gin.RouterGroup) {
 	rg.Use(midware.Secret())
 
 	{
-		rg.GET("/describeDomainList", describeDomainList)
+		rg.POST("/describeDomainList", describeDomainList)
 	}
 
 }

@@ -14,14 +14,14 @@ func Router(api *gin.RouterGroup) {
 	rg.Use(midware.Secret())
 
 	{
-		rg.GET("/describeRegions", describeRegions)
+		rg.POST("/describeRegions", describeRegions)
 
-		rg.GET("/describeInstances/:region", describeInstances)
-		rg.GET("/describeInstancesTrafficPackages/:region", describeInstancesTrafficPackages)
+		rg.POST("/describeInstances/:region", describeInstances)
+		rg.POST("/describeInstancesTrafficPackages/:region", describeInstancesTrafficPackages)
 
-		rg.GET("/describeSnapshots/:region", describeSnapshots)
+		rg.POST("/describeSnapshots/:region", describeSnapshots)
 
-		rg.GET("/describeFirewallRules/:region", describeFirewallRules)
+		rg.POST("/describeFirewallRules/:region", describeFirewallRules)
 	}
 
 }

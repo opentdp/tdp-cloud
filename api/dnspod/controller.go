@@ -15,7 +15,10 @@ func describeDomainList(c *gin.Context) {
 
 	var rq dnspod.DescribeDomainListRequestParams
 
-	c.ShouldBind(&rq)
+	if err := c.ShouldBind(&rq); err != nil {
+		c.Set("Error", "参数错误")
+		return
+	}
 
 	response, err := dnspod.DescribeDomainList(ud, &rq)
 

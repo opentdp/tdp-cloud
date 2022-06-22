@@ -14,7 +14,10 @@ func getMonitorData(c *gin.Context) {
 	var ud = midware.GetUserdata(c)
 	var rq monitor.GetMonitorDataRequestParams
 
-	c.ShouldBind(&rq)
+	if err := c.ShouldBind(&rq); err != nil {
+		c.Set("Error", "参数错误")
+		return
+	}
 
 	response, err := monitor.GetMonitorData(ud, &rq)
 

@@ -21,6 +21,6 @@ Origin: {{$dotenv origin}}
         }
     ],
     "Period": 300,
-    "StartTime": "2022-06-01 00:00:00",
+    "StartTime": "2022-06-20 00:00:00",
     "EndTime": "2022-06-30 23:59:59"
 }

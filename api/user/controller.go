@@ -13,8 +13,8 @@ func register(c *gin.Context) {
 
 	var param user.RegisterParam
 
-	if err := c.BindJSON(&param); err != nil {
-		c.Set("Error", "表单错误")
+	if err := c.ShouldBind(&param); err != nil {
+		c.Set("Error", "参数错误")
 		return
 	}
 
@@ -34,8 +34,8 @@ func login(c *gin.Context) {
 
 	var param user.LoginParam
 
-	if err := c.BindJSON(&param); err != nil {
-		c.Set("Error", "表单错误")
+	if err := c.ShouldBind(&param); err != nil {
+		c.Set("Error", "参数错误")
 		return
 	}
 
@@ -55,8 +55,8 @@ func updateInfo(c *gin.Context) {
 
 	var param user.UpdateInfoParam
 
-	if err := c.BindJSON(&param); err != nil {
-		c.Set("Error", "表单错误")
+	if err := c.ShouldBind(&param); err != nil {
+		c.Set("Error", "参数错误")
 		return
 	}
 
@@ -78,8 +78,8 @@ func updatePassword(c *gin.Context) {
 
 	var param user.UpdatePasswordParam
 
-	if err := c.BindJSON(&param); err != nil {
-		c.Set("Error", "表单错误")
+	if err := c.ShouldBind(&param); err != nil {
+		c.Set("Error", "参数错误")
 		return
 	}
 
@@ -101,8 +101,8 @@ func createSecret(c *gin.Context) {
 
 	var param user.SecretParam
 
-	if err := c.BindJSON(&param); err != nil {
-		c.Set("Error", "表单错误")
+	if err := c.ShouldBind(&param); err != nil {
+		c.Set("Error", "参数错误")
 		return
 	}
 

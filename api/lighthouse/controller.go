@@ -30,7 +30,10 @@ func describeInstances(c *gin.Context) {
 	var ud = midware.GetUserdata(c)
 	var rq lighthouse.DescribeInstancesRequestParams
 
-	c.ShouldBind(&rq)
+	if err := c.ShouldBind(&rq); err != nil {
+		c.Set("Error", "参数错误")
+		return
+	}
 
 	response, err := lighthouse.DescribeInstances(ud, &rq)
 
@@ -49,7 +52,10 @@ func describeInstancesTrafficPackages(c *gin.Context) {
 	var ud = midware.GetUserdata(c)
 	var rq lighthouse.DescribeInstancesTrafficPackagesRequestParams
 
-	c.ShouldBind(&rq)
+	if err := c.ShouldBind(&rq); err != nil {
+		c.Set("Error", "参数错误")
+		return
+	}
 
 	response, err := lighthouse.DescribeInstancesTrafficPackages(ud, &rq)
 
@@ -68,7 +74,10 @@ func describeSnapshots(c *gin.Context) {
 	var ud = midware.GetUserdata(c)
 	var rq lighthouse.DescribeSnapshotsRequestParams
 
-	c.ShouldBind(&rq)
+	if err := c.ShouldBind(&rq); err != nil {
+		c.Set("Error", "参数错误")
+		return
+	}
 
 	response, err := lighthouse.DescribeSnapshots(ud, &rq)
 
@@ -87,7 +96,10 @@ func describeFirewallRules(c *gin.Context) {
 	var ud = midware.GetUserdata(c)
 	var rq lighthouse.DescribeFirewallRulesRequestParams
 
-	c.ShouldBind(&rq)
+	if err := c.ShouldBind(&rq); err != nil {
+		c.Set("Error", "参数错误")
+		return
+	}
 
 	response, err := lighthouse.DescribeFirewallRules(ud, &rq)
 
