@@ -15,7 +15,7 @@ func describeDomainList(c *gin.Context) {
 	var rq dnspod.DescribeDomainListRequestParams
 
 	if err := c.ShouldBind(&rq); err != nil {
-		c.Set("Error", "参数错误")
+		c.Set("Error", err)
 		return
 	}
 
@@ -37,7 +37,7 @@ func describeRecordList(c *gin.Context) {
 	var rq dnspod.DescribeRecordListRequestParams
 
 	if err := c.ShouldBind(&rq); err != nil {
-		c.Set("Error", "参数错误")
+		c.Set("Error", err)
 		return
 	}
 
@@ -59,7 +59,7 @@ func describeRecordLineList(c *gin.Context) {
 	var rq dnspod.DescribeRecordLineListRequestParams
 
 	if err := c.ShouldBind(&rq); err != nil {
-		c.Set("Error", "参数错误")
+		c.Set("Error", err)
 		return
 	}
 
@@ -81,7 +81,7 @@ func describeRecordType(c *gin.Context) {
 	var rq dnspod.DescribeRecordTypeRequestParams
 
 	if err := c.ShouldBind(&rq); err != nil {
-		c.Set("Error", "参数错误")
+		c.Set("Error", err)
 		return
 	}
 
@@ -103,7 +103,7 @@ func modifyRecord(c *gin.Context) {
 	var rq dnspod.ModifyRecordRequestParams
 
 	if err := c.ShouldBind(&rq); err != nil {
-		c.Set("Error", "参数错误")
+		c.Set("Error", err)
 		return
 	}
 

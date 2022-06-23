@@ -11,14 +11,14 @@ import (
 
 func register(c *gin.Context) {
 
-	var param user.RegisterParam
+	var rq user.RegisterParam
 
-	if err := c.ShouldBind(&param); err != nil {
-		c.Set("Error", "参数错误")
+	if err := c.ShouldBind(&rq); err != nil {
+		c.Set("Error", err)
 		return
 	}
 
-	err := user.Register(&param)
+	err := user.Register(&rq)
 
 	if err == nil {
 		c.Set("Payload", "注册成功")
@@ -32,14 +32,14 @@ func register(c *gin.Context) {
 
 func login(c *gin.Context) {
 
-	var param user.LoginParam
+	var rq user.LoginParam
 
-	if err := c.ShouldBind(&param); err != nil {
-		c.Set("Error", "参数错误")
+	if err := c.ShouldBind(&rq); err != nil {
+		c.Set("Error", err)
 		return
 	}
 
-	res, err := user.Login(&param)
+	res, err := user.Login(&rq)
 
 	if err == nil {
 		c.Set("Payload", res)
@@ -53,16 +53,16 @@ func login(c *gin.Context) {
 
 func updateInfo(c *gin.Context) {
 
-	var param user.UpdateInfoParam
+	var rq user.UpdateInfoParam
 
-	if err := c.ShouldBind(&param); err != nil {
-		c.Set("Error", "参数错误")
+	if err := c.ShouldBind(&rq); err != nil {
+		c.Set("Error", err)
 		return
 	}
 
-	param.UserId = c.GetUint("UserId")
+	rq.UserId = c.GetUint("UserId")
 
-	err := user.UpdateInfo(&param)
+	err := user.UpdateInfo(&rq)
 
 	if err == nil {
 		c.Set("Payload", "操作成功")
@@ -76,16 +76,16 @@ func updateInfo(c *gin.Context) {
 
 func updatePassword(c *gin.Context) {
 
-	var param user.UpdatePasswordParam
+	var rq user.UpdatePasswordParam
 
-	if err := c.ShouldBind(&param); err != nil {
-		c.Set("Error", "参数错误")
+	if err := c.ShouldBind(&rq); err != nil {
+		c.Set("Error", err)
 		return
 	}
 
-	param.UserId = c.GetUint("UserId")
+	rq.UserId = c.GetUint("UserId")
 
-	err := user.UpdatePassword(&param)
+	err := user.UpdatePassword(&rq)
 
 	if err == nil {
 		c.Set("Payload", "操作成功")
@@ -99,16 +99,16 @@ func updatePassword(c *gin.Context) {
 
 func createSecret(c *gin.Context) {
 
-	var param user.SecretParam
+	var rq user.SecretParam
 
-	if err := c.ShouldBind(&param); err != nil {
-		c.Set("Error", "参数错误")
+	if err := c.ShouldBind(&rq); err != nil {
+		c.Set("Error", err)
 		return
 	}
 
-	param.UserId = c.GetUint("UserId")
+	rq.UserId = c.GetUint("UserId")
 
-	err := user.CreateSecret(&param)
+	err := user.CreateSecret(&rq)
 
 	if err == nil {
 		c.Set("Payload", "添加成功")

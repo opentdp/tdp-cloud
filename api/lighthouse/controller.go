@@ -31,7 +31,7 @@ func describeInstances(c *gin.Context) {
 	var rq lighthouse.DescribeInstancesRequestParams
 
 	if err := c.ShouldBind(&rq); err != nil {
-		c.Set("Error", "参数错误")
+		c.Set("Error", err)
 		return
 	}
 
@@ -53,7 +53,7 @@ func describeInstancesTrafficPackages(c *gin.Context) {
 	var rq lighthouse.DescribeInstancesTrafficPackagesRequestParams
 
 	if err := c.ShouldBind(&rq); err != nil {
-		c.Set("Error", "参数错误")
+		c.Set("Error", err)
 		return
 	}
 
@@ -75,7 +75,7 @@ func describeSnapshots(c *gin.Context) {
 	var rq lighthouse.DescribeSnapshotsRequestParams
 
 	if err := c.ShouldBind(&rq); err != nil {
-		c.Set("Error", "参数错误")
+		c.Set("Error", err)
 		return
 	}
 
@@ -97,7 +97,7 @@ func describeFirewallRules(c *gin.Context) {
 	var rq lighthouse.DescribeFirewallRulesRequestParams
 
 	if err := c.ShouldBind(&rq); err != nil {
-		c.Set("Error", "参数错误")
+		c.Set("Error", err)
 		return
 	}
 
