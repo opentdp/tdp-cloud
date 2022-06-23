@@ -15,6 +15,12 @@ func Router(api *gin.RouterGroup) {
 
 	{
 		rg.POST("/describeDomainList", describeDomainList)
+		rg.POST("/describeRecordList", describeRecordList)
+
+		rg.POST("/describeRecordLineList", describeRecordLineList)
+		rg.POST("/describeRecordType", describeRecordType)
+
+		rg.POST("/modifyRecord", modifyRecord)
 	}
 
 }

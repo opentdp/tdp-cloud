@@ -7,7 +7,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-// 获取地域
+// 获取监控数据
 
 func getMonitorData(c *gin.Context) {
 
