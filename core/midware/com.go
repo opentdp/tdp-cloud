@@ -4,12 +4,6 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func NewError(message string) gin.H {
-
-	return gin.H{"Error": gin.H{"Message": message}}
-
-}
-
 // 获取会话数据
 
 type Userdata struct {
@@ -31,5 +25,33 @@ func GetUserdata(c *gin.Context) *Userdata {
 	}
 
 	return ud
+
+}
+
+// 构造结构数据
+
+func NewPayload(data any) gin.H {
+
+	if msg, ok := data.(string); ok {
+		return gin.H{"Payload": gin.H{"Message": msg}}
+	}
+
+	return gin.H{"Payload": data}
+
+}
+
+// 构造错误信息
+
+func NewError(data any) gin.H {
+
+	if err, ok := data.(error); ok {
+		return gin.H{"Error": gin.H{"Message": err.Error()}}
+	}
+
+	if err, ok := data.(string); ok {
+		return gin.H{"Error": gin.H{"Message": err}}
+	}
+
+	return gin.H{"Error": data}
 
 }
