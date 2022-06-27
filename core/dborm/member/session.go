@@ -1,4 +1,4 @@
-package user
+package member
 
 import (
 	"tdp-cloud/core/dborm"

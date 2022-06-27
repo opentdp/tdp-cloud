@@ -3,14 +3,14 @@ package api
 import (
 	"github.com/gin-gonic/gin"
 
+	"tdp-cloud/core/midware"
+
 	"tdp-cloud/api/cam"
 	"tdp-cloud/api/dnspod"
 	"tdp-cloud/api/lighthouse"
 	"tdp-cloud/api/monitor"
 
 	"tdp-cloud/api/user"
-
-	"tdp-cloud/core/midware"
 )
 
 func Router(engine *gin.Engine) {
