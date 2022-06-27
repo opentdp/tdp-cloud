@@ -13,12 +13,10 @@ func getAccountSummary(c *gin.Context) {
 
 	var ud = midware.GetUserdata(c)
 
-	response, err := cam.GetAccountSummary(ud)
-
-	if response != nil {
-		c.Set("Payload", response.Response)
+	if res, err := cam.GetAccountSummary(ud); err == nil {
+		c.Set("Payload", res.Response)
+	} else {
+		c.Set("Error", err)
 	}
-
-	c.Set("Error", err)
 
 }

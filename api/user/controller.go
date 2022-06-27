@@ -14,13 +14,11 @@ func register(c *gin.Context) {
 	var rq member.RegisterParam
 
 	if err := c.ShouldBind(&rq); err != nil {
-		c.Set("Error", err)
+		c.Set("Error", "请求参数错误")
 		return
 	}
 
-	err := member.Register(&rq)
-
-	if err == nil {
+	if err := member.Register(&rq); err == nil {
 		c.Set("Payload", "注册成功")
 	} else {
 		c.Set("Error", err)
@@ -35,13 +33,11 @@ func login(c *gin.Context) {
 	var rq member.LoginParam
 
 	if err := c.ShouldBind(&rq); err != nil {
-		c.Set("Error", err)
+		c.Set("Error", "请求参数错误")
 		return
 	}
 
-	res, err := member.Login(&rq)
-
-	if err == nil {
+	if res, err := member.Login(&rq); err == nil {
 		c.Set("Payload", res)
 	} else {
 		c.Set("Error", err)
@@ -56,15 +52,13 @@ func updateInfo(c *gin.Context) {
 	var rq member.UpdateInfoParam
 
 	if err := c.ShouldBind(&rq); err != nil {
-		c.Set("Error", err)
+		c.Set("Error", "请求参数错误")
 		return
 	}
 
 	rq.UserId = c.GetUint("UserId")
 
-	err := member.UpdateInfo(&rq)
-
-	if err == nil {
+	if err := member.UpdateInfo(&rq); err == nil {
 		c.Set("Payload", "操作成功")
 	} else {
 		c.Set("Error", err)
@@ -79,15 +73,13 @@ func updatePassword(c *gin.Context) {
 	var rq member.UpdatePasswordParam
 
 	if err := c.ShouldBind(&rq); err != nil {
-		c.Set("Error", err)
+		c.Set("Error", "请求参数错误")
 		return
 	}
 
 	rq.UserId = c.GetUint("UserId")
 
-	err := member.UpdatePassword(&rq)
-
-	if err == nil {
+	if err := member.UpdatePassword(&rq); err == nil {
 		c.Set("Payload", "操作成功")
 	} else {
 		c.Set("Error", err)
@@ -102,15 +94,13 @@ func createSecret(c *gin.Context) {
 	var rq member.SecretParam
 
 	if err := c.ShouldBind(&rq); err != nil {
-		c.Set("Error", err)
+		c.Set("Error", "请求参数错误")
 		return
 	}
 
 	rq.UserId = c.GetUint("UserId")
 
-	err := member.CreateSecret(&rq)
-
-	if err == nil {
+	if err := member.CreateSecret(&rq); err == nil {
 		c.Set("Payload", "添加成功")
 	} else {
 		c.Set("Error", err)
@@ -126,9 +116,7 @@ func deleteSecret(c *gin.Context) {
 
 	id, _ := strconv.Atoi(c.Param("id"))
 
-	err := member.DeleteSecret(userId, uint(id))
-
-	if err == nil {
+	if err := member.DeleteSecret(userId, uint(id)); err == nil {
 		c.Set("Payload", "删除成功")
 	} else {
 		c.Set("Error", err)
@@ -142,8 +130,10 @@ func fetchSecrets(c *gin.Context) {
 
 	userId := c.GetUint("UserId")
 
-	list := member.FindSecrets(userId)
-
-	c.Set("Payload", list)
+	if res, err := member.FindSecrets(userId); err == nil {
+		c.Set("Payload", res)
+	} else {
+		c.Set("Error", err)
+	}
 
 }

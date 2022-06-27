@@ -15,16 +15,14 @@ func getMonitorData(c *gin.Context) {
 	var rq monitor.GetMonitorDataRequestParams
 
 	if err := c.ShouldBind(&rq); err != nil {
-		c.Set("Error", err)
+		c.Set("Error", "请求参数错误")
 		return
 	}
 
-	response, err := monitor.GetMonitorData(ud, &rq)
-
-	if response != nil {
-		c.Set("Payload", response.Response)
+	if res, err := monitor.GetMonitorData(ud, &rq); err == nil {
+		c.Set("Payload", res.Response)
+	} else {
+		c.Set("Error", err)
 	}
-
-	c.Set("Error", err)
 
 }

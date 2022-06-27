@@ -13,13 +13,11 @@ func describeRegions(c *gin.Context) {
 
 	var ud = midware.GetUserdata(c)
 
-	response, err := lighthouse.DescribeRegions(ud)
-
-	if response != nil {
-		c.Set("Payload", response.Response)
+	if res, err := lighthouse.DescribeRegions(ud); err == nil {
+		c.Set("Payload", res.Response)
+	} else {
+		c.Set("Error", err)
 	}
-
-	c.Set("Error", err)
 
 }
 
@@ -31,17 +29,15 @@ func describeInstances(c *gin.Context) {
 	var rq lighthouse.DescribeInstancesRequestParams
 
 	if err := c.ShouldBind(&rq); err != nil {
-		c.Set("Error", err)
+		c.Set("Error", "请求参数错误")
 		return
 	}
 
-	response, err := lighthouse.DescribeInstances(ud, &rq)
-
-	if response != nil {
-		c.Set("Payload", response.Response)
+	if res, err := lighthouse.DescribeInstances(ud, &rq); err == nil {
+		c.Set("Payload", res.Response)
+	} else {
+		c.Set("Error", err)
 	}
-
-	c.Set("Error", err)
 
 }
 
@@ -53,17 +49,15 @@ func describeInstancesTrafficPackages(c *gin.Context) {
 	var rq lighthouse.DescribeInstancesTrafficPackagesRequestParams
 
 	if err := c.ShouldBind(&rq); err != nil {
-		c.Set("Error", err)
+		c.Set("Error", "请求参数错误")
 		return
 	}
 
-	response, err := lighthouse.DescribeInstancesTrafficPackages(ud, &rq)
-
-	if response != nil {
-		c.Set("Payload", response.Response)
+	if res, err := lighthouse.DescribeInstancesTrafficPackages(ud, &rq); err == nil {
+		c.Set("Payload", res.Response)
+	} else {
+		c.Set("Error", err)
 	}
-
-	c.Set("Error", err)
 
 }
 
@@ -75,17 +69,15 @@ func describeSnapshots(c *gin.Context) {
 	var rq lighthouse.DescribeSnapshotsRequestParams
 
 	if err := c.ShouldBind(&rq); err != nil {
-		c.Set("Error", err)
+		c.Set("Error", "请求参数错误")
 		return
 	}
 
-	response, err := lighthouse.DescribeSnapshots(ud, &rq)
-
-	if response != nil {
-		c.Set("Payload", response.Response)
+	if res, err := lighthouse.DescribeSnapshots(ud, &rq); err == nil {
+		c.Set("Payload", res.Response)
+	} else {
+		c.Set("Error", err)
 	}
-
-	c.Set("Error", err)
 
 }
 
@@ -97,16 +89,14 @@ func describeFirewallRules(c *gin.Context) {
 	var rq lighthouse.DescribeFirewallRulesRequestParams
 
 	if err := c.ShouldBind(&rq); err != nil {
-		c.Set("Error", err)
+		c.Set("Error", "请求参数错误")
 		return
 	}
 
-	response, err := lighthouse.DescribeFirewallRules(ud, &rq)
-
-	if response != nil {
-		c.Set("Payload", response.Response)
+	if res, err := lighthouse.DescribeFirewallRules(ud, &rq); err == nil {
+		c.Set("Payload", res.Response)
+	} else {
+		c.Set("Error", err)
 	}
-
-	c.Set("Error", err)
 
 }

@@ -40,24 +40,24 @@ func DeleteSecret(userId, id uint) error {
 
 // 获取密钥列表
 
-func FindSecrets(userId uint) []*dborm.Secret {
+func FindSecrets(userId uint) ([]*dborm.Secret, error) {
 
 	var secrets []*dborm.Secret
 
-	dborm.Db.Find(&secrets, "user_id = ?", userId)
+	result := dborm.Db.Find(&secrets, "user_id = ?", userId)
 
-	return secrets
+	return secrets, result.Error
 
 }
 
 // 获取密钥
 
-func FetchSecret(userId, id uint) dborm.Secret {
+func FetchSecret(userId, id uint) (dborm.Secret, error) {
 
 	var secret dborm.Secret
 
-	dborm.Db.First(&secret, "user_id = ? AND id = ?", userId, id)
+	result := dborm.Db.First(&secret, "user_id = ? AND id = ?", userId, id)
 
-	return secret
+	return secret, result.Error
 
 }

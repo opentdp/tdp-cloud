@@ -43,16 +43,17 @@ func Secret() gin.HandlerFunc {
 
 		ud := GetUserdata(c)
 
-		secret := member.FetchSecret(ud.UserId, ud.KeyId)
+		res, err := member.FetchSecret(ud.UserId, ud.KeyId)
 
-		if secret.Id == 0 {
+		if err != nil || res.Id == 0 {
 			c.AbortWithStatusJSON(403, NewError("密钥不存在"))
 			return
 		}
 
+		c.Set("SecretId", res.SecretId)
+		c.Set("SecretKey", res.SecretKey)
+
 		c.Set("Region", c.Param("region"))
-		c.Set("SecretId", secret.SecretId)
-		c.Set("SecretKey", secret.SecretKey)
 
 	}
 
