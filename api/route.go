@@ -5,12 +5,12 @@ import (
 
 	"tdp-cloud/core/midware"
 
+	"tdp-cloud/api/member"
+
 	"tdp-cloud/api/cam"
 	"tdp-cloud/api/dnspod"
 	"tdp-cloud/api/lighthouse"
 	"tdp-cloud/api/monitor"
-
-	"tdp-cloud/api/user"
 )
 
 func Router(engine *gin.Engine) {
@@ -20,6 +20,14 @@ func Router(engine *gin.Engine) {
 	api.Use(midware.JSON())
 
 	{
+		// local api
+
+		local := api.Group("/local")
+
+		{
+			member.Router(local)
+		}
+
 		// cloud api
 
 		cloud := api.Group("/cloud")
@@ -29,14 +37,6 @@ func Router(engine *gin.Engine) {
 			dnspod.Router(cloud)
 			lighthouse.Router(cloud)
 			monitor.Router(cloud)
-		}
-
-		// local api
-
-		local := api.Group("/local")
-
-		{
-			user.Router(local)
 		}
 	}
 
