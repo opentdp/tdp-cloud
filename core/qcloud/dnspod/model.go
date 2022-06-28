@@ -50,6 +50,14 @@ func DescribeRecordList(ud *midware.Userdata, rq *DescribeRecordListRequestParam
 
 	request := dnspod.NewDescribeRecordListRequest()
 
+	if rq.Domain != nil {
+		request.Domain = rq.Domain
+	}
+
+	if rq.DomainId != nil {
+		request.DomainId = rq.DomainId
+	}
+
 	if rq.Offset != nil {
 		request.Offset = rq.Offset
 	}
