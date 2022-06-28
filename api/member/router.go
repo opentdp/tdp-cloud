@@ -10,7 +10,7 @@ func Router(api *gin.RouterGroup) {
 
 	// 匿名接口
 
-	rg1 := api.Group("/user")
+	rg1 := api.Group("/member")
 
 	{
 		rg1.POST("/login", login)
@@ -19,7 +19,7 @@ func Router(api *gin.RouterGroup) {
 
 	// 需授权接口
 
-	rg2 := api.Group("/user")
+	rg2 := api.Group("/member")
 
 	rg2.Use(midware.Auth())
 
