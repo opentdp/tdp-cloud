@@ -1,10 +1,10 @@
 package lighthouse
 
 import (
+	lighthouse "github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/lighthouse/v20200324"
+
 	"tdp-cloud/core/midware"
 	"tdp-cloud/core/qcloud"
-
-	lighthouse "github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/lighthouse/v20200324"
 )
 
 // 创建客户端

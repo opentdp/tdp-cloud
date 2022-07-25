@@ -1,9 +1,9 @@
 package dnspod
 
 import (
-	"tdp-cloud/core/midware"
-
 	"github.com/gin-gonic/gin"
+
+	"tdp-cloud/core/midware"
 )
 
 func Router(api *gin.RouterGroup) {

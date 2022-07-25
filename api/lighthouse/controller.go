@@ -1,10 +1,10 @@
 package lighthouse
 
 import (
+	"github.com/gin-gonic/gin"
+
 	"tdp-cloud/core/midware"
 	"tdp-cloud/core/qcloud/lighthouse"
-
-	"github.com/gin-gonic/gin"
 )
 
 // 获取地域

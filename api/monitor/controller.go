@@ -1,10 +1,10 @@
 package monitor
 
 import (
+	"github.com/gin-gonic/gin"
+
 	"tdp-cloud/core/midware"
 	"tdp-cloud/core/qcloud/monitor"
-
-	"github.com/gin-gonic/gin"
 )
 
 // 获取监控数据

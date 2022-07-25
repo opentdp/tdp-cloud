@@ -2,9 +2,10 @@ package member
 
 import (
 	"strconv"
-	"tdp-cloud/core/dborm/member"
 
 	"github.com/gin-gonic/gin"
+
+	"tdp-cloud/core/dborm/member"
 )
 
 // 注册账号

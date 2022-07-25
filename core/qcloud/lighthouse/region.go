@@ -1,9 +1,9 @@
 package lighthouse
 
 import (
-	"tdp-cloud/core/midware"
-
 	lighthouse "github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/lighthouse/v20200324"
+
+	"tdp-cloud/core/midware"
 )
 
 // 查询地域列表

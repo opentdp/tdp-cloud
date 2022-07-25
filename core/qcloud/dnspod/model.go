@@ -1,10 +1,10 @@
 package dnspod
 
 import (
+	dnspod "github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/dnspod/v20210323"
+
 	"tdp-cloud/core/midware"
 	"tdp-cloud/core/utils"
-
-	dnspod "github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/dnspod/v20210323"
 )
 
 // 获取域名列表

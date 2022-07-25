@@ -1,10 +1,10 @@
 package cam
 
 import (
+	cam "github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/cam/v20190116"
+
 	"tdp-cloud/core/midware"
 	"tdp-cloud/core/qcloud"
-
-	cam "github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/cam/v20190116"
 )
 
 // 创建客户端

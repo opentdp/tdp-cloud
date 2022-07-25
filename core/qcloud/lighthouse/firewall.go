@@ -1,10 +1,10 @@
 package lighthouse
 
 import (
+	lighthouse "github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/lighthouse/v20200324"
+
 	"tdp-cloud/core/midware"
 	"tdp-cloud/core/utils"
-
-	lighthouse "github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/lighthouse/v20200324"
 )
 
 // 查询防火墙规则

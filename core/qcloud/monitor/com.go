@@ -1,10 +1,10 @@
 package monitor
 
 import (
+	monitor "github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/monitor/v20180724"
+
 	"tdp-cloud/core/midware"
 	"tdp-cloud/core/qcloud"
-
-	monitor "github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/monitor/v20180724"
 )
 
 // 创建客户端
