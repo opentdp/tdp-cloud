@@ -2,6 +2,7 @@ package dnspod
 
 import (
 	"tdp-cloud/core/midware"
+	"tdp-cloud/core/utils"
 
 	dnspod "github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/dnspod/v20210323"
 )
@@ -15,26 +16,7 @@ func DescribeDomainList(ud *midware.Userdata, rq *DescribeDomainListRequestParam
 	client, _ := NewClient(ud)
 
 	request := dnspod.NewDescribeDomainListRequest()
-
-	if rq.Type != nil {
-		request.Type = rq.Type
-	}
-
-	if rq.Offset != nil {
-		request.Offset = rq.Offset
-	}
-
-	if rq.Limit != nil {
-		request.Limit = rq.Limit
-	}
-
-	if rq.GroupId != nil {
-		request.GroupId = rq.GroupId
-	}
-
-	if rq.Keyword != nil {
-		request.Keyword = rq.Keyword
-	}
+	request.FromJsonString(utils.ToJsonString(rq))
 
 	return client.DescribeDomainList(request)
 
@@ -49,30 +31,7 @@ func DescribeRecordList(ud *midware.Userdata, rq *DescribeRecordListRequestParam
 	client, _ := NewClient(ud)
 
 	request := dnspod.NewDescribeRecordListRequest()
-
-	if rq.Domain != nil {
-		request.Domain = rq.Domain
-	}
-
-	if rq.DomainId != nil {
-		request.DomainId = rq.DomainId
-	}
-
-	if rq.Offset != nil {
-		request.Offset = rq.Offset
-	}
-
-	if rq.Limit != nil {
-		request.Limit = rq.Limit
-	}
-
-	if rq.GroupId != nil {
-		request.GroupId = rq.GroupId
-	}
-
-	if rq.Keyword != nil {
-		request.Keyword = rq.Keyword
-	}
+	request.FromJsonString(utils.ToJsonString(rq))
 
 	return client.DescribeRecordList(request)
 
@@ -87,26 +46,7 @@ func ModifyRecord(ud *midware.Userdata, rq *ModifyRecordRequestParams) (*dnspod.
 	client, _ := NewClient(ud)
 
 	request := dnspod.NewModifyRecordRequest()
-
-	if rq.Domain != nil {
-		request.Domain = rq.Domain
-	}
-
-	if rq.RecordId != nil {
-		request.RecordId = rq.RecordId
-	}
-
-	if rq.RecordType != nil {
-		request.RecordType = rq.RecordType
-	}
-
-	if rq.RecordLine != nil {
-		request.RecordLine = rq.RecordLine
-	}
-
-	if rq.Value != nil {
-		request.Value = rq.Value
-	}
+	request.FromJsonString(utils.ToJsonString(rq))
 
 	return client.ModifyRecord(request)
 

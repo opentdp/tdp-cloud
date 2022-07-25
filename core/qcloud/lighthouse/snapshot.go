@@ -2,6 +2,7 @@ package lighthouse
 
 import (
 	"tdp-cloud/core/midware"
+	"tdp-cloud/core/utils"
 
 	lighthouse "github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/lighthouse/v20200324"
 )
@@ -15,22 +16,7 @@ func DescribeSnapshots(ud *midware.Userdata, rq *DescribeSnapshotsRequestParams)
 	client, _ := NewClient(ud)
 
 	request := lighthouse.NewDescribeSnapshotsRequest()
-
-	if len(rq.SnapshotIds) > 0 {
-		request.SnapshotIds = rq.SnapshotIds
-	}
-
-	if len(rq.Filters) > 0 {
-		request.Filters = rq.Filters
-	}
-
-	if rq.Offset != nil {
-		request.Offset = rq.Offset
-	}
-
-	if rq.Limit != nil {
-		request.Limit = rq.Limit
-	}
+	request.FromJsonString(utils.ToJsonString(rq))
 
 	return client.DescribeSnapshots(request)
 

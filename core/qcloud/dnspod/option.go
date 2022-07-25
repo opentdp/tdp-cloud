@@ -2,6 +2,7 @@ package dnspod
 
 import (
 	"tdp-cloud/core/midware"
+	"tdp-cloud/core/utils"
 
 	dnspod "github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/dnspod/v20210323"
 )
@@ -15,14 +16,7 @@ func DescribeRecordLineList(ud *midware.Userdata, rq *DescribeRecordLineListRequ
 	client, _ := NewClient(ud)
 
 	request := dnspod.NewDescribeRecordLineListRequest()
-
-	if rq.Domain != nil {
-		request.Domain = rq.Domain
-	}
-
-	if rq.DomainGrade != nil {
-		request.DomainGrade = rq.DomainGrade
-	}
+	request.FromJsonString(utils.ToJsonString(rq))
 
 	return client.DescribeRecordLineList(request)
 
@@ -37,10 +31,7 @@ func DescribeRecordType(ud *midware.Userdata, rq *DescribeRecordTypeRequestParam
 	client, _ := NewClient(ud)
 
 	request := dnspod.NewDescribeRecordTypeRequest()
-
-	if rq.DomainGrade != nil {
-		request.DomainGrade = rq.DomainGrade
-	}
+	request.FromJsonString(utils.ToJsonString(rq))
 
 	return client.DescribeRecordType(request)
 

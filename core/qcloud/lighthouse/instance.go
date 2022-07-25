@@ -2,6 +2,7 @@ package lighthouse
 
 import (
 	"tdp-cloud/core/midware"
+	"tdp-cloud/core/utils"
 
 	lighthouse "github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/lighthouse/v20200324"
 )
@@ -15,22 +16,7 @@ func DescribeInstances(ud *midware.Userdata, rq *DescribeInstancesRequestParams)
 	client, _ := NewClient(ud)
 
 	request := lighthouse.NewDescribeInstancesRequest()
-
-	if len(rq.InstanceIds) > 0 {
-		request.InstanceIds = rq.InstanceIds
-	}
-
-	if len(rq.Filters) > 0 {
-		request.Filters = rq.Filters
-	}
-
-	if rq.Offset != nil {
-		request.Offset = rq.Offset
-	}
-
-	if rq.Limit != nil {
-		request.Limit = rq.Limit
-	}
+	request.FromJsonString(utils.ToJsonString(rq))
 
 	return client.DescribeInstances(request)
 
@@ -45,18 +31,7 @@ func DescribeInstancesTrafficPackages(ud *midware.Userdata, rq *DescribeInstance
 	client, _ := NewClient(ud)
 
 	request := lighthouse.NewDescribeInstancesTrafficPackagesRequest()
-
-	if len(rq.InstanceIds) > 0 {
-		request.InstanceIds = rq.InstanceIds
-	}
-
-	if rq.Offset != nil {
-		request.Offset = rq.Offset
-	}
-
-	if rq.Limit != nil {
-		request.Limit = rq.Limit
-	}
+	request.FromJsonString(utils.ToJsonString(rq))
 
 	return client.DescribeInstancesTrafficPackages(request)
 

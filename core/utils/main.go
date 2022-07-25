@@ -1,11 +1,24 @@
 package utils
 
 import (
+	"encoding/json"
 	"math/rand"
 	"strconv"
 	"strings"
 	"time"
 )
+
+// 序列化
+
+func ToJsonString(r any) string {
+
+	b, _ := json.Marshal(r)
+
+	return string(b)
+
+}
+
+// 随机字符串
 
 func RandString(length uint) string {
 

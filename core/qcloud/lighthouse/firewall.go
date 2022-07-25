@@ -2,6 +2,7 @@ package lighthouse
 
 import (
 	"tdp-cloud/core/midware"
+	"tdp-cloud/core/utils"
 
 	lighthouse "github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/lighthouse/v20200324"
 )
@@ -15,18 +16,7 @@ func DescribeFirewallRules(ud *midware.Userdata, rq *DescribeFirewallRulesReques
 	client, _ := NewClient(ud)
 
 	request := lighthouse.NewDescribeFirewallRulesRequest()
-
-	if rq.InstanceId != nil {
-		request.InstanceId = rq.InstanceId
-	}
-
-	if rq.Offset != nil {
-		request.Offset = rq.Offset
-	}
-
-	if rq.Limit != nil {
-		request.Limit = rq.Limit
-	}
+	request.FromJsonString(utils.ToJsonString(rq))
 
 	return client.DescribeFirewallRules(request)
 
