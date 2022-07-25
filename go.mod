@@ -12,20 +12,20 @@ require (
 // 数据库 ORM
 
 require (
-	github.com/glebarez/sqlite v1.4.5
-	golang.org/x/crypto v0.0.0-20220622213112-05595931fe9d
-	gorm.io/driver/mysql v1.3.4
-	gorm.io/gorm v1.23.6
+	github.com/glebarez/sqlite v1.4.6
+	golang.org/x/crypto v0.0.0-20220722155217-630584e8d5aa
+	gorm.io/driver/mysql v1.3.5
+	gorm.io/gorm v1.23.8
 )
 
 // 腾讯云 SDK
 
 require (
-	github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/cam v1.0.431
-	github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/common v1.0.431
-	github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/dnspod v1.0.431
-	github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/lighthouse v1.0.431
-	github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/monitor v1.0.431
+	github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/cam v1.0.449
+	github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/common v1.0.449
+	github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/dnspod v1.0.449
+	github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/lighthouse v1.0.449
+	github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/monitor v1.0.449
 )
 
 // 计划任务
@@ -41,7 +41,7 @@ require (
 	github.com/go-playground/universal-translator v0.18.0 // indirect
 	github.com/go-playground/validator/v10 v10.11.0 // indirect
 	github.com/go-sql-driver/mysql v1.6.0 // indirect
-	github.com/goccy/go-json v0.9.7 // indirect
+	github.com/goccy/go-json v0.9.10 // indirect
 	github.com/google/uuid v1.3.0 // indirect
 	github.com/jinzhu/inflection v1.0.0 // indirect
 	github.com/jinzhu/now v1.1.5 // indirect
@@ -53,12 +53,12 @@ require (
 	github.com/pelletier/go-toml/v2 v2.0.2 // indirect
 	github.com/remyoudompheng/bigfft v0.0.0-20200410134404-eec4a21b6bb0 // indirect
 	github.com/ugorji/go/codec v1.2.7 // indirect
-	golang.org/x/net v0.0.0-20220624214902-1bab6f366d9e // indirect
-	golang.org/x/sys v0.0.0-20220624220833-87e55d714810 // indirect
+	golang.org/x/net v0.0.0-20220722155237-a158d28d115b // indirect
+	golang.org/x/sys v0.0.0-20220722155257-8c9f86f7a55f // indirect
 	golang.org/x/text v0.3.7 // indirect
 	google.golang.org/protobuf v1.28.0 // indirect
 	gopkg.in/yaml.v2 v2.4.0 // indirect
-	modernc.org/libc v1.16.12 // indirect
+	modernc.org/libc v1.16.17 // indirect
 	modernc.org/mathutil v1.4.1 // indirect
 	modernc.org/memory v1.1.1 // indirect
 	modernc.org/sqlite v1.17.3 // indirect
