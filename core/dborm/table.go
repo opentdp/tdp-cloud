@@ -43,3 +43,12 @@ type Session struct {
 	UserId uint   `gorm:"index"`
 	Token  string `gorm:"index,unique"`
 }
+
+// TAT
+type TAT struct {
+	TableModel
+	UserId      uint `gorm:"index"`
+	Name        string
+	Description string
+	Content     string
+}
