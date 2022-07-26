@@ -1,4 +1,4 @@
-package member
+package secret
 
 import (
 	"tdp-cloud/core/dborm"
@@ -6,14 +6,14 @@ import (
 
 // 添加密钥
 
-type SecretParam struct {
+type CreateParam struct {
 	UserId      uint   `json:"userId"`
 	SecretId    string `json:"secretId" binding:"required"`
 	SecretKey   string `json:"secretKey" binding:"required"`
 	Description string `json:"description" binding:"required"`
 }
 
-func CreateSecret(post *SecretParam) error {
+func Create(post *CreateParam) error {
 
 	result := dborm.Db.Create(&dborm.Secret{
 		UserId:      post.UserId,
@@ -28,7 +28,7 @@ func CreateSecret(post *SecretParam) error {
 
 // 删除密钥
 
-func DeleteSecret(userId, id uint) error {
+func Delete(userId, id uint) error {
 
 	var secret dborm.Secret
 
@@ -40,7 +40,7 @@ func DeleteSecret(userId, id uint) error {
 
 // 获取密钥列表
 
-func FindSecrets(userId uint) ([]*dborm.Secret, error) {
+func Find(userId uint) ([]*dborm.Secret, error) {
 
 	var secrets []*dborm.Secret
 
@@ -52,7 +52,7 @@ func FindSecrets(userId uint) ([]*dborm.Secret, error) {
 
 // 获取密钥
 
-func FetchSecret(userId, id uint) (dborm.Secret, error) {
+func Fetch(userId, id uint) (dborm.Secret, error) {
 
 	var secret dborm.Secret
 

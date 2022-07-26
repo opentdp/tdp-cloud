@@ -1,4 +1,4 @@
-package member
+package session
 
 import (
 	"tdp-cloud/core/dborm"
@@ -6,7 +6,7 @@ import (
 
 // 获取会话
 
-func FetchSession(token string) dborm.Session {
+func Fetch(token string) dborm.Session {
 
 	var session dborm.Session
 
