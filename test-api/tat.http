@@ -2,7 +2,7 @@
 
 ### 添加TAT
 
-POST {{$dotenv baseapi}}/local/tat/create
+POST {{$dotenv baseapi}}/tat/create
 Authorization: {{$dotenv authorization}}
 Content-Type: application/json
 Origin: {{$dotenv origin}}
@@ -15,7 +15,7 @@ Origin: {{$dotenv origin}}
 
 ### TAT list
 
-GET {{$dotenv baseapi}}/local/tat/list
+GET {{$dotenv baseapi}}/tat/list
 Authorization: {{$dotenv authorization}}
 Content-Type: application/json
 Origin: {{$dotenv origin}}
@@ -23,14 +23,14 @@ Origin: {{$dotenv origin}}
 
 ### TAT Info
 
-GET {{$dotenv baseapi}}/local/tat/info/1
+GET {{$dotenv baseapi}}/tat/info/1
 Authorization: {{$dotenv authorization}}
 Content-Type: application/json
 Origin: {{$dotenv origin}}
 
 ### 跟新TAT
 
-POST {{$dotenv baseapi}}/local/tat/update
+POST {{$dotenv baseapi}}/tat/update
 Authorization: {{$dotenv authorization}}
 Content-Type: application/json
 Origin: {{$dotenv origin}}

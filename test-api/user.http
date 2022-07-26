@@ -2,7 +2,7 @@
 
 ### 注册账号
 
-POST {{$dotenv baseapi}}/local/user/register
+POST {{$dotenv baseapi}}/user/register
 Origin: {{$dotenv origin}}
 Content-Type: application/json
 
@@ -13,7 +13,7 @@ Content-Type: application/json
 
 ### 登录账号
 
-POST {{$dotenv baseapi}}/local/user/login
+POST {{$dotenv baseapi}}/user/login
 Origin: {{$dotenv origin}}
 Content-Type: application/json
 
@@ -24,18 +24,18 @@ Content-Type: application/json
 
 ### 修改资料
 
-PATCH {{$dotenv baseapi}}/local/user/info
+PATCH {{$dotenv baseapi}}/user/info
 Authorization: {{$dotenv authorization}}
 Origin: {{$dotenv origin}}
 Content-Type: application/json
 
 {
-    "description": "不可能！我的代码怎么可能会有bug！"
+    "description": "不可能！我的代码怎么可能会有Bug！"
 }
 
 ### 修改密码
 
-PATCH {{$dotenv baseapi}}/local/user/password
+PATCH {{$dotenv baseapi}}/user/password
 Authorization: {{$dotenv authorization}}
 Origin: {{$dotenv origin}}
 Content-Type: application/json
