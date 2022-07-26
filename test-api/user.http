@@ -1,4 +1,4 @@
-# User Api
+# Local User Api
 
 ### 注册账号
 
@@ -13,7 +13,7 @@ Content-Type: application/json
 
 ### 登录账号
 
-POST {{$dotenv baseapi}}/local/member/login
+POST {{$dotenv baseapi}}/local/user/login
 Origin: {{$dotenv origin}}
 Content-Type: application/json
 
@@ -43,72 +43,4 @@ Content-Type: application/json
 {
     "oldPassword": "{{$dotenv password}}",
     "newPassword": "{{$dotenv password}}"
-}
-
-### 添加密钥
-
-POST {{$dotenv baseapi}}/local/user/secret
-Authorization: {{$dotenv authorization}}
-Content-Type: application/json
-Origin: {{$dotenv origin}}
-
-{
-    "secretId":  "{{$dotenv secret_id}}",
-    "secretKey": "{{$dotenv secret_key}}",
-    "description":  "也没所谓"
-}
-
-### 获取密钥
-
-GET {{$dotenv baseapi}}/local/user/secret
-Authorization: {{$dotenv authorization}}
-Origin: {{$dotenv origin}}
-
-### 删除密钥
-
-DELETE {{$dotenv baseapi}}/local/user/secret/2
-Authorization: {{$dotenv authorization}}
-Origin: {{$dotenv origin}}
-
-
-### 添加TAT
-
-POST {{$dotenv baseapi}}/local/tat/create
-Authorization: {{$dotenv authorization}}
-Content-Type: application/json
-Origin: {{$dotenv origin}}
-
-{
-    "name":  "name",
-    "description": "description",
-    "content":  "content"
-}
-
-### TAT list
-
-GET {{$dotenv baseapi}}/local/tat/list
-Authorization: {{$dotenv authorization}}
-Content-Type: application/json
-Origin: {{$dotenv origin}}
-
-
-### TAT Info
-
-GET {{$dotenv baseapi}}/local/tat/info/1
-Authorization: {{$dotenv authorization}}
-Content-Type: application/json
-Origin: {{$dotenv origin}}
-
-### 跟新TAT
-
-POST {{$dotenv baseapi}}/local/tat/update
-Authorization: {{$dotenv authorization}}
-Content-Type: application/json
-Origin: {{$dotenv origin}}
-
-{
-    "id": 1,
-    "name":  "name222",
-    "description": "description",
-    "content":  "content"
 }

@@ -1,0 +1,43 @@
+# Local TAT Api
+
+### 添加TAT
+
+POST {{$dotenv baseapi}}/local/tat/create
+Authorization: {{$dotenv authorization}}
+Content-Type: application/json
+Origin: {{$dotenv origin}}
+
+{
+    "name":  "name",
+    "description": "description",
+    "content":  "content"
+}
+
+### TAT list
+
+GET {{$dotenv baseapi}}/local/tat/list
+Authorization: {{$dotenv authorization}}
+Content-Type: application/json
+Origin: {{$dotenv origin}}
+
+
+### TAT Info
+
+GET {{$dotenv baseapi}}/local/tat/info/1
+Authorization: {{$dotenv authorization}}
+Content-Type: application/json
+Origin: {{$dotenv origin}}
+
+### 跟新TAT
+
+POST {{$dotenv baseapi}}/local/tat/update
+Authorization: {{$dotenv authorization}}
+Content-Type: application/json
+Origin: {{$dotenv origin}}
+
+{
+    "id": 1,
+    "name":  "name222",
+    "description": "description",
+    "content":  "content"
+}

@@ -5,9 +5,10 @@ import (
 
 	"tdp-cloud/core/midware"
 
-	"tdp-cloud/api/member"
+	"tdp-cloud/api/secret"
 	"tdp-cloud/api/tat"
 	"tdp-cloud/api/terminal"
+	"tdp-cloud/api/user"
 
 	"tdp-cloud/api/cam"
 	"tdp-cloud/api/dnspod"
@@ -27,7 +28,8 @@ func Router(engine *gin.Engine) {
 		local := api.Group("/local")
 
 		{
-			member.Router(local)
+			user.Router(local)
+			secret.Router(local)
 			tat.Router(local)
 		}
 
