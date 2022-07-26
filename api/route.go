@@ -6,6 +6,7 @@ import (
 	"tdp-cloud/core/midware"
 
 	"tdp-cloud/api/member"
+	"tdp-cloud/api/tat"
 	"tdp-cloud/api/terminal"
 
 	"tdp-cloud/api/cam"
@@ -27,6 +28,7 @@ func Router(engine *gin.Engine) {
 
 		{
 			member.Router(local)
+			tat.Router(local)
 		}
 
 		// cloud api
