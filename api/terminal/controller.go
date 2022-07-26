@@ -8,15 +8,12 @@ import (
 
 func ssh(c *gin.Context) {
 
-	confing := &webssh.WebSSHConfig{
+	option := &webssh.SSHClientOption{
 		RemoteAddr: c.Query("addr"),
 		User:       c.Query("user"),
 		Password:   c.Query("password"),
-		AuthModel:  webssh.PASSWORD,
 	}
 
-	wsh := webssh.NewWebSSH(confing)
-
-	wsh.ServeConn(c)
+	webssh.Handle(c, option)
 
 }

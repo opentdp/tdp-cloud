@@ -36,6 +36,8 @@ require (
 	github.com/sirupsen/logrus v1.9.0
 	// 加密扩充库
 	golang.org/x/crypto v0.0.0-20220722155217-630584e8d5aa
+	// 终端和控制台支持包
+	golang.org/x/term v0.0.0-20210927222741-03fcf44c2211
 )
 
 // 间接依赖
