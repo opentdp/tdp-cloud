@@ -5,7 +5,7 @@ import (
 
 	"tdp-cloud/core/midware"
 
-	"tdp-cloud/api/cloud"
+	"tdp-cloud/api/qcloud"
 
 	"tdp-cloud/api/secret"
 	"tdp-cloud/api/tat"
@@ -17,14 +17,14 @@ func Router(engine *gin.Engine) {
 
 	api := engine.Group("/api")
 
+	api.Use(midware.ExitWithJSON())
+
 	{
-		api.Use(midware.ExitWithJSON())
+		// qcloud api
 
-		// cloud api
+		qcloud.Router(api)
 
-		cloud.Router(api)
-
-		// local api
+		// direct api
 
 		user.Router(api)
 		secret.Router(api)
@@ -35,9 +35,9 @@ func Router(engine *gin.Engine) {
 
 	wsl := engine.Group("/wsl")
 
-	{
-		wsl.Use(midware.SocketPreset())
+	wsl.Use(midware.SocketPreset())
 
+	{
 		terminal.Socket(wsl)
 	}
 

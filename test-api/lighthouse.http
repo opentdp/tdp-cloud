@@ -2,18 +2,18 @@
 
 ### 获取地域
 
-POST {{$dotenv baseapi}}/cloud/lighthouse/describeRegions
+POST {{$dotenv baseapi}}/qcloud/lighthouse/describeRegions
 Authorization: {{$dotenv authorization}}
 Origin: {{$dotenv origin}}
 
 ### 获取地域实例
 
-POST {{$dotenv baseapi}}/cloud/lighthouse/describeInstances/ap-guangzhou
+POST {{$dotenv baseapi}}/qcloud/lighthouse/describeInstances/ap-guangzhou
 Authorization: {{$dotenv authorization}}
 Origin: {{$dotenv origin}}
 
 ### 获取实例流量包
 
-POST {{$dotenv baseapi}}/cloud/lighthouse/describeInstancesTrafficPackages/ap-guangzhou
+POST {{$dotenv baseapi}}/qcloud/lighthouse/describeInstancesTrafficPackages/ap-guangzhou
 Authorization: {{$dotenv authorization}}
 Origin: {{$dotenv origin}}

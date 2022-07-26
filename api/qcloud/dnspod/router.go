@@ -2,16 +2,11 @@ package dnspod
 
 import (
 	"github.com/gin-gonic/gin"
-
-	"tdp-cloud/core/midware"
 )
 
 func Router(api *gin.RouterGroup) {
 
 	rg := api.Group("/dnspod")
-
-	rg.Use(midware.Auth())
-	rg.Use(midware.Secret())
 
 	{
 		rg.POST("/describeDomainList", describeDomainList)
