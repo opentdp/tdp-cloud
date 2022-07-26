@@ -1,14 +1,16 @@
 package serve
 
 import (
-	"fmt"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
 	"github.com/gorilla/websocket"
+	"github.com/sirupsen/logrus"
 )
 
 var upgrader = websocket.Upgrader{
+	ReadBufferSize:  1024,
+	WriteBufferSize: 1024 * 1024 * 10,
 	CheckOrigin: func(r *http.Request) bool {
 		return true
 	},
@@ -23,7 +25,7 @@ func UseSocekt(c *gin.Context) {
 
 	_, message, err := ws.ReadMessage()
 	if nil != err {
-		fmt.Println(err.Error())
+		logrus.Info(err.Error())
 	}
 
 	ws.WriteMessage(websocket.TextMessage, message)

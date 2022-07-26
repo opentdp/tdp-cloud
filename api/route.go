@@ -6,6 +6,7 @@ import (
 	"tdp-cloud/core/midware"
 
 	"tdp-cloud/api/member"
+	"tdp-cloud/api/terminal"
 
 	"tdp-cloud/api/cam"
 	"tdp-cloud/api/dnspod"
@@ -17,7 +18,7 @@ func Router(engine *gin.Engine) {
 
 	api := engine.Group("/api")
 
-	api.Use(midware.JSON())
+	api.Use(midware.ExitWithJSON())
 
 	{
 		// local api
@@ -38,6 +39,16 @@ func Router(engine *gin.Engine) {
 			lighthouse.Router(cloud)
 			monitor.Router(cloud)
 		}
+	}
+
+	// websocket
+
+	wsl := engine.Group("/wsl")
+
+	wsl.Use(midware.SocketPreset())
+
+	{
+		terminal.Socket(wsl)
 	}
 
 }
