@@ -20,7 +20,6 @@ func Socket(wsl *gin.RouterGroup) {
 	rg := wsl.Group("/terminal")
 
 	rg.Use(midware.Auth())
-	rg.Use(midware.Secret())
 
 	{
 		rg.GET("/ssh", ssh)
