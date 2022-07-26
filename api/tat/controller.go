@@ -2,9 +2,10 @@ package tat
 
 import (
 	"strconv"
-	"tdp-cloud/core/dborm/member"
 
 	"github.com/gin-gonic/gin"
+
+	"tdp-cloud/core/dborm/member"
 )
 
 func listTAT(c *gin.Context) {

@@ -45,6 +45,7 @@ type Session struct {
 }
 
 // TAT
+
 type TAT struct {
 	TableModel
 	UserId      uint `gorm:"index"`

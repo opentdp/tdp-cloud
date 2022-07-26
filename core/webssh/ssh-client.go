@@ -32,9 +32,11 @@ func NewSSHClient(option *SSHClientOption) (*ssh.Client, error) {
 
 func NewSSHClientWithPassword(option *SSHClientOption) (*ssh.Client, error) {
 
+	auth := ssh.Password(option.Password)
+
 	config := &ssh.ClientConfig{
 		User:            option.User,
-		Auth:            []ssh.AuthMethod{ssh.Password(option.Password)},
+		Auth:            []ssh.AuthMethod{auth},
 		Timeout:         time.Second * 5,
 		HostKeyCallback: ssh.InsecureIgnoreHostKey(),
 	}
@@ -50,9 +52,11 @@ func NewSSHClientWithPulicKey(option *SSHClientOption) (*ssh.Client, error) {
 		return nil, err
 	}
 
+	auth := ssh.PublicKeys(signer)
+
 	config := &ssh.ClientConfig{
 		User:            option.User,
-		Auth:            []ssh.AuthMethod{ssh.PublicKeys(signer)},
+		Auth:            []ssh.AuthMethod{auth},
 		Timeout:         time.Second * 5,
 		HostKeyCallback: ssh.InsecureIgnoreHostKey(),
 	}
