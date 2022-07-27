@@ -15,7 +15,7 @@
 ## 额外参数设置
 
 如果项目无法运行或编译，请尝试设置系统环境变量或临时环境变量
-  
+
 ```shell
 go env -w GO111MODULE=on
 go env -w GOPROXY=https://goproxy.cn,direct
@@ -37,7 +37,7 @@ go env -w GOPROXY=https://goproxy.cn,direct
 
 ## 获取腾讯云密钥
 
-1、创建一个自定义策略 `TDPCloudAccess`，权限JSON如下：
+1、进入腾讯云 [CAM - 策略](https://console.cloud.tencent.com/cam/policy) 页面，创建一个自定义策略 `TDPCloudAccess`，权限JSON如下：
 
 ```json
 {
@@ -57,9 +57,9 @@ go env -w GOPROXY=https://goproxy.cn,direct
 }
 ```
 
-2、创建一个用户，允许 `编程访问`，并关联策略 `TDPCloudAccess`
+2、进入腾讯云 [CAM - 用户](https://console.cloud.tencent.com/cam) 页面，创建一个用户，允许 `编程访问`，并关联策略 `TDPCloudAccess`
 
-3、使用生成的 `SecretId` 和 `SecretId` 登录面板
+3、进入 `TDP Cloud` 后台，密钥管理，添加获取到的 `SecretId` 和 `SecretKey`
 
 # License
 
