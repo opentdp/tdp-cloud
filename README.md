@@ -35,7 +35,7 @@ go env -w GOPROXY=https://goproxy.cn,direct
 
 - **MySQL**  数据源格式 `user:password@tcp(localhost:3306)/dbname?charset=utf8&parseTime=True&loc=Local`
 
-## 获取腾讯云密钥
+## 添加腾讯云密钥
 
 1、进入腾讯云 [CAM - 策略](https://console.cloud.tencent.com/cam/policy) 页面，创建一个自定义策略 `TDPCloudAccess`，权限JSON如下：
 
