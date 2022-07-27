@@ -33,7 +33,8 @@ func Handle(c *gin.Context, option *SSHClientOption) {
 
 	sshClient, err := NewSSHClient(option)
 	if err != nil {
-		c.AbortWithStatusJSON(500, midware.NewError(err))
+		msg := "> " + err.Error() + "\r\n"
+		wsConn.WriteMessage(websocket.TextMessage, []byte(msg))
 		return
 	}
 
