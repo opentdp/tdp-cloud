@@ -12,7 +12,7 @@ func Router(api *gin.RouterGroup) {
 		rg.POST("/describeRegions", describeRegions)
 
 		rg.POST("/describeInstances/:region", describeInstances)
-		rg.POST("/DescribeInstanceVncUrl/:region", describeInstanceVncUrl)
+		rg.POST("/describeInstanceVncUrl/:region", describeInstanceVncUrl)
 		rg.POST("/describeInstancesTrafficPackages/:region", describeInstancesTrafficPackages)
 
 		rg.POST("/describeSnapshots/:region", describeSnapshots)
