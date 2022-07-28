@@ -4,7 +4,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func ExitWithJSON() gin.HandlerFunc {
+func Output() gin.HandlerFunc {
 
 	return func(c *gin.Context) {
 
