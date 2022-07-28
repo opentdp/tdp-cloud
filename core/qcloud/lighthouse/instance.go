@@ -22,6 +22,21 @@ func DescribeInstances(ud *midware.Userdata, rq *DescribeInstancesRequestParams)
 
 }
 
+// 查询实例管理终端地址
+
+type DescribeInstanceVncUrlRequestParams = lighthouse.DescribeInstanceVncUrlRequestParams
+
+func DescribeInstanceVncUrl(ud *midware.Userdata, rq *DescribeInstanceVncUrlRequestParams) (*lighthouse.DescribeInstanceVncUrlResponse, error) {
+
+	client, _ := NewClient(ud)
+
+	request := lighthouse.NewDescribeInstanceVncUrlRequest()
+	request.FromJsonString(utils.ToJsonString(rq))
+
+	return client.DescribeInstanceVncUrl(request)
+
+}
+
 // 查看实例流量包详情
 
 type DescribeInstancesTrafficPackagesRequestParams = lighthouse.DescribeInstancesTrafficPackagesRequestParams
