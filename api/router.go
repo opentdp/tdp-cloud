@@ -29,6 +29,7 @@ func Router(engine *gin.Engine) {
 		user.Router(api)
 		secret.Router(api)
 		tat.Router(api)
+		terminal.Router(api)
 	}
 
 	// websocket

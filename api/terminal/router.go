@@ -10,8 +10,7 @@ func Router(api *gin.RouterGroup) {
 
 	rg := api.Group("/terminal")
 
-	rg.Use(midware.Auth())
-	rg.Use(midware.Secret())
+	rg.GET("/vnc", vnc)
 
 }
 

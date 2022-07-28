@@ -22,6 +22,14 @@ func ExitWithJSON() gin.HandlerFunc {
 			return
 		}
 
+		// 输出HTML内容
+		if res, exists := c.Get("HTML"); exists && res != nil {
+			c.Header("Content-Type", "text/html; charset=utf-8")
+			c.String(200, res.(string))
+			c.Abort()
+			return
+		}
+
 		// 捕获异常返回
 		c.AbortWithStatusJSON(500, NewError("内部错误"))
 
