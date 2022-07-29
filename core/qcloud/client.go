@@ -23,30 +23,33 @@ type Response struct {
 	Response interface{} `json:"Response"`
 }
 
-func NewRequest(rp *Params) (*Response, error) {
+func NewRequest(rp *Params) (res *Response, err error) {
 
 	request := th.NewCommonRequest(rp.Service, rp.Version, rp.Action)
 
-	if err := request.SetActionParameters(rp.Payload); err != nil {
-		return nil, err
+	if rp.Payload != nil {
+		request.SetActionParameters(rp.Payload)
 	}
 
+	client := NewClient(rp)
 	response := th.NewCommonResponse()
 
-	if err := NewClient(rp).Send(request, response); err != nil {
-		return nil, err
+	if err = client.Send(request, response); err != nil {
+		return
 	}
 
-	var res = &Response{}
-	if err := json.Unmarshal(response.GetBody(), res); err != nil {
-		return nil, err
+	res = &Response{}
+	body := response.GetBody()
+
+	if err = json.Unmarshal(body, res); err != nil {
+		return
 	}
 
-	return res, nil
+	return
 
 }
 
-func NewClient(rp *Params) *tc.Client {
+func NewClient(rp *Params) (c *tc.Client) {
 
 	profile := tp.NewClientProfile()
 
@@ -60,6 +63,8 @@ func NewClient(rp *Params) *tc.Client {
 
 	credential := tc.NewCredential(rp.SecretId, rp.SecretKey)
 
-	return tc.NewCommonClient(credential, rp.Region, profile)
+	c = tc.NewCommonClient(credential, rp.Region, profile)
+
+	return
 
 }
