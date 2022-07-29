@@ -1,9 +1,6 @@
 package qcloud
 
 import (
-	"encoding/json"
-	"fmt"
-
 	"github.com/gin-gonic/gin"
 
 	"tdp-cloud/core/midware"
@@ -24,11 +21,6 @@ func doRequest(c *gin.Context) {
 		SecretId:  userdata.SecretId,
 		SecretKey: userdata.SecretKey,
 	}
-
-	c.ShouldBindQuery(&params)
-
-	p, _ := json.Marshal(params)
-	fmt.Println(string(p))
 
 	res, err := qcloud.NewRequest(params)
 
