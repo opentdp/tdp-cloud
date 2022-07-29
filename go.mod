@@ -17,16 +17,6 @@ require (
 	gorm.io/gorm v1.23.8
 )
 
-// 腾讯云 SDK
-
-require (
-	github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/cam v1.0.449
-	github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/common v1.0.449
-	github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/dnspod v1.0.449
-	github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/lighthouse v1.0.449
-	github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/monitor v1.0.449
-)
-
 // 其他依赖
 
 require (
@@ -34,6 +24,8 @@ require (
 	github.com/robfig/cron/v3 v3.0.1
 	// 日志输出
 	github.com/sirupsen/logrus v1.9.0
+	// 腾讯云 SDK
+	github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/common v1.0.449
 	// 加密扩充库
 	golang.org/x/crypto v0.0.0-20220722155217-630584e8d5aa
 	// 终端和控制台支持包

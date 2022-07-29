@@ -54,8 +54,6 @@ func Secret() gin.HandlerFunc {
 		c.Set("SecretId", res.SecretId)
 		c.Set("SecretKey", res.SecretKey)
 
-		c.Set("Region", c.Param("region"))
-
 	}
 
 }

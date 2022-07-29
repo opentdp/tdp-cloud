@@ -9,7 +9,6 @@ import (
 type Userdata struct {
 	KeyId     uint
 	UserId    uint
-	Region    string
 	SecretId  string
 	SecretKey string
 }
@@ -19,7 +18,6 @@ func GetUserdata(c *gin.Context) *Userdata {
 	ud := &Userdata{
 		KeyId:     c.GetUint("KeyId"),
 		UserId:    c.GetUint("UserId"),
-		Region:    c.GetString("Region"),
 		SecretId:  c.GetString("SecretId"),
 		SecretKey: c.GetString("SecretKey"),
 	}
