@@ -2,6 +2,8 @@ package midware
 
 import (
 	"github.com/gin-gonic/gin"
+
+	"tdp-cloud/core/utils"
 )
 
 func Output() gin.HandlerFunc {
@@ -12,13 +14,13 @@ func Output() gin.HandlerFunc {
 
 		// 输出错误信息
 		if err, exists := c.Get("Error"); exists && err != nil {
-			c.AbortWithStatusJSON(400, NewError(err))
+			c.AbortWithStatusJSON(400, utils.NewMessage(err))
 			return
 		}
 
 		// 输出请求结果
 		if res, exists := c.Get("Payload"); exists && res != nil {
-			c.AbortWithStatusJSON(200, NewPayload(res))
+			c.AbortWithStatusJSON(200, utils.NewPayload(res))
 			return
 		}
 
@@ -31,7 +33,7 @@ func Output() gin.HandlerFunc {
 		}
 
 		// 捕获异常返回
-		c.AbortWithStatusJSON(500, NewError("内部错误"))
+		c.AbortWithStatusJSON(500, utils.NewMessage("内部错误"))
 
 	}
 

@@ -6,8 +6,8 @@ import (
 
 	"github.com/gin-gonic/gin"
 
-	"tdp-cloud/core/dborm/secret"
 	"tdp-cloud/core/dborm/session"
+	"tdp-cloud/core/utils"
 )
 
 func Auth() gin.HandlerFunc {
@@ -18,14 +18,14 @@ func Auth() gin.HandlerFunc {
 		field := strings.Split(input, ":")
 
 		if len(field) != 2 {
-			c.AbortWithStatusJSON(403, NewError("登录后重试"))
+			c.AbortWithStatusJSON(403, utils.NewMessage("登录后重试"))
 			return
 		}
 
 		session := session.Fetch(field[1])
 
 		if session.UserId == 0 {
-			c.AbortWithStatusJSON(403, NewError("会话已失效"))
+			c.AbortWithStatusJSON(403, utils.NewMessage("会话已失效"))
 			return
 		}
 
@@ -38,21 +38,13 @@ func Auth() gin.HandlerFunc {
 
 }
 
-func Secret() gin.HandlerFunc {
+func SocketPreset() gin.HandlerFunc {
 
 	return func(c *gin.Context) {
 
-		ud := GetUserdata(c)
-
-		res, err := secret.Fetch(ud.UserId, ud.KeyId)
-
-		if err != nil || res.Id == 0 {
-			c.AbortWithStatusJSON(403, NewError("密钥不存在"))
-			return
+		if auth := c.Query("auth"); auth != "" {
+			c.Request.Header.Set("Authorization", auth)
 		}
-
-		c.Set("SecretId", res.SecretId)
-		c.Set("SecretKey", res.SecretKey)
 
 	}
 

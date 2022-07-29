@@ -3,14 +3,23 @@ package qcloud
 import (
 	"github.com/gin-gonic/gin"
 
-	"tdp-cloud/core/midware"
+	"tdp-cloud/core/dborm/secret"
 	"tdp-cloud/core/qcloud"
 )
 
 func doRequest(c *gin.Context) {
 
+	keyId := c.GetUint("KeyId")
+	userId := c.GetUint("UserId")
+
+	secret, err := secret.Fetch(userId, keyId)
+
+	if err != nil || secret.Id == 0 {
+		c.Set("Error", "密钥不存在")
+		return
+	}
+
 	payload, _ := c.GetRawData()
-	userdata := midware.GetUserdata(c)
 
 	var params = &qcloud.Params{
 		Service:   c.Param("service"),
@@ -18,8 +27,8 @@ func doRequest(c *gin.Context) {
 		Action:    c.Param("action"),
 		Payload:   payload,
 		Region:    c.Param("region"),
-		SecretId:  userdata.SecretId,
-		SecretKey: userdata.SecretKey,
+		SecretId:  secret.SecretId,
+		SecretKey: secret.SecretKey,
 	}
 
 	res, err := qcloud.NewRequest(params)
