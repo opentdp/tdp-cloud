@@ -2,7 +2,7 @@
 
 ### 获取监控数据
 
-POST {{$dotenv baseapi}}/qcloud/monitor/getMonitorData/ap-guangzhou
+POST {{$dotenv baseapi}}/qcloud/monitor/2018-07-24/GetMonitorData/ap-guangzhou
 Authorization: {{$dotenv authorization}}
 Content-Type: application/json
 Origin: {{$dotenv origin}}

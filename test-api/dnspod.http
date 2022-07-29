@@ -2,7 +2,7 @@
 
 ### 获取域名列表
 
-POST {{$dotenv baseapi}}/qcloud/dnspod/describeDomainList
+POST {{$dotenv baseapi}}/qcloud/dnspod/2021-03-23/DescribeDomainList
 Authorization: {{$dotenv authorization}}
 Origin: {{$dotenv origin}}
 

@@ -2,7 +2,7 @@
 
 ### 获取账号信息
 
-POST {{$dotenv baseapi}}/qcloud/cam/getAccountSummary
+POST {{$dotenv baseapi}}/qcloud/cam/2019-01-16/GetAccountSummary
 Authorization: {{$dotenv authorization}}
 Origin: {{$dotenv origin}}
 
