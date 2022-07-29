@@ -18,16 +18,6 @@ func list(c *gin.Context) {
 	}
 }
 
-func info(c *gin.Context) {
-	id, _ := strconv.Atoi(c.Param("id"))
-
-	if res, err := tat.Info(id); err == nil {
-		c.Set("Payload", res)
-	} else {
-		c.Set("Error", err)
-	}
-}
-
 func create(c *gin.Context) {
 	var rq tat.CreateParam
 
