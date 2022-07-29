@@ -8,8 +8,9 @@ import (
 	"tdp-cloud/core/dborm/tat"
 )
 
-func listTAT(c *gin.Context) {
+func list(c *gin.Context) {
 	userId := c.GetUint("UserId")
+
 	if res, err := tat.List(userId); err == nil {
 		c.Set("Payload", res)
 	} else {
@@ -17,7 +18,7 @@ func listTAT(c *gin.Context) {
 	}
 }
 
-func infoTAT(c *gin.Context) {
+func info(c *gin.Context) {
 	id, _ := strconv.Atoi(c.Param("id"))
 
 	if res, err := tat.Info(id); err == nil {
@@ -27,7 +28,7 @@ func infoTAT(c *gin.Context) {
 	}
 }
 
-func createTAT(c *gin.Context) {
+func create(c *gin.Context) {
 	var rq tat.CreateParam
 
 	if err := c.ShouldBind(&rq); err != nil {
@@ -45,7 +46,7 @@ func createTAT(c *gin.Context) {
 
 }
 
-func updateTAT(c *gin.Context) {
+func update(c *gin.Context) {
 	var rq tat.UpdateParam
 
 	if err := c.ShouldBind(&rq); err != nil {
@@ -59,7 +60,7 @@ func updateTAT(c *gin.Context) {
 	}
 }
 
-func deleteTAT(c *gin.Context) {
+func delete(c *gin.Context) {
 	id, _ := strconv.Atoi(c.Param("id"))
 
 	if err := tat.Delete(id); err == nil {

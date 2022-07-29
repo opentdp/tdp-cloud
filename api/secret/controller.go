@@ -10,7 +10,7 @@ import (
 
 // 添加密钥
 
-func createSecret(c *gin.Context) {
+func create(c *gin.Context) {
 
 	var rq secret.CreateParam
 
@@ -31,7 +31,7 @@ func createSecret(c *gin.Context) {
 
 // 删除密钥
 
-func deleteSecret(c *gin.Context) {
+func delete(c *gin.Context) {
 
 	userId := c.GetUint("UserId")
 
@@ -47,7 +47,7 @@ func deleteSecret(c *gin.Context) {
 
 // 密钥列表
 
-func fetchSecrets(c *gin.Context) {
+func fetch(c *gin.Context) {
 
 	userId := c.GetUint("UserId")
 

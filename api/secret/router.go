@@ -8,14 +8,14 @@ import (
 
 func Router(api *gin.RouterGroup) {
 
-	rg := api.Group("/")
+	rg := api.Group("/secret")
 
 	rg.Use(midware.Auth())
 
 	{
-		rg.GET("/secret", fetchSecrets)
-		rg.POST("/secret", createSecret)
-		rg.DELETE("/secret/:id", deleteSecret)
+		rg.GET("/", fetch)
+		rg.POST("/", create)
+		rg.DELETE("/:id", delete)
 	}
 
 }
