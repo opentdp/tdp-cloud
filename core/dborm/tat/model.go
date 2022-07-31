@@ -7,7 +7,7 @@ import (
 type CreateParam struct {
 	UserId      uint   `json:"userId"`
 	Name        string `json:"name" binding:"required"`
-	Description string `json:"description" binding:"required"`
+	Description string `json:"description"`
 	Content     string `json:"content" binding:"required"`
 }
 
