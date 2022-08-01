@@ -1,11 +1,13 @@
 package dborm
 
 import (
+	"os"
 	"strings"
 
 	"github.com/glebarez/sqlite"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
+	"gorm.io/gorm/logger"
 )
 
 var Db *gorm.DB
@@ -14,10 +16,16 @@ func Connect(dsn string) {
 
 	var err error
 
+	var config = &gorm.Config{}
+
+	if os.Getenv("IS_DEBUG") != "" {
+		config.Logger = logger.Default.LogMode(logger.Info)
+	}
+
 	if strings.Index(dsn, "@") > 0 {
-		Db, err = gorm.Open(mysql.Open(dsn), &gorm.Config{})
+		Db, err = gorm.Open(mysql.Open(dsn), config)
 	} else {
-		Db, err = gorm.Open(sqlite.Open(dsn), &gorm.Config{})
+		Db, err = gorm.Open(sqlite.Open(dsn), config)
 	}
 
 	if err != nil {
