@@ -64,7 +64,7 @@ func FetchAll(userId uint) ([]*dborm.Secret, error) {
 
 // 获取密钥
 
-func FetchOne(userId, id uint) (dborm.Secret, error) {
+func FetchOne(id, userId uint) (dborm.Secret, error) {
 
 	var secret dborm.Secret
 
@@ -76,7 +76,7 @@ func FetchOne(userId, id uint) (dborm.Secret, error) {
 
 // 删除密钥
 
-func Delete(userId, id uint) error {
+func Delete(id, userId uint) error {
 
 	var secret dborm.Secret
 

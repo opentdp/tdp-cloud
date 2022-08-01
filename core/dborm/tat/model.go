@@ -36,13 +36,13 @@ func Update(post *UpdateParam) error {
 	return result.Error
 }
 
-func List(uid uint) ([]*dborm.TAT, error) {
+func FetchAll(uid uint) ([]*dborm.TAT, error) {
 	var tats []*dborm.TAT
 	result := dborm.Db.Find(&tats, "user_id = ?", uid)
 	return tats, result.Error
 }
 
-func Info(id int) (dborm.TAT, error) {
+func FetchOne(id int) (dborm.TAT, error) {
 	var tat dborm.TAT
 	result := dborm.Db.Find(&tat, "id = ?", id)
 	return tat, result.Error

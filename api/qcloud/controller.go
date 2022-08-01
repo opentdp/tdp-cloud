@@ -12,7 +12,7 @@ func doRequest(c *gin.Context) {
 	keyId := c.GetUint("KeyId")
 	userId := c.GetUint("UserId")
 
-	secret, err := secret.FetchOne(userId, keyId)
+	secret, err := secret.FetchOne(keyId, userId)
 
 	if err != nil || secret.Id == 0 {
 		c.Set("Error", "密钥不存在")

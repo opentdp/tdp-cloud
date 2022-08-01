@@ -6,7 +6,7 @@ import (
 
 // 获取会话
 
-func FetchOne(token string) dborm.Session {
+func FetchByToken(token string) dborm.Session {
 
 	var session dborm.Session
 

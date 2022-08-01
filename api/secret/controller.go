@@ -51,7 +51,7 @@ func delete(c *gin.Context) {
 
 	id, _ := strconv.Atoi(c.Param("id"))
 
-	if err := secret.Delete(userId, uint(id)); err == nil {
+	if err := secret.Delete(uint(id), userId); err == nil {
 		c.Set("Payload", "删除成功")
 	} else {
 		c.Set("Error", err)

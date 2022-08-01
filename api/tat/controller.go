@@ -11,7 +11,7 @@ import (
 func list(c *gin.Context) {
 	userId := c.GetUint("UserId")
 
-	if res, err := tat.List(userId); err == nil {
+	if res, err := tat.FetchAll(userId); err == nil {
 		c.Set("Payload", res)
 	} else {
 		c.Set("Error", err)
