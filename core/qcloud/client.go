@@ -53,10 +53,18 @@ func NewClient(rp *Params) (c *tc.Client) {
 
 	profile := tp.NewClientProfile()
 
+	// 调试模式
 	if os.Getenv("IS_DEBUG") != "" {
 		profile.Debug = true
 	}
 
+	// 网络错误重试
+	profile.NetworkFailureMaxRetries = 2
+
+	// API 限频重试
+	profile.RateLimitExceededMaxRetries = 2
+
+	// 使用地域接口，尽量避免限频
 	if rp.Region != "" {
 		profile.HttpProfile.Endpoint = rp.Service + "." + rp.Region + ".tencentcloudapi.com"
 	}
