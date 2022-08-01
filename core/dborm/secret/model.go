@@ -26,13 +26,25 @@ func Create(post *CreateParam) error {
 
 }
 
-// 删除密钥
+// 更新密钥
 
-func Delete(userId, id uint) error {
+type UpdateParam struct {
+	Id          uint   `json:"id"  binding:"required"`
+	UserId      uint   `json:"userId" binding:"required"`
+	SecretId    string `json:"secretId" binding:"required"`
+	SecretKey   string `json:"secretKey" binding:"required"`
+	Description string `json:"description" binding:"required"`
+}
 
-	var secret dborm.Secret
+func Update(post *UpdateParam) error {
 
-	result := dborm.Db.Delete(&secret, "user_id = ? AND id = ?", userId, id)
+	result := dborm.Db.Model(&dborm.Secret{}).
+		Where("id = ? AND user_id = ?", post.Id, post.UserId).
+		Updates(dborm.Secret{
+			SecretId:    post.SecretId,
+			SecretKey:   post.SecretKey,
+			Description: post.Description,
+		})
 
 	return result.Error
 
@@ -40,7 +52,7 @@ func Delete(userId, id uint) error {
 
 // 获取密钥列表
 
-func Find(userId uint) ([]*dborm.Secret, error) {
+func FetchAll(userId uint) ([]*dborm.Secret, error) {
 
 	var secrets []*dborm.Secret
 
@@ -52,12 +64,24 @@ func Find(userId uint) ([]*dborm.Secret, error) {
 
 // 获取密钥
 
-func Fetch(userId, id uint) (dborm.Secret, error) {
+func FetchOne(userId, id uint) (dborm.Secret, error) {
 
 	var secret dborm.Secret
 
-	result := dborm.Db.First(&secret, "user_id = ? AND id = ?", userId, id)
+	result := dborm.Db.First(&secret, "id = ? AND user_id = ?", id, userId)
 
 	return secret, result.Error
+
+}
+
+// 删除密钥
+
+func Delete(userId, id uint) error {
+
+	var secret dborm.Secret
+
+	result := dborm.Db.Delete(&secret, "id = ? AND user_id = ?", id, userId)
+
+	return result.Error
 
 }

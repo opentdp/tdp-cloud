@@ -13,7 +13,7 @@ func Router(api *gin.RouterGroup) {
 	rg.Use(midware.Auth())
 
 	{
-		rg.GET("/", fetch)
+		rg.GET("/", list)
 		rg.POST("/", create)
 		rg.DELETE("/:id", delete)
 	}

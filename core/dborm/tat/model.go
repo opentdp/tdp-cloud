@@ -25,14 +25,14 @@ func Create(post *CreateParam) error {
 }
 
 type UpdateParam struct {
-	ID          uint   `json:"id"  binding:"required"`
+	Id          uint   `json:"id"  binding:"required"`
 	Name        string `json:"name" binding:"required"`
 	Description string `json:"description" binding:"required"`
 	Content     string `json:"content" binding:"required"`
 }
 
 func Update(post *UpdateParam) error {
-	result := dborm.Db.Model(&dborm.TAT{}).Where("id = ?", post.ID).Updates(dborm.TAT{Name: post.Name, Content: post.Content, Description: post.Description})
+	result := dborm.Db.Model(&dborm.TAT{}).Where("id = ?", post.Id).Updates(dborm.TAT{Name: post.Name, Content: post.Content, Description: post.Description})
 	return result.Error
 }
 

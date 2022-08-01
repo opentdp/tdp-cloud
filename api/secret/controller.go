@@ -8,6 +8,20 @@ import (
 	"tdp-cloud/core/dborm/secret"
 )
 
+// 密钥列表
+
+func list(c *gin.Context) {
+
+	userId := c.GetUint("UserId")
+
+	if res, err := secret.FetchAll(userId); err == nil {
+		c.Set("Payload", res)
+	} else {
+		c.Set("Error", err)
+	}
+
+}
+
 // 添加密钥
 
 func create(c *gin.Context) {
@@ -39,20 +53,6 @@ func delete(c *gin.Context) {
 
 	if err := secret.Delete(userId, uint(id)); err == nil {
 		c.Set("Payload", "删除成功")
-	} else {
-		c.Set("Error", err)
-	}
-
-}
-
-// 密钥列表
-
-func fetch(c *gin.Context) {
-
-	userId := c.GetUint("UserId")
-
-	if res, err := secret.Find(userId); err == nil {
-		c.Set("Payload", res)
 	} else {
 		c.Set("Error", err)
 	}
