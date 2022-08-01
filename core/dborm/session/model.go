@@ -1,9 +1,10 @@
 package session
 
 import (
+	"time"
+
 	"tdp-cloud/core/dborm"
 	"tdp-cloud/core/utils"
-	"time"
 )
 
 // 添加令牌
@@ -35,8 +36,8 @@ func FetchOne(token string) dborm.Session {
 		return dborm.Session{}
 	}
 
-	// 会话超过10分钟，自动续期
-	if session.UpdatedAt.Add(time.Minute * 10).Before(time.Now()) {
+	// 会话超过1分钟，自动续期
+	if session.UpdatedAt.Add(time.Minute).Before(time.Now()) {
 		dborm.Db.Save(&session)
 	}
 
