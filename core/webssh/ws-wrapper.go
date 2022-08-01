@@ -8,7 +8,7 @@ type wsWrapper struct {
 	*websocket.Conn
 }
 
-func (wsw *wsWrapper) Read(p []byte) (n int, err error) {
+func (wsw *wsWrapper) Read(p []byte) (int, error) {
 
 	for {
 		mtype, reader, err := wsw.Conn.NextReader()
@@ -23,7 +23,7 @@ func (wsw *wsWrapper) Read(p []byte) (n int, err error) {
 
 }
 
-func (wsw *wsWrapper) Write(p []byte) (n int, err error) {
+func (wsw *wsWrapper) Write(p []byte) (int, error) {
 
 	writer, err := wsw.Conn.NextWriter(websocket.TextMessage)
 	if err != nil {

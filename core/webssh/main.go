@@ -49,26 +49,22 @@ func wsHandle(wsConn *websocket.Conn, sshClient *ssh.Client, quitChan chan bool)
 
 	defer setQuit(quitChan)
 
-	rw := io.ReadWriter(&wsWrapper{wsConn})
-
-	webPrintln := func(data string) {
-		rw.Write([]byte(data + "\r\n"))
-	}
-
 	wsConn.SetCloseHandler(func(code int, text string) error {
 		wsConn.Close()
 		return nil
 	})
 
-	sshHandle(rw, sshClient, webPrintln)
+	rw := io.ReadWriter(&wsWrapper{wsConn})
+
+	sshHandle(rw, sshClient)
 
 }
 
-func sshHandle(rw io.ReadWriter, sshClient *ssh.Client, errhandle func(string)) {
+func sshHandle(rw io.ReadWriter, sshClient *ssh.Client) {
 
 	session, err := sshClient.NewSession()
 	if err != nil {
-		errhandle(err.Error())
+		rw.Write([]byte(err.Error() + "\r\n"))
 		return
 	}
 
@@ -79,26 +75,27 @@ func sshHandle(rw io.ReadWriter, sshClient *ssh.Client, errhandle func(string)) 
 	session.Stdin = rw
 
 	fd := int(os.Stdin.Fd())
+	width, height, _ := term.GetSize(fd)
+
 	modes := ssh.TerminalModes{
 		ssh.ECHO:          1,
 		ssh.TTY_OP_ISPEED: 14400,
 		ssh.TTY_OP_OSPEED: 14400,
 	}
-	termWidth, termHeight, _ := term.GetSize(fd)
 
-	err = session.RequestPty("xterm", termHeight, termWidth, modes)
+	err = session.RequestPty("xterm", width, height, modes)
 	if err != nil {
-		errhandle(err.Error())
+		rw.Write([]byte(err.Error() + "\r\n"))
 	}
 
 	err = session.Shell()
 	if err != nil {
-		errhandle(err.Error())
+		rw.Write([]byte(err.Error() + "\r\n"))
 	}
 
 	err = session.Wait()
 	if err != nil {
-		errhandle(err.Error())
+		rw.Write([]byte(err.Error() + "\r\n"))
 	}
 
 }
