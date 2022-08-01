@@ -6,7 +6,7 @@ import (
 	"golang.org/x/crypto/bcrypt"
 
 	"tdp-cloud/core/dborm"
-	"tdp-cloud/core/utils"
+	"tdp-cloud/core/dborm/session"
 )
 
 // 注册账号
@@ -64,8 +64,7 @@ func Login(param *LoginParam) (LoginResult, error) {
 
 	// 创建令牌
 
-	token := utils.RandString(32)
-	dborm.Db.Create(&dborm.Session{UserId: user.Id, Token: token})
+	token, _ := session.Create(user.Id)
 
 	// 获取密钥
 

@@ -9,8 +9,6 @@ import (
 	"github.com/gorilla/websocket"
 	"golang.org/x/crypto/ssh"
 	"golang.org/x/term"
-
-	"tdp-cloud/core/utils"
 )
 
 var upgrader = websocket.Upgrader{
@@ -25,7 +23,8 @@ func Handle(c *gin.Context, option *SSHClientOption) {
 
 	wsConn, err := upgrader.Upgrade(c.Writer, c.Request, nil)
 	if err != nil {
-		c.AbortWithStatusJSON(500, utils.NewMessage(err))
+		c.Set("Error", err)
+		c.Abort()
 		return
 	}
 

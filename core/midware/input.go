@@ -7,7 +7,6 @@ import (
 	"github.com/gin-gonic/gin"
 
 	"tdp-cloud/core/dborm/session"
-	"tdp-cloud/core/utils"
 )
 
 func Auth() gin.HandlerFunc {
@@ -18,14 +17,16 @@ func Auth() gin.HandlerFunc {
 		field := strings.Split(input, ":")
 
 		if len(field) != 2 {
-			c.AbortWithStatusJSON(403, utils.NewMessage("登录后重试"))
+			c.Set("Error", "登录后重试")
+			c.Abort()
 			return
 		}
 
-		session := session.FetchByToken(field[1])
+		session := session.FetchOne(field[1])
 
 		if session.UserId == 0 {
-			c.AbortWithStatusJSON(403, utils.NewMessage("会话已失效"))
+			c.Set("Error", "会话已失效")
+			c.Abort()
 			return
 		}
 
