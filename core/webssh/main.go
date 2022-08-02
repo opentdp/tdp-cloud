@@ -12,7 +12,7 @@ import (
 
 func Handle(c *gin.Context, option *SSHClientOption) {
 
-	log.Println("Webssh 正在尝试连接")
+	log.Println("Webssh - Connecting")
 
 	wsConn, err := wsUpgrader.Upgrade(c.Writer, c.Request, nil)
 	if err != nil {
@@ -37,7 +37,7 @@ func Handle(c *gin.Context, option *SSHClientOption) {
 	go sshHandle(sshClient, wsw, quit)
 	<-quit
 
-	log.Println("Webssh 连接已断开")
+	log.Println("Webssh - Disconnected")
 
 }
 
