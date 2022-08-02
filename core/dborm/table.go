@@ -1,55 +1,48 @@
 package dborm
 
-import (
-	"time"
-
-	"gorm.io/gorm"
-)
-
-// 公共模型
-
-type TableModel struct {
-	Id        uint `gorm:"primaryKey"`
-	CreatedAt time.Time
-	UpdatedAt time.Time
-	DeletedAt gorm.DeletedAt `gorm:"index"`
-}
-
 // 用户表
 
 type User struct {
-	TableModel
+	Id          uint   `gorm:"primaryKey"`
 	Username    string `gorm:"index,unique"`
 	Password    string
 	Description string `gorm:"default:不可能！我的代码怎么可能会有bug！"`
 	Secrets     []Secret
 	Sessions    []Session
+	CreatedAt   int64
+	UpdatedAt   int64
 }
 
 // 密钥表
 
 type Secret struct {
-	TableModel
+	Id          uint   `gorm:"primaryKey"`
 	UserId      uint   `gorm:"index"`
 	SecretId    string `gorm:"index,unique"`
 	SecretKey   string
 	Description string
+	CreatedAt   int64
+	UpdatedAt   int64
 }
 
 // 会话表
 
 type Session struct {
-	TableModel
-	UserId uint   `gorm:"index"`
-	Token  string `gorm:"index,unique"`
+	Id        uint   `gorm:"primaryKey"`
+	UserId    uint   `gorm:"index"`
+	Token     string `gorm:"index,unique"`
+	CreatedAt int64
+	UpdatedAt int64
 }
 
 // TAT
 
 type TAT struct {
-	TableModel
+	Id          uint `gorm:"primaryKey"`
 	UserId      uint `gorm:"index"`
 	Name        string
-	Description string
 	Content     string
+	Description string
+	CreatedAt   int64
+	UpdatedAt   int64
 }

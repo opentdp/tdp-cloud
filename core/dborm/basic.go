@@ -8,6 +8,7 @@ import (
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 	"gorm.io/gorm/logger"
+	"gorm.io/gorm/schema"
 )
 
 var Db *gorm.DB
@@ -16,7 +17,11 @@ func Connect(dsn string) {
 
 	var err error
 
-	var config = &gorm.Config{}
+	var config = &gorm.Config{
+		NamingStrategy: schema.NamingStrategy{
+			SingularTable: true,
+		},
+	}
 
 	if os.Getenv("IS_DEBUG") != "" {
 		config.Logger = logger.Default.LogMode(logger.Info)

@@ -31,13 +31,13 @@ func FetchOne(token string) dborm.Session {
 	dborm.Db.First(&session, "token = ?", token)
 
 	// 会话超过30分钟，删除令牌
-	if session.UpdatedAt.Add(time.Minute * 30).Before(time.Now()) {
+	if time.Now().Unix()-session.UpdatedAt > 1800 {
 		dborm.Db.Delete(&session)
 		return dborm.Session{}
 	}
 
 	// 会话超过1分钟，自动续期
-	if session.UpdatedAt.Add(time.Minute).Before(time.Now()) {
+	if time.Now().Unix()-session.UpdatedAt > 60 {
 		dborm.Db.Save(&session)
 	}
 
