@@ -22,8 +22,6 @@ require (
 require (
 	// 计划任务
 	github.com/robfig/cron/v3 v3.0.1
-	// 日志输出
-	github.com/sirupsen/logrus v1.9.0
 	// 腾讯云 SDK
 	github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/common v1.0.449
 	// 加密扩充库

@@ -1,11 +1,11 @@
 package serve
 
 import (
+	"log"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
 	"github.com/gorilla/websocket"
-	"github.com/sirupsen/logrus"
 )
 
 var upgrader = websocket.Upgrader{
@@ -25,7 +25,7 @@ func UseSocekt(c *gin.Context) {
 
 	_, message, err := ws.ReadMessage()
 	if nil != err {
-		logrus.Info(err.Error())
+		log.Println(err.Error())
 	}
 
 	ws.WriteMessage(websocket.TextMessage, message)

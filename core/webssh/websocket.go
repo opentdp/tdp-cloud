@@ -6,11 +6,11 @@ import (
 	"github.com/gorilla/websocket"
 )
 
-type readWriter struct {
+type wsWrapper struct {
 	*websocket.Conn
 }
 
-var upgrader = websocket.Upgrader{
+var wsUpgrader = websocket.Upgrader{
 	ReadBufferSize:  1024,
 	WriteBufferSize: 1024 * 1024 * 10,
 	CheckOrigin: func(r *http.Request) bool {
@@ -18,10 +18,10 @@ var upgrader = websocket.Upgrader{
 	},
 }
 
-func (rw *readWriter) Read(p []byte) (int, error) {
+func (wsw *wsWrapper) Read(p []byte) (int, error) {
 
 	for {
-		mtype, reader, err := rw.Conn.NextReader()
+		mtype, reader, err := wsw.Conn.NextReader()
 		if err != nil {
 			return 0, err
 		}
@@ -33,14 +33,23 @@ func (rw *readWriter) Read(p []byte) (int, error) {
 
 }
 
-func (rw *readWriter) Write(p []byte) (int, error) {
+func (wsw *wsWrapper) Write(p []byte) (int, error) {
 
-	writer, err := rw.Conn.NextWriter(websocket.TextMessage)
+	writer, err := wsw.Conn.NextWriter(websocket.TextMessage)
 	if err != nil {
 		return 0, err
 	}
 
 	defer writer.Close()
 	return writer.Write(p)
+
+}
+
+func (wsw *wsWrapper) SetCloseHandler(cb func() error) {
+
+	wsw.Conn.SetCloseHandler(func(code int, text string) error {
+		wsw.Conn.Close()
+		return cb()
+	})
 
 }

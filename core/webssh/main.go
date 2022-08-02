@@ -2,17 +2,19 @@ package webssh
 
 import (
 	"io"
+	"log"
 	"os"
 
 	"github.com/gin-gonic/gin"
-	"github.com/gorilla/websocket"
 	"golang.org/x/crypto/ssh"
 	"golang.org/x/term"
 )
 
 func Handle(c *gin.Context, option *SSHClientOption) {
 
-	wsConn, err := upgrader.Upgrade(c.Writer, c.Request, nil)
+	log.Println("Webssh 正在尝试连接")
+
+	wsConn, err := wsUpgrader.Upgrade(c.Writer, c.Request, nil)
 	if err != nil {
 		c.Set("Error", err)
 		c.Abort()
@@ -21,28 +23,31 @@ func Handle(c *gin.Context, option *SSHClientOption) {
 
 	defer wsConn.Close()
 
+	wsw := &wsWrapper{wsConn}
+
 	sshClient, err := NewSSHClient(option)
 	if err != nil {
-		msg := "> " + err.Error() + "\r\n"
-		wsConn.WriteMessage(websocket.TextMessage, []byte(msg))
+		wsw.Write([]byte("> " + err.Error() + "\r\n"))
 		return
 	}
 
 	defer sshClient.Close()
 
-	ch := make(chan bool, 1)
-	go sshHandle(wsConn, sshClient, ch)
-	<-ch
+	quit := make(chan bool, 1)
+	go sshHandle(sshClient, wsw, quit)
+	<-quit
+
+	log.Println("Webssh 连接已断开")
 
 }
 
-func sshHandle(wsConn *websocket.Conn, sshClient *ssh.Client, ch chan bool) {
+func sshHandle(sshClient *ssh.Client, wsw *wsWrapper, quit chan bool) {
 
 	defer func() {
-		ch <- true
+		quit <- true
 	}()
 
-	rw := io.ReadWriter(&readWriter{wsConn})
+	rw := io.ReadWriter(wsw)
 
 	session, err := sshClient.NewSession()
 	if err != nil {
@@ -50,18 +55,16 @@ func sshHandle(wsConn *websocket.Conn, sshClient *ssh.Client, ch chan bool) {
 		return
 	}
 
-	// 客户端关闭连接时清理会话
-	wsConn.SetCloseHandler(func(code int, text string) error {
-		session.Close()
-		wsConn.Close()
-		return nil
-	})
-
 	defer session.Close()
 
+	// 客户端断开连接时清理资源
+	wsw.SetCloseHandler(func() error {
+		return session.Close()
+	})
+
+	session.Stdin = rw
 	session.Stdout = rw
 	session.Stderr = rw
-	session.Stdin = rw
 
 	fd := int(os.Stdin.Fd())
 	width, height, _ := term.GetSize(fd)
@@ -72,18 +75,15 @@ func sshHandle(wsConn *websocket.Conn, sshClient *ssh.Client, ch chan bool) {
 		ssh.TTY_OP_OSPEED: 14400,
 	}
 
-	err = session.RequestPty("xterm", width, height, modes)
-	if err != nil {
+	if err := session.RequestPty("xterm", width, height, modes); err != nil {
 		rw.Write([]byte(err.Error() + "\r\n"))
 	}
 
-	err = session.Shell()
-	if err != nil {
+	if err := session.Shell(); err != nil {
 		rw.Write([]byte(err.Error() + "\r\n"))
 	}
 
-	err = session.Wait()
-	if err != nil {
+	if err := session.Wait(); err != nil {
 		rw.Write([]byte(err.Error() + "\r\n"))
 	}
 
