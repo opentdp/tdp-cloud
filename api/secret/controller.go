@@ -1,6 +1,7 @@
 package secret
 
 import (
+	"regexp"
 	"strconv"
 
 	"github.com/gin-gonic/gin"
@@ -15,6 +16,11 @@ func list(c *gin.Context) {
 	userId := c.GetUint("UserId")
 
 	if res, err := secret.FetchAll(userId); err == nil {
+		re, _ := regexp.Compile(`^(\w{8}).+(\w{8})$`)
+		for k, v := range res {
+			res[k].SecretId = re.ReplaceAllString(v.SecretId, "$1*******$2")
+			res[k].SecretKey = re.ReplaceAllString(v.SecretKey, "$1******$2")
+		}
 		c.Set("Payload", res)
 	} else {
 		c.Set("Error", err)
