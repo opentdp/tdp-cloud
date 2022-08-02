@@ -31,7 +31,7 @@ func Listen(addr string) {
 	}()
 
 	// 创建监听中断信号通道
-	quit := make(chan os.Signal)
+	quit := make(chan os.Signal, 1)
 	// SIGTERM: `kill`
 	// SIGINT : `kill -2` 或 CTRL + C
 	// SIGKILL: `kill -9`，无法捕获，故而不做处理
@@ -42,7 +42,7 @@ func Listen(addr string) {
 	log.Println("Server shutting down...")
 
 	// 通知服务器还有5秒的时间完成当前正在处理的请求
-	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+	ctx, cancel := context.WithTimeout(context.Background(), time.Second*5)
 	defer cancel()
 
 	// 优雅地关闭服务器而不中断任何活动连接
