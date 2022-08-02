@@ -2,6 +2,7 @@ package webssh
 
 import (
 	"errors"
+	"strings"
 	"time"
 
 	"golang.org/x/crypto/ssh"
@@ -17,6 +18,10 @@ type SSHClientOption struct {
 }
 
 func NewSSHClient(option *SSHClientOption) (*ssh.Client, error) {
+
+	if !strings.Contains(option.RemoteAddr, ":") {
+		option.RemoteAddr = option.RemoteAddr + ":22"
+	}
 
 	if option.Password != "" {
 		return NewSSHClientWithPassword(option)
