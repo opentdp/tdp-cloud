@@ -44,11 +44,10 @@ func Login(param *LoginParam) (LoginResult, error) {
 	var res LoginResult
 
 	var user dborm.User
-	var secret dborm.Secret
 
 	// 验证账号
 
-	dborm.Db.First(&user, "username = ?", param.Username)
+	dborm.Db.Preload("Secrets").First(&user, "username = ?", param.Username)
 
 	if user.Id == 0 {
 		return res, errors.New("账号错误")
@@ -66,14 +65,15 @@ func Login(param *LoginParam) (LoginResult, error) {
 
 	token, _ := session.Create(user.Id)
 
-	// 获取密钥
+	// 返回结果
 
-	dborm.Db.First(&secret, "user_id = ?", user.Id)
-
-	res.Keyid = secret.Id
 	res.Token = token
 	res.Username = user.Username
 	res.Description = user.Description
+
+	if len(user.Secrets) > 0 {
+		res.Keyid = user.Secrets[0].Id
+	}
 
 	return res, nil
 
