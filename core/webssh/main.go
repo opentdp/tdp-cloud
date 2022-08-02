@@ -2,7 +2,6 @@ package webssh
 
 import (
 	"io"
-	"net/http"
 	"os"
 
 	"github.com/gin-gonic/gin"
@@ -10,14 +9,6 @@ import (
 	"golang.org/x/crypto/ssh"
 	"golang.org/x/term"
 )
-
-var upgrader = websocket.Upgrader{
-	ReadBufferSize:  1024,
-	WriteBufferSize: 1024 * 1024 * 10,
-	CheckOrigin: func(r *http.Request) bool {
-		return true
-	},
-}
 
 func Handle(c *gin.Context, option *SSHClientOption) {
 
@@ -39,34 +30,32 @@ func Handle(c *gin.Context, option *SSHClientOption) {
 
 	defer sshClient.Close()
 
-	quitChan := make(chan bool, 1)
-	go wsHandle(wsConn, sshClient, quitChan)
-	<-quitChan
+	ch := make(chan bool, 1)
+	go sshHandle(wsConn, sshClient, ch)
+	<-ch
 
 }
 
-func wsHandle(wsConn *websocket.Conn, sshClient *ssh.Client, quitChan chan bool) {
+func sshHandle(wsConn *websocket.Conn, sshClient *ssh.Client, ch chan bool) {
 
-	defer setQuit(quitChan)
+	defer func() {
+		ch <- true
+	}()
 
-	wsConn.SetCloseHandler(func(code int, text string) error {
-		wsConn.Close()
-		return nil
-	})
-
-	rw := io.ReadWriter(&wsWrapper{wsConn})
-
-	sshHandle(rw, sshClient)
-
-}
-
-func sshHandle(rw io.ReadWriter, sshClient *ssh.Client) {
+	rw := io.ReadWriter(&readWriter{wsConn})
 
 	session, err := sshClient.NewSession()
 	if err != nil {
 		rw.Write([]byte(err.Error() + "\r\n"))
 		return
 	}
+
+	// 客户端关闭连接时清理会话
+	wsConn.SetCloseHandler(func(code int, text string) error {
+		session.Close()
+		wsConn.Close()
+		return nil
+	})
 
 	defer session.Close()
 
@@ -98,8 +87,4 @@ func sshHandle(rw io.ReadWriter, sshClient *ssh.Client) {
 		rw.Write([]byte(err.Error() + "\r\n"))
 	}
 
-}
-
-func setQuit(ch chan bool) {
-	ch <- true
 }
