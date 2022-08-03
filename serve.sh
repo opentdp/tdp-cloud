@@ -1,7 +1,10 @@
 #!/bin/sh
 #
 
-export IS_DEBUG=1
+export TDP_DEBUG=1
+
+export CGO_ENABLED=0
+export GO111MODULE=on
 
 ####################################################################
 

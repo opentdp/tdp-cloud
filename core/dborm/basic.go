@@ -23,7 +23,7 @@ func Connect(dsn string) {
 		},
 	}
 
-	if os.Getenv("IS_DEBUG") != "" {
+	if os.Getenv("TDP_DEBUG") != "" {
 		config.Logger = logger.Default.LogMode(logger.Info)
 	}
 

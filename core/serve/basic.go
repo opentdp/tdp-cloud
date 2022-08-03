@@ -10,7 +10,7 @@ var engine *gin.Engine
 
 func Create(addr string, mids ...func(*gin.Engine)) {
 
-	if os.Getenv("IS_DEBUG") == "" {
+	if os.Getenv("TDP_DEBUG") == "" {
 		gin.SetMode(gin.ReleaseMode)
 	}
 

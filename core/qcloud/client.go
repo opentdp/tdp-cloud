@@ -54,7 +54,7 @@ func NewClient(rp *Params) (c *tc.Client) {
 	profile := tp.NewClientProfile()
 
 	// 调试模式
-	if os.Getenv("IS_DEBUG") != "" {
+	if os.Getenv("TDP_DEBUG") != "" {
 		profile.Debug = true
 	}
 

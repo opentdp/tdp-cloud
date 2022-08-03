@@ -2,6 +2,7 @@
 #
 
 export CGO_ENABLED=0
+export GO111MODULE=on
 
 build() {
     GOOS=$1

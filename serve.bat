@@ -1,7 +1,10 @@
 @ECHO OFF
 ::
 
-SET IS_DEBUG=1
+SET TDP_DEBUG=1
+
+SET CGO_ENABLED=0
+SET GO111MODULE=on
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
