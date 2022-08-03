@@ -5,10 +5,8 @@ export CGO_ENABLED=0
 export GO111MODULE=on
 
 build() {
-    GOOS=$1
-    GOARCH=$2
     echo building for $1/$2
-    go build -o build/tdpc-$1-$2$3 main.go
+    GOOS=$1 GOARCH=$2 go build -o build/tdpc-$1-$2$3 main.go
 }
 
 ####################################################################
