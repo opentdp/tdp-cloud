@@ -14,7 +14,7 @@
 
 ### 编译为二进制
 
-在项目目录运行  `build.bat` 或 `./build.sh`，或者[下载二进制可执行程序](https://github.com/tdp-resource/tdp-cloud/releases)
+在项目目录运行 `build.bat` 或 `./build.sh`。你还可以下载 [稳定版](https://github.com/tdp-resource/tdp-cloud/releases) 或 [每日编译版](http://curl.rpc.im/?dir=/tdp-cloud)
 
 ### 额外参数设置
 
@@ -66,8 +66,8 @@ go env -w GOPROXY=https://goproxy.cn,direct
 
 3、进入 `TDP Cloud` 后台，密钥管理，添加获取到的 `SecretId` 和 `SecretKey`
 
-## 四、License
+## 四、其他
 
-[GPL-3.0](https://opensource.org/licenses/GPL-3.0)
+License [GPL-3.0](https://opensource.org/licenses/GPL-3.0)
 
 Copyright (c) 2022 TDP Cloud
