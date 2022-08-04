@@ -1,4 +1,6 @@
-# 腾讯云轻量控制面板
+# 轻量控制面板
+
+基于腾讯云API实现的轻量级云资源控制面板
 
 ## 功能列表
 
@@ -10,7 +12,7 @@
 
 ### 编译为二进制
 
-在项目目录运行  `build.bat` 或 `./build.sh`，预编译二进制下载地址 https://github.com/tdp-resource/tdp-cloud-ci/releases
+在项目目录运行  `build.bat` 或 `./build.sh`，或者[下载预编译可执行程序](https://github.com/tdp-resource/tdp-cloud/releases)
 
 ### 额外参数设置
 
