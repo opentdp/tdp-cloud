@@ -12,7 +12,7 @@
 
 ### 编译为二进制
 
-在项目目录运行  `build.bat` 或 `./build.sh`，或者[下载预编译可执行程序](https://github.com/tdp-resource/tdp-cloud/releases)
+在项目目录运行  `build.bat` 或 `./build.sh`，或者[下载二进制可执行程序](https://github.com/tdp-resource/tdp-cloud/releases)
 
 ### 额外参数设置
 
