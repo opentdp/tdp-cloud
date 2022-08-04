@@ -4,15 +4,15 @@
 
 请参阅 https://github.com/tdp-resource/tdp-cloud/issues/1
 
-## 运行开发服务
+## 开发说明
 
 在项目目录运行  `serve.bat` 或 `./serve.sh`
 
-## 编译为二进制
+### 编译为二进制
 
 在项目目录运行  `build.bat` 或 `./build.sh`，预编译二进制下载地址 https://github.com/tdp-resource/tdp-cloud-ci/releases
 
-## 额外参数设置
+### 额外参数设置
 
 如果项目无法运行或编译，请尝试设置系统环境变量或临时环境变量
 
@@ -21,7 +21,7 @@ go env -w GO111MODULE=on
 go env -w GOPROXY=https://goproxy.cn,direct
 ```
 
-## 初次部署说明
+## 部署说明
 
 1、运行编译好的二进制文件，此时会生成 `cloud.db` 数据库文件，请注意权限
 
@@ -29,13 +29,13 @@ go env -w GOPROXY=https://goproxy.cn,direct
 
 3、登录刚注册的账号，添加腾讯云访问密钥
 
-## 支持的数据库
+### 支持的数据库
 
 - **SQLite** 数据源格式 `cloud.db`
 
 - **MySQL**  数据源格式 `user:password@tcp(localhost:3306)/dbname?charset=utf8&parseTime=True&loc=Local`
 
-## 添加腾讯云密钥
+### 添加腾讯云密钥
 
 1、进入腾讯云 [CAM - 策略](https://console.cloud.tencent.com/cam/policy) 页面，创建一个自定义策略 `TDPCloudAccess`，权限JSON如下：
 
@@ -62,7 +62,7 @@ go env -w GOPROXY=https://goproxy.cn,direct
 
 3、进入 `TDP Cloud` 后台，密钥管理，添加获取到的 `SecretId` 和 `SecretKey`
 
-# License
+## License
 
 [GPL-3.0](https://opensource.org/licenses/GPL-3.0)
 
