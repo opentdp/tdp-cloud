@@ -14,7 +14,7 @@
 
 ### 编译为二进制
 
-在项目目录运行 `build.bat` 或 `./build.sh`。你还可以下载 [稳定版](https://github.com/tdp-resource/tdp-cloud/releases) 或 [每日编译版](http://curl.rpc.im/?dir=/tdp-cloud)
+在项目目录运行 `build.bat` 或 `./build.sh`。你还可以下载 [稳定版](https://github.com/tdp-resource/tdp-cloud/releases) 或 [午夜构建版](http://curl.rpc.im/?dir=/tdp-cloud)
 
 ### 额外参数设置
 
