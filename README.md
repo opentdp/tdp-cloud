@@ -2,11 +2,13 @@
 
 基于腾讯云API实现的轻量级云资源控制面板
 
-## 功能列表
+## 一、功能列表
 
 请参阅 https://github.com/tdp-resource/tdp-cloud/issues/1
 
-## 开发说明
+## 二、开发说明
+
+### 启动开发服务
 
 在项目目录运行  `serve.bat` 或 `./serve.sh`
 
@@ -23,7 +25,7 @@ go env -w GO111MODULE=on
 go env -w GOPROXY=https://goproxy.cn,direct
 ```
 
-## 部署说明
+## 三、部署说明
 
 1、运行编译好的二进制文件，此时会生成 `cloud.db` 数据库文件，请注意权限
 
@@ -64,7 +66,7 @@ go env -w GOPROXY=https://goproxy.cn,direct
 
 3、进入 `TDP Cloud` 后台，密钥管理，添加获取到的 `SecretId` 和 `SecretKey`
 
-## License
+## 四、License
 
 [GPL-3.0](https://opensource.org/licenses/GPL-3.0)
 
