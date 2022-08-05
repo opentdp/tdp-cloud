@@ -22,13 +22,14 @@ func doRequest(c *gin.Context) {
 	payload, _ := c.GetRawData()
 
 	var params = &qcloud.Params{
-		Service:   c.Param("service"),
-		Version:   c.Param("version"),
-		Action:    c.Param("action"),
-		Payload:   payload,
-		Region:    c.Param("region"),
-		SecretId:  secret.SecretId,
-		SecretKey: secret.SecretKey,
+		Service:       c.Param("service"),
+		Version:       c.Param("version"),
+		Action:        c.Param("action"),
+		Payload:       payload,
+		Region:        c.Param("region"),
+		RequestResion: c.Param("rregion"),
+		SecretId:      secret.SecretId,
+		SecretKey:     secret.SecretKey,
 	}
 
 	res, err := qcloud.NewRequest(params)

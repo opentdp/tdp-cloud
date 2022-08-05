@@ -10,13 +10,14 @@ import (
 )
 
 type Params struct {
-	Service   string
-	Version   string
-	Action    string
-	Payload   []byte
-	Region    string
-	SecretId  string
-	SecretKey string
+	Service       string
+	Version       string
+	Action        string
+	Payload       []byte
+	Region        string
+	RequestResion string
+	SecretId      string
+	SecretKey     string
 }
 
 type Response struct {
@@ -66,7 +67,11 @@ func NewClient(rp *Params) (c *tc.Client) {
 
 	// 使用地域接口，尽量避免限频
 	if rp.Region != "" {
-		profile.HttpProfile.Endpoint = rp.Service + "." + rp.Region + ".tencentcloudapi.com"
+		if rp.RequestResion != "" {
+			profile.HttpProfile.Endpoint = rp.Service + "." + rp.RequestResion + ".tencentcloudapi.com"
+		} else {
+			profile.HttpProfile.Endpoint = rp.Service + "." + rp.Region + ".tencentcloudapi.com"
+		}
 	}
 
 	credential := tc.NewCredential(rp.SecretId, rp.SecretKey)

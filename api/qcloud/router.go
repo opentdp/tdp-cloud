@@ -14,5 +14,5 @@ func Router(api *gin.RouterGroup) {
 
 	rg.POST("/:service/:version/:action", doRequest)
 	rg.POST("/:service/:version/:action/:region", doRequest)
-
+	rg.POST("/:service/:version/:action/:region/:rregion", doRequest)
 }
