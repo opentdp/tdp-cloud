@@ -26,10 +26,13 @@ func vnc(c *gin.Context) {
 
 func ssh(c *gin.Context) {
 
-	query := webssh.SSHClientOption{}
+	var rq webssh.SSHClientOption
 
-	c.ShouldBindQuery(&query)
+	if err := c.ShouldBindQuery(&rq); err != nil {
+		c.Set("Error", "请求参数错误")
+		return
+	}
 
-	webssh.Handle(c, &query)
+	webssh.Handle(c, &rq)
 
 }

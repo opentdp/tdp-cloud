@@ -11,16 +11,16 @@ import (
 type AuthModel int8
 
 type SSHClientOption struct {
-	RemoteAddr string `form:"addr"`
-	User       string `form:"user"`
-	Password   string `form:"password"`
-	PublicKey  string `form:"publicKey"`
+	Addr      string `form:"addr"`
+	User      string `form:"user"`
+	Password  string `form:"password"`
+	PublicKey string `form:"publicKey"`
 }
 
 func NewSSHClient(option *SSHClientOption) (*ssh.Client, error) {
 
-	if !strings.Contains(option.RemoteAddr, ":") {
-		option.RemoteAddr = option.RemoteAddr + ":22"
+	if !strings.Contains(option.Addr, ":") {
+		option.Addr = option.Addr + ":22"
 	}
 
 	if option.Password != "" {
@@ -46,7 +46,7 @@ func NewSSHClientWithPassword(option *SSHClientOption) (*ssh.Client, error) {
 		HostKeyCallback: ssh.InsecureIgnoreHostKey(),
 	}
 
-	return ssh.Dial("tcp", option.RemoteAddr, config)
+	return ssh.Dial("tcp", option.Addr, config)
 
 }
 
@@ -66,6 +66,6 @@ func NewSSHClientWithPublicKey(option *SSHClientOption) (*ssh.Client, error) {
 		HostKeyCallback: ssh.InsecureIgnoreHostKey(),
 	}
 
-	return ssh.Dial("tcp", option.RemoteAddr, config)
+	return ssh.Dial("tcp", option.Addr, config)
 
 }
