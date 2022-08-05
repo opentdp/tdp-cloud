@@ -30,6 +30,7 @@ func ssh(c *gin.Context) {
 		RemoteAddr: c.Query("addr"),
 		User:       c.Query("user"),
 		Password:   c.Query("password"),
+		PublicKey:  c.Query("publicKey"),
 	}
 
 	webssh.Handle(c, option)

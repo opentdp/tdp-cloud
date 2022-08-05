@@ -14,7 +14,7 @@ type SSHClientOption struct {
 	RemoteAddr string
 	User       string
 	Password   string
-	PulicKey   string
+	PublicKey  string
 }
 
 func NewSSHClient(option *SSHClientOption) (*ssh.Client, error) {
@@ -27,8 +27,8 @@ func NewSSHClient(option *SSHClientOption) (*ssh.Client, error) {
 		return NewSSHClientWithPassword(option)
 	}
 
-	if option.PulicKey != "" {
-		return NewSSHClientWithPulicKey(option)
+	if option.PublicKey != "" {
+		return NewSSHClientWithPublicKey(option)
 	}
 
 	return nil, errors.New("no Password or PublicKey")
@@ -50,9 +50,9 @@ func NewSSHClientWithPassword(option *SSHClientOption) (*ssh.Client, error) {
 
 }
 
-func NewSSHClientWithPulicKey(option *SSHClientOption) (*ssh.Client, error) {
+func NewSSHClientWithPublicKey(option *SSHClientOption) (*ssh.Client, error) {
 
-	signer, err := ssh.ParsePrivateKey([]byte(option.PulicKey))
+	signer, err := ssh.ParsePrivateKey([]byte(option.PublicKey))
 	if err != nil {
 		return nil, err
 	}
