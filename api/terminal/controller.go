@@ -26,13 +26,10 @@ func vnc(c *gin.Context) {
 
 func ssh(c *gin.Context) {
 
-	option := &webssh.SSHClientOption{
-		RemoteAddr: c.Query("addr"),
-		User:       c.Query("user"),
-		Password:   c.Query("password"),
-		PublicKey:  c.Query("publicKey"),
-	}
+	option := webssh.SSHClientOption{}
 
-	webssh.Handle(c, option)
+	c.ShouldBindQuery(&option)
+
+	webssh.Handle(c, &option)
 
 }
