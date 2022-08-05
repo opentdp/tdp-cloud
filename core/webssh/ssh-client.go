@@ -11,10 +11,10 @@ import (
 type AuthModel int8
 
 type SSHClientOption struct {
-	Addr      string `form:"addr"`
-	User      string `form:"user"`
-	Password  string `form:"password"`
-	PublicKey string `form:"publicKey"`
+	Addr       string `form:"addr"`
+	User       string `form:"user"`
+	Password   string `form:"password"`
+	PrivateKey string `form:"privateKey"`
 }
 
 func NewSSHClient(option *SSHClientOption) (*ssh.Client, error) {
@@ -27,11 +27,11 @@ func NewSSHClient(option *SSHClientOption) (*ssh.Client, error) {
 		return NewSSHClientWithPassword(option)
 	}
 
-	if option.PublicKey != "" {
-		return NewSSHClientWithPublicKey(option)
+	if option.PrivateKey != "" {
+		return NewSSHClientWithPrivateKey(option)
 	}
 
-	return nil, errors.New("no Password or PublicKey")
+	return nil, errors.New("no Password or PrivateKey")
 
 }
 
@@ -50,9 +50,9 @@ func NewSSHClientWithPassword(option *SSHClientOption) (*ssh.Client, error) {
 
 }
 
-func NewSSHClientWithPublicKey(option *SSHClientOption) (*ssh.Client, error) {
+func NewSSHClientWithPrivateKey(option *SSHClientOption) (*ssh.Client, error) {
 
-	signer, err := ssh.ParsePrivateKey([]byte(option.PublicKey))
+	signer, err := ssh.ParsePrivateKey([]byte(option.PrivateKey))
 	if err != nil {
 		return nil, err
 	}
