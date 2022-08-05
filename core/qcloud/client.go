@@ -10,21 +10,21 @@ import (
 )
 
 type Params struct {
-	Service       string
-	Version       string
-	Action        string
-	Payload       []byte
-	Region        string
-	RequestResion string
-	SecretId      string
-	SecretKey     string
+	Service   string `desc:"产品名称"`
+	Version   string `desc:"接口版本"`
+	Action    string `desc:"接口名称"`
+	Payload   []byte `desc:"结构化数据"`
+	Region    string `desc:"资源所在区域"`
+	Endpoint  string `desc:"指定接口区域"`
+	SecretId  string `desc:"访问密钥 Id"`
+	SecretKey string `desc:"访问密钥 Key"`
 }
 
 type Response struct {
 	Response interface{} `json:"Response"`
 }
 
-func NewRequest(rp *Params) (res *Response, err error) {
+func NewRequest(rp *Params) (*Response, error) {
 
 	request := th.NewCommonRequest(rp.Service, rp.Version, rp.Action)
 
@@ -35,49 +35,49 @@ func NewRequest(rp *Params) (res *Response, err error) {
 	client := NewClient(rp)
 	response := th.NewCommonResponse()
 
-	if err = client.Send(request, response); err != nil {
-		return
+	if err := client.Send(request, response); err != nil {
+		return nil, err
 	}
 
-	res = &Response{}
+	res := &Response{}
 	body := response.GetBody()
 
-	if err = json.Unmarshal(body, res); err != nil {
-		return
+	if err := json.Unmarshal(body, res); err != nil {
+		return nil, err
 	}
 
-	return
+	return res, nil
 
 }
 
-func NewClient(rp *Params) (c *tc.Client) {
+func NewClient(rp *Params) *tc.Client {
 
-	profile := tp.NewClientProfile()
+	cpf := tp.NewClientProfile()
 
 	// 调试模式
 	if os.Getenv("TDP_DEBUG") != "" {
-		profile.Debug = true
+		cpf.Debug = true
 	}
 
 	// 网络错误重试
-	profile.NetworkFailureMaxRetries = 2
+	cpf.NetworkFailureMaxRetries = 2
 
 	// API 限频重试
-	profile.RateLimitExceededMaxRetries = 2
+	cpf.RateLimitExceededMaxRetries = 2
 
-	// 使用地域接口，尽量避免限频
-	if rp.Region != "" {
-		if rp.RequestResion != "" {
-			profile.HttpProfile.Endpoint = rp.Service + "." + rp.RequestResion + ".tencentcloudapi.com"
-		} else {
-			profile.HttpProfile.Endpoint = rp.Service + "." + rp.Region + ".tencentcloudapi.com"
-		}
+	// 启用地域容灾
+	cpf.DisableRegionBreaker = false
+	cpf.BackupEndpoint = "ap-hongkong.tencentcloudapi.com"
+
+	// 使用地域接口，避免限频
+	if rp.Endpoint != "" {
+		cpf.HttpProfile.Endpoint = rp.Service + "." + rp.Endpoint + ".tencentcloudapi.com"
+	} else if rp.Region != "" {
+		cpf.HttpProfile.Endpoint = rp.Service + "." + rp.Region + ".tencentcloudapi.com"
 	}
 
-	credential := tc.NewCredential(rp.SecretId, rp.SecretKey)
+	cred := tc.NewCredential(rp.SecretId, rp.SecretKey)
 
-	c = tc.NewCommonClient(credential, rp.Region, profile)
-
-	return
+	return tc.NewCommonClient(cred, rp.Region, cpf)
 
 }

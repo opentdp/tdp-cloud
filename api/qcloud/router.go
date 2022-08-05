@@ -10,9 +10,6 @@ func Router(api *gin.RouterGroup) {
 
 	rg := api.Group("/qcloud")
 
-	rg.Use(midware.Auth())
+	rg.Use(midware.Auth()).POST("/", doRequest)
 
-	rg.POST("/:service/:version/:action", doRequest)
-	rg.POST("/:service/:version/:action/:region", doRequest)
-	rg.POST("/:service/:version/:action/:region/:rregion", doRequest)
 }
