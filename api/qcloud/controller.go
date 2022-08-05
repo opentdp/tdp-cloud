@@ -1,6 +1,8 @@
 package qcloud
 
 import (
+	"encoding/json"
+
 	"github.com/gin-gonic/gin"
 
 	"tdp-cloud/core/dborm/secret"
@@ -20,16 +22,18 @@ func doRequest(c *gin.Context) {
 	}
 
 	params := &qcloud.Params{
-		Service:   c.GetHeader("X-TC-Service"),
-		Version:   c.GetHeader("X-TC-Version"),
-		Action:    c.GetHeader("X-TC-Action"),
-		Region:    c.GetHeader("X-TC-Region"),
-		Endpoint:  c.GetHeader("X-TC-Endpoint"),
 		SecretId:  secret.SecretId,
 		SecretKey: secret.SecretKey,
 	}
 
-	if payload, err := c.GetRawData(); err != nil {
+	header := []byte(c.GetHeader("TDP-Cloud"))
+
+	if json.Unmarshal(header, params) != nil {
+		c.Set("Error", "参数错误")
+		return
+	}
+
+	if payload, err := c.GetRawData(); err == nil {
 		params.Payload = payload
 	}
 

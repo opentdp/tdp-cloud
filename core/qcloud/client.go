@@ -10,14 +10,14 @@ import (
 )
 
 type Params struct {
-	Service   string `desc:"产品名称"`
-	Version   string `desc:"接口版本"`
-	Action    string `desc:"接口名称"`
-	Payload   []byte `desc:"结构化数据"`
-	Region    string `desc:"资源所在区域"`
-	Endpoint  string `desc:"指定接口区域"`
-	SecretId  string `desc:"访问密钥 Id"`
-	SecretKey string `desc:"访问密钥 Key"`
+	Service   string `json:"service" desc:"产品名称"`
+	Version   string `json:"version" desc:"接口版本"`
+	Action    string `json:"action" desc:"接口名称"`
+	Payload   []byte `json:"payload" desc:"结构化数据"`
+	Region    string `json:"region" desc:"资源所在区域"`
+	Endpoint  string `json:"endpoint" desc:"指定接口区域"`
+	SecretId  string `json:"secretId" desc:"访问密钥 Id"`
+	SecretKey string `json:"secretKey" desc:"访问密钥 Key"`
 }
 
 type Response struct {
