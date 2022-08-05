@@ -2,10 +2,12 @@ package terminal
 
 import (
 	"io/ioutil"
+	"log"
 	"net/http"
-	"tdp-cloud/core/webssh"
 
 	"github.com/gin-gonic/gin"
+
+	"tdp-cloud/core/webssh"
 )
 
 func vnc(c *gin.Context) {
@@ -26,13 +28,10 @@ func vnc(c *gin.Context) {
 
 func ssh(c *gin.Context) {
 
-	var rq webssh.SSHClientOption
+	log.Println("Webssh - Connecting")
 
-	if err := c.ShouldBindQuery(&rq); err != nil {
-		c.Set("Error", "请求参数错误")
-		return
-	}
+	webssh.Handle(c)
 
-	webssh.Handle(c, &rq)
+	log.Println("Webssh - Disconnected")
 
 }

@@ -2,7 +2,6 @@ package webssh
 
 import (
 	"io"
-	"log"
 	"os"
 
 	"github.com/gin-gonic/gin"
@@ -10,46 +9,52 @@ import (
 	"golang.org/x/term"
 )
 
-func Handle(c *gin.Context, option *SSHClientOption) {
+func Handle(c *gin.Context) {
 
-	log.Println("Webssh - Connecting")
-
-	wsConn, err := wsUpgrader.Upgrade(c.Writer, c.Request, nil)
+	wsp, err := NewSocketPod(c.Writer, c.Request)
 	if err != nil {
-		c.Set("Error", err)
-		c.Abort()
+		c.AbortWithError(500, err)
 		return
 	}
 
-	defer wsConn.Close()
+	defer wsp.Close()
 
-	wsw := &wsWrapper{wsConn}
+	// 获取 SSH 参数
 
-	sshClient, err := NewSSHClient(option)
-	if err != nil {
-		wsw.Write([]byte("> " + err.Error() + "\r\n"))
+	var option SSHClientOption
+
+	if err := c.ShouldBindQuery(&option); err != nil {
+		wsp.Write([]byte("> " + err.Error() + "\r\n"))
 		return
 	}
 
-	defer sshClient.Close()
+	// 创建 SSH 连接
+
+	client, err := NewSSHClient(&option)
+	if err != nil {
+		wsp.Write([]byte("> " + err.Error() + "\r\n"))
+		return
+	}
+
+	defer client.Close()
+
+	// 转发 SSH 会话
 
 	quit := make(chan bool, 1)
-	go sshHandle(sshClient, wsw, quit)
+	go sshBridge(client, wsp, quit)
 	<-quit
-
-	log.Println("Webssh - Disconnected")
 
 }
 
-func sshHandle(sshClient *ssh.Client, wsw *wsWrapper, quit chan bool) {
+func sshBridge(client *ssh.Client, wsp *SocketPod, quit chan bool) {
 
 	defer func() {
 		quit <- true
 	}()
 
-	rw := io.ReadWriter(wsw)
+	rw := io.ReadWriter(wsp)
 
-	session, err := sshClient.NewSession()
+	session, err := client.NewSession()
 	if err != nil {
 		rw.Write([]byte(err.Error() + "\r\n"))
 		return
@@ -57,10 +62,8 @@ func sshHandle(sshClient *ssh.Client, wsw *wsWrapper, quit chan bool) {
 
 	defer session.Close()
 
-	// 客户端断开连接时清理资源
-	wsw.SetCloseHandler(func() error {
-		return session.Close()
-	})
+	// 客户端断开时清理资源
+	wsp.OnClose(session.Close)
 
 	session.Stdin = rw
 	session.Stdout = rw

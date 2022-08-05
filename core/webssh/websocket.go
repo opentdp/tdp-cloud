@@ -6,22 +6,30 @@ import (
 	"github.com/gorilla/websocket"
 )
 
-type wsWrapper struct {
+type SocketPod struct {
 	*websocket.Conn
 }
 
-var wsUpgrader = websocket.Upgrader{
-	ReadBufferSize:  1024,
-	WriteBufferSize: 1024 * 1024 * 10,
-	CheckOrigin: func(r *http.Request) bool {
-		return true
-	},
+func NewSocketPod(w http.ResponseWriter, r *http.Request) (*SocketPod, error) {
+
+	var upgrader = websocket.Upgrader{
+		ReadBufferSize:  1024,
+		WriteBufferSize: 1024 * 1024 * 10,
+		CheckOrigin: func(r *http.Request) bool {
+			return true
+		},
+	}
+
+	ws, err := upgrader.Upgrade(w, r, nil)
+
+	return &SocketPod{ws}, err
+
 }
 
-func (wsw *wsWrapper) Read(p []byte) (int, error) {
+func (wsp *SocketPod) Read(p []byte) (int, error) {
 
 	for {
-		mtype, reader, err := wsw.Conn.NextReader()
+		mtype, reader, err := wsp.Conn.NextReader()
 		if err != nil {
 			return 0, err
 		}
@@ -33,9 +41,9 @@ func (wsw *wsWrapper) Read(p []byte) (int, error) {
 
 }
 
-func (wsw *wsWrapper) Write(p []byte) (int, error) {
+func (wsp *SocketPod) Write(p []byte) (int, error) {
 
-	writer, err := wsw.Conn.NextWriter(websocket.TextMessage)
+	writer, err := wsp.Conn.NextWriter(websocket.TextMessage)
 	if err != nil {
 		return 0, err
 	}
@@ -45,11 +53,17 @@ func (wsw *wsWrapper) Write(p []byte) (int, error) {
 
 }
 
-func (wsw *wsWrapper) SetCloseHandler(cb func() error) {
+func (wsp *SocketPod) OnClose(cb func() error) {
 
-	wsw.Conn.SetCloseHandler(func(code int, text string) error {
-		wsw.Conn.Close()
+	wsp.Conn.SetCloseHandler(func(code int, text string) error {
+		defer wsp.Conn.Close()
 		return cb()
 	})
+
+}
+
+func (wsp *SocketPod) Close() {
+
+	wsp.Conn.Close()
 
 }
