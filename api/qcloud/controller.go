@@ -29,7 +29,7 @@ func doRequest(c *gin.Context) {
 	header := []byte(c.GetHeader("TDP-Cloud"))
 
 	if json.Unmarshal(header, params) != nil {
-		c.Set("Error", "参数错误")
+		c.Set("Error", "请求参数错误")
 		return
 	}
 
