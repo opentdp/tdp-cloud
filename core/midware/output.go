@@ -6,7 +6,7 @@ import (
 	"tdp-cloud/core/utils"
 )
 
-func Output() gin.HandlerFunc {
+func AbortHandle() gin.HandlerFunc {
 
 	return func(c *gin.Context) {
 
