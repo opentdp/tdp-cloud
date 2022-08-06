@@ -44,8 +44,8 @@ func apiProxy(c *gin.Context) {
 		c.Set("Payload", res.Response)
 	} else {
 		re, _ := regexp.Compile(`^.+, Message=`)
-		str := re.ReplaceAllString(err.Error(), "")
-		c.Set("Error", str)
+		msg := re.ReplaceAllString(err.Error(), "")
+		c.Set("Error", msg)
 	}
 
 }
