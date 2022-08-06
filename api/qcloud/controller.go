@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"io/ioutil"
 	"net/http"
+	"regexp"
 
 	"github.com/gin-gonic/gin"
 
@@ -42,7 +43,9 @@ func apiProxy(c *gin.Context) {
 	if res, err := qcloud.NewRequest(params); err == nil {
 		c.Set("Payload", res.Response)
 	} else {
-		c.Set("Error", err)
+		re, _ := regexp.Compile(`^.+, Message=`)
+		str := re.ReplaceAllString(err.Error(), "")
+		c.Set("Error", str)
 	}
 
 }
