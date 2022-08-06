@@ -38,11 +38,26 @@ type Session struct {
 // TAT
 
 type TAT struct {
-	Id          uint `gorm:"primaryKey"`
-	UserId      uint `gorm:"index"`
-	Name        string
-	Content     string
-	Description string
-	CreatedAt   int64
-	UpdatedAt   int64
+	Id               uint `gorm:"primaryKey"`
+	UserId           uint `gorm:"index"`
+	Name             string
+	Username         string
+	Content          string
+	Description      string
+	CommandType      string
+	WorkingDirectory string
+	Timeout          uint
+	CreatedAt        int64
+	UpdatedAt        int64
+}
+
+type TATHistory struct {
+	Id                   uint `gorm:"primaryKey"`
+	UserId               uint `gorm:"index"`
+	KeyId                uint
+	Name                 string
+	Region               string
+	InvocationId         string
+	InvocationStatus     string
+	InvocationResultJson string
 }

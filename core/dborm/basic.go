@@ -37,7 +37,7 @@ func Connect(dsn string) {
 		panic("Failed to connect database")
 	}
 
-	if Db.AutoMigrate(&User{}, &Secret{}, &Session{}, &TAT{}) != nil {
+	if Db.AutoMigrate(&User{}, &Secret{}, &Session{}, &TAT{}, &TATHistory{}) != nil {
 		panic("Failed to migrate database")
 	}
 
