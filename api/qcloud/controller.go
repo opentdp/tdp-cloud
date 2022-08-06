@@ -26,7 +26,7 @@ func doRequest(c *gin.Context) {
 		SecretKey: secret.SecretKey,
 	}
 
-	header := []byte(c.GetHeader("TDP-Cloud"))
+	header := []byte(c.GetHeader("TDP-QCloud"))
 
 	if json.Unmarshal(header, params) != nil {
 		c.Set("Error", "请求参数错误")
