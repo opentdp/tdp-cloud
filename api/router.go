@@ -17,7 +17,7 @@ func Router(engine *gin.Engine) {
 
 	api := engine.Group("/api")
 
-	api.Use(midware.Output())
+	api.Use(midware.AbortHandle())
 
 	{
 		// qcloud api
@@ -29,7 +29,6 @@ func Router(engine *gin.Engine) {
 		user.Router(api)
 		secret.Router(api)
 		tat.Router(api)
-		terminal.Router(api)
 	}
 
 	// websocket

@@ -2,6 +2,8 @@ package qcloud
 
 import (
 	"encoding/json"
+	"io/ioutil"
+	"net/http"
 
 	"github.com/gin-gonic/gin"
 
@@ -9,7 +11,7 @@ import (
 	"tdp-cloud/core/qcloud"
 )
 
-func doRequest(c *gin.Context) {
+func apiProxy(c *gin.Context) {
 
 	keyId := c.GetUint("KeyId")
 	userId := c.GetUint("UserId")
@@ -39,6 +41,22 @@ func doRequest(c *gin.Context) {
 
 	if res, err := qcloud.NewRequest(params); err == nil {
 		c.Set("Payload", res.Response)
+	} else {
+		c.Set("Error", err)
+	}
+
+}
+
+func vncProxy(c *gin.Context) {
+
+	resp, err := http.Get("https://img.qcloud.com/qcloud/app/active_vnc/index.html")
+	if err != nil {
+		c.Set("Error", "获取资源失败")
+		return
+	}
+
+	if res, err := ioutil.ReadAll(resp.Body); err == nil {
+		c.Set("HTML", string(res))
 	} else {
 		c.Set("Error", err)
 	}

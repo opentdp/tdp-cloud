@@ -6,14 +6,6 @@ import (
 	"tdp-cloud/core/midware"
 )
 
-func Router(api *gin.RouterGroup) {
-
-	rg := api.Group("/terminal")
-
-	rg.GET("/vnc", vnc)
-
-}
-
 func Socket(wsl *gin.RouterGroup) {
 
 	rg := wsl.Group("/terminal")
