@@ -12,7 +12,7 @@ func register(c *gin.Context) {
 
 	var rq user.RegisterParam
 
-	if err := c.ShouldBind(&rq); err != nil {
+	if c.ShouldBind(&rq) != nil {
 		c.Set("Error", "请求参数错误")
 		return
 	}
@@ -31,7 +31,7 @@ func login(c *gin.Context) {
 
 	var rq user.LoginParam
 
-	if err := c.ShouldBind(&rq); err != nil {
+	if c.ShouldBind(&rq) != nil {
 		c.Set("Error", "请求参数错误")
 		return
 	}
@@ -50,7 +50,7 @@ func updateInfo(c *gin.Context) {
 
 	var rq user.UpdateInfoParam
 
-	if err := c.ShouldBind(&rq); err != nil {
+	if c.ShouldBind(&rq) != nil {
 		c.Set("Error", "请求参数错误")
 		return
 	}
@@ -71,7 +71,7 @@ func updatePassword(c *gin.Context) {
 
 	var rq user.UpdatePasswordParam
 
-	if err := c.ShouldBind(&rq); err != nil {
+	if c.ShouldBind(&rq) != nil {
 		c.Set("Error", "请求参数错误")
 		return
 	}

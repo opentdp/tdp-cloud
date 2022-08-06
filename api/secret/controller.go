@@ -34,7 +34,7 @@ func create(c *gin.Context) {
 
 	var rq secret.CreateParam
 
-	if err := c.ShouldBind(&rq); err != nil {
+	if c.ShouldBind(&rq) != nil {
 		c.Set("Error", "请求参数错误")
 		return
 	}
