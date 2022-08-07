@@ -37,7 +37,10 @@ func Connect(dsn string) {
 		panic("Failed to connect database")
 	}
 
-	if Db.AutoMigrate(&User{}, &Secret{}, &Session{}, &TAT{}, &TATHistory{}) != nil {
+	// 升级tat表
+	Db.Migrator().RenameTable("tat", "tat_script")
+
+	if Db.AutoMigrate(&User{}, &Secret{}, &Session{}, &TATScript{}, &TATHistory{}) != nil {
 		panic("Failed to migrate database")
 	}
 

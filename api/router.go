@@ -8,7 +8,8 @@ import (
 	"tdp-cloud/api/qcloud"
 
 	"tdp-cloud/api/secret"
-	"tdp-cloud/api/tat"
+	"tdp-cloud/api/tat_history"
+	"tdp-cloud/api/tat_script"
 	"tdp-cloud/api/terminal"
 	"tdp-cloud/api/user"
 )
@@ -28,7 +29,8 @@ func Router(engine *gin.Engine) {
 
 		user.Router(api)
 		secret.Router(api)
-		tat.Router(api)
+		tat_history.Router(api)
+		tat_script.Router(api)
 	}
 
 	// websocket

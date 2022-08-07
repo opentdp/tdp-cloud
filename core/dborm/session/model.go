@@ -24,7 +24,7 @@ func Create(userId uint) (string, error) {
 
 // 获取令牌
 
-func FetchOne(token string) dborm.Session {
+func Fetch(token string) dborm.Session {
 
 	var session dborm.Session
 

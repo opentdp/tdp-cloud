@@ -2,7 +2,7 @@
 
 ### 列表
 
-GET {{$dotenv baseapi}}/tat
+GET {{$dotenv baseapi}}/tat/script
 Authorization: {{$dotenv authorization}}
 Content-Type: application/json
 Origin: {{$dotenv origin}}
@@ -10,14 +10,14 @@ Origin: {{$dotenv origin}}
 
 ### 查看一条
 
-GET {{$dotenv baseapi}}/tat/1
+GET {{$dotenv baseapi}}/tat/script/1
 Authorization: {{$dotenv authorization}}
 Content-Type: application/json
 Origin: {{$dotenv origin}}
 
 ### 添加
 
-POST {{$dotenv baseapi}}/tat
+POST {{$dotenv baseapi}}/tat/script
 Authorization: {{$dotenv authorization}}
 Content-Type: application/json
 Origin: {{$dotenv origin}}
@@ -30,7 +30,7 @@ Origin: {{$dotenv origin}}
 
 ### 更新
 
-PATCH {{$dotenv baseapi}}/tat/1
+PATCH {{$dotenv baseapi}}/tat/script/1
 Authorization: {{$dotenv authorization}}
 Content-Type: application/json
 Origin: {{$dotenv origin}}
@@ -44,7 +44,7 @@ Origin: {{$dotenv origin}}
 
 ### 删除
 
-DELETE {{$dotenv baseapi}}/tat/1
+DELETE {{$dotenv baseapi}}/tat/script/1
 Authorization: {{$dotenv authorization}}
 Content-Type: application/json
 Origin: {{$dotenv origin}}

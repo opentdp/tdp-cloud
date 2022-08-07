@@ -22,7 +22,7 @@ func Auth() gin.HandlerFunc {
 			return
 		}
 
-		session := session.FetchOne(field[1])
+		session := session.Fetch(field[1])
 
 		if session.UserId == 0 {
 			c.Set("Error", "会话已失效")

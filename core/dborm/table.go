@@ -35,9 +35,9 @@ type Session struct {
 	UpdatedAt int64
 }
 
-// TAT
+// 自动化助手
 
-type TAT struct {
+type TATScript struct {
 	Id               uint `gorm:"primaryKey"`
 	UserId           uint `gorm:"index"`
 	Name             string
