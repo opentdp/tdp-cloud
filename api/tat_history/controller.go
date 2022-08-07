@@ -45,7 +45,7 @@ func update(c *gin.Context) {
 		return
 	}
 
-	id, _ := strconv.ParseUint(c.Param("id"), 10, 32)
+	id, _ := strconv.Atoi(c.Param("id"))
 	rq.Id = uint(id)
 
 	if err := history.Update(&rq); err == nil {
