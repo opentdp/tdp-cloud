@@ -37,11 +37,26 @@ func Connect(dsn string) {
 		panic("Failed to connect database")
 	}
 
-	// 升级tat表
-	Db.Migrator().RenameTable("tat", "tat_script")
-
-	if Db.AutoMigrate(&User{}, &Secret{}, &Session{}, &TATScript{}, &TATHistory{}) != nil {
+	if migrate() != nil {
 		panic("Failed to migrate database")
 	}
+
+}
+
+func migrate() error {
+
+	// 更改表名 tat -> tat_script
+	if Db.Migrator().HasTable("tat") {
+		Db.Migrator().RenameTable("tat", "tat_script")
+	}
+
+	// 自动迁移
+	return Db.AutoMigrate(
+		&User{},
+		&Secret{},
+		&Session{},
+		&TATScript{},
+		&TATHistory{},
+	)
 
 }
