@@ -24,16 +24,16 @@ func Create(userId uint) (string, error) {
 
 // 获取令牌
 
-func Fetch(token string) dborm.Session {
+func Fetch(token string) *dborm.Session {
 
-	var item dborm.Session
+	var item *dborm.Session
 
 	dborm.Db.First(&item, "token = ?", token)
 
 	// 会话超过30分钟，删除令牌
 	if time.Now().Unix()-item.UpdatedAt > 1800 {
 		dborm.Db.Delete(&item)
-		return dborm.Session{}
+		return nil
 	}
 
 	// 会话超过1分钟，自动续期

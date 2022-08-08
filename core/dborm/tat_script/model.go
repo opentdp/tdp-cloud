@@ -63,8 +63,8 @@ func FetchAll(uid uint) ([]*dborm.TATScript, error) {
 	return items, result.Error
 }
 
-func Fetch(id int) (dborm.TATScript, error) {
-	var item dborm.TATScript
+func Fetch(id int) (*dborm.TATScript, error) {
+	var item *dborm.TATScript
 
 	result := dborm.Db.Find(&item, "id = ?", id)
 	return item, result.Error

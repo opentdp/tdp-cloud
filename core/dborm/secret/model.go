@@ -64,9 +64,9 @@ func FetchAll(userId uint) ([]*dborm.Secret, error) {
 
 // 获取密钥
 
-func Fetch(id, userId uint) (dborm.Secret, error) {
+func Fetch(id, userId uint) (*dborm.Secret, error) {
 
-	var item dborm.Secret
+	var item *dborm.Secret
 
 	result := dborm.Db.First(&item, "id = ? AND user_id = ?", id, userId)
 

@@ -39,40 +39,40 @@ type LoginResult struct {
 	Description string `json:"description"`
 }
 
-func Login(param *LoginParam) (LoginResult, error) {
+func Login(param *LoginParam) (*LoginResult, error) {
 
-	var res LoginResult
-
-	var user dborm.User
+	var item dborm.User
 
 	// 验证账号
 
-	dborm.Db.Preload("Secrets").First(&user, "username = ?", param.Username)
+	dborm.Db.Preload("Secrets").First(&item, "username = ?", param.Username)
 
-	if user.Id == 0 {
-		return res, errors.New("账号错误")
+	if item.Id == 0 {
+		return nil, errors.New("账号错误")
 	}
 
 	// 验证密码
 
-	err := bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(param.Password))
+	err := bcrypt.CompareHashAndPassword([]byte(item.Password), []byte(param.Password))
 
 	if err != nil {
-		return res, errors.New("密码错误")
+		return nil, errors.New("密码错误")
 	}
 
 	// 创建令牌
 
-	token, _ := session.Create(user.Id)
+	token, _ := session.Create(item.Id)
 
 	// 返回结果
 
-	res.Token = token
-	res.Username = user.Username
-	res.Description = user.Description
+	res := &LoginResult{
+		Token:       token,
+		Username:    item.Username,
+		Description: item.Description,
+	}
 
-	if len(user.Secrets) > 0 {
-		res.Keyid = user.Secrets[0].Id
+	if len(item.Secrets) > 0 {
+		res.Keyid = item.Secrets[0].Id
 	}
 
 	return res, nil
@@ -88,21 +88,21 @@ type UpdateInfoParam struct {
 
 func UpdateInfo(param *UpdateInfoParam) error {
 
-	var user dborm.User
+	var item *dborm.User
 
 	// 验证账号
 
-	dborm.Db.First(&user, "id = ?", param.UserId)
+	dborm.Db.First(&item, "id = ?", param.UserId)
 
-	if user.Id == 0 {
+	if item.Id == 0 {
 		return errors.New("账号错误")
 	}
 
 	// 更新资料
 
-	user.Description = param.Description
+	item.Description = param.Description
 
-	dborm.Db.Select("Description").Save(&user)
+	dborm.Db.Select("Description").Save(&item)
 
 	return nil
 
@@ -118,17 +118,17 @@ type UpdatePasswordParam struct {
 
 func UpdatePassword(param *UpdatePasswordParam) error {
 
-	var user dborm.User
+	var item *dborm.User
 
 	// 验证账号
 
-	dborm.Db.First(&user, "id = ?", param.UserId)
+	dborm.Db.First(&item, "id = ?", param.UserId)
 
-	if user.Id == 0 {
+	if item.Id == 0 {
 		return errors.New("账号错误")
 	}
 
-	err := bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(param.OldPassword))
+	err := bcrypt.CompareHashAndPassword([]byte(item.Password), []byte(param.OldPassword))
 
 	if err != nil {
 		return errors.New("密码错误")
@@ -137,9 +137,9 @@ func UpdatePassword(param *UpdatePasswordParam) error {
 	// 更新密码
 
 	hash, _ := bcrypt.GenerateFromPassword([]byte(param.NewPassword), bcrypt.DefaultCost)
-	user.Password = string(hash)
+	item.Password = string(hash)
 
-	dborm.Db.Select("Password").Save(&user)
+	dborm.Db.Select("Password").Save(&item)
 
 	return nil
 

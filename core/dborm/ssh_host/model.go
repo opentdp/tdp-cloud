@@ -64,9 +64,9 @@ func FetchAll(userId uint) ([]*dborm.SSHHost, error) {
 
 // 获取主机
 
-func Fetch(id, userId uint) (dborm.SSHHost, error) {
+func Fetch(id, userId uint) (*dborm.SSHHost, error) {
 
-	var item dborm.SSHHost
+	var item *dborm.SSHHost
 
 	result := dborm.Db.First(&item, "id = ? AND user_id = ?", id, userId)
 

@@ -64,9 +64,9 @@ func FetchAll(userId uint) ([]*dborm.SSHKey, error) {
 
 // 获取密钥
 
-func Fetch(id, userId uint) (dborm.SSHKey, error) {
+func Fetch(id, userId uint) (*dborm.SSHKey, error) {
 
-	var item dborm.SSHKey
+	var item *dborm.SSHKey
 
 	result := dborm.Db.First(&item, "id = ? AND user_id = ?", id, userId)
 
