@@ -1,4 +1,4 @@
-package item
+package ssh_key
 
 import (
 	"tdp-cloud/core/dborm"
