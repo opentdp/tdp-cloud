@@ -54,11 +54,11 @@ func Update(post *UpdateParam) error {
 
 func FetchAll(userId uint) ([]*dborm.Secret, error) {
 
-	var secrets []*dborm.Secret
+	var items []*dborm.Secret
 
-	result := dborm.Db.Find(&secrets, "user_id = ?", userId)
+	result := dborm.Db.Find(&items, "user_id = ?", userId)
 
-	return secrets, result.Error
+	return items, result.Error
 
 }
 
@@ -66,11 +66,11 @@ func FetchAll(userId uint) ([]*dborm.Secret, error) {
 
 func Fetch(id, userId uint) (dborm.Secret, error) {
 
-	var secret dborm.Secret
+	var item dborm.Secret
 
-	result := dborm.Db.First(&secret, "id = ? AND user_id = ?", id, userId)
+	result := dborm.Db.First(&item, "id = ? AND user_id = ?", id, userId)
 
-	return secret, result.Error
+	return item, result.Error
 
 }
 
@@ -78,9 +78,9 @@ func Fetch(id, userId uint) (dborm.Secret, error) {
 
 func Delete(id, userId uint) error {
 
-	var secret dborm.Secret
+	var item dborm.Secret
 
-	result := dborm.Db.Delete(&secret, "id = ? AND user_id = ?", id, userId)
+	result := dborm.Db.Delete(&item, "id = ? AND user_id = ?", id, userId)
 
 	return result.Error
 

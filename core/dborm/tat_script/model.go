@@ -57,17 +57,17 @@ func Update(post *UpdateParam) error {
 }
 
 func FetchAll(uid uint) ([]*dborm.TATScript, error) {
-	var tatScripts []*dborm.TATScript
+	var items []*dborm.TATScript
 
-	result := dborm.Db.Find(&tatScripts, "user_id = ?", uid)
-	return tatScripts, result.Error
+	result := dborm.Db.Find(&items, "user_id = ?", uid)
+	return items, result.Error
 }
 
 func Fetch(id int) (dborm.TATScript, error) {
-	var tatScript dborm.TATScript
+	var item dborm.TATScript
 
-	result := dborm.Db.Find(&tatScript, "id = ?", id)
-	return tatScript, result.Error
+	result := dborm.Db.Find(&item, "id = ?", id)
+	return item, result.Error
 }
 
 func Delete(id int) error {

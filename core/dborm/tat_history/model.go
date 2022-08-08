@@ -42,11 +42,11 @@ func Update(post *UpdateParam) error {
 }
 
 func FetchAll(userId, keyId uint) ([]*dborm.TATHistory, error) {
-	var historys []*dborm.TATHistory
+	var items []*dborm.TATHistory
 
 	result := dborm.Db.Limit(50).Order("id desc").
-		Find(&historys, "user_id = ? and key_id = ?", userId, keyId)
-	return historys, result.Error
+		Find(&items, "user_id = ? and key_id = ?", userId, keyId)
+	return items, result.Error
 }
 
 func Delete(id int) error {

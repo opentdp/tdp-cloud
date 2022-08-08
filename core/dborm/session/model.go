@@ -26,21 +26,21 @@ func Create(userId uint) (string, error) {
 
 func Fetch(token string) dborm.Session {
 
-	var session dborm.Session
+	var item dborm.Session
 
-	dborm.Db.First(&session, "token = ?", token)
+	dborm.Db.First(&item, "token = ?", token)
 
 	// 会话超过30分钟，删除令牌
-	if time.Now().Unix()-session.UpdatedAt > 1800 {
-		dborm.Db.Delete(&session)
+	if time.Now().Unix()-item.UpdatedAt > 1800 {
+		dborm.Db.Delete(&item)
 		return dborm.Session{}
 	}
 
 	// 会话超过1分钟，自动续期
-	if time.Now().Unix()-session.UpdatedAt > 60 {
-		dborm.Db.Save(&session)
+	if time.Now().Unix()-item.UpdatedAt > 60 {
+		dborm.Db.Save(&item)
 	}
 
-	return session
+	return item
 
 }
