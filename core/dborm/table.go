@@ -1,19 +1,30 @@
 package dborm
 
-// 用户表
+// 用户
 
 type User struct {
 	Id          uint   `gorm:"primaryKey"`
 	Username    string `gorm:"index,unique"`
 	Password    string
-	Description string `gorm:"default:不可能！我的代码怎么可能会有bug！"`
+	Description string `gorm:"default:什么也没有"`
 	Secrets     []Secret
 	Sessions    []Session
 	CreatedAt   int64
 	UpdatedAt   int64
 }
 
-// CAM 密钥表
+// 用户会话
+
+type Session struct {
+	Id        uint `gorm:"primaryKey"`
+	UserId    uint `gorm:"index"`
+	User      User
+	Token     string `gorm:"index,unique"`
+	CreatedAt int64
+	UpdatedAt int64
+}
+
+// CAM 密钥
 
 type Secret struct {
 	Id          uint   `gorm:"primaryKey"`
@@ -25,18 +36,7 @@ type Secret struct {
 	UpdatedAt   int64
 }
 
-// 会话表
-
-type Session struct {
-	Id        uint `gorm:"primaryKey"`
-	UserId    uint `gorm:"index"`
-	User      User
-	Token     string `gorm:"index,unique"`
-	CreatedAt int64
-	UpdatedAt int64
-}
-
-// SSH 主机表
+// SSH 主机
 
 type SSHHost struct {
 	Id          uint   `gorm:"primaryKey"`
@@ -51,7 +51,7 @@ type SSHHost struct {
 	UpdatedAt   int64
 }
 
-// SSH 密钥表
+// SSH 密钥
 
 type SSHKey struct {
 	Id          uint `gorm:"primaryKey"`
@@ -64,7 +64,7 @@ type SSHKey struct {
 	UpdatedAt   int64
 }
 
-// 自动化助手
+// 自动化助手 脚本
 
 type TATScript struct {
 	Id               uint `gorm:"primaryKey"`
@@ -79,6 +79,8 @@ type TATScript struct {
 	CreatedAt        int64
 	UpdatedAt        int64
 }
+
+// 自动化助手 历史记录
 
 type TATHistory struct {
 	Id                   uint `gorm:"primaryKey"`
