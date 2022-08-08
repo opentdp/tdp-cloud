@@ -13,7 +13,7 @@ type User struct {
 	UpdatedAt   int64
 }
 
-// 密钥表
+// CAM 密钥表
 
 type Secret struct {
 	Id          uint   `gorm:"primaryKey"`
@@ -28,11 +28,40 @@ type Secret struct {
 // 会话表
 
 type Session struct {
-	Id        uint   `gorm:"primaryKey"`
-	UserId    uint   `gorm:"index"`
+	Id        uint `gorm:"primaryKey"`
+	UserId    uint `gorm:"index"`
+	User      User
 	Token     string `gorm:"index,unique"`
 	CreatedAt int64
 	UpdatedAt int64
+}
+
+// SSH 主机表
+
+type SSHHost struct {
+	Id          uint   `gorm:"primaryKey"`
+	UserId      uint   `gorm:"index"`
+	Address     string `gorm:"index,unique"`
+	Username    string
+	Password    string
+	Description string
+	SSHKeyId    uint
+	SSHKey      SSHKey
+	CreatedAt   int64
+	UpdatedAt   int64
+}
+
+// SSH 密钥表
+
+type SSHKey struct {
+	Id          uint `gorm:"primaryKey"`
+	UserId      uint `gorm:"index"`
+	PublicKey   string
+	PrivateKey  string
+	Description string
+	SSHHost     []SSHHost
+	CreatedAt   int64
+	UpdatedAt   int64
 }
 
 // 自动化助手
