@@ -1,6 +1,7 @@
 package session
 
 import (
+	"errors"
 	"time"
 
 	"tdp-cloud/core/dborm"
@@ -24,16 +25,20 @@ func Create(userId uint) (string, error) {
 
 // 获取令牌
 
-func Fetch(token string) *dborm.Session {
+func Fetch(token string) (*dborm.Session, error) {
 
 	var item *dborm.Session
 
-	dborm.Db.First(&item, "token = ?", token)
+	result := dborm.Db.First(&item, "token = ?", token)
+
+	if result.Error != nil {
+		return nil, result.Error
+	}
 
 	// 会话超过30分钟，删除令牌
 	if time.Now().Unix()-item.UpdatedAt > 1800 {
 		dborm.Db.Delete(&item)
-		return nil
+		return nil, errors.New("会话过期")
 	}
 
 	// 会话超过1分钟，自动续期
@@ -41,6 +46,6 @@ func Fetch(token string) *dborm.Session {
 		dborm.Db.Save(&item)
 	}
 
-	return item
+	return item, nil
 
 }

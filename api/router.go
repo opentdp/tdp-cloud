@@ -8,7 +8,7 @@ import (
 	"tdp-cloud/api/qcloud"
 
 	"tdp-cloud/api/secret"
-	"tdp-cloud/api/ssh_key"
+	"tdp-cloud/api/sshkey"
 	"tdp-cloud/api/tat_history"
 	"tdp-cloud/api/tat_script"
 	"tdp-cloud/api/terminal"
@@ -30,7 +30,7 @@ func Router(engine *gin.Engine) {
 
 		user.Router(api)
 		secret.Router(api)
-		ssh_key.Router(api)
+		sshkey.Router(api)
 		tat_history.Router(api)
 		tat_script.Router(api)
 	}
