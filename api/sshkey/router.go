@@ -1,4 +1,4 @@
-package ssh_key
+package sshkey
 
 import (
 	"github.com/gin-gonic/gin"
@@ -8,7 +8,7 @@ import (
 
 func Router(api *gin.RouterGroup) {
 
-	rg := api.Group("/ssh/key")
+	rg := api.Group("/sshkey")
 
 	rg.Use(midware.Auth())
 

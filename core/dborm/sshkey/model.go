@@ -1,4 +1,4 @@
-package ssh_key
+package sshkey
 
 import (
 	"tdp-cloud/core/dborm"
@@ -15,7 +15,7 @@ type CreateParam struct {
 
 func Create(post *CreateParam) error {
 
-	result := dborm.Db.Create(&dborm.SSHKey{
+	result := dborm.Db.Create(&dborm.Sshkey{
 		UserId:      post.UserId,
 		PublicKey:   post.PublicKey,
 		PrivateKey:  post.PrivateKey,
@@ -38,9 +38,9 @@ type UpdateParam struct {
 
 func Update(post *UpdateParam) error {
 
-	result := dborm.Db.Model(&dborm.SSHKey{}).
+	result := dborm.Db.Model(&dborm.Sshkey{}).
 		Where("id = ? AND user_id = ?", post.Id, post.UserId).
-		Updates(dborm.SSHKey{
+		Updates(dborm.Sshkey{
 			PublicKey:   post.PublicKey,
 			PrivateKey:  post.PrivateKey,
 			Description: post.Description,
@@ -52,9 +52,9 @@ func Update(post *UpdateParam) error {
 
 // 获取密钥列表
 
-func FetchAll(userId uint) ([]*dborm.SSHKey, error) {
+func FetchAll(userId uint) ([]*dborm.Sshkey, error) {
 
-	var items []*dborm.SSHKey
+	var items []*dborm.Sshkey
 
 	result := dborm.Db.Find(&items, "user_id = ?", userId)
 
@@ -64,9 +64,9 @@ func FetchAll(userId uint) ([]*dborm.SSHKey, error) {
 
 // 获取密钥
 
-func Fetch(id, userId uint) (*dborm.SSHKey, error) {
+func Fetch(id, userId uint) (*dborm.Sshkey, error) {
 
-	var item *dborm.SSHKey
+	var item *dborm.Sshkey
 
 	result := dborm.Db.First(&item, "id = ? AND user_id = ?", id, userId)
 
@@ -78,7 +78,7 @@ func Fetch(id, userId uint) (*dborm.SSHKey, error) {
 
 func Delete(id, userId uint) error {
 
-	var item dborm.SSHKey
+	var item dborm.Sshkey
 
 	result := dborm.Db.Delete(&item, "id = ? AND user_id = ?", id, userId)
 

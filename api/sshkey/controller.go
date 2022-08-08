@@ -1,11 +1,11 @@
-package ssh_key
+package sshkey
 
 import (
 	"strconv"
 
 	"github.com/gin-gonic/gin"
 
-	sshkey "tdp-cloud/core/dborm/ssh_key"
+	"tdp-cloud/core/dborm/sshkey"
 )
 
 // 密钥列表

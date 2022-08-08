@@ -36,30 +36,14 @@ type Secret struct {
 	UpdatedAt   int64
 }
 
-// SSH 主机
-
-type SSHHost struct {
-	Id          uint   `gorm:"primaryKey"`
-	UserId      uint   `gorm:"index"`
-	Address     string `gorm:"index,unique"`
-	Username    string
-	Password    string
-	Description string
-	SSHKeyId    uint
-	SSHKey      SSHKey
-	CreatedAt   int64
-	UpdatedAt   int64
-}
-
 // SSH 密钥
 
-type SSHKey struct {
+type Sshkey struct {
 	Id          uint `gorm:"primaryKey"`
 	UserId      uint `gorm:"index"`
 	PublicKey   string
 	PrivateKey  string
 	Description string
-	SSHHost     []SSHHost
 	CreatedAt   int64
 	UpdatedAt   int64
 }

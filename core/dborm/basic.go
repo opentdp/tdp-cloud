@@ -55,8 +55,7 @@ func migrate() error {
 		&User{},
 		&Secret{},
 		&Session{},
-		&SSHKey{},
-		&SSHHost{},
+		&Sshkey{},
 		&TATScript{},
 		&TATHistory{},
 	)
