@@ -31,7 +31,7 @@ func Fetch(token string) (*dborm.Session, error) {
 
 	result := dborm.Db.First(&item, "token = ?", token)
 
-	if result.Error != nil {
+	if result.Error != nil || item.Id == 0 {
 		return nil, result.Error
 	}
 
