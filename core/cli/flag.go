@@ -7,14 +7,19 @@ import (
 )
 
 var (
-	Dsn     string
 	Address string
+	Agent   string
+	Dsn     string
 )
 
 func Flags() {
 
-	flag.StringVar(&Dsn, "dsn", "cloud.db", "数据来源名称")
-	flag.StringVar(&Address, "address", ":7800", "服务监听地址和端口")
+	// 服务器模式
+	flag.StringVar(&Address, "address", ":7800", "服务端监听地址和端口")
+	flag.StringVar(&Dsn, "dsn", "cloud.db", "数据源名称")
+
+	// 客户端模式
+	flag.StringVar(&Agent, "agent", "", "注册为客户端（例: http://ip:7800/wsl/agent/xx）")
 
 	flag.Usage = usage
 
