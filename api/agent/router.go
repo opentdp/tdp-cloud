@@ -14,7 +14,7 @@ func Router(api *gin.RouterGroup) {
 
 	{
 		rg.GET("/node", list)
-		rg.POST("/shell", shell)
+		rg.POST("/command", runCommand)
 	}
 
 }

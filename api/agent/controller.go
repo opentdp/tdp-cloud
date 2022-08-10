@@ -14,21 +14,21 @@ func list(c *gin.Context) {
 
 }
 
-type shellParam struct {
+type commandParam struct {
 	Addr    string
-	Payload agent.ShellPayload
+	Payload agent.CommandPayload
 }
 
-func shell(c *gin.Context) {
+func runCommand(c *gin.Context) {
 
-	var rq shellParam
+	var rq commandParam
 
 	if c.ShouldBind(&rq) != nil {
 		c.Set("Error", "请求参数错误")
 		return
 	}
 
-	if err := agent.Shell(rq.Addr, &rq.Payload); err == nil {
+	if err := agent.RunCommand(rq.Addr, &rq.Payload); err == nil {
 		c.Set("Payload", "命令下发完成")
 	} else {
 		c.Set("Error", err)

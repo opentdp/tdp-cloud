@@ -2,7 +2,7 @@ package agent
 
 import "errors"
 
-type ShellPayload struct {
+type CommandPayload struct {
 	Content          string `binding:"required"`
 	Username         string `binding:"required"`
 	CommandType      string `binding:"required"`
@@ -10,7 +10,7 @@ type ShellPayload struct {
 	Timeout          uint   `binding:"required"`
 }
 
-func Shell(addr string, data *ShellPayload) error {
+func RunCommand(addr string, data *CommandPayload) error {
 
 	node, ok := AgentPool[addr]
 

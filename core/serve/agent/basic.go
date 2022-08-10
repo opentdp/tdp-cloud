@@ -28,8 +28,6 @@ func Register(pod *socket.JsonPod) {
 
 	defer delete(AgentPool, addr)
 
-	// 保持客户端连接
-
 	for {
 		var rq SocketData
 
