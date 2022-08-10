@@ -20,21 +20,7 @@ func AgentFactory(c *gin.Context) {
 
 	defer wsp.Close()
 
-	for {
-		var rq agent.SocketData
-
-		if wsp.Read(&rq) != nil {
-			break
-		}
-
-		if rq.Action == "ping" && rq.Method == "request" {
-			rs := agent.Ping(rq)
-			if wsp.Write(&rs) != nil {
-				break
-			}
-		}
-
-	}
+	agent.Register(wsp)
 
 }
 

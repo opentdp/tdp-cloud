@@ -7,6 +7,7 @@ import (
 
 	"tdp-cloud/api/qcloud"
 
+	"tdp-cloud/api/agent"
 	"tdp-cloud/api/secret"
 	"tdp-cloud/api/sshkey"
 	"tdp-cloud/api/tat_history"
@@ -27,11 +28,12 @@ func Router(engine *gin.Engine) {
 		qcloud.Router(api)
 
 		// direct api
-		user.Router(api)
+		agent.Router(api)
 		secret.Router(api)
 		sshkey.Router(api)
 		tat_history.Router(api)
 		tat_script.Router(api)
+		user.Router(api)
 	}
 
 	// websocket interface
