@@ -11,8 +11,9 @@ import (
 	"tdp-cloud/api/sshkey"
 	"tdp-cloud/api/tat_history"
 	"tdp-cloud/api/tat_script"
-	"tdp-cloud/api/terminal"
 	"tdp-cloud/api/user"
+
+	"tdp-cloud/api/socket"
 )
 
 func Router(engine *gin.Engine) {
@@ -23,11 +24,9 @@ func Router(engine *gin.Engine) {
 
 	{
 		// qcloud api
-
 		qcloud.Router(api)
 
 		// direct api
-
 		user.Router(api)
 		secret.Router(api)
 		sshkey.Router(api)
@@ -35,14 +34,14 @@ func Router(engine *gin.Engine) {
 		tat_script.Router(api)
 	}
 
-	// websocket
+	// websocket interface
 
-	wsl := engine.Group("/wsl")
+	wsl := engine.Group("/wsi")
 
 	wsl.Use(midware.SocketPreset())
 
 	{
-		terminal.Socket(wsl)
+		socket.Socket(wsl)
 	}
 
 }

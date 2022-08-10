@@ -1,4 +1,4 @@
-package terminal
+package socket
 
 import (
 	"github.com/gin-gonic/gin"
@@ -6,13 +6,14 @@ import (
 	"tdp-cloud/core/midware"
 )
 
-func Socket(wsl *gin.RouterGroup) {
+func Socket(wsi *gin.RouterGroup) {
 
-	rg := wsl.Group("/terminal")
+	rg := wsi.Group("/")
 
 	rg.Use(midware.Auth())
 
 	{
+		rg.GET("/agent", agent)
 		rg.GET("/ssh", ssh)
 	}
 

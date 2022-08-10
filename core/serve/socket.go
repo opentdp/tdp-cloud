@@ -16,7 +16,7 @@ var upgrader = websocket.Upgrader{
 	},
 }
 
-func UseSocekt(c *gin.Context) {
+func AgentFactory(c *gin.Context) {
 
 	ws, err := upgrader.Upgrade(c.Writer, c.Request, nil)
 	if err != nil {
