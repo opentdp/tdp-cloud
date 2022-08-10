@@ -7,11 +7,13 @@ import (
 	"github.com/gin-gonic/gin"
 	"golang.org/x/crypto/ssh"
 	"golang.org/x/term"
+
+	"tdp-cloud/core/socket"
 )
 
 func Handle(c *gin.Context) {
 
-	wsp, err := NewSocketPod(c.Writer, c.Request)
+	wsp, err := socket.NewIOPod(c.Writer, c.Request)
 	if err != nil {
 		c.AbortWithError(500, err)
 		return
@@ -46,7 +48,7 @@ func Handle(c *gin.Context) {
 
 }
 
-func sshBridge(client *ssh.Client, wsp *SocketPod, quit chan bool) {
+func sshBridge(client *ssh.Client, wsp *socket.IOPod, quit chan bool) {
 
 	defer func() {
 		quit <- true

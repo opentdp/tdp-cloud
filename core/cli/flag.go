@@ -19,7 +19,7 @@ func Flags() {
 	flag.StringVar(&Dsn, "dsn", "cloud.db", "数据源名称")
 
 	// 客户端模式
-	flag.StringVar(&Agent, "agent", "", "注册为客户端（例: http://ip:7800/wsl/agent/xx）")
+	flag.StringVar(&Agent, "agent", "", "注册为客户端（例: ws://ip:7800/wsi/agent/xx）")
 
 	flag.Usage = usage
 

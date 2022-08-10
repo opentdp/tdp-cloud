@@ -36,12 +36,12 @@ func Router(engine *gin.Engine) {
 
 	// websocket interface
 
-	wsl := engine.Group("/wsi")
+	wsi := engine.Group("/wsi")
 
-	wsl.Use(midware.SocketPreset())
+	wsi.Use(midware.SocketPreset())
 
 	{
-		socket.Socket(wsl)
+		socket.Socket(wsi)
 	}
 
 }

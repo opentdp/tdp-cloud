@@ -5,14 +5,14 @@ import (
 	"time"
 
 	"tdp-cloud/core/dborm"
-	"tdp-cloud/core/utils"
+	"tdp-cloud/core/helper"
 )
 
 // 添加令牌
 
 func Create(userId uint) (string, error) {
 
-	token := utils.RandString(32)
+	token := helper.RandString(32)
 
 	result := dborm.Db.Create(&dborm.Session{
 		UserId: userId,
