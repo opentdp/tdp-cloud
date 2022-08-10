@@ -19,7 +19,7 @@ func RunCommand(addr string, data *CommandPayload) error {
 	}
 
 	return node.Pod.Write(SocketData{
-		Action:  "shell",
+		Action:  "runCommand",
 		Method:  "request",
 		Payload: data,
 	})
