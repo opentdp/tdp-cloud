@@ -60,7 +60,7 @@ func Connect(url string) {
 				log.Println("runCommand 参数错误")
 			}
 		default:
-			log.Println("receive: ", rq)
+			log.Println("unkown action: ", rq)
 		}
 	}
 

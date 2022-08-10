@@ -1,6 +1,8 @@
 package agent
 
 import (
+	"log"
+
 	"tdp-cloud/core/socket"
 )
 
@@ -40,6 +42,8 @@ func Register(pod *socket.JsonPod) {
 			if Pong(addr, &rq.Payload) != nil {
 				return
 			}
+		default:
+			log.Println("unkown action: ", rq)
 		}
 	}
 
