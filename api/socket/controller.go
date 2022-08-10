@@ -1,6 +1,7 @@
 package socket
 
 import (
+	"errors"
 	"log"
 
 	"github.com/gin-gonic/gin"
@@ -11,7 +12,14 @@ import (
 
 func agent(c *gin.Context) {
 
-	log.Println("agent - Connecting")
+	key := c.Param("key")
+
+	log.Println("agent - Connecting With Key: " + key)
+
+	if key != "xxx" {
+		c.AbortWithError(400, errors.New("授权失败"))
+		return
+	}
 
 	serve.AgentFactory(c)
 
