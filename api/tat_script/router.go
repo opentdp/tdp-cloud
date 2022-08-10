@@ -10,7 +10,7 @@ func Router(api *gin.RouterGroup) {
 
 	rg := api.Group("/tat/script")
 
-	rg.Use(midware.Auth())
+	rg.Use(midware.AuthGuard())
 
 	{
 		rg.GET("/", list)

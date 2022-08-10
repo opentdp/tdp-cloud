@@ -9,7 +9,7 @@ import (
 	"tdp-cloud/core/dborm/session"
 )
 
-func Auth() gin.HandlerFunc {
+func AuthGuard() gin.HandlerFunc {
 
 	return func(c *gin.Context) {
 

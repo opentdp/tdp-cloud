@@ -18,7 +18,7 @@ func Socket(wsi *gin.RouterGroup) {
 
 	// 需授权接口
 
-	rg.Use(midware.Auth())
+	rg.Use(midware.AuthGuard())
 
 	{
 		rg.GET("/ssh", ssh)
