@@ -27,7 +27,7 @@ func Connect(url string) {
 			if err := ws.WriteJSON(v); err != nil {
 				log.Fatal(err)
 			}
-			time.Sleep(time.Second * 2)
+			time.Sleep(time.Second * 30)
 		}
 	}()
 
