@@ -1,8 +1,6 @@
 package agent
 
 import (
-	"errors"
-
 	"tdp-cloud/core/socket"
 )
 
@@ -13,22 +11,22 @@ type SocketData struct {
 }
 
 type AgentNode struct {
-	Pod *socket.JsonPod
-	Ip  string
+	Pod  *socket.JsonPod
+	Addr string
 }
 
 var AgentPool = map[string]AgentNode{}
 
 func Register(pod *socket.JsonPod) {
 
-	ip := pod.Conn.RemoteAddr().String()
+	addr := pod.Conn.RemoteAddr().String()
 
-	AgentPool[ip] = AgentNode{
-		Pod: pod,
-		Ip:  ip,
+	AgentPool[addr] = AgentNode{
+		Addr: addr,
+		Pod:  pod,
 	}
 
-	defer delete(AgentPool, ip)
+	defer delete(AgentPool, addr)
 
 	// 保持客户端连接
 
@@ -39,25 +37,13 @@ func Register(pod *socket.JsonPod) {
 			break
 		}
 
-		if rq.Action == "ping" && rq.Method == "request" {
-			rs := Ping(rq)
-			if pod.Write(&rs) != nil {
-				break
+		switch rq.Action {
+		case "ping":
+			if Pong(addr, &rq.Payload) != nil {
+				return
 			}
 		}
 	}
-
-}
-
-func SendAction(addr string, data SocketData) error {
-
-	node, ok := AgentPool[addr]
-
-	if !ok {
-		return errors.New("客户端已断开")
-	}
-
-	return node.Pod.Write(data)
 
 }
 
@@ -67,7 +53,7 @@ func GetNodeList() []AgentNode {
 
 	for _, v := range AgentPool {
 		items = append(items, AgentNode{
-			Ip: v.Ip,
+			Addr: v.Addr,
 		})
 	}
 
