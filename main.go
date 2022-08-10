@@ -7,8 +7,7 @@ import (
 	"tdp-cloud/core/cli"
 	"tdp-cloud/core/dborm"
 	"tdp-cloud/core/serve"
-
-	"tdp-cloud/core/client"
+	"tdp-cloud/core/slave"
 )
 
 func main() {
@@ -18,15 +17,15 @@ func main() {
 	if cli.Agent == "" {
 		server()
 	} else {
-		agent()
+		client()
 	}
 
 }
 
-func agent() {
+func client() {
 
 	// 连接服务端
-	client.Connect(cli.Agent)
+	slave.Connect(cli.Agent)
 
 }
 
