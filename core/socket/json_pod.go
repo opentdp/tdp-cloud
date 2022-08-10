@@ -26,13 +26,13 @@ func NewJsonPod(w http.ResponseWriter, r *http.Request) (*JsonPod, error) {
 
 }
 
-func (pod *JsonPod) Read(v *interface{}) error {
+func (pod *JsonPod) Read(v any) error {
 
 	return pod.Conn.ReadJSON(v)
 
 }
 
-func (pod *JsonPod) Write(v *interface{}) error {
+func (pod *JsonPod) Write(v any) error {
 
 	return pod.Conn.WriteJSON(v)
 

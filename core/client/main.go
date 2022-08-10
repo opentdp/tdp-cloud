@@ -1,14 +1,11 @@
 package client
 
 import (
-	"fmt"
 	"log"
 	"time"
 
 	"github.com/gorilla/websocket"
 )
-
-type H map[string]any
 
 func Connect(url string) {
 
@@ -20,10 +17,14 @@ func Connect(url string) {
 	}
 
 	go func() {
-		var v = H{"e": "error"}
+		var v = SocketData{
+			Action:  "ping",
+			Method:  "request",
+			Payload: "xx",
+		}
 		for {
-			err := ws.WriteJSON(v)
-			if err != nil {
+			log.Println("send: ", v)
+			if err := ws.WriteJSON(v); err != nil {
 				log.Fatal(err)
 			}
 			time.Sleep(time.Second * 2)
@@ -31,12 +32,11 @@ func Connect(url string) {
 	}()
 
 	for {
-		var v = H{}
-		err := ws.ReadJSON(&v)
-		if err != nil {
+		var v = SocketData{}
+		if err := ws.ReadJSON(&v); err != nil {
 			log.Fatal(err)
 		}
-		fmt.Println("receive: ", v)
+		log.Println("receive: ", v)
 	}
 
 }

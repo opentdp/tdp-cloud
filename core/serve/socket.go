@@ -6,6 +6,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/gorilla/websocket"
 
+	"tdp-cloud/core/serve/agent"
 	"tdp-cloud/core/socket"
 )
 
@@ -20,17 +21,19 @@ func AgentFactory(c *gin.Context) {
 	defer wsp.Close()
 
 	for {
-		var p interface{}
+		var rq agent.SocketData
 
-		e1 := wsp.Read(&p)
-		if e1 != nil {
+		if wsp.Read(&rq) != nil {
 			break
 		}
 
-		e2 := wsp.Write(&p)
-		if e2 != nil {
-			break
+		if rq.Action == "ping" && rq.Method == "request" {
+			rs := agent.Ping(rq)
+			if wsp.Write(&rs) != nil {
+				break
+			}
 		}
+
 	}
 
 }

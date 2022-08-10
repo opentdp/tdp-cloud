@@ -21,7 +21,7 @@ type Params struct {
 }
 
 type Response struct {
-	Response interface{} `json:"Response"`
+	Response any `json:"Response"`
 }
 
 func NewRequest(rp *Params) (*Response, error) {
