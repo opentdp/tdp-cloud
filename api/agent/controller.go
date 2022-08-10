@@ -8,7 +8,7 @@ import (
 
 func list(c *gin.Context) {
 
-	res := agent.GetAgents()
+	res := agent.GetNodeList()
 
 	c.Set("Payload", res)
 

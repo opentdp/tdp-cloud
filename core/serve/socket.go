@@ -12,15 +12,15 @@ import (
 
 func AgentFactory(c *gin.Context) {
 
-	wsp, err := socket.NewJsonPod(c.Writer, c.Request)
+	pod, err := socket.NewJsonPod(c.Writer, c.Request)
 	if err != nil {
 		c.AbortWithError(500, err)
 		return
 	}
 
-	defer wsp.Close()
+	defer pod.Close()
 
-	agent.Register(wsp)
+	agent.Register(pod)
 
 }
 

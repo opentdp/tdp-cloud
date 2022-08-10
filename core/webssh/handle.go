@@ -13,20 +13,20 @@ import (
 
 func Handle(c *gin.Context) {
 
-	wsp, err := socket.NewIOPod(c.Writer, c.Request)
+	pod, err := socket.NewIOPod(c.Writer, c.Request)
 	if err != nil {
 		c.AbortWithError(500, err)
 		return
 	}
 
-	defer wsp.Close()
+	defer pod.Close()
 
 	// 获取 SSH 参数
 
 	var option SSHClientOption
 
 	if err := c.ShouldBindQuery(&option); err != nil {
-		wsp.Write([]byte("> " + err.Error() + "\r\n"))
+		pod.Write([]byte("> " + err.Error() + "\r\n"))
 		return
 	}
 
@@ -34,7 +34,7 @@ func Handle(c *gin.Context) {
 
 	client, err := NewSSHClient(&option)
 	if err != nil {
-		wsp.Write([]byte("> " + err.Error() + "\r\n"))
+		pod.Write([]byte("> " + err.Error() + "\r\n"))
 		return
 	}
 
@@ -43,18 +43,18 @@ func Handle(c *gin.Context) {
 	// 转发 SSH 会话
 
 	quit := make(chan bool, 1)
-	go sshBridge(client, wsp, quit)
+	go sshBridge(client, pod, quit)
 	<-quit
 
 }
 
-func sshBridge(client *ssh.Client, wsp *socket.IOPod, quit chan bool) {
+func sshBridge(client *ssh.Client, pod *socket.IOPod, quit chan bool) {
 
 	defer func() {
 		quit <- true
 	}()
 
-	rw := io.ReadWriter(wsp)
+	rw := io.ReadWriter(pod)
 
 	session, err := client.NewSession()
 	if err != nil {
@@ -65,7 +65,7 @@ func sshBridge(client *ssh.Client, wsp *socket.IOPod, quit chan bool) {
 	defer session.Close()
 
 	// 客户端断开时清理资源
-	wsp.OnClose(session.Close)
+	pod.OnClose(session.Close)
 
 	session.Stdin = rw
 	session.Stdout = rw

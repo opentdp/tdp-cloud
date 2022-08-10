@@ -2,6 +2,7 @@ package agent
 
 import (
 	"errors"
+
 	"tdp-cloud/core/socket"
 )
 
@@ -11,13 +12,21 @@ type SocketData struct {
 	Payload any
 }
 
-var AgentPool = map[string]*socket.JsonPod{}
+type AgentNode struct {
+	Pod *socket.JsonPod
+	Ip  string
+}
 
-func Register(wsp *socket.JsonPod) {
+var AgentPool = map[string]AgentNode{}
 
-	ip := wsp.Conn.RemoteAddr().String()
+func Register(pod *socket.JsonPod) {
 
-	AgentPool[ip] = wsp
+	ip := pod.Conn.RemoteAddr().String()
+
+	AgentPool[ip] = AgentNode{
+		Pod: pod,
+		Ip:  ip,
+	}
 
 	defer delete(AgentPool, ip)
 
@@ -26,13 +35,13 @@ func Register(wsp *socket.JsonPod) {
 	for {
 		var rq SocketData
 
-		if wsp.Read(&rq) != nil {
+		if pod.Read(&rq) != nil {
 			break
 		}
 
 		if rq.Action == "ping" && rq.Method == "request" {
 			rs := Ping(rq)
-			if wsp.Write(&rs) != nil {
+			if pod.Write(&rs) != nil {
 				break
 			}
 		}
@@ -42,22 +51,24 @@ func Register(wsp *socket.JsonPod) {
 
 func SendAction(addr string, data SocketData) error {
 
-	wsp := AgentPool[addr]
+	node, ok := AgentPool[addr]
 
-	if wsp != nil {
-		wsp.Write(data)
+	if !ok {
+		return errors.New("客户端已断开")
 	}
 
-	return errors.New("客户端已断开")
+	return node.Pod.Write(data)
 
 }
 
-func GetAgents() []string {
+func GetNodeList() []AgentNode {
 
-	items := make([]string, 0, len(AgentPool))
+	items := make([]AgentNode, 0, len(AgentPool))
 
-	for k := range AgentPool {
-		items = append(items, k)
+	for _, v := range AgentPool {
+		items = append(items, AgentNode{
+			Ip: v.Ip,
+		})
 	}
 
 	return items
