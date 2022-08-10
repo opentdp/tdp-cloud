@@ -20,21 +20,23 @@ require (
 // 其他依赖
 
 require (
+	// Map 转结构体
+	github.com/mitchellh/mapstructure v1.5.0
 	// 计划任务
 	github.com/robfig/cron/v3 v3.0.1
 	// 腾讯云 SDK
-	github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/common v1.0.449
+	github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/common v1.0.470
 	// 加密扩充库
 	golang.org/x/crypto v0.0.0-20220722155217-630584e8d5aa
 	// 终端和控制台支持包
-	golang.org/x/term v0.0.0-20210927222741-03fcf44c2211
+	golang.org/x/term v0.0.0-20220722155259-a9ba230a4035
 )
 
 // 间接依赖
 
 require (
 	github.com/gin-contrib/sse v0.1.0 // indirect
-	github.com/glebarez/go-sqlite v1.17.3 // indirect
+	github.com/glebarez/go-sqlite v1.18.0 // indirect
 	github.com/go-playground/locales v0.14.0 // indirect
 	github.com/go-playground/universal-translator v0.18.0 // indirect
 	github.com/go-playground/validator/v10 v10.11.0 // indirect
@@ -52,13 +54,13 @@ require (
 	github.com/remyoudompheng/bigfft v0.0.0-20200410134404-eec4a21b6bb0 // indirect
 	github.com/stretchr/testify v1.8.0 // indirect
 	github.com/ugorji/go/codec v1.2.7 // indirect
-	golang.org/x/net v0.0.0-20220722155237-a158d28d115b // indirect
-	golang.org/x/sys v0.0.0-20220722155257-8c9f86f7a55f // indirect
+	golang.org/x/net v0.0.0-20220809184613-07c6da5e1ced // indirect
+	golang.org/x/sys v0.0.0-20220808155132-1c4a2a72c664 // indirect
 	golang.org/x/text v0.3.7 // indirect
-	google.golang.org/protobuf v1.28.0 // indirect
+	google.golang.org/protobuf v1.28.1 // indirect
 	gopkg.in/yaml.v2 v2.4.0 // indirect
-	modernc.org/libc v1.16.17 // indirect
+	modernc.org/libc v1.16.19 // indirect
 	modernc.org/mathutil v1.4.1 // indirect
 	modernc.org/memory v1.1.1 // indirect
-	modernc.org/sqlite v1.17.3 // indirect
+	modernc.org/sqlite v1.18.0 // indirect
 )
