@@ -6,6 +6,8 @@ import (
 	"strconv"
 	"strings"
 	"time"
+
+	"golang.org/x/text/encoding/simplifiedchinese"
 )
 
 // 序列化
@@ -38,5 +40,32 @@ func RandString(length uint) string {
 	}
 
 	return strings.Join(rs, "")
+
+}
+
+// 根据编码转换 byte 为 string
+
+type Charset string
+
+const (
+	UTF8    = Charset("UTF-8")
+	GB18030 = Charset("GB18030")
+)
+
+func Byte2String(byte []byte, charset Charset) string {
+
+	var str string
+
+	switch charset {
+	case GB18030:
+		ret, _ := simplifiedchinese.GB18030.NewDecoder().Bytes(byte)
+		str = string(ret)
+	case UTF8:
+		fallthrough
+	default:
+		str = string(byte)
+	}
+
+	return str
 
 }

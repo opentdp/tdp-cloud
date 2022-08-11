@@ -13,6 +13,7 @@ require (
 
 require (
 	github.com/glebarez/sqlite v1.4.6
+	golang.org/x/text v0.3.7
 	gorm.io/driver/mysql v1.3.5
 	gorm.io/gorm v1.23.8
 )
@@ -56,7 +57,6 @@ require (
 	github.com/ugorji/go/codec v1.2.7 // indirect
 	golang.org/x/net v0.0.0-20220809184613-07c6da5e1ced // indirect
 	golang.org/x/sys v0.0.0-20220808155132-1c4a2a72c664 // indirect
-	golang.org/x/text v0.3.7 // indirect
 	google.golang.org/protobuf v1.28.1 // indirect
 	gopkg.in/yaml.v2 v2.4.0 // indirect
 	modernc.org/libc v1.16.19 // indirect

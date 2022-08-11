@@ -78,7 +78,7 @@ func Fetch(id, userId uint) (*dborm.Sshkey, error) {
 
 func Delete(id, userId uint) error {
 
-	var item dborm.Sshkey
+	var item *dborm.Sshkey
 
 	result := dborm.Db.Delete(&item, "id = ? AND user_id = ?", id, userId)
 

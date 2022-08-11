@@ -21,7 +21,7 @@ type commandParam struct {
 
 func runCommand(c *gin.Context) {
 
-	var rq commandParam
+	var rq *commandParam
 
 	if c.ShouldBind(&rq) != nil {
 		c.Set("Error", "请求参数错误")

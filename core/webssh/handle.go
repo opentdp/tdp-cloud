@@ -24,7 +24,7 @@ func Handle(c *gin.Context) {
 
 	// 获取 SSH 参数
 
-	var option SSHClientOption
+	var option *SSHClientOption
 
 	if err := c.ShouldBindQuery(&option); err != nil {
 		pod.Write([]byte("> " + err.Error() + "\r\n"))
@@ -33,7 +33,7 @@ func Handle(c *gin.Context) {
 
 	// 创建 SSH 连接
 
-	client, err := NewSSHClient(&option)
+	client, err := NewSSHClient(option)
 
 	if err != nil {
 		pod.Write([]byte("> " + err.Error() + "\r\n"))

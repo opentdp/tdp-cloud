@@ -31,7 +31,7 @@ func Register(pod *socket.JsonPod) {
 	defer delete(AgentPool, addr)
 
 	for {
-		var rq SocketData
+		var rq *SocketData
 
 		if pod.Read(&rq) != nil {
 			break

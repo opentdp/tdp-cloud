@@ -41,7 +41,7 @@ type LoginResult struct {
 
 func Login(param *LoginParam) (*LoginResult, error) {
 
-	var item dborm.User
+	var item *dborm.User
 
 	// 验证账号
 

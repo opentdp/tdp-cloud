@@ -10,8 +10,8 @@ import (
 
 func list(c *gin.Context) {
 
-	userId := c.GetUint("UserId")
 	keyId := c.GetUint("KeyId")
+	userId := c.GetUint("UserId")
 
 	if res, err := history.FetchAll(userId, keyId); err == nil {
 		c.Set("Payload", res)
@@ -23,7 +23,7 @@ func list(c *gin.Context) {
 
 func create(c *gin.Context) {
 
-	var rq history.CreateParam
+	var rq *history.CreateParam
 
 	if c.ShouldBind(&rq) != nil {
 		c.Set("Error", "请求参数错误")
@@ -33,7 +33,7 @@ func create(c *gin.Context) {
 	rq.KeyId = c.GetUint("KeyId")
 	rq.UserId = c.GetUint("UserId")
 
-	if err := history.Create(&rq); err == nil {
+	if err := history.Create(rq); err == nil {
 		c.Set("Payload", "添加成功")
 	} else {
 		c.Set("Error", err)
@@ -43,7 +43,7 @@ func create(c *gin.Context) {
 
 func update(c *gin.Context) {
 
-	var rq history.UpdateParam
+	var rq *history.UpdateParam
 
 	if c.ShouldBind(&rq) != nil {
 		c.Set("Error", "请求参数错误")
@@ -53,7 +53,7 @@ func update(c *gin.Context) {
 	id, _ := strconv.Atoi(c.Param("id"))
 	rq.Id = uint(id)
 
-	if err := history.Update(&rq); err == nil {
+	if err := history.Update(rq); err == nil {
 		c.Set("Payload", "")
 	} else {
 		c.Set("Error", err)

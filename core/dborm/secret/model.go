@@ -78,7 +78,7 @@ func Fetch(id, userId uint) (*dborm.Secret, error) {
 
 func Delete(id, userId uint) error {
 
-	var item dborm.Secret
+	var item *dborm.Secret
 
 	result := dborm.Db.Delete(&item, "id = ? AND user_id = ?", id, userId)
 

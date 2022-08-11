@@ -13,6 +13,7 @@ type SocketData struct {
 	Action  string
 	Method  string
 	Payload any
+	Error   error
 }
 
 func Connect(url string) {
@@ -48,7 +49,7 @@ func Connect(url string) {
 	// 接收数据
 
 	for {
-		var rq SocketData
+		var rq *SocketData
 
 		if pod.Read(&rq) != nil {
 			break

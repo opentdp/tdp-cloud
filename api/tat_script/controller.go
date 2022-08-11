@@ -22,7 +22,7 @@ func list(c *gin.Context) {
 
 func create(c *gin.Context) {
 
-	var rq script.CreateParam
+	var rq *script.CreateParam
 
 	if c.ShouldBind(&rq) != nil {
 		c.Set("Error", "请求参数错误")
@@ -31,7 +31,7 @@ func create(c *gin.Context) {
 
 	rq.UserId = c.GetUint("UserId")
 
-	if err := script.Create(&rq); err == nil {
+	if err := script.Create(rq); err == nil {
 		c.Set("Payload", "添加成功")
 	} else {
 		c.Set("Error", err)
@@ -41,13 +41,14 @@ func create(c *gin.Context) {
 
 func update(c *gin.Context) {
 
-	var rq script.UpdateParam
+	var rq *script.UpdateParam
 
 	if c.ShouldBind(&rq) != nil {
 		c.Set("Error", "请求参数错误")
 		return
 	}
-	if err := script.Update(&rq); err == nil {
+
+	if err := script.Update(rq); err == nil {
 		c.Set("Payload", "更新成功")
 	} else {
 		c.Set("Error", err)
