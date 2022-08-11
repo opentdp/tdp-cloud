@@ -8,6 +8,8 @@ import (
 	"tdp-cloud/core/socket"
 )
 
+type RecvPod agent.RecvPod
+type SendPod agent.SendPod
 type SocketData agent.SocketData
 
 func Connect(url string) {
@@ -29,10 +31,12 @@ func Connect(url string) {
 
 	// 保持连接
 
+	send := NewSendPod(pod)
+
 	go func() {
 		for {
 			log.Println("send: Ping")
-			if _, err := SendPing(pod); err != nil {
+			if _, err := send.Ping(); err != nil {
 				log.Println(err)
 				break
 			}
@@ -41,6 +45,8 @@ func Connect(url string) {
 	}()
 
 	// 接收数据
+
+	recv := NewRecvPod(pod)
 
 	for {
 		var rq *SocketData
@@ -51,7 +57,7 @@ func Connect(url string) {
 
 		switch rq.Method {
 		case "RunCommand":
-			RecvRunCommand(pod, rq)
+			recv.RunCommand(rq)
 		default:
 			log.Println("recv:", rq)
 		}
@@ -65,5 +71,17 @@ func delayConnect(url string) {
 
 	time.Sleep(time.Second * 5)
 	Connect(url)
+
+}
+
+func NewRecvPod(pod *socket.JsonPod) *RecvPod {
+
+	return &RecvPod{pod}
+
+}
+
+func NewSendPod(pod *socket.JsonPod) *SendPod {
+
+	return &SendPod{pod}
 
 }

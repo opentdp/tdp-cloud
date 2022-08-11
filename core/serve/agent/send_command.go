@@ -1,8 +1,6 @@
 package agent
 
 import (
-	"errors"
-
 	"github.com/google/uuid"
 )
 
@@ -14,13 +12,7 @@ type RunCommandPayload struct {
 	Timeout          uint
 }
 
-func SendRunCommand(addr string, data *RunCommandPayload) (string, error) {
-
-	node, ok := AgentPool[addr]
-
-	if !ok {
-		return "", errors.New("客户端已断开")
-	}
+func (pod *SendPod) RunCommand(data *RunCommandPayload) (string, error) {
 
 	v := &SocketData{
 		TaskId:  uuid.New().String(),
@@ -28,6 +20,6 @@ func SendRunCommand(addr string, data *RunCommandPayload) (string, error) {
 		Payload: data,
 	}
 
-	return v.TaskId, node.Pod.Write(v)
+	return v.TaskId, pod.Write(v)
 
 }

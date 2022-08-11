@@ -6,11 +6,12 @@ import (
 	"tdp-cloud/core/socket"
 )
 
-type SocketData struct {
-	TaskId  string
-	Method  string
-	Success bool
-	Payload any
+type RecvPod struct {
+	*socket.JsonPod
+}
+
+type SendPod struct {
+	*socket.JsonPod
 }
 
 type AgentNode struct {
@@ -18,9 +19,16 @@ type AgentNode struct {
 	Addr string
 }
 
+type SocketData struct {
+	TaskId  string
+	Method  string
+	Success bool
+	Payload any
+}
+
 var AgentPool = map[string]AgentNode{}
 
-func Register(pod *socket.JsonPod) {
+func AddNode(pod *socket.JsonPod) {
 
 	addr := pod.Conn.RemoteAddr().String()
 
@@ -31,6 +39,10 @@ func Register(pod *socket.JsonPod) {
 
 	defer delete(AgentPool, addr)
 
+	// 接收数据
+
+	recv := NewRecvPod(pod)
+
 	for {
 		var rq *SocketData
 
@@ -40,7 +52,7 @@ func Register(pod *socket.JsonPod) {
 
 		switch rq.Method {
 		case "Ping":
-			if RecvPing(addr, rq) != nil {
+			if recv.Ping(rq) != nil {
 				return
 			}
 		default:
@@ -61,5 +73,23 @@ func GetNodeList() []AgentNode {
 	}
 
 	return items
+
+}
+
+func NewRecvPod(pod *socket.JsonPod) *RecvPod {
+
+	return &RecvPod{pod}
+
+}
+
+func NewSendPod(addr string) *SendPod {
+
+	node, ok := AgentPool[addr]
+
+	if ok {
+		return &SendPod{node.Pod}
+	}
+
+	return nil
 
 }

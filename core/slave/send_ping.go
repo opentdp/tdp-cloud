@@ -4,11 +4,9 @@ import (
 	"time"
 
 	"github.com/google/uuid"
-
-	"tdp-cloud/core/socket"
 )
 
-func SendPing(pod *socket.JsonPod) (string, error) {
+func (pod *SendPod) Ping() (string, error) {
 
 	v := &SocketData{
 		TaskId:  uuid.New().String(),

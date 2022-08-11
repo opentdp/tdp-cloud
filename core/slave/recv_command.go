@@ -16,12 +16,11 @@ import (
 
 	"tdp-cloud/core/helper"
 	"tdp-cloud/core/serve/agent"
-	"tdp-cloud/core/socket"
 )
 
 type RunCommandPayload agent.RunCommandPayload
 
-func RecvRunCommand(pod *socket.JsonPod, rq *SocketData) error {
+func (pod *RecvPod) RunCommand(rq *SocketData) error {
 
 	var err error
 	var ret string

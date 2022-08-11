@@ -28,9 +28,16 @@ func runCommand(c *gin.Context) {
 		return
 	}
 
-	taskId, err := agent.SendRunCommand(rq.Addr, &rq.Payload)
+	send := agent.NewSendPod(rq.Addr)
 
-	//TODO: 返回的TaskId需要入库，以便异步接收回调结果
+	if send == nil {
+		c.Set("Error", "客户端已断开连接")
+		return
+	}
+
+	taskId, err := send.RunCommand(&rq.Payload)
+
+	//TODO: 返回的TaskId需要入库，以便异步回收结果
 
 	if err == nil {
 		c.Set("Payload", "命令下发完成，TaskId："+taskId)

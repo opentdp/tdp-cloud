@@ -1,14 +1,6 @@
 package agent
 
-import "errors"
-
-func RecvPing(addr string, rq *SocketData) error {
-
-	node, ok := AgentPool[addr]
-
-	if !ok {
-		return errors.New("客户端已断开")
-	}
+func (pod *RecvPod) Ping(rq *SocketData) error {
 
 	v := &SocketData{
 		TaskId:  rq.TaskId,
@@ -16,6 +8,6 @@ func RecvPing(addr string, rq *SocketData) error {
 		Payload: rq.Payload,
 	}
 
-	return node.Pod.Write(v)
+	return pod.Write(v)
 
 }
