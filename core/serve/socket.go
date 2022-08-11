@@ -13,6 +13,7 @@ import (
 func AgentFactory(c *gin.Context) {
 
 	pod, err := socket.NewJsonPod(c.Writer, c.Request)
+
 	if err != nil {
 		c.AbortWithError(500, err)
 		return

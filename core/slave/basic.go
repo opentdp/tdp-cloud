@@ -25,6 +25,7 @@ func Connect(url string) {
 	// 注册服务
 
 	pod, err := socket.NewJsonPodClient(url)
+
 	if err != nil {
 		return
 	}

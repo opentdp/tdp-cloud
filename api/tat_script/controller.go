@@ -9,6 +9,7 @@ import (
 )
 
 func list(c *gin.Context) {
+
 	userId := c.GetUint("UserId")
 
 	if res, err := script.FetchAll(userId); err == nil {
@@ -16,9 +17,11 @@ func list(c *gin.Context) {
 	} else {
 		c.Set("Error", err)
 	}
+
 }
 
 func create(c *gin.Context) {
+
 	var rq script.CreateParam
 
 	if c.ShouldBind(&rq) != nil {
@@ -33,9 +36,11 @@ func create(c *gin.Context) {
 	} else {
 		c.Set("Error", err)
 	}
+
 }
 
 func update(c *gin.Context) {
+
 	var rq script.UpdateParam
 
 	if c.ShouldBind(&rq) != nil {
@@ -47,9 +52,11 @@ func update(c *gin.Context) {
 	} else {
 		c.Set("Error", err)
 	}
+
 }
 
 func delete(c *gin.Context) {
+
 	id, _ := strconv.Atoi(c.Param("id"))
 
 	if err := script.Delete(id); err == nil {
@@ -57,4 +64,5 @@ func delete(c *gin.Context) {
 	} else {
 		c.Set("Error", err)
 	}
+
 }

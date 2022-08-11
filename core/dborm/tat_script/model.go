@@ -16,6 +16,7 @@ type CreateParam struct {
 }
 
 func Create(post *CreateParam) error {
+
 	result := dborm.Db.Create(&dborm.TATScript{
 		UserId:           post.UserId,
 		Name:             post.Name,
@@ -26,7 +27,9 @@ func Create(post *CreateParam) error {
 		CommandType:      post.CommandType,
 		Timeout:          post.Timeout,
 	})
+
 	return result.Error
+
 }
 
 type UpdateParam struct {
@@ -41,6 +44,7 @@ type UpdateParam struct {
 }
 
 func Update(post *UpdateParam) error {
+
 	result := dborm.Db.
 		Model(&dborm.TATScript{}).
 		Where("id = ?", post.Id).
@@ -53,24 +57,35 @@ func Update(post *UpdateParam) error {
 			WorkingDirectory: post.WorkingDirectory,
 			Timeout:          post.Timeout,
 		})
+
 	return result.Error
+
 }
 
 func FetchAll(uid uint) ([]*dborm.TATScript, error) {
+
 	var items []*dborm.TATScript
 
 	result := dborm.Db.Find(&items, "user_id = ?", uid)
+
 	return items, result.Error
+
 }
 
 func Fetch(id int) (*dborm.TATScript, error) {
+
 	var item *dborm.TATScript
 
 	result := dborm.Db.Find(&item, "id = ?", id)
+
 	return item, result.Error
+
 }
 
 func Delete(id int) error {
+
 	result := dborm.Db.Delete(&dborm.TATScript{}, id)
+
 	return result.Error
+
 }

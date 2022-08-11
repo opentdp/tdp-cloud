@@ -9,6 +9,7 @@ import (
 )
 
 func list(c *gin.Context) {
+
 	userId := c.GetUint("UserId")
 	keyId := c.GetUint("KeyId")
 
@@ -17,9 +18,11 @@ func list(c *gin.Context) {
 	} else {
 		c.Set("Error", err)
 	}
+
 }
 
 func create(c *gin.Context) {
+
 	var rq history.CreateParam
 
 	if c.ShouldBind(&rq) != nil {
@@ -35,9 +38,11 @@ func create(c *gin.Context) {
 	} else {
 		c.Set("Error", err)
 	}
+
 }
 
 func update(c *gin.Context) {
+
 	var rq history.UpdateParam
 
 	if c.ShouldBind(&rq) != nil {
@@ -53,9 +58,11 @@ func update(c *gin.Context) {
 	} else {
 		c.Set("Error", err)
 	}
+
 }
 
 func delete(c *gin.Context) {
+
 	id, _ := strconv.Atoi(c.Param("id"))
 
 	if err := history.Delete(id); err == nil {
@@ -63,4 +70,5 @@ func delete(c *gin.Context) {
 	} else {
 		c.Set("Error", err)
 	}
+
 }

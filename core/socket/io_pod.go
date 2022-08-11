@@ -44,6 +44,7 @@ func (pod *IOPod) Read(p []byte) (int, error) {
 func (pod *IOPod) Write(p []byte) (int, error) {
 
 	writer, err := pod.Conn.NextWriter(websocket.TextMessage)
+
 	if err != nil {
 		return 0, err
 	}

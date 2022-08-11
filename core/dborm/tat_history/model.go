@@ -13,6 +13,7 @@ type CreateParam struct {
 }
 
 func Create(post *CreateParam) error {
+
 	result := dborm.Db.Create(&dborm.TATHistory{
 		UserId:               post.UserId,
 		KeyId:                post.KeyId,
@@ -22,7 +23,9 @@ func Create(post *CreateParam) error {
 		InvocationStatus:     "",
 		InvocationResultJson: "",
 	})
+
 	return result.Error
+
 }
 
 type UpdateParam struct {
@@ -32,24 +35,33 @@ type UpdateParam struct {
 }
 
 func Update(post *UpdateParam) error {
+
 	result := dborm.Db.Model(&dborm.TATHistory{}).
 		Where("id = ?", post.Id).
 		Updates(dborm.TATHistory{
 			InvocationStatus:     post.InvocationStatus,
 			InvocationResultJson: post.InvocationResultJson,
 		})
+
 	return result.Error
+
 }
 
 func FetchAll(userId, keyId uint) ([]*dborm.TATHistory, error) {
+
 	var items []*dborm.TATHistory
 
 	result := dborm.Db.Limit(50).Order("id desc").
 		Find(&items, "user_id = ? and key_id = ?", userId, keyId)
+
 	return items, result.Error
+
 }
 
 func Delete(id int) error {
+
 	result := dborm.Db.Delete(&dborm.TATHistory{}, id)
+
 	return result.Error
+
 }

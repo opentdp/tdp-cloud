@@ -14,6 +14,7 @@ import (
 func Handle(c *gin.Context) {
 
 	pod, err := socket.NewIOPod(c.Writer, c.Request)
+
 	if err != nil {
 		c.AbortWithError(500, err)
 		return
@@ -33,6 +34,7 @@ func Handle(c *gin.Context) {
 	// 创建 SSH 连接
 
 	client, err := NewSSHClient(&option)
+
 	if err != nil {
 		pod.Write([]byte("> " + err.Error() + "\r\n"))
 		return
@@ -57,6 +59,7 @@ func sshBridge(client *ssh.Client, pod *socket.IOPod, quit chan bool) {
 	rw := io.ReadWriter(pod)
 
 	session, err := client.NewSession()
+
 	if err != nil {
 		rw.Write([]byte(err.Error() + "\r\n"))
 		return

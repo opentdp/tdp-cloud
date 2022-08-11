@@ -53,6 +53,7 @@ func NewSSHClientWithPassword(option *SSHClientOption) (*ssh.Client, error) {
 func NewSSHClientWithPrivateKey(option *SSHClientOption) (*ssh.Client, error) {
 
 	signer, err := ssh.ParsePrivateKey([]byte(option.PrivateKey))
+
 	if err != nil {
 		return nil, err
 	}
