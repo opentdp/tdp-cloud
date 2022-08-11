@@ -8,7 +8,7 @@ import (
 
 func Ping(pod *socket.JsonPod) error {
 
-	v := SocketData{
+	v := &SocketData{
 		Action:  "ping",
 		Method:  "request",
 		Payload: time.Now().Format("2006-01-02 15:04:05"),

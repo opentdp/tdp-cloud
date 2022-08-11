@@ -18,10 +18,12 @@ func RunCommand(addr string, data *CommandPayload) error {
 		return errors.New("客户端已断开")
 	}
 
-	return node.Pod.Write(SocketData{
+	v := &SocketData{
 		Action:  "runCommand",
 		Method:  "request",
 		Payload: data,
-	})
+	}
+
+	return node.Pod.Write(v)
 
 }

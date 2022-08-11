@@ -35,6 +35,7 @@ func Connect(url string) {
 
 	go func() {
 		for {
+			log.Println("send: Ping")
 			if err := Ping(pod); err != nil {
 				log.Println(err)
 				break
@@ -60,8 +61,10 @@ func Connect(url string) {
 			} else {
 				log.Println("runCommand 参数错误")
 			}
+		case "pong":
+			log.Println("receive: Pong - ", rq.Payload)
 		default:
-			log.Println("unkown action: ", rq)
+			log.Println("unkown: ", rq)
 		}
 	}
 

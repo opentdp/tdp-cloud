@@ -10,10 +10,12 @@ func Pong(addr string, data *interface{}) error {
 		return errors.New("客户端已断开")
 	}
 
-	return node.Pod.Write(SocketData{
+	v := &SocketData{
 		Action:  "pong",
 		Method:  "response",
 		Payload: data,
-	})
+	}
+
+	return node.Pod.Write(v)
 
 }
