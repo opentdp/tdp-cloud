@@ -61,7 +61,7 @@ func cmdScript(data *CommandPayload) (string, error) {
 	tf, err := ioutil.TempFile(os.TempDir(), "tat-*.bat")
 
 	if err != nil {
-		return "", errors.New("无法创建临时文件")
+		return "", errors.New("创建临时文件失败")
 	}
 
 	defer os.Remove(tf.Name())
@@ -69,7 +69,7 @@ func cmdScript(data *CommandPayload) (string, error) {
 	_, err = tf.WriteString(data.Content)
 
 	if err != nil {
-		return "", errors.New("无法写入临时文件")
+		return "", errors.New("写入临时文件失败")
 	}
 
 	name := "cmd.exe"
@@ -84,7 +84,7 @@ func ps1Script(data *CommandPayload) (string, error) {
 	tf, err := ioutil.TempFile(os.TempDir(), "tat-*.ps1")
 
 	if err != nil {
-		return "", errors.New("无法创建临时文件")
+		return "", errors.New("创建临时文件失败")
 	}
 
 	defer os.Remove(tf.Name())
@@ -92,7 +92,7 @@ func ps1Script(data *CommandPayload) (string, error) {
 	_, err = tf.WriteString(data.Content)
 
 	if err != nil {
-		return "", errors.New("无法写入临时文件")
+		return "", errors.New("写入临时文件失败")
 	}
 
 	name := "powershell.exe"
@@ -107,7 +107,7 @@ func shellScript(data *CommandPayload) (string, error) {
 	tf, err := ioutil.TempFile(os.TempDir(), "tat-*")
 
 	if err != nil {
-		return "", errors.New("无法创建临时文件")
+		return "", errors.New("创建临时文件失败")
 	}
 
 	defer os.Remove(tf.Name())
@@ -115,7 +115,7 @@ func shellScript(data *CommandPayload) (string, error) {
 	_, err = tf.WriteString(data.Content)
 
 	if err != nil {
-		return "", errors.New("无法写入临时文件")
+		return "", errors.New("写入临时文件失败")
 	}
 
 	tf.Chmod(0755)
