@@ -4,8 +4,9 @@ import (
 	"log"
 	"time"
 
-	"github.com/gorilla/websocket"
 	"github.com/mitchellh/mapstructure"
+
+	"tdp-cloud/core/socket"
 )
 
 type SocketData struct {
@@ -18,23 +19,23 @@ func Connect(url string) {
 
 	log.Println("客户端模式暂未实现，仅供调试使用")
 
-	// 断线重连
+	// 自动重连
 	defer delayConnect(url)
 
-	// 连接服务器
-	ws, _, err := websocket.DefaultDialer.Dial(url, nil)
+	// 注册服务
+
+	pod, err := socket.NewJsonPodClient(url)
 	if err != nil {
 		return
 	}
 
-	// 延迟关闭连接
-	defer ws.Close()
+	defer pod.Close()
 
 	// 保持连接
 
 	go func() {
 		for {
-			if err := Ping(ws); err != nil {
+			if err := Ping(pod); err != nil {
 				log.Println(err)
 				break
 			}
@@ -47,7 +48,7 @@ func Connect(url string) {
 	for {
 		var rq SocketData
 
-		if ws.ReadJSON(&rq) != nil {
+		if pod.Read(&rq) != nil {
 			break
 		}
 
@@ -55,7 +56,7 @@ func Connect(url string) {
 		case "runCommand":
 			var data *CommandPayload
 			if mapstructure.Decode(rq.Payload, &data) == nil {
-				RunCommand(ws, data)
+				RunCommand(pod, data)
 			} else {
 				log.Println("runCommand 参数错误")
 			}

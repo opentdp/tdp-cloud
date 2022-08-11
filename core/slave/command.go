@@ -3,7 +3,7 @@ package slave
 import (
 	"log"
 
-	"github.com/gorilla/websocket"
+	"tdp-cloud/core/socket"
 )
 
 type CommandPayload struct {
@@ -14,7 +14,7 @@ type CommandPayload struct {
 	Timeout          uint   `binding:"required"`
 }
 
-func RunCommand(ws *websocket.Conn, data *CommandPayload) error {
+func RunCommand(pod *socket.JsonPod, data *CommandPayload) error {
 
 	log.Println("RunCommand", data)
 

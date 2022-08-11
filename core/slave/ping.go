@@ -3,10 +3,10 @@ package slave
 import (
 	"time"
 
-	"github.com/gorilla/websocket"
+	"tdp-cloud/core/socket"
 )
 
-func Ping(ws *websocket.Conn) error {
+func Ping(pod *socket.JsonPod) error {
 
 	v := SocketData{
 		Action:  "ping",
@@ -14,6 +14,6 @@ func Ping(ws *websocket.Conn) error {
 		Payload: time.Now().Format("2006-01-02 15:04:05"),
 	}
 
-	return ws.WriteJSON(v)
+	return pod.Write(v)
 
 }

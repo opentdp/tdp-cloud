@@ -26,6 +26,14 @@ func NewJsonPod(w http.ResponseWriter, r *http.Request) (*JsonPod, error) {
 
 }
 
+func NewJsonPodClient(url string) (*JsonPod, error) {
+
+	ws, _, err := websocket.DefaultDialer.Dial(url, nil)
+
+	return &JsonPod{ws}, err
+
+}
+
 func (pod *JsonPod) Read(v any) error {
 
 	return pod.Conn.ReadJSON(v)
