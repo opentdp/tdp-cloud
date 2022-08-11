@@ -2,7 +2,7 @@ package agent
 
 import "errors"
 
-func Pong(addr string, data *interface{}) error {
+func RecvPing(addr string, rq *SocketData) error {
 
 	node, ok := AgentPool[addr]
 
@@ -11,9 +11,9 @@ func Pong(addr string, data *interface{}) error {
 	}
 
 	v := &SocketData{
-		Action:  "pong",
-		Method:  "response",
-		Payload: data,
+		TaskId:  rq.TaskId,
+		Method:  "Ping:end",
+		Payload: rq.Payload,
 	}
 
 	return node.Pod.Write(v)

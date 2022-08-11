@@ -16,7 +16,7 @@ func list(c *gin.Context) {
 
 type commandParam struct {
 	Addr    string
-	Payload agent.CommandPayload
+	Payload agent.RunCommandPayload
 }
 
 func runCommand(c *gin.Context) {
@@ -28,8 +28,12 @@ func runCommand(c *gin.Context) {
 		return
 	}
 
-	if err := agent.RunCommand(rq.Addr, &rq.Payload); err == nil {
-		c.Set("Payload", "命令下发完成")
+	taskId, err := agent.SendRunCommand(rq.Addr, &rq.Payload)
+
+	//TODO: 返回的TaskId需要入库，以便异步接收回调结果
+
+	if err == nil {
+		c.Set("Payload", "命令下发完成，TaskId："+taskId)
 	} else {
 		c.Set("Error", err)
 	}

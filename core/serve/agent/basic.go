@@ -7,8 +7,9 @@ import (
 )
 
 type SocketData struct {
-	Action  string
+	TaskId  string
 	Method  string
+	Success bool
 	Payload any
 }
 
@@ -37,13 +38,13 @@ func Register(pod *socket.JsonPod) {
 			break
 		}
 
-		switch rq.Action {
-		case "ping":
-			if Pong(addr, &rq.Payload) != nil {
+		switch rq.Method {
+		case "Ping":
+			if RecvPing(addr, rq) != nil {
 				return
 			}
 		default:
-			log.Println("unkown action: ", rq)
+			log.Println("recv:", rq)
 		}
 	}
 

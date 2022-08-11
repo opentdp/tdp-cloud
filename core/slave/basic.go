@@ -4,17 +4,11 @@ import (
 	"log"
 	"time"
 
-	"github.com/mitchellh/mapstructure"
-
+	"tdp-cloud/core/serve/agent"
 	"tdp-cloud/core/socket"
 )
 
-type SocketData struct {
-	Action  string
-	Method  string
-	Payload any
-	Error   error
-}
+type SocketData agent.SocketData
 
 func Connect(url string) {
 
@@ -38,7 +32,7 @@ func Connect(url string) {
 	go func() {
 		for {
 			log.Println("send: Ping")
-			if err := Ping(pod); err != nil {
+			if _, err := SendPing(pod); err != nil {
 				log.Println(err)
 				break
 			}
@@ -55,18 +49,11 @@ func Connect(url string) {
 			break
 		}
 
-		switch rq.Action {
-		case "runCommand":
-			var data *CommandPayload
-			if mapstructure.Decode(rq.Payload, &data) == nil {
-				RunCommand(pod, data)
-			} else {
-				log.Println("runCommand 参数错误")
-			}
-		case "pong":
-			log.Println("receive: Pong - ", rq.Payload)
+		switch rq.Method {
+		case "RunCommand":
+			RecvRunCommand(pod, rq)
 		default:
-			log.Println("unkown: ", rq)
+			log.Println("recv:", rq)
 		}
 	}
 

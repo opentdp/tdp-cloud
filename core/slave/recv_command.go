@@ -12,37 +12,39 @@ import (
 	"sync"
 	"time"
 
+	"github.com/mitchellh/mapstructure"
+
 	"tdp-cloud/core/helper"
+	"tdp-cloud/core/serve/agent"
 	"tdp-cloud/core/socket"
 )
 
-type CommandPayload struct {
-	Content          string `binding:"required"`
-	Username         string `binding:"required"`
-	CommandType      string `binding:"required"`
-	WorkingDirectory string `binding:"required"`
-	Timeout          uint   `binding:"required"`
-}
+type RunCommandPayload agent.RunCommandPayload
 
-func RunCommand(pod *socket.JsonPod, data *CommandPayload) error {
+func RecvRunCommand(pod *socket.JsonPod, rq *SocketData) error {
 
 	var err error
 	var ret string
+	var data *RunCommandPayload
 
-	switch data.CommandType {
-	case "CMD":
-		ret, err = cmdScript(data)
-	case "POWERSHELL":
-		ret, err = ps1Script(data)
-	case "SHELL":
-		ret, err = shellScript(data)
+	err = mapstructure.Decode(rq.Payload, &data)
+
+	if err == nil {
+		switch data.CommandType {
+		case "CMD":
+			ret, err = cmdScript(data)
+		case "POWERSHELL":
+			ret, err = ps1Script(data)
+		case "SHELL":
+			ret, err = shellScript(data)
+		}
 	}
 
 	v := &SocketData{
-		Action:  "runCommand",
-		Method:  "response",
+		TaskId:  rq.TaskId,
+		Method:  "RunCommand:end",
+		Success: err == nil,
 		Payload: ret,
-		Error:   err,
 	}
 
 	if err := pod.Write(v); err != nil {
@@ -56,7 +58,7 @@ func RunCommand(pod *socket.JsonPod, data *CommandPayload) error {
 
 /////
 
-func cmdScript(data *CommandPayload) (string, error) {
+func cmdScript(data *RunCommandPayload) (string, error) {
 
 	tf, err := ioutil.TempFile(os.TempDir(), "tat-*.bat")
 
@@ -79,7 +81,7 @@ func cmdScript(data *CommandPayload) (string, error) {
 
 }
 
-func ps1Script(data *CommandPayload) (string, error) {
+func ps1Script(data *RunCommandPayload) (string, error) {
 
 	tf, err := ioutil.TempFile(os.TempDir(), "tat-*.ps1")
 
@@ -102,7 +104,7 @@ func ps1Script(data *CommandPayload) (string, error) {
 
 }
 
-func shellScript(data *CommandPayload) (string, error) {
+func shellScript(data *RunCommandPayload) (string, error) {
 
 	tf, err := ioutil.TempFile(os.TempDir(), "tat-*")
 
