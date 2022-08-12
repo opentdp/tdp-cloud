@@ -1,4 +1,4 @@
-package secret
+package config
 
 import (
 	"github.com/gin-gonic/gin"
@@ -8,15 +8,15 @@ import (
 
 func Router(api *gin.RouterGroup) {
 
-	rg := api.Group("/secret")
+	rg := api.Group("/config")
 
 	rg.Use(midware.AuthGuard())
 
 	{
 		rg.GET("/", list)
 		rg.POST("/", create)
-		rg.PATCH("/:id", update)
-		rg.DELETE("/:id", delete)
+		rg.PATCH("/:key", update)
+		rg.DELETE("/:key", delete)
 	}
 
 }

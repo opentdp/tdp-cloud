@@ -49,6 +49,25 @@ func create(c *gin.Context) {
 
 }
 
+// 修改配置
+
+func update(c *gin.Context) {
+
+	var rq *secret.UpdateParam
+
+	if c.ShouldBind(&rq) != nil {
+		c.Set("Error", "请求参数错误")
+		return
+	}
+
+	if err := secret.Update(rq); err == nil {
+		c.Set("Payload", "操作成功")
+	} else {
+		c.Set("Error", err)
+	}
+
+}
+
 // 删除密钥
 
 func delete(c *gin.Context) {
