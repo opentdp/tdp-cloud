@@ -9,7 +9,7 @@ import (
 	"log"
 	"os"
 	"os/exec"
-	"sync"
+	"runtime"
 	"time"
 
 	"github.com/mitchellh/mapstructure"
@@ -24,6 +24,7 @@ func (pod *RecvPod) RunCommand(rq *SocketData) error {
 
 	var err error
 	var ret string
+
 	var data *RunCommandPayload
 
 	err = mapstructure.Decode(rq.Payload, &data)
@@ -132,41 +133,51 @@ func execCommand(name string, params []string, timeout uint) (string, error) {
 
 	var ret string
 
-	// 超时时间
+	// 设置上下文
 
-	otime := time.Duration(timeout) * time.Millisecond
-	ctx, cancel := context.WithTimeout(context.Background(), otime)
-
-	defer cancel()
-
-	// 执行命令
+	ctx, cancel := context.WithTimeout(context.Background(), time.Millisecond*time.Duration(timeout))
 
 	cmd := exec.CommandContext(ctx, name, params...)
 
-	// 捕获输出
+	defer cancel()
+
+	// 持续读取输出
 
 	stdout, err := cmd.StdoutPipe()
+
 	if err != nil {
-		return ret, err
+		return "", err
 	}
 
-	var wg sync.WaitGroup
+	defer stdout.Close()
 
-	wg.Add(1)
 	go func() {
-		defer wg.Done()
 		reader := bufio.NewReader(stdout)
+
 		for {
-			rs, err := reader.ReadString('\n')
+			str, err := reader.ReadString('\n')
 			if err != nil || err == io.EOF {
-				return
+				break
 			}
-			ret += helper.Byte2String([]byte(rs), "GB18030")
+			ret += str
+		}
+
+		if runtime.GOOS == "windows" {
+			ret = helper.Gb18030ToUtf8(ret)
 		}
 	}()
 
-	err = cmd.Start()
-	wg.Wait()
+	// 开始执行命令
+
+	if err := cmd.Start(); err != nil {
+		return ret, err
+	}
+
+	// 等待命令结束
+
+	if err := cmd.Wait(); err != nil {
+		return ret, err
+	}
 
 	return ret, err
 

@@ -43,29 +43,12 @@ func RandString(length uint) string {
 
 }
 
-// 根据编码转换 byte 为 string
+// 转换编码 gb18030 -> utf-8
 
-type Charset string
+func Gb18030ToUtf8(str string) string {
 
-const (
-	UTF8    = Charset("UTF-8")
-	GB18030 = Charset("GB18030")
-)
+	ret, _ := simplifiedchinese.GB18030.NewDecoder().String(str)
 
-func Byte2String(byte []byte, charset Charset) string {
-
-	var str string
-
-	switch charset {
-	case GB18030:
-		ret, _ := simplifiedchinese.GB18030.NewDecoder().Bytes(byte)
-		str = string(ret)
-	case UTF8:
-		fallthrough
-	default:
-		str = string(byte)
-	}
-
-	return str
+	return string(ret)
 
 }

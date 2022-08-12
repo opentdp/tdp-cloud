@@ -53,6 +53,7 @@ func apiProxy(c *gin.Context) {
 func vncProxy(c *gin.Context) {
 
 	resp, err := http.Get("https://img.qcloud.com/qcloud/app/active_vnc/index.html")
+
 	if err != nil {
 		c.Set("Error", "获取资源失败")
 		return

@@ -84,9 +84,7 @@ func NewRecvPod(pod *socket.JsonPod) *RecvPod {
 
 func NewSendPod(addr string) *SendPod {
 
-	node, ok := AgentPool[addr]
-
-	if ok {
+	if node, ok := AgentPool[addr]; ok {
 		return &SendPod{node.Pod}
 	}
 
