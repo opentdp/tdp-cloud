@@ -6,6 +6,7 @@ import (
 
 	"github.com/gin-gonic/gin"
 
+	"tdp-cloud/core/dborm/config"
 	"tdp-cloud/core/serve"
 	"tdp-cloud/core/webssh"
 )
@@ -16,7 +17,9 @@ func agent(c *gin.Context) {
 
 	log.Println("agent - Connecting With Key: " + key)
 
-	if key != "xxx" {
+	cc, err := config.Fetch("AgentKey")
+
+	if err != nil || key != cc.Value {
 		c.AbortWithError(400, errors.New("授权失败"))
 		return
 	}
