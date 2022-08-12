@@ -22,9 +22,9 @@ func AuthGuard() gin.HandlerFunc {
 			return
 		}
 
-		session, err := session.Fetch(field[1])
+		sess, err := session.Fetch(field[1])
 
-		if err != nil || session.UserId == 0 {
+		if err != nil || sess.UserId == 0 {
 			c.Set("Error", "会话已失效")
 			c.Abort()
 			return
@@ -33,7 +33,7 @@ func AuthGuard() gin.HandlerFunc {
 		keyId, _ := strconv.Atoi(field[0])
 
 		c.Set("KeyId", uint(keyId))
-		c.Set("UserId", session.UserId)
+		c.Set("UserId", sess.UserId)
 
 	}
 
