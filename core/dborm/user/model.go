@@ -12,8 +12,8 @@ import (
 // 注册账号
 
 type RegisterParam struct {
-	Username string `json:"username" binding:"required"`
-	Password string `json:"password" binding:"required"`
+	Username string `binding:"required"`
+	Password string `binding:"required"`
 }
 
 func Register(param *RegisterParam) error {
@@ -28,15 +28,15 @@ func Register(param *RegisterParam) error {
 // 登录账号
 
 type LoginParam struct {
-	Username string `json:"username" binding:"required"`
-	Password string `json:"password" binding:"required"`
+	Username string `binding:"required"`
+	Password string `binding:"required"`
 }
 
 type LoginResult struct {
-	Keyid       uint   `json:"keyid"`
-	Token       string `json:"token"`
-	Username    string `json:"username"`
-	Description string `json:"description"`
+	KeyId       uint
+	Token       string
+	Username    string
+	Description string
 }
 
 func Login(param *LoginParam) (*LoginResult, error) {
@@ -72,7 +72,7 @@ func Login(param *LoginParam) (*LoginResult, error) {
 	}
 
 	if len(item.Secrets) > 0 {
-		res.Keyid = item.Secrets[0].Id
+		res.KeyId = item.Secrets[0].Id
 	}
 
 	return res, nil
@@ -82,8 +82,8 @@ func Login(param *LoginParam) (*LoginResult, error) {
 // 修改资料
 
 type UpdateInfoParam struct {
-	UserId      uint   `json:"userId"`
-	Description string `json:"description" binding:"required"`
+	UserId      uint
+	Description string `binding:"required"`
 }
 
 func UpdateInfo(param *UpdateInfoParam) error {
@@ -111,9 +111,9 @@ func UpdateInfo(param *UpdateInfoParam) error {
 // 修改密码
 
 type UpdatePasswordParam struct {
-	UserId      uint   `json:"userId"`
-	OldPassword string `json:"oldPassword" binding:"required"`
-	NewPassword string `json:"newPassword" binding:"required"`
+	UserId      uint
+	OldPassword string `binding:"required"`
+	NewPassword string `binding:"required"`
 }
 
 func UpdatePassword(param *UpdatePasswordParam) error {

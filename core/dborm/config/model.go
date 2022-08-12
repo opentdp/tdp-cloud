@@ -7,8 +7,10 @@ import (
 // 添加配置
 
 type CreateParam struct {
-	Key   string `json:"key" binding:"required"`
-	Value string `json:"value" binding:"required"`
+	Key         string `binding:"required"`
+	Value       string `binding:"required"`
+	Module      string
+	Description string
 }
 
 func Create(post *CreateParam) error {
@@ -25,8 +27,10 @@ func Create(post *CreateParam) error {
 // 更新配置
 
 type UpdateParam struct {
-	Key   string `json:"key" binding:"required"`
-	Value string `json:"value" binding:"required"`
+	Key         string `binding:"required"`
+	Value       string `binding:"required"`
+	Module      string
+	Description string
 }
 
 func Update(post *UpdateParam) error {

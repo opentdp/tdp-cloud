@@ -23,9 +23,9 @@ Content-Type: application/json
 Origin: {{$dotenv origin}}
 
 {
-    "name":  "name",
-    "description": "description",
-    "content":  "content"
+    "Name":  "name",
+    "Description": "description",
+    "Content":  "content"
 }
 
 ### 更新
@@ -36,10 +36,10 @@ Content-Type: application/json
 Origin: {{$dotenv origin}}
 
 {
-    "id": 1,
-    "name":  "name222",
-    "description": "description",
-    "content":  "content"
+    "Id": 1,
+    "Name":  "name222",
+    "Description": "description",
+    "Content":  "content"
 }
 
 ### 删除

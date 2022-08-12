@@ -3,11 +3,13 @@ package dborm
 // 配置
 
 type Config struct {
-	Id        uint   `gorm:"primaryKey"`
-	Key       string `gorm:"index,unique"`
-	Value     string
-	CreatedAt int64
-	UpdatedAt int64
+	Id          uint   `gorm:"primaryKey"`
+	Key         string `gorm:"index,unique"`
+	Value       string
+	Module      string
+	Description string
+	CreatedAt   int64
+	UpdatedAt   int64
 }
 
 // 用户

@@ -7,8 +7,8 @@ Origin: {{$dotenv origin}}
 Content-Type: application/json
 
 {
-    "username":"{{$dotenv username}}",
-    "password": "{{$dotenv password}}"
+    "Username":"{{$dotenv username}}",
+    "Password": "{{$dotenv password}}"
 }
 
 ### 登录账号
@@ -18,8 +18,8 @@ Origin: {{$dotenv origin}}
 Content-Type: application/json
 
 {
-    "username":"{{$dotenv username}}",
-    "password": "{{$dotenv password}}"
+    "Username":"{{$dotenv username}}",
+    "Password": "{{$dotenv password}}"
 }
 
 ### 修改资料
@@ -30,7 +30,7 @@ Origin: {{$dotenv origin}}
 Content-Type: application/json
 
 {
-    "description": "不可能！我的代码怎么可能会有Bug！"
+    "Description": "不可能！我的代码怎么可能会有Bug！"
 }
 
 ### 修改密码
@@ -41,6 +41,6 @@ Origin: {{$dotenv origin}}
 Content-Type: application/json
 
 {
-    "oldPassword": "{{$dotenv password}}",
-    "newPassword": "{{$dotenv password}}"
+    "OldPassword": "{{$dotenv password}}",
+    "NewPassword": "{{$dotenv password}}"
 }

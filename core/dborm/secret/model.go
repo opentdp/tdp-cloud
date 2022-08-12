@@ -7,10 +7,10 @@ import (
 // 添加密钥
 
 type CreateParam struct {
-	UserId      uint   `json:"userId"`
-	SecretId    string `json:"secretId" binding:"required"`
-	SecretKey   string `json:"secretKey" binding:"required"`
-	Description string `json:"description" binding:"required"`
+	UserId      uint
+	SecretId    string `binding:"required"`
+	SecretKey   string `binding:"required"`
+	Description string `binding:"required"`
 }
 
 func Create(post *CreateParam) error {
@@ -29,11 +29,11 @@ func Create(post *CreateParam) error {
 // 更新密钥
 
 type UpdateParam struct {
-	Id          uint   `json:"id"  binding:"required"`
-	UserId      uint   `json:"userId" binding:"required"`
-	SecretId    string `json:"secretId" binding:"required"`
-	SecretKey   string `json:"secretKey" binding:"required"`
-	Description string `json:"description" binding:"required"`
+	Id          uint   `binding:"required"`
+	UserId      uint   `binding:"required"`
+	SecretId    string `binding:"required"`
+	SecretKey   string `binding:"required"`
+	Description string `binding:"required"`
 }
 
 func Update(post *UpdateParam) error {
