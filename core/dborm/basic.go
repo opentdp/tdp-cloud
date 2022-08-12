@@ -45,16 +45,11 @@ func Connect(dsn string) {
 
 func migrate() error {
 
-	// 更改表名 tat -> tat_script
-	if Db.Migrator().HasTable("tat") {
-		Db.Migrator().RenameTable("tat", "tat_script")
-	}
-
-	// 自动迁移
 	return Db.AutoMigrate(
+		&Config{},
 		&User{},
-		&Secret{},
 		&Session{},
+		&Secret{},
 		&Sshkey{},
 		&TATScript{},
 		&TATHistory{},
