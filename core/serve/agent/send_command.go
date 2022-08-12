@@ -15,7 +15,7 @@ type RunCommandPayload struct {
 func (pod *SendPod) RunCommand(data *RunCommandPayload) (string, error) {
 
 	v := &SocketData{
-		TaskId:  uuid.New().String(),
+		TaskId:  uuid.NewString(),
 		Method:  "RunCommand",
 		Payload: data,
 	}

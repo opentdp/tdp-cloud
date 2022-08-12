@@ -34,25 +34,7 @@ func Connect(dsn string) {
 	}
 
 	if err != nil {
-		panic("Failed to connect database")
+		panic("Connect to database failed")
 	}
-
-	if migrate() != nil {
-		panic("Failed to migrate database")
-	}
-
-}
-
-func migrate() error {
-
-	return Db.AutoMigrate(
-		&Config{},
-		&User{},
-		&Session{},
-		&Secret{},
-		&Sshkey{},
-		&TATScript{},
-		&TATHistory{},
-	)
 
 }

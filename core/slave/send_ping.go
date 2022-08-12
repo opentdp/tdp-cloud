@@ -9,7 +9,7 @@ import (
 func (pod *SendPod) Ping() (string, error) {
 
 	v := &SocketData{
-		TaskId:  uuid.New().String(),
+		TaskId:  uuid.NewString(),
 		Method:  "Ping",
 		Payload: time.Now().Format("2006-01-02 15:04:05"),
 	}
