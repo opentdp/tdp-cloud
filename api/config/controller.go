@@ -20,7 +20,7 @@ func list(c *gin.Context) {
 
 // 获取配置
 
-func fetch(c *gin.Context) {
+func detail(c *gin.Context) {
 
 	key := c.Param("key")
 
