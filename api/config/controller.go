@@ -18,6 +18,20 @@ func list(c *gin.Context) {
 
 }
 
+// 获取配置
+
+func fetch(c *gin.Context) {
+
+	key := c.Param("key")
+
+	if res, err := config.Fetch(key); err == nil {
+		c.Set("Payload", res)
+	} else {
+		c.Set("Error", err)
+	}
+
+}
+
 // 添加配置
 
 func create(c *gin.Context) {

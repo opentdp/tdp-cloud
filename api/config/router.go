@@ -15,6 +15,7 @@ func Router(api *gin.RouterGroup) {
 	{
 		rg.GET("/", list)
 		rg.POST("/", create)
+		rg.GET("/:key", fetch)
 		rg.PATCH("/:key", update)
 		rg.DELETE("/:key", delete)
 	}
