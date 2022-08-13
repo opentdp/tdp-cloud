@@ -60,7 +60,7 @@ func addMigration(v string) {
 	Versions += ":" + v
 
 	config.Update(&config.UpdateParam{
-		Key:         "Migration",
+		Name:        "Migration",
 		Value:       Versions,
 		Module:      "System",
 		Description: "自动迁移记录",

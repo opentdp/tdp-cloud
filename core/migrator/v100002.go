@@ -35,7 +35,7 @@ func newAgentKey() error {
 	}
 
 	return config.Create(&config.CreateParam{
-		Key:         "AgentKey",
+		Name:        "AgentKey",
 		Value:       uuid.NewString(),
 		Module:      "System",
 		Description: "客户端注册密钥",
@@ -54,7 +54,7 @@ func newMigration() error {
 	Versions = "100001"
 
 	return config.Create(&config.CreateParam{
-		Key:         "Migration",
+		Name:        "Migration",
 		Value:       Versions,
 		Module:      "System",
 		Description: "自动迁移记录",
