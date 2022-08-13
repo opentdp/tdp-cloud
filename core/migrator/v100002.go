@@ -8,7 +8,7 @@ import (
 
 func v100002() error {
 
-	if isMigrated("v100002") {
+	if isMigrated("100002") {
 		return nil
 	}
 
@@ -20,7 +20,7 @@ func v100002() error {
 		return err
 	}
 
-	addMigration("v100002")
+	addMigration("100002")
 
 	return nil
 
@@ -51,7 +51,7 @@ func newMigration() error {
 		return nil
 	}
 
-	Versions = "v100001"
+	Versions = "100001"
 
 	return config.Create(&config.CreateParam{
 		Key:         "Migration",

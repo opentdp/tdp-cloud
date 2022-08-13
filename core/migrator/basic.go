@@ -57,7 +57,7 @@ func addMigration(v string) {
 		return
 	}
 
-	Versions += "," + v
+	Versions += ":" + v
 
 	config.Update(&config.UpdateParam{
 		Key:         "Migration",
