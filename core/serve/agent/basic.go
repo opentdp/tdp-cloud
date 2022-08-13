@@ -3,6 +3,7 @@ package agent
 import (
 	"log"
 
+	"tdp-cloud/core/helper"
 	"tdp-cloud/core/socket"
 )
 
@@ -15,8 +16,9 @@ type SendPod struct {
 }
 
 type AgentNode struct {
-	Pod  *socket.JsonPod
 	Addr string
+	Pod  *socket.JsonPod
+	Stat *helper.SystemStat
 }
 
 type SocketData struct {
@@ -35,6 +37,7 @@ func AddNode(pod *socket.JsonPod) {
 	AgentPool[addr] = AgentNode{
 		Addr: addr,
 		Pod:  pod,
+		Stat: &helper.SystemStat{},
 	}
 
 	defer delete(AgentPool, addr)
@@ -67,9 +70,7 @@ func GetNodeList() []AgentNode {
 	items := make([]AgentNode, 0, len(AgentPool))
 
 	for _, v := range AgentPool {
-		items = append(items, AgentNode{
-			Addr: v.Addr,
-		})
+		items = append(items, v)
 	}
 
 	return items
