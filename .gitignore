@@ -5,6 +5,7 @@ cloud.db
 
 # local env files
 test-api/.env
+__debug_*
 
 # Log files
 *.log
