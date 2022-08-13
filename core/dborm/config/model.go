@@ -7,7 +7,7 @@ import (
 // 添加配置
 
 type CreateParam struct {
-	Key         string `binding:"required"`
+	Name        string `binding:"required"`
 	Value       string `binding:"required"`
 	Module      string
 	Description string
@@ -16,7 +16,7 @@ type CreateParam struct {
 func Create(post *CreateParam) error {
 
 	result := dborm.Db.Create(&dborm.Config{
-		Key:         post.Key,
+		Name:        post.Name,
 		Value:       post.Value,
 		Module:      post.Module,
 		Description: post.Description,
@@ -29,7 +29,7 @@ func Create(post *CreateParam) error {
 // 更新配置
 
 type UpdateParam struct {
-	Key         string `binding:"required"`
+	Name        string `binding:"required"`
 	Value       string `binding:"required"`
 	Module      string
 	Description string
@@ -38,7 +38,7 @@ type UpdateParam struct {
 func Update(post *UpdateParam) error {
 
 	result := dborm.Db.Model(&dborm.Config{}).
-		Where("key = ? ", post.Key).
+		Where("name = ? ", post.Name).
 		Updates(dborm.Config{
 			Value:       post.Value,
 			Module:      post.Module,
@@ -63,11 +63,11 @@ func FetchAll() ([]*dborm.Config, error) {
 
 // 获取配置
 
-func Fetch(key string) (*dborm.Config, error) {
+func Fetch(name string) (*dborm.Config, error) {
 
 	var item *dborm.Config
 
-	result := dborm.Db.First(&item, "key = ?", key)
+	result := dborm.Db.First(&item, "name = ?", name)
 
 	return item, result.Error
 
@@ -75,11 +75,11 @@ func Fetch(key string) (*dborm.Config, error) {
 
 // 删除配置
 
-func Delete(key string) error {
+func Delete(name string) error {
 
 	var item *dborm.Config
 
-	result := dborm.Db.Delete(&item, "key = ?", key)
+	result := dborm.Db.Delete(&item, "name = ?", name)
 
 	return result.Error
 

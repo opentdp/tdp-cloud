@@ -22,9 +22,9 @@ func list(c *gin.Context) {
 
 func detail(c *gin.Context) {
 
-	key := c.Param("key")
+	name := c.Param("name")
 
-	if res, err := config.Fetch(key); err == nil {
+	if res, err := config.Fetch(name); err == nil {
 		c.Set("Payload", res)
 	} else {
 		c.Set("Error", err)
@@ -74,9 +74,9 @@ func update(c *gin.Context) {
 
 func delete(c *gin.Context) {
 
-	key := c.Param("key")
+	name := c.Param("name")
 
-	if err := config.Delete(key); err == nil {
+	if err := config.Delete(name); err == nil {
 		c.Set("Payload", "删除成功")
 	} else {
 		c.Set("Error", err)

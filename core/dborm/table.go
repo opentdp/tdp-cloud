@@ -4,7 +4,7 @@ package dborm
 
 type Config struct {
 	Id          uint   `gorm:"primaryKey"`
-	Key         string `gorm:"index,unique"`
+	Name        string `gorm:"index,unique"`
 	Value       string
 	Module      string
 	Description string
