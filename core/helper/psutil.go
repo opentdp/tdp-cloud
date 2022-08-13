@@ -26,7 +26,7 @@ type SystemStat struct {
 
 func GetSystemStat() *SystemStat {
 
-	cc, _ := cpu.Counts(false)
+	cc, _ := cpu.Counts(true)
 	cp, _ := cpu.Percent(time.Second, false)
 	mv, _ := mem.VirtualMemory()
 	dp, _ := disk.Partitions(false)
