@@ -41,7 +41,7 @@ func Connect(url string) {
 				log.Println(err)
 				break
 			}
-			time.Sleep(time.Second * 30)
+			time.Sleep(time.Second * 15)
 		}
 	}()
 
