@@ -16,8 +16,10 @@ type CreateParam struct {
 func Create(post *CreateParam) error {
 
 	result := dborm.Db.Create(&dborm.Config{
-		Key:   post.Key,
-		Value: post.Value,
+		Key:         post.Key,
+		Value:       post.Value,
+		Module:      post.Module,
+		Description: post.Description,
 	})
 
 	return result.Error
@@ -38,7 +40,9 @@ func Update(post *UpdateParam) error {
 	result := dborm.Db.Model(&dborm.Config{}).
 		Where("key = ? ", post.Key).
 		Updates(dborm.Config{
-			Value: post.Value,
+			Value:       post.Value,
+			Module:      post.Module,
+			Description: post.Description,
 		})
 
 	return result.Error

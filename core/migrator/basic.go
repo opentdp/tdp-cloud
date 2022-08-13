@@ -1,48 +1,69 @@
 package migrator
 
 import (
-	"strconv"
+	"log"
+	"strings"
 
 	"tdp-cloud/core/dborm/config"
 )
 
-var Version = 0
+var Versions = ""
 
-func Migrate() {
+func Start() {
 
-	getVersion()
-	defer setVersion()
-
-	if v00001() != nil {
-		panic("Migration to v100001 failed")
-	}
-
-	if Version < 100002 {
-		if v00002() != nil {
-			panic("Migration to v100002 failed")
-		}
-		Version = 100002
+	if err := doMigrate(); err != nil {
+		log.Panic(err)
 	}
 
 }
 
-func getVersion() {
+func doMigrate() error {
 
-	item, err := config.Fetch("migrate")
+	getMigration()
+
+	if err := v100001(); err != nil {
+		return err
+	}
+
+	if err := v100002(); err != nil {
+		return err
+	}
+
+	Versions = "" // 释放资源
+
+	return nil
+
+}
+
+func isMigrated(v string) bool {
+
+	return strings.Contains(Versions, v)
+
+}
+
+func getMigration() {
+
+	item, err := config.Fetch("Migration")
 
 	if err == nil && item.Value != "" {
-		v, _ := strconv.Atoi(item.Value)
-		Version = v
+		Versions = item.Value
 	}
 
 }
 
-func setVersion() {
+func addMigration(v string) {
 
-	v := strconv.Itoa(Version)
+	if isMigrated(v) {
+		return
+	}
+
+	Versions += "," + v
 
 	config.Update(&config.UpdateParam{
-		Key: "migrate", Value: v,
+		Key:         "Migration",
+		Value:       Versions,
+		Module:      "System",
+		Description: "自动迁移记录",
 	})
 
 }

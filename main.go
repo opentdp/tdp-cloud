@@ -37,7 +37,7 @@ func server() {
 	dborm.Connect(cli.Dsn)
 
 	// 实施自动迁移
-	migrator.Migrate()
+	migrator.Start()
 
 	// 创建HTTP服务
 	serve.Create(cli.Address, api.Router, front.Router)
