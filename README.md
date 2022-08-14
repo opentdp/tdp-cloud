@@ -29,9 +29,9 @@ go env -w GOPROXY=https://goproxy.cn,direct
 
 1、运行编译好的二进制文件，此时会生成 `cloud.db` 数据库文件，请注意权限
 
-2、浏览器打开 `http://localhost:7800`，注册一个账号
+2、浏览器打开 `http://localhost:7800`，默认账号 `admin`，密码 `123456`
 
-3、登录刚注册的账号，添加腾讯云访问密钥
+3、使用默认账号登录，添加腾讯云CAM密钥
 
 ### 支持的数据库
 
