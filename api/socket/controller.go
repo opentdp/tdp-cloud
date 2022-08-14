@@ -24,6 +24,8 @@ func agent(c *gin.Context) {
 		return
 	}
 
+	c.Set("UserId", u.Id)
+
 	serve.AgentFactory(c)
 
 }

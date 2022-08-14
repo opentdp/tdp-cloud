@@ -16,9 +16,10 @@ type SendPod struct {
 }
 
 type AgentNode struct {
-	Addr string
-	Pod  *socket.JsonPod
-	Stat *helper.SystemStat
+	Pod    *socket.JsonPod
+	Stat   *helper.SystemStat
+	Addr   string
+	UserId uint
 }
 
 type SocketData struct {
@@ -30,14 +31,15 @@ type SocketData struct {
 
 var AgentPool = map[string]AgentNode{}
 
-func AddNode(pod *socket.JsonPod) {
+func AddNode(pod *socket.JsonPod, userId uint) {
 
 	addr := pod.Conn.RemoteAddr().String()
 
 	AgentPool[addr] = AgentNode{
-		Addr: addr,
-		Pod:  pod,
-		Stat: &helper.SystemStat{},
+		Pod:    pod,
+		Stat:   &helper.SystemStat{},
+		Addr:   addr,
+		UserId: userId,
 	}
 
 	defer delete(AgentPool, addr)
@@ -65,12 +67,14 @@ func AddNode(pod *socket.JsonPod) {
 
 }
 
-func GetNodeList() []AgentNode {
+func GetNodeList(userId uint) []AgentNode {
 
 	items := make([]AgentNode, 0, len(AgentPool))
 
 	for _, v := range AgentPool {
-		items = append(items, v)
+		if userId == v.UserId {
+			items = append(items, v)
+		}
 	}
 
 	return items

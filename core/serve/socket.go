@@ -21,7 +21,7 @@ func AgentFactory(c *gin.Context) {
 
 	defer pod.Close()
 
-	agent.AddNode(pod)
+	agent.AddNode(pod, c.GetUint("UserId"))
 
 }
 
