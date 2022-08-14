@@ -2,6 +2,7 @@ package socket
 
 import (
 	"errors"
+	"strings"
 
 	"github.com/gin-gonic/gin"
 
@@ -12,7 +13,7 @@ import (
 
 func agent(c *gin.Context) {
 
-	at := c.Param("at")
+	at := strings.Replace(c.Param("auth"), "0:", "", 1)
 
 	u, err := user.Fetch(&user.FetchParam{
 		AppToken: at,
