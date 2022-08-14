@@ -31,7 +31,7 @@ go env -w GOPROXY=https://goproxy.cn,direct
 
 2、浏览器打开 `http://localhost:7800`，默认账号 `admin`，密码 `123456`
 
-3、使用默认账号登录，添加腾讯云CAM密钥
+3、登录账号，添加一组或多组 `腾讯云CAM密钥`，即可管理云资源
 
 ### 支持的数据库
 
