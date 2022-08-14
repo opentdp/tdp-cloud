@@ -11,9 +11,8 @@ type RecvPod struct {
 	*socket.JsonPod
 }
 
-type SendPod struct {
-	*socket.JsonPod
-}
+type RespPod RecvPod
+type SendPod RecvPod
 
 type AgentNode struct {
 	Pod    *socket.JsonPod
@@ -46,7 +45,8 @@ func AddNode(pod *socket.JsonPod, userId uint) {
 
 	// 接收数据
 
-	recv := NewRecvPod(pod)
+	recv := &RecvPod{pod}
+	resp := &RespPod{pod}
 
 	for {
 		var rq *SocketData
@@ -60,6 +60,8 @@ func AddNode(pod *socket.JsonPod, userId uint) {
 			if recv.Ping(rq) != nil {
 				return
 			}
+		case "Exec:resp":
+			resp.Exec(rq)
 		default:
 			log.Println("recv:", rq)
 		}
@@ -78,12 +80,6 @@ func GetNodeList(userId uint) []AgentNode {
 	}
 
 	return items
-
-}
-
-func NewRecvPod(pod *socket.JsonPod) *RecvPod {
-
-	return &RecvPod{pod}
 
 }
 

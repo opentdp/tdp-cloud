@@ -9,6 +9,7 @@ import (
 )
 
 type RecvPod agent.RecvPod
+type RespPod agent.RespPod
 type SendPod agent.SendPod
 
 type SocketData agent.SocketData
@@ -32,7 +33,7 @@ func Connect(url string) {
 
 	// 保持连接
 
-	send := NewSendPod(pod)
+	send := &SendPod{pod}
 
 	go func() {
 		for {
@@ -47,7 +48,8 @@ func Connect(url string) {
 
 	// 接收数据
 
-	recv := NewRecvPod(pod)
+	recv := &RecvPod{pod}
+	resp := &RespPod{pod}
 
 	for {
 		var rq *SocketData
@@ -59,6 +61,8 @@ func Connect(url string) {
 		switch rq.Method {
 		case "Exec":
 			recv.Exec(rq)
+		case "Ping:resp":
+			resp.Ping(rq)
 		default:
 			log.Println("recv:", rq)
 		}
@@ -72,17 +76,5 @@ func delayConnect(url string) {
 
 	time.Sleep(time.Second * 5)
 	Connect(url)
-
-}
-
-func NewRecvPod(pod *socket.JsonPod) *RecvPod {
-
-	return &RecvPod{pod}
-
-}
-
-func NewSendPod(pod *socket.JsonPod) *SendPod {
-
-	return &SendPod{pod}
 
 }

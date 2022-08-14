@@ -1,9 +1,11 @@
 package slave
 
 import (
-	"tdp-cloud/core/helper"
+	"log"
 
 	"github.com/google/uuid"
+
+	"tdp-cloud/core/helper"
 )
 
 func (pod *SendPod) Ping() (string, error) {
@@ -15,5 +17,11 @@ func (pod *SendPod) Ping() (string, error) {
 	}
 
 	return v.TaskId, pod.Write(v)
+
+}
+
+func (pod *RespPod) Ping(rq *SocketData) {
+
+	log.Println("Ping:resp:", rq.Payload)
 
 }

@@ -1,6 +1,8 @@
 package agent
 
 import (
+	"log"
+
 	"github.com/google/uuid"
 )
 
@@ -21,5 +23,11 @@ func (pod *SendPod) Exec(data *ExecPayload) (string, error) {
 	}
 
 	return v.TaskId, pod.Write(v)
+
+}
+
+func (pod *RespPod) Exec(rq *SocketData) {
+
+	log.Println("Ping:resp:", rq.Payload)
 
 }
