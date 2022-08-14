@@ -6,6 +6,8 @@
 
 请参阅 https://github.com/tdp-resource/tdp-cloud/issues/1
 
+**截图演示** https://github.com/tdp-resource/tdp-cloud/blob/main/docs/%E7%95%8C%E9%9D%A2%E9%A2%84%E8%A7%88.md
+
 ## 二、开发说明
 
 ### 启动开发服务
