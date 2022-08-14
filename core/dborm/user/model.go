@@ -123,10 +123,11 @@ type LoginParam struct {
 }
 
 type LoginResult struct {
-	KeyId       uint
-	Token       string
-	Username    string
-	Description string
+	KeyId        uint
+	AppToken     string
+	SessionToken string
+	Username     string
+	Description  string
 }
 
 func Login(param *LoginParam) (*LoginResult, error) {
@@ -151,9 +152,10 @@ func Login(param *LoginParam) (*LoginResult, error) {
 	// 返回结果
 
 	res := &LoginResult{
-		Token:       token,
-		Username:    item.Username,
-		Description: item.Description,
+		Username:     item.Username,
+		AppToken:     item.AppToken,
+		Description:  item.Description,
+		SessionToken: token,
 	}
 
 	if len(item.Secrets) > 0 {
