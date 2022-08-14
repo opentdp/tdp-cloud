@@ -14,7 +14,7 @@ func Router(api *gin.RouterGroup) {
 
 	{
 		rg.POST("/login", login)
-		rg.POST("/register", register)
+		rg.POST("/register", create)
 	}
 
 	// 需授权接口
@@ -22,6 +22,7 @@ func Router(api *gin.RouterGroup) {
 	rg.Use(midware.AuthGuard())
 
 	{
+		rg.GET("/info", detail)
 		rg.PATCH("/info", updateInfo)
 		rg.PATCH("/password", updatePassword)
 	}

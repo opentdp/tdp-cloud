@@ -7,7 +7,7 @@ import (
 	"tdp-cloud/core/dborm/config"
 )
 
-var Versions = ""
+var Versions = "100000"
 
 func Start() {
 
@@ -41,7 +41,7 @@ func isMigrated(v string) bool {
 
 }
 
-func getMigration() {
+func getMigration() string {
 
 	item, err := config.Fetch("Migration")
 
@@ -49,17 +49,19 @@ func getMigration() {
 		Versions = item.Value
 	}
 
+	return Versions
+
 }
 
-func addMigration(v string) {
+func addMigration(v string) error {
 
 	if isMigrated(v) {
-		return
+		return nil
 	}
 
 	Versions += ":" + v
 
-	config.Update(&config.UpdateParam{
+	return config.Update(&config.UpdateParam{
 		Name:        "Migration",
 		Value:       Versions,
 		Module:      "System",

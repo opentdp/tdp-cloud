@@ -1,19 +1,56 @@
 package migrator
 
 import (
-	"tdp-cloud/core/dborm"
+	"tdp-cloud/core/dborm/config"
+	"tdp-cloud/core/dborm/user"
 )
 
-func v100001() error {
+func v100002() error {
 
-	return dborm.Db.AutoMigrate(
-		&dborm.Config{},
-		&dborm.User{},
-		&dborm.Session{},
-		&dborm.Secret{},
-		&dborm.Sshkey{},
-		&dborm.TATScript{},
-		&dborm.TATHistory{},
-	)
+	if isMigrated("100001") {
+		return nil
+	}
+
+	if err := newAdminUser(); err != nil {
+		return err
+	}
+
+	if err := newMigration(); err != nil {
+		return err
+	}
+
+	return addMigration("100001")
+
+}
+
+func newAdminUser() error {
+
+	item, err := user.Fetch(&user.FetchParam{Id: 1})
+
+	if err == nil && item.Id > 0 {
+		return nil
+	}
+
+	return user.Create(&user.CreateParam{
+		Username: "admin",
+		Password: "123456",
+	})
+
+}
+
+func newMigration() error {
+
+	item, err := config.Fetch("Migration")
+
+	if err == nil && item.Id > 0 {
+		return nil
+	}
+
+	return config.Create(&config.CreateParam{
+		Name:        "Migration",
+		Value:       Versions,
+		Module:      "System",
+		Description: "自动迁移记录",
+	})
 
 }

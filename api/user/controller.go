@@ -6,19 +6,35 @@ import (
 	"tdp-cloud/core/dborm/user"
 )
 
-// 注册账号
+// 创建账号
 
-func register(c *gin.Context) {
+func create(c *gin.Context) {
 
-	var rq *user.RegisterParam
+	var rq *user.CreateParam
 
 	if c.ShouldBind(&rq) != nil {
 		c.Set("Error", "请求参数错误")
 		return
 	}
 
-	if err := user.Register(rq); err == nil {
+	if err := user.Create(rq); err == nil {
 		c.Set("Payload", "注册成功")
+	} else {
+		c.Set("Error", err)
+	}
+
+}
+
+// 获取用户
+
+func detail(c *gin.Context) {
+
+	rq := &user.FetchParam{
+		Id: c.GetUint("UserId"),
+	}
+
+	if res, err := user.Fetch(rq); err == nil {
+		c.Set("Payload", res)
 	} else {
 		c.Set("Error", err)
 	}
@@ -55,7 +71,7 @@ func updateInfo(c *gin.Context) {
 		return
 	}
 
-	rq.UserId = c.GetUint("UserId")
+	rq.Id = c.GetUint("UserId")
 
 	if err := user.UpdateInfo(rq); err == nil {
 		c.Set("Payload", "操作成功")
@@ -76,7 +92,7 @@ func updatePassword(c *gin.Context) {
 		return
 	}
 
-	rq.UserId = c.GetUint("UserId")
+	rq.Id = c.GetUint("UserId")
 
 	if err := user.UpdatePassword(rq); err == nil {
 		c.Set("Payload", "操作成功")

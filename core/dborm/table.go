@@ -18,6 +18,7 @@ type User struct {
 	Id          uint   `gorm:"primaryKey"`
 	Username    string `gorm:"index,unique"`
 	Password    string
+	AppToken    string `gorm:"index,unique"`
 	Description string `gorm:"default:什么也没有"`
 	Secrets     []Secret
 	Sessions    []Session
@@ -81,7 +82,7 @@ type TATScript struct {
 type TATHistory struct {
 	Id                   uint `gorm:"primaryKey"`
 	UserId               uint `gorm:"index"`
-	KeyId                uint
+	KeyId                uint `gorm:"index"`
 	Name                 string
 	Region               string
 	InvocationId         string

@@ -2,40 +2,33 @@ package socket
 
 import (
 	"errors"
-	"log"
 
 	"github.com/gin-gonic/gin"
 
-	"tdp-cloud/core/dborm/config"
+	"tdp-cloud/core/dborm/user"
 	"tdp-cloud/core/serve"
 	"tdp-cloud/core/webssh"
 )
 
 func agent(c *gin.Context) {
 
-	key := c.Param("key")
+	at := c.Param("at")
 
-	log.Println("agent - Connecting With Key: " + key)
+	u, err := user.Fetch(&user.FetchParam{
+		AppToken: at,
+	})
 
-	cc, err := config.Fetch("AgentKey")
-
-	if err != nil || key != cc.Value {
+	if err != nil || u.Id == 0 {
 		c.AbortWithError(400, errors.New("授权失败"))
 		return
 	}
 
 	serve.AgentFactory(c)
 
-	log.Println("agent - Disconnected")
-
 }
 
 func ssh(c *gin.Context) {
 
-	log.Println("webssh - Connecting")
-
 	webssh.Handle(c)
-
-	log.Println("webssh - Disconnected")
 
 }

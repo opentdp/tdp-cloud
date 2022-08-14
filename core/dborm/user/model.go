@@ -3,25 +3,115 @@ package user
 import (
 	"errors"
 
-	"golang.org/x/crypto/bcrypt"
+	"github.com/google/uuid"
 
 	"tdp-cloud/core/dborm"
 	"tdp-cloud/core/dborm/session"
 )
 
-// 注册账号
+// 创建账号
 
-type RegisterParam struct {
+type CreateParam struct {
 	Username string `binding:"required"`
 	Password string `binding:"required"`
 }
 
-func Register(param *RegisterParam) error {
+func Create(param *CreateParam) error {
 
-	hash, _ := bcrypt.GenerateFromPassword([]byte(param.Password), bcrypt.DefaultCost)
-	result := dborm.Db.Create(&dborm.User{Username: param.Username, Password: string(hash)})
+	result := dborm.Db.Create(&dborm.User{
+		Username: param.Username,
+		Password: HashPassword(param.Password),
+		AppToken: uuid.NewString(),
+	})
 
 	return result.Error
+
+}
+
+// 修改资料
+
+type UpdateInfoParam struct {
+	Id          uint
+	Description string `binding:"required"`
+}
+
+func UpdateInfo(param *UpdateInfoParam) error {
+
+	var item *dborm.User
+
+	// 验证账号
+
+	dborm.Db.First(&item, "id = ?", param.Id)
+
+	if item.Id == 0 {
+		return errors.New("账号错误")
+	}
+
+	// 更新资料
+
+	item.Description = param.Description
+
+	dborm.Db.Select("Description").Save(&item)
+
+	return nil
+
+}
+
+// 修改密码
+
+type UpdatePasswordParam struct {
+	Id          uint
+	OldPassword string `binding:"required"`
+	NewPassword string `binding:"required"`
+}
+
+func UpdatePassword(param *UpdatePasswordParam) error {
+
+	var item *dborm.User
+
+	// 验证账号
+
+	dborm.Db.First(&item, "id = ?", param.Id)
+
+	if item.Id == 0 {
+		return errors.New("账号错误")
+	}
+	if !CheckPassword(item.Password, param.OldPassword) {
+		return errors.New("密码错误")
+	}
+
+	// 更新密码
+
+	item.Password = HashPassword(param.NewPassword)
+
+	dborm.Db.Select("Password").Save(&item)
+
+	return nil
+
+}
+
+// 获取用户
+
+type FetchParam struct {
+	Id       uint
+	Username string
+	AppToken string
+}
+
+func Fetch(param *FetchParam) (*dborm.User, error) {
+
+	var item *dborm.User
+
+	dborm.Db.Where(param).First(&item)
+
+	if item.Id == 0 {
+		return nil, errors.New("用户不存在")
+	}
+
+	// 删除敏感字段
+	item.Password = ""
+
+	return item, nil
 
 }
 
@@ -50,12 +140,7 @@ func Login(param *LoginParam) (*LoginResult, error) {
 	if item.Id == 0 {
 		return nil, errors.New("账号错误")
 	}
-
-	// 验证密码
-
-	err := bcrypt.CompareHashAndPassword([]byte(item.Password), []byte(param.Password))
-
-	if err != nil {
+	if !CheckPassword(item.Password, param.Password) {
 		return nil, errors.New("密码错误")
 	}
 
@@ -76,71 +161,5 @@ func Login(param *LoginParam) (*LoginResult, error) {
 	}
 
 	return res, nil
-
-}
-
-// 修改资料
-
-type UpdateInfoParam struct {
-	UserId      uint
-	Description string `binding:"required"`
-}
-
-func UpdateInfo(param *UpdateInfoParam) error {
-
-	var item *dborm.User
-
-	// 验证账号
-
-	dborm.Db.First(&item, "id = ?", param.UserId)
-
-	if item.Id == 0 {
-		return errors.New("账号错误")
-	}
-
-	// 更新资料
-
-	item.Description = param.Description
-
-	dborm.Db.Select("Description").Save(&item)
-
-	return nil
-
-}
-
-// 修改密码
-
-type UpdatePasswordParam struct {
-	UserId      uint
-	OldPassword string `binding:"required"`
-	NewPassword string `binding:"required"`
-}
-
-func UpdatePassword(param *UpdatePasswordParam) error {
-
-	var item *dborm.User
-
-	// 验证账号
-
-	dborm.Db.First(&item, "id = ?", param.UserId)
-
-	if item.Id == 0 {
-		return errors.New("账号错误")
-	}
-
-	err := bcrypt.CompareHashAndPassword([]byte(item.Password), []byte(param.OldPassword))
-
-	if err != nil {
-		return errors.New("密码错误")
-	}
-
-	// 更新密码
-
-	hash, _ := bcrypt.GenerateFromPassword([]byte(param.NewPassword), bcrypt.DefaultCost)
-	item.Password = string(hash)
-
-	dborm.Db.Select("Password").Save(&item)
-
-	return nil
 
 }
