@@ -57,8 +57,8 @@ func Connect(url string) {
 		}
 
 		switch rq.Method {
-		case "RunCommand":
-			recv.RunCommand(rq)
+		case "Exec":
+			recv.Exec(rq)
 		default:
 			log.Println("recv:", rq)
 		}

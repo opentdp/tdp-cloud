@@ -16,14 +16,14 @@ func list(c *gin.Context) {
 
 }
 
-type commandParam struct {
+type execParam struct {
 	Addr    string
-	Payload agent.RunCommandPayload
+	Payload agent.ExecPayload
 }
 
-func runCommand(c *gin.Context) {
+func exec(c *gin.Context) {
 
-	var rq *commandParam
+	var rq *execParam
 
 	if c.ShouldBind(&rq) != nil {
 		c.Set("Error", "请求参数错误")
@@ -37,7 +37,7 @@ func runCommand(c *gin.Context) {
 		return
 	}
 
-	taskId, err := send.RunCommand(&rq.Payload)
+	taskId, err := send.Exec(&rq.Payload)
 
 	//TODO: 返回的TaskId需要入库，以便异步回收结果
 

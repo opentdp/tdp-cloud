@@ -18,14 +18,14 @@ import (
 	"tdp-cloud/core/serve/agent"
 )
 
-type RunCommandPayload agent.RunCommandPayload
+type ExecPayload agent.ExecPayload
 
-func (pod *RecvPod) RunCommand(rq *SocketData) error {
+func (pod *RecvPod) Exec(rq *SocketData) error {
 
 	var err error
 	var ret string
 
-	var data *RunCommandPayload
+	var data *ExecPayload
 
 	err = mapstructure.Decode(rq.Payload, &data)
 
@@ -42,13 +42,13 @@ func (pod *RecvPod) RunCommand(rq *SocketData) error {
 
 	v := &SocketData{
 		TaskId:  rq.TaskId,
-		Method:  "RunCommand:end",
+		Method:  "Exec:resp",
 		Success: err == nil,
 		Payload: ret,
 	}
 
 	if err := pod.Write(v); err != nil {
-		log.Println("[RunCommand] ", err)
+		log.Println("[Exec] ", err)
 		return err
 	}
 
@@ -58,7 +58,7 @@ func (pod *RecvPod) RunCommand(rq *SocketData) error {
 
 /////
 
-func cmdScript(data *RunCommandPayload) (string, error) {
+func cmdScript(data *ExecPayload) (string, error) {
 
 	tf, err := ioutil.TempFile(os.TempDir(), "tat-*.bat")
 
@@ -81,7 +81,7 @@ func cmdScript(data *RunCommandPayload) (string, error) {
 
 }
 
-func ps1Script(data *RunCommandPayload) (string, error) {
+func ps1Script(data *ExecPayload) (string, error) {
 
 	tf, err := ioutil.TempFile(os.TempDir(), "tat-*.ps1")
 
@@ -104,7 +104,7 @@ func ps1Script(data *RunCommandPayload) (string, error) {
 
 }
 
-func shellScript(data *RunCommandPayload) (string, error) {
+func shellScript(data *ExecPayload) (string, error) {
 
 	tf, err := ioutil.TempFile(os.TempDir(), "tat-*")
 

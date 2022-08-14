@@ -4,7 +4,7 @@ import (
 	"github.com/google/uuid"
 )
 
-type RunCommandPayload struct {
+type ExecPayload struct {
 	Content          string
 	Username         string
 	CommandType      string
@@ -12,11 +12,11 @@ type RunCommandPayload struct {
 	Timeout          uint
 }
 
-func (pod *SendPod) RunCommand(data *RunCommandPayload) (string, error) {
+func (pod *SendPod) Exec(data *ExecPayload) (string, error) {
 
 	v := &SocketData{
 		TaskId:  uuid.NewString(),
-		Method:  "RunCommand",
+		Method:  "Exec",
 		Payload: data,
 	}
 

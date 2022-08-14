@@ -14,7 +14,7 @@ func (pod *RecvPod) Ping(rq *SocketData) error {
 
 	v := &SocketData{
 		TaskId:  rq.TaskId,
-		Method:  "Ping:end",
+		Method:  "Ping:resp",
 		Payload: "OK",
 	}
 
