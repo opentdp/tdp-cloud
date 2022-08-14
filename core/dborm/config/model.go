@@ -37,8 +37,8 @@ type UpdateParam struct {
 
 func Update(post *UpdateParam) error {
 
-	result := dborm.Db.Model(&dborm.Config{}).
-		Where("name = ? ", post.Name).
+	result := dborm.Db.
+		Where(&dborm.Config{Name: post.Name}).
 		Updates(dborm.Config{
 			Value:       post.Value,
 			Module:      post.Module,
@@ -67,7 +67,7 @@ func Fetch(name string) (*dborm.Config, error) {
 
 	var item *dborm.Config
 
-	result := dborm.Db.First(&item, "name = ?", name)
+	result := dborm.Db.Where(&dborm.Config{Name: name}).First(&item)
 
 	return item, result.Error
 
@@ -79,7 +79,7 @@ func Delete(name string) error {
 
 	var item *dborm.Config
 
-	result := dborm.Db.Delete(&item, "name = ?", name)
+	result := dborm.Db.Where(&dborm.Config{Name: name}).Delete(&item)
 
 	return result.Error
 

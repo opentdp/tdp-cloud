@@ -29,7 +29,7 @@ func Fetch(token string) (*dborm.Session, error) {
 
 	var item *dborm.Session
 
-	result := dborm.Db.First(&item, "token = ?", token)
+	result := dborm.Db.Where(&dborm.Session{Token: token}).First(&item)
 
 	if result.Error != nil || item.Id == 0 {
 		return nil, result.Error

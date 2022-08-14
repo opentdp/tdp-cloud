@@ -36,9 +36,9 @@ type UpdateParam struct {
 
 func Update(post *UpdateParam) error {
 
-	result := dborm.Db.Model(&dborm.TATHistory{}).
-		Where("id = ?", post.Id).
-		Updates(dborm.TATHistory{
+	result := dborm.Db.
+		Where(&dborm.TATHistory{Id: post.Id}).
+		Updates(&dborm.TATHistory{
 			InvocationStatus:     post.InvocationStatus,
 			InvocationResultJson: post.InvocationResultJson,
 		})
@@ -51,8 +51,10 @@ func FetchAll(userId, keyId uint) ([]*dborm.TATHistory, error) {
 
 	var items []*dborm.TATHistory
 
-	result := dborm.Db.Limit(50).Order("id desc").
-		Find(&items, "user_id = ? and key_id = ?", userId, keyId)
+	result := dborm.Db.
+		Where(&dborm.TATHistory{UserId: userId, KeyId: keyId}).
+		Limit(50).Order("id DESC").
+		Find(&items)
 
 	return items, result.Error
 

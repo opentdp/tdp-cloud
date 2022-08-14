@@ -38,8 +38,8 @@ type UpdateParam struct {
 
 func Update(post *UpdateParam) error {
 
-	result := dborm.Db.Model(&dborm.Sshkey{}).
-		Where("id = ? AND user_id = ?", post.Id, post.UserId).
+	result := dborm.Db.
+		Where(&dborm.Sshkey{Id: post.Id, UserId: post.UserId}).
 		Updates(dborm.Sshkey{
 			PublicKey:   post.PublicKey,
 			PrivateKey:  post.PrivateKey,
@@ -56,7 +56,7 @@ func FetchAll(userId uint) ([]*dborm.Sshkey, error) {
 
 	var items []*dborm.Sshkey
 
-	result := dborm.Db.Find(&items, "user_id = ?", userId)
+	result := dborm.Db.Where(&dborm.Sshkey{UserId: userId}).Find(&items)
 
 	return items, result.Error
 
@@ -68,7 +68,7 @@ func Fetch(id, userId uint) (*dborm.Sshkey, error) {
 
 	var item *dborm.Sshkey
 
-	result := dborm.Db.First(&item, "id = ? AND user_id = ?", id, userId)
+	result := dborm.Db.Where(&dborm.Sshkey{Id: id, UserId: userId}).First(&item)
 
 	return item, result.Error
 
@@ -80,7 +80,7 @@ func Delete(id, userId uint) error {
 
 	var item *dborm.Sshkey
 
-	result := dborm.Db.Delete(&item, "id = ? AND user_id = ?", id, userId)
+	result := dborm.Db.Where(&dborm.Sshkey{Id: id, UserId: userId}).Delete(&item)
 
 	return result.Error
 

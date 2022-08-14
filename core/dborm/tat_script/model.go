@@ -46,8 +46,7 @@ type UpdateParam struct {
 func Update(post *UpdateParam) error {
 
 	result := dborm.Db.
-		Model(&dborm.TATScript{}).
-		Where("id = ?", post.Id).
+		Where(&dborm.TATScript{Id: post.Id}).
 		Updates(dborm.TATScript{
 			Name:             post.Name,
 			Description:      post.Description,
@@ -62,21 +61,21 @@ func Update(post *UpdateParam) error {
 
 }
 
-func FetchAll(uid uint) ([]*dborm.TATScript, error) {
+func FetchAll(userId uint) ([]*dborm.TATScript, error) {
 
 	var items []*dborm.TATScript
 
-	result := dborm.Db.Find(&items, "user_id = ?", uid)
+	result := dborm.Db.Where(&dborm.TATScript{UserId: userId}).Find(&items)
 
 	return items, result.Error
 
 }
 
-func Fetch(id int) (*dborm.TATScript, error) {
+func Fetch(id uint) (*dborm.TATScript, error) {
 
 	var item *dborm.TATScript
 
-	result := dborm.Db.Find(&item, "id = ?", id)
+	result := dborm.Db.Where(&dborm.TATScript{Id: id}).Find(&item)
 
 	return item, result.Error
 

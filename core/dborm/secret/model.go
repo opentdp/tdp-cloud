@@ -38,8 +38,8 @@ type UpdateParam struct {
 
 func Update(post *UpdateParam) error {
 
-	result := dborm.Db.Model(&dborm.Secret{}).
-		Where("id = ? AND user_id = ?", post.Id, post.UserId).
+	result := dborm.Db.
+		Where(&dborm.Secret{Id: post.Id, UserId: post.UserId}).
 		Updates(dborm.Secret{
 			SecretId:    post.SecretId,
 			SecretKey:   post.SecretKey,
@@ -56,7 +56,7 @@ func FetchAll(userId uint) ([]*dborm.Secret, error) {
 
 	var items []*dborm.Secret
 
-	result := dborm.Db.Find(&items, "user_id = ?", userId)
+	result := dborm.Db.Where(&dborm.Secret{UserId: userId}).Find(&items)
 
 	return items, result.Error
 
@@ -68,7 +68,7 @@ func Fetch(id, userId uint) (*dborm.Secret, error) {
 
 	var item *dborm.Secret
 
-	result := dborm.Db.First(&item, "id = ? AND user_id = ?", id, userId)
+	result := dborm.Db.Where(&dborm.Secret{Id: id, UserId: userId}).First(&item)
 
 	return item, result.Error
 
@@ -80,7 +80,7 @@ func Delete(id, userId uint) error {
 
 	var item *dborm.Secret
 
-	result := dborm.Db.Delete(&item, "id = ? AND user_id = ?", id, userId)
+	result := dborm.Db.Where(&dborm.Secret{Id: id, UserId: userId}).Delete(&item)
 
 	return result.Error
 

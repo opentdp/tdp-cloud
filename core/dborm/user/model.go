@@ -16,11 +16,11 @@ type CreateParam struct {
 	Password string `binding:"required"`
 }
 
-func Create(param *CreateParam) error {
+func Create(post *CreateParam) error {
 
 	result := dborm.Db.Create(&dborm.User{
-		Username: param.Username,
-		Password: HashPassword(param.Password),
+		Username: post.Username,
+		Password: HashPassword(post.Password),
 		AppToken: uuid.NewString(),
 	})
 
@@ -35,13 +35,13 @@ type UpdateInfoParam struct {
 	Description string `binding:"required"`
 }
 
-func UpdateInfo(param *UpdateInfoParam) error {
+func UpdateInfo(post *UpdateInfoParam) error {
 
 	var item *dborm.User
 
 	// 验证账号
 
-	dborm.Db.First(&item, "id = ?", param.Id)
+	dborm.Db.Where(&dborm.User{Id: post.Id}).First(&item)
 
 	if item.Id == 0 {
 		return errors.New("账号错误")
@@ -49,7 +49,7 @@ func UpdateInfo(param *UpdateInfoParam) error {
 
 	// 更新资料
 
-	item.Description = param.Description
+	item.Description = post.Description
 
 	dborm.Db.Select("Description").Save(&item)
 
@@ -65,24 +65,24 @@ type UpdatePasswordParam struct {
 	NewPassword string `binding:"required"`
 }
 
-func UpdatePassword(param *UpdatePasswordParam) error {
+func UpdatePassword(post *UpdatePasswordParam) error {
 
 	var item *dborm.User
 
 	// 验证账号
 
-	dborm.Db.First(&item, "id = ?", param.Id)
+	dborm.Db.Where(&dborm.User{Id: post.Id}).First(&item)
 
 	if item.Id == 0 {
 		return errors.New("账号错误")
 	}
-	if !CheckPassword(item.Password, param.OldPassword) {
+	if !CheckPassword(item.Password, post.OldPassword) {
 		return errors.New("密码错误")
 	}
 
 	// 更新密码
 
-	item.Password = HashPassword(param.NewPassword)
+	item.Password = HashPassword(post.NewPassword)
 
 	dborm.Db.Select("Password").Save(&item)
 
@@ -98,11 +98,11 @@ type FetchParam struct {
 	AppToken string
 }
 
-func Fetch(param *FetchParam) (*dborm.User, error) {
+func Fetch(post *FetchParam) (*dborm.User, error) {
 
 	var item *dborm.User
 
-	dborm.Db.Where(param).First(&item)
+	dborm.Db.Where(post).First(&item)
 
 	if item.Id == 0 {
 		return nil, errors.New("用户不存在")
@@ -130,18 +130,18 @@ type LoginResult struct {
 	Description  string
 }
 
-func Login(param *LoginParam) (*LoginResult, error) {
+func Login(post *LoginParam) (*LoginResult, error) {
 
 	var item *dborm.User
 
 	// 验证账号
 
-	dborm.Db.Preload("Secrets").First(&item, "username = ?", param.Username)
+	dborm.Db.Preload("Secrets").Where(&dborm.User{Username: post.Username}).First(&item)
 
 	if item.Id == 0 {
 		return nil, errors.New("账号错误")
 	}
-	if !CheckPassword(item.Password, param.Password) {
+	if !CheckPassword(item.Password, post.Password) {
 		return nil, errors.New("密码错误")
 	}
 
