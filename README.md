@@ -4,9 +4,9 @@
 
 ## 一、功能列表
 
-请参阅 https://github.com/tdp-resource/tdp-cloud/issues/1
+支持的功能和开发进度，请参阅 [Issues #1](https://github.com/tdp-resource/tdp-cloud/issues/1)
 
-**截图演示** https://github.com/tdp-resource/tdp-cloud/blob/main/docs/%E7%95%8C%E9%9D%A2%E9%A2%84%E8%A7%88.md
+WebUI界面请查看文档 [界面预览](https://github.com/tdp-resource/tdp-cloud/blob/main/docs/界面预览.md)
 
 ## 二、开发说明
 
