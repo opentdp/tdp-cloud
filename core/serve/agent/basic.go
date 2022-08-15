@@ -73,7 +73,7 @@ func AddNode(pod *socket.JsonPod, userId uint) {
 
 func NodesOfUser(userId uint) []any {
 
-	items := make([]any, 0, len(NodePool))
+	items := []any{}
 
 	for _, v := range NodePool {
 		if userId == v.UserId {
