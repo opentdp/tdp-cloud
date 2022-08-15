@@ -11,7 +11,7 @@ import (
 )
 
 type SystemStat struct {
-	Hostname     string
+	HostName     string
 	Uptime       uint64
 	OS           string
 	CpuCore      int
@@ -49,7 +49,7 @@ func GetSystemStat() *SystemStat {
 	}
 
 	return &SystemStat{
-		Hostname:     hi.Hostname,
+		HostName:     hi.Hostname,
 		Uptime:       hi.Uptime,
 		OS:           hi.OS,
 		CpuCore:      cc,

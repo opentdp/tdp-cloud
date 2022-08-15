@@ -102,16 +102,18 @@ func Fetch(post *FetchParam) (*dborm.User, error) {
 
 	var item *dborm.User
 
-	dborm.Db.Where(post).First(&item)
-
-	if item.Id == 0 {
-		return nil, errors.New("用户不存在")
-	}
+	result := dborm.Db.
+		Where(&dborm.User{
+			Id:       post.Id,
+			Username: post.Username,
+			AppToken: post.AppToken,
+		}).
+		First(&item)
 
 	// 删除敏感字段
 	item.Password = ""
 
-	return item, nil
+	return item, result.Error
 
 }
 

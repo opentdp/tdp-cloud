@@ -29,9 +29,8 @@ type User struct {
 // 用户会话
 
 type Session struct {
-	Id        uint `gorm:"primaryKey"`
-	UserId    uint `gorm:"index"`
-	User      User
+	Id        uint   `gorm:"primaryKey"`
+	UserId    uint   `gorm:"index"`
 	Token     string `gorm:"index,unique"`
 	CreatedAt int64
 	UpdatedAt int64
@@ -61,7 +60,7 @@ type Sshkey struct {
 	UpdatedAt   int64
 }
 
-// 自动化助手 脚本
+// 自动化助手 - 脚本
 
 type TATScript struct {
 	Id               uint `gorm:"primaryKey"`
@@ -77,7 +76,7 @@ type TATScript struct {
 	UpdatedAt        int64
 }
 
-// 自动化助手 历史记录
+// 自动化助手 - 历史记录
 
 type TATHistory struct {
 	Id                   uint `gorm:"primaryKey"`
@@ -88,4 +87,31 @@ type TATHistory struct {
 	InvocationId         string
 	InvocationStatus     string
 	InvocationResultJson string
+}
+
+// 客户端 - 列表
+
+type SlaveNode struct {
+	Id        uint   `gorm:"primaryKey"`
+	UserId    string `gorm:"index"`
+	HostId    string `gorm:"index"`
+	HostName  string
+	Address   string
+	Status    string
+	CreatedAt int64
+	UpdatedAt int64
+}
+
+// 客户端 - 任务记录
+
+type SlaveTask struct {
+	Id        uint   `gorm:"primaryKey"`
+	UserId    uint   `gorm:"index"`
+	HostId    string `gorm:"index"`
+	Name      string
+	Content   string
+	Status    string
+	Result    string
+	CreatedAt int64
+	UpdatedAt int64
 }

@@ -30,14 +30,14 @@ func exec(c *gin.Context) {
 		return
 	}
 
-	send := agent.NewSendPod(rq.Addr)
+	pod := agent.NewSendPod(rq.Addr)
 
-	if send == nil {
+	if pod == nil {
 		c.Set("Error", "客户端已断开连接")
 		return
 	}
 
-	taskId, err := send.Exec(&rq.Payload)
+	taskId, err := pod.Exec(&rq.Payload)
 
 	if err == nil {
 		c.Set("Payload", "命令下发完成，TaskId："+taskId)

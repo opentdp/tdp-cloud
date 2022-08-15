@@ -13,6 +13,11 @@ func list(c *gin.Context) {
 	keyId := c.GetUint("KeyId")
 	userId := c.GetUint("UserId")
 
+	// 用于兼容 Agent Exec 结果
+	if c.Query("keyId") == "0" {
+		keyId = 0
+	}
+
 	if res, err := history.FetchAll(userId, keyId); err == nil {
 		c.Set("Payload", res)
 	} else {

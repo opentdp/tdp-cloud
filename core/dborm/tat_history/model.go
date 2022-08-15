@@ -5,11 +5,11 @@ import (
 )
 
 type CreateParam struct {
-	Name         string `binding:"required"`
-	InvocationId string `binding:"required"`
-	Region       string `binding:"required"`
 	UserId       uint
 	KeyId        uint
+	Name         string `binding:"required"`
+	Region       string `binding:"required"`
+	InvocationId string `binding:"required"`
 }
 
 func Create(post *CreateParam) error {
@@ -30,6 +30,7 @@ func Create(post *CreateParam) error {
 
 type UpdateParam struct {
 	Id                   uint
+	InvocationId         string
 	InvocationStatus     string `binding:"required"`
 	InvocationResultJson string `binding:"required"`
 }
@@ -37,7 +38,7 @@ type UpdateParam struct {
 func Update(post *UpdateParam) error {
 
 	result := dborm.Db.
-		Where(&dborm.TATHistory{Id: post.Id}).
+		Where(&dborm.TATHistory{Id: post.Id, InvocationId: post.InvocationId}).
 		Updates(&dborm.TATHistory{
 			InvocationStatus:     post.InvocationStatus,
 			InvocationResultJson: post.InvocationResultJson,
@@ -57,6 +58,23 @@ func FetchAll(userId, keyId uint) ([]*dborm.TATHistory, error) {
 		Find(&items)
 
 	return items, result.Error
+
+}
+
+type FetchParam struct {
+	Id           uint
+	InvocationId string
+}
+
+func Fetch(post *FetchParam) (*dborm.TATHistory, error) {
+
+	var item *dborm.TATHistory
+
+	result := dborm.Db.
+		Where(&dborm.TATHistory{Id: post.Id, InvocationId: post.InvocationId}).
+		First(&item)
+
+	return item, result.Error
 
 }
 

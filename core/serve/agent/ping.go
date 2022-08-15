@@ -6,11 +6,7 @@ import (
 
 func (pod *RecvPod) Ping(rq *SocketData) error {
 
-	addr := pod.Conn.RemoteAddr().String()
-
-	if node, ok := NodePool[addr]; ok {
-		mapstructure.Decode(rq.Payload, &node.SystemStat)
-	}
+	mapstructure.Decode(rq.Payload, &pod.SystemStat)
 
 	v := &SocketData{
 		Method:  "Ping:resp",

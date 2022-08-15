@@ -58,6 +58,8 @@ func AddNode(pod *socket.JsonPod, userId uint) {
 		switch rq.Method {
 		case "Exec:resp":
 			resp.Exec(rq)
+		case "Register":
+			recv.Register(rq)
 		case "Ping":
 			recv.Ping(rq)
 		default:

@@ -24,7 +24,7 @@ type SocketData agent.SocketData
 
 func Connect(url string) {
 
-	defer delayConnect(url)
+	defer delayer(url)
 
 	// 注册服务
 
@@ -36,9 +36,13 @@ func Connect(url string) {
 
 	defer pod.Close()
 
-	// 保持连接
+	// 发送数据
 
 	send := &SendPod{pod}
+
+	if _, err := send.Register(); err != nil {
+		return
+	}
 
 	go func() {
 		for {
@@ -74,7 +78,7 @@ func Connect(url string) {
 
 }
 
-func delayConnect(url string) {
+func delayer(url string) {
 
 	log.Println("连接失败，将在5秒后重试")
 
