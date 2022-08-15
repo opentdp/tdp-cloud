@@ -24,9 +24,6 @@ type SocketData agent.SocketData
 
 func Connect(url string) {
 
-	log.Println("客户端模式暂未实现，仅供调试使用")
-
-	// 自动重连
 	defer delayConnect(url)
 
 	// 注册服务
@@ -45,7 +42,6 @@ func Connect(url string) {
 
 	go func() {
 		for {
-			log.Println("send: Ping")
 			if _, err := send.Ping(); err != nil {
 				log.Println(err)
 				break

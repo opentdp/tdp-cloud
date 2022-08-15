@@ -25,8 +25,8 @@ type AgentNode struct {
 }
 
 type SocketData struct {
-	TaskId  string
 	Method  string
+	TaskId  string
 	Success bool
 	Payload any
 }
@@ -56,12 +56,10 @@ func AddNode(pod *socket.JsonPod, userId uint) {
 		}
 
 		switch rq.Method {
-		case "Ping":
-			if recv.Ping(rq) != nil {
-				return
-			}
 		case "Exec:resp":
 			resp.Exec(rq)
+		case "Ping":
+			recv.Ping(rq)
 		default:
 			log.Println("recv:", rq)
 		}

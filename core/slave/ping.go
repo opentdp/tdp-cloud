@@ -10,9 +10,11 @@ import (
 
 func (pod *SendPod) Ping() (string, error) {
 
+	log.Println("Ping start")
+
 	v := &SocketData{
-		TaskId:  uuid.NewString(),
 		Method:  "Ping",
+		TaskId:  uuid.NewString(),
 		Payload: helper.GetSystemStat(),
 	}
 

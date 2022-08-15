@@ -41,8 +41,8 @@ func (pod *RecvPod) Exec(rq *SocketData) error {
 	}
 
 	v := &SocketData{
-		TaskId:  rq.TaskId,
 		Method:  "Exec:resp",
+		TaskId:  rq.TaskId,
 		Success: err == nil,
 		Payload: ret,
 	}

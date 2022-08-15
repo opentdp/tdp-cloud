@@ -17,8 +17,8 @@ type ExecPayload struct {
 func (pod *SendPod) Exec(data *ExecPayload) (string, error) {
 
 	v := &SocketData{
-		TaskId:  uuid.NewString(),
 		Method:  "Exec",
+		TaskId:  uuid.NewString(),
 		Payload: data,
 	}
 
