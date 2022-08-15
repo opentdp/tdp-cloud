@@ -1,10 +1,6 @@
 package agent
 
 import (
-	"log"
-
-	"github.com/google/uuid"
-
 	"tdp-cloud/core/helper"
 
 	task "tdp-cloud/core/dborm/slave_task"
@@ -19,7 +15,7 @@ type ExecPayload struct {
 	Timeout          uint
 }
 
-func (pod *SendPod) Exec(data *ExecPayload) (string, error) {
+func (pod *SendPod) Exec(data *ExecPayload) (uint, error) {
 
 	item := &task.CreateParam{
 		UserId:   pod.UserId,
@@ -31,11 +27,11 @@ func (pod *SendPod) Exec(data *ExecPayload) (string, error) {
 		Result:   "",
 	}
 
-	task.Create(item)
+	taskId, _ := task.Create(item)
 
 	v := &SocketData{
 		Method:  "Exec",
-		TaskId:  uuid.NewString(),
+		TaskId:  taskId,
 		Payload: data,
 	}
 
@@ -45,9 +41,8 @@ func (pod *SendPod) Exec(data *ExecPayload) (string, error) {
 
 func (pod *RespPod) Exec(rq *SocketData) {
 
-	log.Println("Ping:resp:", rq.Payload)
-
 	item := &task.UpdateParam{
+		Id:     rq.TaskId,
 		UserId: pod.UserId,
 		Result: helper.ToJsonString(rq.Payload),
 	}

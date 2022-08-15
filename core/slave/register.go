@@ -3,7 +3,6 @@ package slave
 import (
 	"log"
 
-	"github.com/google/uuid"
 	"github.com/shirou/gopsutil/v3/host"
 
 	"tdp-cloud/core/serve/agent"
@@ -11,7 +10,7 @@ import (
 
 type RegisterPayload agent.RegisterPayload
 
-func (pod *SendPod) Register() (string, error) {
+func (pod *SendPod) Register() (uint, error) {
 
 	log.Println("Register to server...")
 
@@ -25,7 +24,7 @@ func (pod *SendPod) Register() (string, error) {
 
 	v := &SocketData{
 		Method:  "Register",
-		TaskId:  uuid.NewString(),
+		TaskId:  0,
 		Payload: data,
 	}
 

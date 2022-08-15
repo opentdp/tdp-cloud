@@ -17,7 +17,7 @@ func list(c *gin.Context) {
 }
 
 type execParam struct {
-	Addr    string
+	HostId  string
 	Payload agent.ExecPayload
 }
 
@@ -30,17 +30,18 @@ func exec(c *gin.Context) {
 		return
 	}
 
-	pod := agent.NewSendPod(rq.Addr)
+	pod := agent.NewSendPod(rq.HostId)
 
 	if pod == nil {
 		c.Set("Error", "客户端已断开连接")
 		return
 	}
 
-	taskId, err := pod.Exec(&rq.Payload)
-
-	if err == nil {
-		c.Set("Payload", "命令下发完成，TaskId："+taskId)
+	if id, err := pod.Exec(&rq.Payload); err == nil {
+		c.Set("Payload", map[string]any{
+			"Message": "命令下发完成",
+			"TaskId":  id,
+		})
 	} else {
 		c.Set("Error", err)
 	}

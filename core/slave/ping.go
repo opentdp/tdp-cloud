@@ -3,18 +3,16 @@ package slave
 import (
 	"log"
 
-	"github.com/google/uuid"
-
 	"tdp-cloud/core/helper"
 )
 
-func (pod *SendPod) Ping() (string, error) {
+func (pod *SendPod) Ping() (uint, error) {
 
 	log.Println("Ping start")
 
 	v := &SocketData{
 		Method:  "Ping",
-		TaskId:  uuid.NewString(),
+		TaskId:  0,
 		Payload: helper.GetSystemStat(),
 	}
 

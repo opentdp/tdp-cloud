@@ -20,33 +20,29 @@ type SendPod struct {
 type AgentNode struct {
 	*socket.JsonPod
 	UserId     uint
-	RemoteAddr string
+	HostId     string
 	SystemStat *helper.SystemStat
 }
 
 type SocketData struct {
 	Method  string
-	TaskId  string
+	TaskId  uint
 	Success bool
 	Payload any
 }
 
-var NodePool = map[string]AgentNode{}
+var NodePool = map[string]*AgentNode{}
 
 func AddNode(pod *socket.JsonPod, userId uint) {
 
-	addr := pod.Conn.RemoteAddr().String()
-	node := AgentNode{
-		pod, userId, addr, &helper.SystemStat{},
+	node := &AgentNode{
+		pod, userId, "", &helper.SystemStat{},
 	}
-
-	NodePool[addr] = node
-	defer delete(NodePool, addr)
 
 	// 接收数据
 
-	recv := &RecvPod{&node}
-	resp := &RespPod{&node}
+	recv := &RecvPod{node}
+	resp := &RespPod{node}
 
 	for {
 		var rq *SocketData
@@ -59,7 +55,7 @@ func AddNode(pod *socket.JsonPod, userId uint) {
 		case "Exec:resp":
 			resp.Exec(rq)
 		case "Register":
-			recv.Register(rq)
+			recv.Register(rq, node)
 		case "Ping":
 			recv.Ping(rq)
 		default:
@@ -67,15 +63,25 @@ func AddNode(pod *socket.JsonPod, userId uint) {
 		}
 	}
 
+	// 清理资源
+
+	if node.HostId != "" {
+		delete(NodePool, node.HostId)
+	}
+
 }
 
-func NodesOfUser(userId uint) []AgentNode {
+func NodesOfUser(userId uint) []any {
 
-	items := make([]AgentNode, 0, len(NodePool))
+	items := make([]any, 0, len(NodePool))
 
 	for _, v := range NodePool {
 		if userId == v.UserId {
-			items = append(items, v)
+			items = append(items, map[string]any{
+				"HostId":     v.HostId,
+				"RemoteAddr": v.Conn.RemoteAddr().String(),
+				"SystemStat": v.SystemStat,
+			})
 		}
 	}
 
@@ -83,10 +89,10 @@ func NodesOfUser(userId uint) []AgentNode {
 
 }
 
-func NewSendPod(addr string) *SendPod {
+func NewSendPod(hostId string) *SendPod {
 
-	if node, ok := NodePool[addr]; ok {
-		return &SendPod{&node}
+	if node, ok := NodePool[hostId]; ok {
+		return &SendPod{node}
 	}
 
 	return nil

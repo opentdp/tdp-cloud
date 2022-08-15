@@ -10,10 +10,13 @@ type RegisterPayload struct {
 	OS       string
 }
 
-func (pod *RecvPod) Register(rq *SocketData) error {
+func (pod *RecvPod) Register(rq *SocketData, node *AgentNode) error {
 
 	data := &RegisterPayload{}
 	mapstructure.Decode(rq.Payload, data)
+
+	node.HostId = data.HostId
+	NodePool[data.HostId] = node
 
 	return nil
 
