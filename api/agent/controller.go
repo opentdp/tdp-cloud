@@ -10,7 +10,7 @@ func list(c *gin.Context) {
 
 	userId := c.GetUint("UserId")
 
-	res := agent.GetNodeList(userId)
+	res := agent.NodesOfUser(userId)
 
 	c.Set("Payload", res)
 
@@ -38,8 +38,6 @@ func exec(c *gin.Context) {
 	}
 
 	taskId, err := send.Exec(&rq.Payload)
-
-	//TODO: 返回的TaskId需要入库，以便异步回收结果
 
 	if err == nil {
 		c.Set("Payload", "命令下发完成，TaskId："+taskId)

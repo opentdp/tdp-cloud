@@ -8,8 +8,8 @@ func (pod *RecvPod) Ping(rq *SocketData) error {
 
 	addr := pod.Conn.RemoteAddr().String()
 
-	if node, ok := AgentPool[addr]; ok {
-		mapstructure.Decode(rq.Payload, &node.Stat)
+	if node, ok := NodePool[addr]; ok {
+		mapstructure.Decode(rq.Payload, &node.SystemStat)
 	}
 
 	v := &SocketData{

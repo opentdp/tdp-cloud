@@ -22,6 +22,8 @@ func (pod *SendPod) Exec(data *ExecPayload) (string, error) {
 		Payload: data,
 	}
 
+	createHistory(pod.UserId, v)
+
 	return v.TaskId, pod.Write(v)
 
 }
@@ -29,5 +31,11 @@ func (pod *SendPod) Exec(data *ExecPayload) (string, error) {
 func (pod *RespPod) Exec(rq *SocketData) {
 
 	log.Println("Ping:resp:", rq.Payload)
+
+}
+
+/////
+
+func createHistory(userId uint, data *SocketData) {
 
 }

@@ -8,9 +8,17 @@ import (
 	"tdp-cloud/core/socket"
 )
 
-type RecvPod agent.RecvPod
-type RespPod agent.RespPod
-type SendPod agent.SendPod
+type RecvPod struct {
+	*socket.JsonPod
+}
+
+type RespPod struct {
+	*socket.JsonPod
+}
+
+type SendPod struct {
+	*socket.JsonPod
+}
 
 type SocketData agent.SocketData
 
