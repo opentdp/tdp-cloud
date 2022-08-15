@@ -71,7 +71,7 @@ func AddNode(pod *socket.JsonPod, userId uint) {
 
 }
 
-func NodesOfUser(userId uint) []any {
+func NodesOfUser(userId uint) *[]any {
 
 	items := []any{}
 
@@ -85,7 +85,7 @@ func NodesOfUser(userId uint) []any {
 		}
 	}
 
-	return items
+	return &items
 
 }
 
