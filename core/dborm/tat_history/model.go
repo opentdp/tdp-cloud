@@ -12,9 +12,9 @@ type CreateParam struct {
 	InvocationId string `binding:"required"`
 }
 
-func Create(post *CreateParam) error {
+func Create(post *CreateParam) (uint, error) {
 
-	result := dborm.Db.Create(&dborm.TATHistory{
+	item := &dborm.TATHistory{
 		UserId:               post.UserId,
 		KeyId:                post.KeyId,
 		Name:                 post.Name,
@@ -22,9 +22,11 @@ func Create(post *CreateParam) error {
 		InvocationId:         post.InvocationId,
 		InvocationStatus:     "",
 		InvocationResultJson: "",
-	})
+	}
 
-	return result.Error
+	result := dborm.Db.Create(item)
+
+	return item.Id, result.Error
 
 }
 

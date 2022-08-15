@@ -15,9 +15,9 @@ type CreateParam struct {
 	Timeout          uint   `binding:"required"`
 }
 
-func Create(post *CreateParam) error {
+func Create(post *CreateParam) (uint, error) {
 
-	result := dborm.Db.Create(&dborm.TATScript{
+	item := &dborm.TATScript{
 		UserId:           post.UserId,
 		Name:             post.Name,
 		Username:         post.Username,
@@ -26,9 +26,11 @@ func Create(post *CreateParam) error {
 		WorkingDirectory: post.WorkingDirectory,
 		CommandType:      post.CommandType,
 		Timeout:          post.Timeout,
-	})
+	}
 
-	return result.Error
+	result := dborm.Db.Create(item)
+
+	return item.Id, result.Error
 
 }
 

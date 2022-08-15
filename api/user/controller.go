@@ -17,7 +17,7 @@ func create(c *gin.Context) {
 		return
 	}
 
-	if err := user.Create(rq); err == nil {
+	if _, err := user.Create(rq); err == nil {
 		c.Set("Payload", "注册成功")
 	} else {
 		c.Set("Error", err)

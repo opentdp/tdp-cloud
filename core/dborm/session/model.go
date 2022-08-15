@@ -12,14 +12,14 @@ import (
 
 func Create(userId uint) (string, error) {
 
-	token := helper.RandString(32)
-
-	result := dborm.Db.Create(&dborm.Session{
+	item := &dborm.Session{
 		UserId: userId,
-		Token:  token,
-	})
+		Token:  helper.RandString(32),
+	}
 
-	return token, result.Error
+	result := dborm.Db.Create(item)
+
+	return item.Token, result.Error
 
 }
 

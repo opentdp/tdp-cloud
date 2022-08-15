@@ -31,10 +31,12 @@ func newAdminUser() error {
 		return nil
 	}
 
-	return user.Create(&user.CreateParam{
+	_, err = user.Create(&user.CreateParam{
 		Username: "admin",
 		Password: "123456",
 	})
+
+	return err
 
 }
 
@@ -46,11 +48,13 @@ func newMigration() error {
 		return nil
 	}
 
-	return config.Create(&config.CreateParam{
+	_, err = config.Create(&config.CreateParam{
 		Name:        "Migration",
 		Value:       Versions,
 		Module:      "System",
 		Description: "自动迁移记录",
 	})
+
+	return err
 
 }

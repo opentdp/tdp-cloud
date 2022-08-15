@@ -4,24 +4,10 @@ package dborm
 
 type Config struct {
 	Id          uint   `gorm:"primaryKey"`
-	Name        string `gorm:"index,unique"`
+	Name        string `gorm:"uniqueIndex"`
 	Value       string
 	Module      string
 	Description string
-	CreatedAt   int64
-	UpdatedAt   int64
-}
-
-// 用户
-
-type User struct {
-	Id          uint   `gorm:"primaryKey"`
-	Username    string `gorm:"index,unique"`
-	Password    string
-	AppToken    string `gorm:"index,unique"`
-	Description string `gorm:"default:什么也没有"`
-	Secrets     []Secret
-	Sessions    []Session
 	CreatedAt   int64
 	UpdatedAt   int64
 }
@@ -31,7 +17,7 @@ type User struct {
 type Session struct {
 	Id        uint   `gorm:"primaryKey"`
 	UserId    uint   `gorm:"index"`
-	Token     string `gorm:"index,unique"`
+	Token     string `gorm:"uniqueIndex"`
 	CreatedAt int64
 	UpdatedAt int64
 }
@@ -41,7 +27,7 @@ type Session struct {
 type Secret struct {
 	Id          uint   `gorm:"primaryKey"`
 	UserId      uint   `gorm:"index"`
-	SecretId    string `gorm:"index,unique"`
+	SecretId    string `gorm:"uniqueIndex"`
 	SecretKey   string
 	Description string
 	CreatedAt   int64
@@ -58,6 +44,34 @@ type Sshkey struct {
 	Description string
 	CreatedAt   int64
 	UpdatedAt   int64
+}
+
+// 客户端 - 列表
+
+type SlaveNode struct {
+	Id        uint   `gorm:"primaryKey"`
+	UserId    string `gorm:"index"`
+	HostId    string `gorm:"index"`
+	HostName  string
+	Address   string
+	Status    string
+	CreatedAt int64
+	UpdatedAt int64
+}
+
+// 客户端 - 任务记录
+
+type SlaveTask struct {
+	Id        uint   `gorm:"primaryKey"`
+	UserId    uint   `gorm:"index"`
+	HostId    string `gorm:"index"`
+	HostName  string
+	Subject   string
+	Content   string
+	Status    string
+	Result    string
+	CreatedAt int64
+	UpdatedAt int64
 }
 
 // 自动化助手 - 脚本
@@ -89,30 +103,16 @@ type TATHistory struct {
 	InvocationResultJson string
 }
 
-// 客户端 - 列表
+// 用户
 
-type SlaveNode struct {
-	Id        uint   `gorm:"primaryKey"`
-	UserId    string `gorm:"index"`
-	HostId    string `gorm:"index"`
-	HostName  string
-	Address   string
-	Status    string
-	CreatedAt int64
-	UpdatedAt int64
-}
-
-// 客户端 - 任务记录
-
-type SlaveTask struct {
-	Id        uint   `gorm:"primaryKey"`
-	UserId    uint   `gorm:"index"`
-	HostId    string `gorm:"index"`
-	HostName  string
-	Name      string
-	Content   string
-	Status    string
-	Result    string
-	CreatedAt int64
-	UpdatedAt int64
+type User struct {
+	Id          uint   `gorm:"primaryKey"`
+	Username    string `gorm:"uniqueIndex"`
+	Password    string
+	AppToken    string `gorm:"uniqueIndex"`
+	Description string `gorm:"default:什么也没有"`
+	Secrets     []Secret
+	Sessions    []Session
+	CreatedAt   int64
+	UpdatedAt   int64
 }

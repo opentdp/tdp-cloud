@@ -13,7 +13,7 @@ type RegisterPayload agent.RegisterPayload
 
 func (pod *SendPod) Register() (string, error) {
 
-	log.Println("Register to server")
+	log.Println("Register to server...")
 
 	data := &RegisterPayload{}
 

@@ -39,7 +39,7 @@ func Listen(addr string) {
 	// 等待信号，如果没有则保持阻塞
 	<-quit
 
-	log.Println("Server shutting down...")
+	log.Println("Server closing...")
 
 	// 通知服务器还有5秒的时间完成当前正在处理的请求
 	ctx, cancel := context.WithTimeout(context.Background(), time.Second*5)
@@ -50,6 +50,6 @@ func Listen(addr string) {
 		log.Fatal("Server forced to shutdown:", err)
 	}
 
-	log.Println("Server exiting")
+	log.Println("Server exiting...")
 
 }

@@ -10,25 +10,27 @@ type CreateParam struct {
 	UserId   uint
 	HostId   string `binding:"required"`
 	HostName string `binding:"required"`
-	Name     string `binding:"required"`
+	Subject  string `binding:"required"`
 	Content  string `binding:"required"`
 	Status   string `binding:"required"`
 	Result   string
 }
 
-func Create(post *CreateParam) error {
+func Create(post *CreateParam) (uint, error) {
 
-	result := dborm.Db.Create(&dborm.SlaveTask{
+	item := &dborm.SlaveTask{
 		UserId:   post.UserId,
 		HostId:   post.HostId,
 		HostName: post.HostName,
-		Name:     post.Name,
+		Subject:  post.Subject,
 		Content:  post.Content,
 		Status:   post.Status,
 		Result:   post.Result,
-	})
+	}
 
-	return result.Error
+	result := dborm.Db.Create(item)
+
+	return item.Id, result.Error
 
 }
 
@@ -39,7 +41,7 @@ type UpdateParam struct {
 	UserId   uint
 	HostId   string `binding:"required"`
 	HostName string `binding:"required"`
-	Name     string `binding:"required"`
+	Subject  string `binding:"required"`
 	Content  string `binding:"required"`
 	Status   string `binding:"required"`
 	Result   string
@@ -52,7 +54,7 @@ func Update(post *UpdateParam) error {
 		Updates(dborm.SlaveTask{
 			HostId:   post.HostId,
 			HostName: post.HostName,
-			Name:     post.Name,
+			Subject:  post.Subject,
 			Content:  post.Content,
 			Status:   post.Status,
 			Result:   post.Result,

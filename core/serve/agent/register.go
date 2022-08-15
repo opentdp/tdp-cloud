@@ -1,8 +1,6 @@
 package agent
 
 import (
-	"log"
-
 	"github.com/mitchellh/mapstructure"
 )
 
@@ -15,10 +13,7 @@ type RegisterPayload struct {
 func (pod *RecvPod) Register(rq *SocketData) error {
 
 	data := &RegisterPayload{}
-
 	mapstructure.Decode(rq.Payload, data)
-
-	log.Println(data)
 
 	return nil
 

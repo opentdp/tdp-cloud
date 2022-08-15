@@ -13,16 +13,18 @@ type CreateParam struct {
 	Description string
 }
 
-func Create(post *CreateParam) error {
+func Create(post *CreateParam) (uint, error) {
 
-	result := dborm.Db.Create(&dborm.Config{
+	item := &dborm.Config{
 		Name:        post.Name,
 		Value:       post.Value,
 		Module:      post.Module,
 		Description: post.Description,
-	})
+	}
 
-	return result.Error
+	result := dborm.Db.Create(item)
+
+	return item.Id, result.Error
 
 }
 

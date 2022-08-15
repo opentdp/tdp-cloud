@@ -16,15 +16,17 @@ type CreateParam struct {
 	Password string `binding:"required"`
 }
 
-func Create(post *CreateParam) error {
+func Create(post *CreateParam) (uint, error) {
 
-	result := dborm.Db.Create(&dborm.User{
+	item := &dborm.User{
 		Username: post.Username,
 		Password: HashPassword(post.Password),
 		AppToken: uuid.NewString(),
-	})
+	}
 
-	return result.Error
+	result := dborm.Db.Create(item)
+
+	return item.Id, result.Error
 
 }
 

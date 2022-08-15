@@ -43,7 +43,7 @@ func create(c *gin.Context) {
 		return
 	}
 
-	if err := config.Create(rq); err == nil {
+	if _, err := config.Create(rq); err == nil {
 		c.Set("Payload", "添加成功")
 	} else {
 		c.Set("Error", err)

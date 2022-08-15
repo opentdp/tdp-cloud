@@ -44,7 +44,9 @@ func (pod *RecvPod) Exec(rq *SocketData) error {
 		Method:  "Exec:resp",
 		TaskId:  rq.TaskId,
 		Success: err == nil,
-		Payload: ret,
+		Payload: map[string]string{
+			"Output": ret,
+		},
 	}
 
 	if err := pod.Write(v); err != nil {

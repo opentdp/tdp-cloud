@@ -7,7 +7,7 @@ import (
 
 	"tdp-cloud/core/helper"
 
-	history "tdp-cloud/core/dborm/tat_history"
+	task "tdp-cloud/core/dborm/slave_task"
 )
 
 type ExecPayload struct {
@@ -21,13 +21,23 @@ type ExecPayload struct {
 
 func (pod *SendPod) Exec(data *ExecPayload) (string, error) {
 
+	item := &task.CreateParam{
+		UserId:   pod.UserId,
+		HostId:   pod.SystemStat.HostId,
+		HostName: pod.SystemStat.HostName,
+		Subject:  "Exec: " + data.Name,
+		Content:  helper.ToJsonString(data),
+		Status:   "Doing",
+		Result:   "",
+	}
+
+	task.Create(item)
+
 	v := &SocketData{
 		Method:  "Exec",
 		TaskId:  uuid.NewString(),
 		Payload: data,
 	}
-
-	createHistory(pod.UserId, v.TaskId, data)
 
 	return v.TaskId, pod.Write(v)
 
@@ -37,31 +47,17 @@ func (pod *RespPod) Exec(rq *SocketData) {
 
 	log.Println("Ping:resp:", rq.Payload)
 
-	item := &history.UpdateParam{
-		InvocationId:         rq.TaskId,
-		InvocationResultJson: helper.ToJsonString(rq.Payload),
+	item := &task.UpdateParam{
+		UserId: pod.UserId,
+		Result: helper.ToJsonString(rq.Payload),
 	}
 
 	if rq.Success {
-		item.InvocationStatus = "Success"
+		item.Status = "Success"
 	} else {
-		item.InvocationStatus = "Failed"
+		item.Status = "Failed"
 	}
 
-	history.Update(item)
-
-}
-
-/////
-
-func createHistory(userId uint, taskId string, data *ExecPayload) error {
-
-	return history.Create(&history.CreateParam{
-		UserId:       userId,
-		KeyId:        uint(0),
-		Name:         data.Name,
-		InvocationId: taskId,
-		Region:       "agent",
-	})
+	task.Update(item)
 
 }

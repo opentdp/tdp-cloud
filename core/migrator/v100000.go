@@ -8,12 +8,14 @@ func v100001() error {
 
 	return dborm.Db.AutoMigrate(
 		&dborm.Config{},
-		&dborm.User{},
 		&dborm.Session{},
 		&dborm.Secret{},
+		&dborm.SlaveNode{},
+		&dborm.SlaveTask{},
 		&dborm.Sshkey{},
 		&dborm.TATScript{},
 		&dborm.TATHistory{},
+		&dborm.User{},
 	)
 
 }

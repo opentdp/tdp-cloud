@@ -13,16 +13,18 @@ type CreateParam struct {
 	Description string `binding:"required"`
 }
 
-func Create(post *CreateParam) error {
+func Create(post *CreateParam) (uint, error) {
 
-	result := dborm.Db.Create(&dborm.Secret{
+	item := &dborm.Secret{
 		UserId:      post.UserId,
 		SecretId:    post.SecretId,
 		SecretKey:   post.SecretKey,
 		Description: post.Description,
-	})
+	}
 
-	return result.Error
+	result := dborm.Db.Create(item)
+
+	return item.Id, result.Error
 
 }
 

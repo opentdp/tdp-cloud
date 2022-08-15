@@ -33,7 +33,7 @@ func create(c *gin.Context) {
 	rq.KeyId = c.GetUint("KeyId")
 	rq.UserId = c.GetUint("UserId")
 
-	if err := history.Create(rq); err == nil {
+	if _, err := history.Create(rq); err == nil {
 		c.Set("Payload", "添加成功")
 	} else {
 		c.Set("Error", err)
