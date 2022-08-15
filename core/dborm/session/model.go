@@ -29,16 +29,16 @@ func Fetch(token string) (*dborm.Session, error) {
 
 	var item *dborm.Session
 
-	result := dborm.Db.Where(&dborm.Session{Token: token}).First(&item)
+	dborm.Db.Where(&dborm.Session{Token: token}).First(&item)
 
-	if result.Error != nil || item.Id == 0 {
-		return nil, result.Error
+	if item.Id == 0 {
+		return nil, errors.New("会话不存在")
 	}
 
 	// 会话超过30分钟，删除令牌
 	if time.Now().Unix()-item.UpdatedAt > 1800 {
 		dborm.Db.Delete(&item)
-		return nil, errors.New("会话过期")
+		return nil, errors.New("会话已过期")
 	}
 
 	// 会话超过1分钟，自动续期

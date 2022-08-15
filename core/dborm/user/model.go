@@ -51,9 +51,9 @@ func UpdateInfo(post *UpdateInfoParam) error {
 
 	item.Description = post.Description
 
-	dborm.Db.Select("Description").Save(&item)
+	result := dborm.Db.Select("Description").Save(&item)
 
-	return nil
+	return result.Error
 
 }
 
@@ -84,9 +84,9 @@ func UpdatePassword(post *UpdatePasswordParam) error {
 
 	item.Password = HashPassword(post.NewPassword)
 
-	dborm.Db.Select("Password").Save(&item)
+	result := dborm.Db.Select("Password").Save(&item)
 
-	return nil
+	return result.Error
 
 }
 
