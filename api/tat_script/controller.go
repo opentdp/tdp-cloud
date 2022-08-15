@@ -48,6 +48,8 @@ func update(c *gin.Context) {
 		return
 	}
 
+	rq.UserId = c.GetUint("UserId")
+
 	if err := script.Update(rq); err == nil {
 		c.Set("Payload", "更新成功")
 	} else {
@@ -58,9 +60,11 @@ func update(c *gin.Context) {
 
 func delete(c *gin.Context) {
 
+	userId := c.GetUint("UserId")
+
 	id, _ := strconv.Atoi(c.Param("id"))
 
-	if err := script.Delete(id); err == nil {
+	if err := script.Delete(uint(id), userId); err == nil {
 		c.Set("Payload", "删除成功")
 	} else {
 		c.Set("Error", err)

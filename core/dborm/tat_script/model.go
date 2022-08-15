@@ -33,7 +33,8 @@ func Create(post *CreateParam) error {
 }
 
 type UpdateParam struct {
-	Id               uint   `binding:"required"`
+	Id               uint `binding:"required"`
+	UserId           uint
 	Name             string `binding:"required"`
 	Description      string
 	Content          string `binding:"required"`
@@ -46,7 +47,7 @@ type UpdateParam struct {
 func Update(post *UpdateParam) error {
 
 	result := dborm.Db.
-		Where(&dborm.TATScript{Id: post.Id}).
+		Where(&dborm.TATScript{Id: post.Id, UserId: post.UserId}).
 		Updates(dborm.TATScript{
 			Name:             post.Name,
 			Description:      post.Description,
@@ -71,19 +72,21 @@ func FetchAll(userId uint) ([]*dborm.TATScript, error) {
 
 }
 
-func Fetch(id uint) (*dborm.TATScript, error) {
+func Fetch(id, userId uint) (*dborm.TATScript, error) {
 
 	var item *dborm.TATScript
 
-	result := dborm.Db.Where(&dborm.TATScript{Id: id}).Find(&item)
+	result := dborm.Db.Where(&dborm.TATScript{Id: id, UserId: userId}).Find(&item)
 
 	return item, result.Error
 
 }
 
-func Delete(id int) error {
+func Delete(id, userId uint) error {
 
-	result := dborm.Db.Delete(&dborm.TATScript{}, id)
+	var item *dborm.TATScript
+
+	result := dborm.Db.Where(&dborm.TATScript{Id: id, UserId: userId}).Delete(&item)
 
 	return result.Error
 

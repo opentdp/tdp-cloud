@@ -108,6 +108,7 @@ type SlaveTask struct {
 	Id        uint   `gorm:"primaryKey"`
 	UserId    uint   `gorm:"index"`
 	HostId    string `gorm:"index"`
+	HostName  string
 	Name      string
 	Content   string
 	Status    string

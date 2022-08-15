@@ -13,11 +13,6 @@ func list(c *gin.Context) {
 	keyId := c.GetUint("KeyId")
 	userId := c.GetUint("UserId")
 
-	// 用于兼容 Agent Exec 结果
-	if c.Query("keyId") == "0" {
-		keyId = 0
-	}
-
 	if res, err := history.FetchAll(userId, keyId); err == nil {
 		c.Set("Payload", res)
 	} else {
@@ -55,8 +50,7 @@ func update(c *gin.Context) {
 		return
 	}
 
-	id, _ := strconv.Atoi(c.Param("id"))
-	rq.Id = uint(id)
+	rq.UserId = c.GetUint("UserId")
 
 	if err := history.Update(rq); err == nil {
 		c.Set("Payload", "")
@@ -68,9 +62,11 @@ func update(c *gin.Context) {
 
 func delete(c *gin.Context) {
 
+	userId := c.GetUint("UserId")
+
 	id, _ := strconv.Atoi(c.Param("id"))
 
-	if err := history.Delete(id); err == nil {
+	if err := history.Delete(uint(id), userId); err == nil {
 		c.Set("Payload", "删除成功")
 	} else {
 		c.Set("Error", err)

@@ -60,6 +60,8 @@ func update(c *gin.Context) {
 		return
 	}
 
+	rq.UserId = c.GetUint("UserId")
+
 	if err := secret.Update(rq); err == nil {
 		c.Set("Payload", "操作成功")
 	} else {

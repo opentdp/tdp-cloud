@@ -29,8 +29,8 @@ func Create(post *CreateParam) error {
 // 更新密钥
 
 type UpdateParam struct {
-	Id          uint   `binding:"required"`
-	UserId      uint   `binding:"required"`
+	Id          uint `binding:"required"`
+	UserId      uint
 	PublicKey   string `binding:"required"`
 	PrivateKey  string `binding:"required"`
 	Description string `binding:"required"`
