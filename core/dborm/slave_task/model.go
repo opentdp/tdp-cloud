@@ -70,7 +70,10 @@ func FetchAll(userId uint) ([]*dborm.SlaveTask, error) {
 
 	var items []*dborm.SlaveTask
 
-	result := dborm.Db.Where(&dborm.SlaveTask{UserId: userId}).Find(&items)
+	result := dborm.Db.
+		Where(&dborm.SlaveTask{UserId: userId}).
+		Limit(50).Order("id DESC").
+		Find(&items)
 
 	return items, result.Error
 
