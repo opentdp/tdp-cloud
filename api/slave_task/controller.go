@@ -1,26 +1,20 @@
-package secret
+package slave_task
 
 import (
-	"regexp"
 	"strconv"
 
 	"github.com/gin-gonic/gin"
 
-	"tdp-cloud/core/dborm/secret"
+	task "tdp-cloud/core/dborm/slave_task"
 )
 
-// 密钥列表
+// 任务列表
 
 func list(c *gin.Context) {
 
 	userId := c.GetUint("UserId")
 
-	if res, err := secret.FetchAll(userId); err == nil {
-		re, _ := regexp.Compile(`^(\w{8}).+(\w{8})$`)
-		for k, v := range res {
-			res[k].SecretId = re.ReplaceAllString(v.SecretId, "$1*******$2")
-			res[k].SecretKey = re.ReplaceAllString(v.SecretKey, "$1******$2")
-		}
+	if res, err := task.FetchAll(userId); err == nil {
 		c.Set("Payload", res)
 	} else {
 		c.Set("Error", err)
@@ -28,11 +22,26 @@ func list(c *gin.Context) {
 
 }
 
-// 添加密钥
+// 获取密钥
+
+func detail(c *gin.Context) {
+
+	userId := c.GetUint("UserId")
+	id, _ := strconv.Atoi(c.Param("id"))
+
+	if res, err := task.Fetch(uint(id), userId); err == nil {
+		c.Set("Payload", res)
+	} else {
+		c.Set("Error", err)
+	}
+
+}
+
+// 添加任务
 
 func create(c *gin.Context) {
 
-	var rq *secret.CreateParam
+	var rq *task.CreateParam
 
 	if c.ShouldBind(&rq) != nil {
 		c.Set("Error", "请求参数错误")
@@ -41,7 +50,7 @@ func create(c *gin.Context) {
 
 	rq.UserId = c.GetUint("UserId")
 
-	if _, err := secret.Create(rq); err == nil {
+	if _, err := task.Create(rq); err == nil {
 		c.Set("Payload", "添加成功")
 	} else {
 		c.Set("Error", err)
@@ -53,7 +62,7 @@ func create(c *gin.Context) {
 
 func update(c *gin.Context) {
 
-	var rq *secret.UpdateParam
+	var rq *task.UpdateParam
 
 	if c.ShouldBind(&rq) != nil {
 		c.Set("Error", "请求参数错误")
@@ -62,7 +71,7 @@ func update(c *gin.Context) {
 
 	rq.UserId = c.GetUint("UserId")
 
-	if err := secret.Update(rq); err == nil {
+	if err := task.Update(rq); err == nil {
 		c.Set("Payload", "操作成功")
 	} else {
 		c.Set("Error", err)
@@ -70,14 +79,14 @@ func update(c *gin.Context) {
 
 }
 
-// 删除密钥
+// 删除任务
 
 func delete(c *gin.Context) {
 
 	userId := c.GetUint("UserId")
 	id, _ := strconv.Atoi(c.Param("id"))
 
-	if err := secret.Delete(uint(id), userId); err == nil {
+	if err := task.Delete(uint(id), userId); err == nil {
 		c.Set("Payload", "删除成功")
 	} else {
 		c.Set("Error", err)

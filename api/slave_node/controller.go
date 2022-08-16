@@ -1,4 +1,4 @@
-package agent
+package slave_node
 
 import (
 	"github.com/gin-gonic/gin"

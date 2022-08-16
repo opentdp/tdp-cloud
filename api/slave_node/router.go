@@ -1,4 +1,4 @@
-package agent
+package slave_node
 
 import (
 	"github.com/gin-gonic/gin"
@@ -8,12 +8,12 @@ import (
 
 func Router(api *gin.RouterGroup) {
 
-	rg := api.Group("/agent")
+	rg := api.Group("/slave/node")
 
 	rg.Use(midware.AuthGuard())
 
 	{
-		rg.GET("/node", list)
+		rg.GET("/", list)
 		rg.POST("/exec", exec)
 	}
 

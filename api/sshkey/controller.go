@@ -48,7 +48,6 @@ func create(c *gin.Context) {
 func delete(c *gin.Context) {
 
 	userId := c.GetUint("UserId")
-
 	id, _ := strconv.Atoi(c.Param("id"))
 
 	if err := sshkey.Delete(uint(id), userId); err == nil {

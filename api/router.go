@@ -7,9 +7,10 @@ import (
 
 	"tdp-cloud/api/qcloud"
 
-	"tdp-cloud/api/agent"
 	"tdp-cloud/api/config"
 	"tdp-cloud/api/secret"
+	"tdp-cloud/api/slave_node"
+	"tdp-cloud/api/slave_task"
 	"tdp-cloud/api/sshkey"
 	"tdp-cloud/api/tat_history"
 	"tdp-cloud/api/tat_script"
@@ -29,9 +30,10 @@ func Router(engine *gin.Engine) {
 		qcloud.Router(api)
 
 		// direct api
-		agent.Router(api)
 		config.Router(api)
 		secret.Router(api)
+		slave_node.Router(api)
+		slave_task.Router(api)
 		sshkey.Router(api)
 		tat_history.Router(api)
 		tat_script.Router(api)
