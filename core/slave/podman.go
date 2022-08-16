@@ -30,7 +30,7 @@ func Receiver(pod *socket.JsonPod) {
 	for {
 		var rq *SocketData
 
-		if pod.Read(rq) != nil {
+		if pod.Read(&rq) != nil {
 			break
 		}
 

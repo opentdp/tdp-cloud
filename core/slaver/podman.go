@@ -29,7 +29,7 @@ func Receiver(node *SlaveNode) {
 	for {
 		var rq *SocketData
 
-		if node.Read(rq) != nil {
+		if node.Read(&rq) != nil {
 			break
 		}
 
