@@ -8,14 +8,14 @@ import (
 
 func Router(api *gin.RouterGroup) {
 
-	rg := api.Group("/sshkey")
+	rg := api.Group("/")
 
 	rg.Use(midware.AuthGuard())
 
 	{
-		rg.GET("/", list)
-		rg.POST("/", create)
-		rg.DELETE("/:id", delete)
+		rg.GET("/sshkey", list)
+		rg.POST("/sshkey", create)
+		rg.DELETE("/sshkey/:id", delete)
 	}
 
 }

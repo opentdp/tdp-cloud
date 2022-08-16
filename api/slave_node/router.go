@@ -8,13 +8,13 @@ import (
 
 func Router(api *gin.RouterGroup) {
 
-	rg := api.Group("/slave/node")
+	rg := api.Group("/slave")
 
 	rg.Use(midware.AuthGuard())
 
 	{
-		rg.GET("/", list)
-		rg.POST("/exec", exec)
+		rg.GET("/node", list)
+		rg.POST("/node/exec", exec)
 	}
 
 }

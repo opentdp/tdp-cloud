@@ -7,19 +7,19 @@ import (
 )
 
 var (
-	Address string
-	Agent   string
-	Dsn     string
+	Dsn    string
+	Listen string
+	Master string
 )
 
 func Flags() {
 
 	// 服务器模式
-	flag.StringVar(&Address, "address", ":7800", "服务端监听地址和端口")
-	flag.StringVar(&Dsn, "dsn", "./cloud.db", "数据源名称，支持MySQL和SQLite")
+	flag.StringVar(&Dsn, "dsn", "./cloud.db", "数据源名称，支持 MySQL 和 SQLite")
+	flag.StringVar(&Listen, "listen", ":7800", "服务端监听的 IP 地址和端口")
 
 	// 客户端模式
-	flag.StringVar(&Agent, "agent", "", `注册为客户端（e.g. "ws://ip:7800/wsi/agent/*"）`)
+	flag.StringVar(&Master, "master", "", `注册为客户端（e.g. "ws://ip:7800/wsi/agent/*"）`)
 
 	flag.Usage = usage
 

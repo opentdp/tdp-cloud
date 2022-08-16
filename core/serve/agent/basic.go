@@ -8,16 +8,16 @@ import (
 )
 
 type RecvPod struct {
-	*AgentNode
+	*SlaveNode
 }
 type RespPod struct {
-	*AgentNode
+	*SlaveNode
 }
 type SendPod struct {
-	*AgentNode
+	*SlaveNode
 }
 
-type AgentNode struct {
+type SlaveNode struct {
 	*socket.JsonPod
 	UserId     uint
 	HostId     string
@@ -31,11 +31,11 @@ type SocketData struct {
 	Payload any
 }
 
-var NodePool = map[string]*AgentNode{}
+var NodePool = map[string]*SlaveNode{}
 
 func AddNode(pod *socket.JsonPod, userId uint) {
 
-	node := &AgentNode{
+	node := &SlaveNode{
 		pod, userId, "", &helper.SystemStat{},
 	}
 

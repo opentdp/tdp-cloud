@@ -16,18 +16,11 @@ func main() {
 
 	cli.Flags()
 
-	if cli.Agent == "" {
+	if cli.Master == "" {
 		server()
 	} else {
 		client()
 	}
-
-}
-
-func client() {
-
-	// 连接服务端
-	slave.Connect(cli.Agent)
 
 }
 
@@ -40,6 +33,13 @@ func server() {
 	migrator.Start()
 
 	// 创建HTTP服务
-	serve.Create(cli.Address, api.Router, front.Router)
+	serve.Create(cli.Listen, api.Router, front.Router)
+
+}
+
+func client() {
+
+	// 连接服务端
+	slave.Connect(cli.Master)
 
 }

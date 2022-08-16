@@ -8,12 +8,12 @@ import (
 
 func Router(api *gin.RouterGroup) {
 
-	rg := api.Group("/qcloud")
+	rg := api.Group("/")
 
 	// 匿名接口
 
 	{
-		rg.GET("/vnc", vncProxy)
+		rg.GET("/qcloud/vnc", vncProxy)
 	}
 
 	// 需授权接口
@@ -21,7 +21,7 @@ func Router(api *gin.RouterGroup) {
 	rg.Use(midware.AuthGuard())
 
 	{
-		rg.POST("/", apiProxy)
+		rg.POST("/qcloud", apiProxy)
 	}
 
 }
