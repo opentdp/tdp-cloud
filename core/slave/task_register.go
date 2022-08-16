@@ -5,10 +5,10 @@ import (
 
 	"github.com/shirou/gopsutil/v3/host"
 
-	"tdp-cloud/core/serve/agent"
+	"tdp-cloud/core/slaver"
 )
 
-type RegisterPayload agent.RegisterPayload
+type RegisterPayload slaver.RegisterPayload
 
 func (pod *SendPod) Register() (uint, error) {
 

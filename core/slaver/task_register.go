@@ -1,4 +1,4 @@
-package agent
+package slaver
 
 import (
 	"github.com/mitchellh/mapstructure"

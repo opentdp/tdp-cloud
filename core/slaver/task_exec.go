@@ -1,4 +1,4 @@
-package agent
+package slaver
 
 import (
 	"tdp-cloud/core/helper"

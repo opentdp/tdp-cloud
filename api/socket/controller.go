@@ -7,7 +7,7 @@ import (
 	"github.com/gin-gonic/gin"
 
 	"tdp-cloud/core/dborm/user"
-	"tdp-cloud/core/serve"
+	"tdp-cloud/core/slaver"
 	"tdp-cloud/core/webssh"
 )
 
@@ -26,7 +26,7 @@ func agent(c *gin.Context) {
 
 	c.Set("UserId", u.Id)
 
-	serve.AgentFactory(c)
+	slaver.Upgrader(c)
 
 }
 
