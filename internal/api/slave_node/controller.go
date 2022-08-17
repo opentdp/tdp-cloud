@@ -3,14 +3,14 @@ package slave_node
 import (
 	"github.com/gin-gonic/gin"
 
-	"tdp-cloud/internal/slaver"
+	"tdp-cloud/internal/master"
 )
 
 func list(c *gin.Context) {
 
 	userId := c.GetUint("UserId")
 
-	res := slaver.NodesOfUser(userId)
+	res := master.NodesOfUser(userId)
 
 	c.Set("Payload", res)
 
@@ -18,7 +18,7 @@ func list(c *gin.Context) {
 
 type execParam struct {
 	HostId  string
-	Payload slaver.ExecPayload
+	Payload master.ExecPayload
 }
 
 func exec(c *gin.Context) {
@@ -30,7 +30,7 @@ func exec(c *gin.Context) {
 		return
 	}
 
-	send := slaver.NewSender(rq.HostId)
+	send := master.NewSender(rq.HostId)
 
 	if send == nil {
 		c.Set("Error", "客户端已断开连接")

@@ -8,7 +8,7 @@ import (
 
 	"tdp-cloud/helper/webssh"
 	"tdp-cloud/internal/dborm/user"
-	"tdp-cloud/internal/slaver"
+	"tdp-cloud/internal/master"
 )
 
 func agent(c *gin.Context) {
@@ -26,7 +26,7 @@ func agent(c *gin.Context) {
 
 	c.Set("UserId", u.Id)
 
-	slaver.Upgrader(c)
+	master.Upgrader(c)
 
 }
 

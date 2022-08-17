@@ -1,4 +1,4 @@
-package slaver
+package master
 
 import (
 	"tdp-cloud/helper/json"

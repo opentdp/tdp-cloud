@@ -1,4 +1,4 @@
-package slaver
+package master
 
 import (
 	"github.com/mitchellh/mapstructure"
