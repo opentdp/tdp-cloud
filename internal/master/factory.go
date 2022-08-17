@@ -7,14 +7,14 @@ import (
 	"tdp-cloud/helper/socket"
 )
 
-type SlaveNode struct {
+type Worker struct {
 	*socket.JsonPod
 	UserId     uint
 	HostId     string
 	SystemStat *psutil.SystemStat
 }
 
-var NodePool = map[string]*SlaveNode{}
+var NodePool = map[string]*Worker{}
 
 func Upgrader(c *gin.Context) {
 
@@ -32,7 +32,7 @@ func Upgrader(c *gin.Context) {
 	hostId := c.Query("HostId")
 	userId := c.GetUint("UserId")
 
-	NodePool[hostId] = &SlaveNode{
+	NodePool[hostId] = &Worker{
 		pod, userId, hostId, &psutil.SystemStat{},
 	}
 

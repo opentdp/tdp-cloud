@@ -5,13 +5,13 @@ import (
 )
 
 type RecvPod struct {
-	*SlaveNode
+	*Worker
 }
 type RespPod struct {
-	*SlaveNode
+	*Worker
 }
 type SendPod struct {
-	*SlaveNode
+	*Worker
 }
 
 type SocketData struct {
@@ -21,7 +21,7 @@ type SocketData struct {
 	Payload any
 }
 
-func Receiver(node *SlaveNode) error {
+func Receiver(node *Worker) error {
 
 	recv := &RecvPod{node}
 	resp := &RespPod{node}

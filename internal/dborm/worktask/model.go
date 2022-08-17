@@ -1,4 +1,4 @@
-package slave_task
+package worktask
 
 import (
 	"tdp-cloud/internal/dborm"
@@ -18,7 +18,7 @@ type CreateParam struct {
 
 func Create(post *CreateParam) (uint, error) {
 
-	item := &dborm.SlaveTask{
+	item := &dborm.Worktask{
 		UserId:   post.UserId,
 		HostId:   post.HostId,
 		HostName: post.HostName,
@@ -50,8 +50,8 @@ type UpdateParam struct {
 func Update(post *UpdateParam) error {
 
 	result := dborm.Db.
-		Where(&dborm.SlaveTask{Id: post.Id, UserId: post.UserId}).
-		Updates(dborm.SlaveTask{
+		Where(&dborm.Worktask{Id: post.Id, UserId: post.UserId}).
+		Updates(dborm.Worktask{
 			HostId:   post.HostId,
 			HostName: post.HostName,
 			Subject:  post.Subject,
@@ -66,12 +66,12 @@ func Update(post *UpdateParam) error {
 
 // 获取任务列表
 
-func FetchAll(userId uint) ([]*dborm.SlaveTask, error) {
+func FetchAll(userId uint) ([]*dborm.Worktask, error) {
 
-	var items []*dborm.SlaveTask
+	var items []*dborm.Worktask
 
 	result := dborm.Db.
-		Where(&dborm.SlaveTask{UserId: userId}).
+		Where(&dborm.Worktask{UserId: userId}).
 		Limit(50).Order("id DESC").
 		Find(&items)
 
@@ -81,11 +81,11 @@ func FetchAll(userId uint) ([]*dborm.SlaveTask, error) {
 
 // 获取任务
 
-func Fetch(id, userId uint) (*dborm.SlaveTask, error) {
+func Fetch(id, userId uint) (*dborm.Worktask, error) {
 
-	var item *dborm.SlaveTask
+	var item *dborm.Worktask
 
-	result := dborm.Db.Where(&dborm.SlaveTask{Id: id, UserId: userId}).First(&item)
+	result := dborm.Db.Where(&dborm.Worktask{Id: id, UserId: userId}).First(&item)
 
 	return item, result.Error
 
@@ -95,9 +95,9 @@ func Fetch(id, userId uint) (*dborm.SlaveTask, error) {
 
 func Delete(id, userId uint) error {
 
-	var item *dborm.SlaveTask
+	var item *dborm.Worktask
 
-	result := dborm.Db.Where(&dborm.SlaveTask{Id: id, UserId: userId}).Delete(&item)
+	result := dborm.Db.Where(&dborm.Worktask{Id: id, UserId: userId}).Delete(&item)
 
 	return result.Error
 

@@ -46,34 +46,6 @@ type Sshkey struct {
 	UpdatedAt   int64
 }
 
-// 客户端 - 列表
-
-type SlaveNode struct {
-	Id        uint   `gorm:"primaryKey"`
-	UserId    string `gorm:"index"`
-	HostId    string `gorm:"index"`
-	HostName  string
-	Address   string
-	Status    string
-	CreatedAt int64
-	UpdatedAt int64
-}
-
-// 客户端 - 任务记录
-
-type SlaveTask struct {
-	Id        uint   `gorm:"primaryKey"`
-	UserId    uint   `gorm:"index"`
-	HostId    string `gorm:"index"`
-	HostName  string
-	Subject   string
-	Content   string
-	Status    string
-	Result    string
-	CreatedAt int64
-	UpdatedAt int64
-}
-
 // 自动化助手 - 脚本
 
 type TATScript struct {
@@ -115,4 +87,32 @@ type User struct {
 	Sessions    []Session
 	CreatedAt   int64
 	UpdatedAt   int64
+}
+
+// 子节点
+
+type Worker struct {
+	Id        uint   `gorm:"primaryKey"`
+	UserId    string `gorm:"index"`
+	HostId    string `gorm:"index"`
+	HostName  string
+	Address   string
+	Status    string
+	CreatedAt int64
+	UpdatedAt int64
+}
+
+// 子节点任务
+
+type Worktask struct {
+	Id        uint   `gorm:"primaryKey"`
+	UserId    uint   `gorm:"index"`
+	HostId    string `gorm:"index"`
+	HostName  string
+	Subject   string
+	Content   string
+	Status    string
+	Result    string
+	CreatedAt int64
+	UpdatedAt int64
 }

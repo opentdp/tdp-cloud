@@ -3,7 +3,7 @@ package master
 import (
 	"tdp-cloud/helper/json"
 
-	task "tdp-cloud/internal/dborm/slave_task"
+	"tdp-cloud/internal/dborm/worktask"
 )
 
 type ExecPayload struct {
@@ -17,7 +17,7 @@ type ExecPayload struct {
 
 func (pod *SendPod) Exec(data *ExecPayload) (uint, error) {
 
-	item := &task.CreateParam{
+	item := &worktask.CreateParam{
 		UserId:   pod.UserId,
 		HostId:   pod.SystemStat.HostId,
 		HostName: pod.SystemStat.HostName,
@@ -27,7 +27,7 @@ func (pod *SendPod) Exec(data *ExecPayload) (uint, error) {
 		Result:   "",
 	}
 
-	taskId, _ := task.Create(item)
+	taskId, _ := worktask.Create(item)
 
 	// 发送给节点执行该任务
 
@@ -43,7 +43,7 @@ func (pod *SendPod) Exec(data *ExecPayload) (uint, error) {
 
 func (pod *RespPod) Exec(rq *SocketData) {
 
-	item := &task.UpdateParam{
+	item := &worktask.UpdateParam{
 		Id:     rq.TaskId,
 		UserId: pod.UserId,
 		Result: json.ToString(rq.Payload),
@@ -55,6 +55,6 @@ func (pod *RespPod) Exec(rq *SocketData) {
 		item.Status = "Failed"
 	}
 
-	task.Update(item)
+	worktask.Update(item)
 
 }

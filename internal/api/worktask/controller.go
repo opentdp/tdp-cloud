@@ -1,11 +1,11 @@
-package slave_task
+package worktask
 
 import (
 	"strconv"
 
 	"github.com/gin-gonic/gin"
 
-	task "tdp-cloud/internal/dborm/slave_task"
+	"tdp-cloud/internal/dborm/worktask"
 )
 
 // 任务列表
@@ -14,7 +14,7 @@ func list(c *gin.Context) {
 
 	userId := c.GetUint("UserId")
 
-	if res, err := task.FetchAll(userId); err == nil {
+	if res, err := worktask.FetchAll(userId); err == nil {
 		c.Set("Payload", res)
 	} else {
 		c.Set("Error", err)
@@ -29,7 +29,7 @@ func detail(c *gin.Context) {
 	userId := c.GetUint("UserId")
 	id, _ := strconv.Atoi(c.Param("id"))
 
-	if res, err := task.Fetch(uint(id), userId); err == nil {
+	if res, err := worktask.Fetch(uint(id), userId); err == nil {
 		c.Set("Payload", res)
 	} else {
 		c.Set("Error", err)
@@ -41,7 +41,7 @@ func detail(c *gin.Context) {
 
 func create(c *gin.Context) {
 
-	var rq *task.CreateParam
+	var rq *worktask.CreateParam
 
 	if c.ShouldBind(&rq) != nil {
 		c.Set("Error", "请求参数错误")
@@ -50,7 +50,7 @@ func create(c *gin.Context) {
 
 	rq.UserId = c.GetUint("UserId")
 
-	if _, err := task.Create(rq); err == nil {
+	if _, err := worktask.Create(rq); err == nil {
 		c.Set("Payload", "添加成功")
 	} else {
 		c.Set("Error", err)
@@ -62,7 +62,7 @@ func create(c *gin.Context) {
 
 func update(c *gin.Context) {
 
-	var rq *task.UpdateParam
+	var rq *worktask.UpdateParam
 
 	if c.ShouldBind(&rq) != nil {
 		c.Set("Error", "请求参数错误")
@@ -71,7 +71,7 @@ func update(c *gin.Context) {
 
 	rq.UserId = c.GetUint("UserId")
 
-	if err := task.Update(rq); err == nil {
+	if err := worktask.Update(rq); err == nil {
 		c.Set("Payload", "操作成功")
 	} else {
 		c.Set("Error", err)
@@ -86,7 +86,7 @@ func delete(c *gin.Context) {
 	userId := c.GetUint("UserId")
 	id, _ := strconv.Atoi(c.Param("id"))
 
-	if err := task.Delete(uint(id), userId); err == nil {
+	if err := worktask.Delete(uint(id), userId); err == nil {
 		c.Set("Payload", "删除成功")
 	} else {
 		c.Set("Error", err)
