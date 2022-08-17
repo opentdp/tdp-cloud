@@ -2,42 +2,38 @@ package webssh
 
 import (
 	"io"
+	"net/http"
 	"os"
 
-	"github.com/gin-gonic/gin"
 	"golang.org/x/crypto/ssh"
 	"golang.org/x/term"
 
 	"tdp-cloud/helper/socket"
 )
 
-func Handle(c *gin.Context) {
+type ConnectParam struct {
+	Request *http.Request
+	Writer  http.ResponseWriter
+	Option  *SSHClientOption
+}
 
-	pod, err := socket.NewIOPod(c.Writer, c.Request)
+func Connect(p *ConnectParam) error {
+
+	pod, err := socket.NewIOPod(p.Writer, p.Request)
 
 	if err != nil {
-		c.AbortWithError(500, err)
-		return
+		return err
 	}
 
 	defer pod.Close()
 
-	// 获取 SSH 参数
-
-	var option *SSHClientOption
-
-	if err := c.ShouldBindQuery(&option); err != nil {
-		pod.Write([]byte("> " + err.Error() + "\r\n"))
-		return
-	}
-
 	// 创建 SSH 连接
 
-	client, err := NewSSHClient(option)
+	client, err := NewSSHClient(p.Option)
 
 	if err != nil {
 		pod.Write([]byte("> " + err.Error() + "\r\n"))
-		return
+		return err
 	}
 
 	defer client.Close()
@@ -45,12 +41,14 @@ func Handle(c *gin.Context) {
 	// 转发 SSH 会话
 
 	quit := make(chan bool, 1)
-	go sshBridge(client, pod, quit)
+	go sshProxy(client, pod, quit)
 	<-quit
+
+	return nil
 
 }
 
-func sshBridge(client *ssh.Client, pod *socket.IOPod, quit chan bool) {
+func sshProxy(client *ssh.Client, pod *socket.IOPod, quit chan bool) {
 
 	defer func() {
 		quit <- true
