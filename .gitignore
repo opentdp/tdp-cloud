@@ -4,8 +4,9 @@ build
 cloud.db
 
 # local env files
-test-api/.env
 __debug_*
+tests/.env
+font/*
 
 # Log files
 *.log
