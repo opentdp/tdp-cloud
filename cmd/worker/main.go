@@ -7,7 +7,7 @@ import (
 	"tdp-cloud/internal/worker"
 )
 
-func Connect(url string) {
+func Create(url string) {
 
 	defer delayer(url)
 
@@ -20,6 +20,6 @@ func delayer(url string) {
 	log.Println("连接失败，将在5秒后重试")
 
 	time.Sleep(time.Second * 5)
-	Connect(url)
+	Create(url)
 
 }

@@ -13,7 +13,7 @@ func main() {
 	if args.Master == "" {
 		master.Create(args.Listen)
 	} else {
-		worker.Connect(args.Master)
+		worker.Create(args.Master)
 	}
 
 }
