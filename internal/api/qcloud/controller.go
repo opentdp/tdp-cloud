@@ -8,8 +8,8 @@ import (
 
 	"github.com/gin-gonic/gin"
 
+	"tdp-cloud/helper/qcloud"
 	"tdp-cloud/internal/dborm/secret"
-	"tdp-cloud/internal/qcloud"
 )
 
 func apiProxy(c *gin.Context) {

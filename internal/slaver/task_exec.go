@@ -1,7 +1,7 @@
 package slaver
 
 import (
-	"tdp-cloud/internal/helper"
+	"tdp-cloud/helper/json"
 
 	task "tdp-cloud/internal/dborm/slave_task"
 )
@@ -22,7 +22,7 @@ func (pod *SendPod) Exec(data *ExecPayload) (uint, error) {
 		HostId:   pod.SystemStat.HostId,
 		HostName: pod.SystemStat.HostName,
 		Subject:  "Exec: " + data.Name,
-		Content:  helper.ToJsonString(data),
+		Content:  json.ToString(data),
 		Status:   "Doing",
 		Result:   "",
 	}
@@ -46,7 +46,7 @@ func (pod *RespPod) Exec(rq *SocketData) {
 	item := &task.UpdateParam{
 		Id:     rq.TaskId,
 		UserId: pod.UserId,
-		Result: helper.ToJsonString(rq.Payload),
+		Result: json.ToString(rq.Payload),
 	}
 
 	if rq.Success {

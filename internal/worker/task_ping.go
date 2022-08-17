@@ -3,7 +3,7 @@ package worker
 import (
 	"log"
 
-	"tdp-cloud/internal/helper"
+	"tdp-cloud/helper/psutil"
 )
 
 func (pod *SendPod) Ping() (uint, error) {
@@ -11,7 +11,7 @@ func (pod *SendPod) Ping() (uint, error) {
 	v := &SocketData{
 		Method:  "Ping",
 		TaskId:  0,
-		Payload: helper.GetSystemStat(),
+		Payload: psutil.GetSystemStat(),
 	}
 
 	log.Println("Ping:send", "SystemStat")

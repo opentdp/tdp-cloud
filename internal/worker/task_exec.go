@@ -14,7 +14,7 @@ import (
 
 	"github.com/mitchellh/mapstructure"
 
-	"tdp-cloud/internal/helper"
+	"tdp-cloud/helper/strings"
 	"tdp-cloud/internal/slaver"
 )
 
@@ -167,7 +167,7 @@ func execCommand(name string, params []string, timeout uint) (string, error) {
 		}
 
 		if runtime.GOOS == "windows" {
-			ret = helper.Gb18030ToUtf8(ret)
+			ret = strings.Gb18030ToUtf8(ret)
 		}
 	}()
 

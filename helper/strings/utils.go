@@ -1,7 +1,6 @@
-package helper
+package strings
 
 import (
-	"encoding/json"
 	"math/rand"
 	"strconv"
 	"strings"
@@ -10,19 +9,9 @@ import (
 	"golang.org/x/text/encoding/simplifiedchinese"
 )
 
-// 序列化
-
-func ToJsonString(r any) string {
-
-	b, _ := json.Marshal(r)
-
-	return string(b)
-
-}
-
 // 随机字符串
 
-func RandString(length uint) string {
+func Rand(length uint) string {
 
 	rand.Seed(time.Now().UnixNano())
 

@@ -3,15 +3,15 @@ package slaver
 import (
 	"github.com/gin-gonic/gin"
 
-	"tdp-cloud/internal/helper"
-	"tdp-cloud/internal/socket"
+	"tdp-cloud/helper/psutil"
+	"tdp-cloud/helper/socket"
 )
 
 type SlaveNode struct {
 	*socket.JsonPod
 	UserId     uint
 	HostId     string
-	SystemStat *helper.SystemStat
+	SystemStat *psutil.SystemStat
 }
 
 var NodePool = map[string]*SlaveNode{}
@@ -33,7 +33,7 @@ func Upgrader(c *gin.Context) {
 	userId := c.GetUint("UserId")
 
 	NodePool[hostId] = &SlaveNode{
-		pod, userId, hostId, &helper.SystemStat{},
+		pod, userId, hostId, &psutil.SystemStat{},
 	}
 
 	defer delete(NodePool, hostId)

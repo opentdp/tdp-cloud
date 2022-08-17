@@ -4,8 +4,8 @@ import (
 	"errors"
 	"time"
 
+	"tdp-cloud/helper/strings"
 	"tdp-cloud/internal/dborm"
-	"tdp-cloud/internal/helper"
 )
 
 // 添加令牌
@@ -14,7 +14,7 @@ func Create(userId uint) (string, error) {
 
 	item := &dborm.Session{
 		UserId: userId,
-		Token:  helper.RandString(32),
+		Token:  strings.Rand(32),
 	}
 
 	result := dborm.Db.Create(item)

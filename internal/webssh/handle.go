@@ -8,7 +8,7 @@ import (
 	"golang.org/x/crypto/ssh"
 	"golang.org/x/term"
 
-	"tdp-cloud/internal/socket"
+	"tdp-cloud/helper/socket"
 )
 
 func Handle(c *gin.Context) {
