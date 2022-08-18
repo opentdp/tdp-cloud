@@ -25,8 +25,9 @@ func apiProxy(c *gin.Context) {
 	}
 
 	params := &qcloud.Params{
-		SecretId:  secret.SecretId,
-		SecretKey: secret.SecretKey,
+		SecretId:   secret.SecretId,
+		SecretKey:  secret.SecretKey,
+		RootDomain: "tencentcloudapi.com",
 	}
 
 	header := []byte(c.GetHeader("TDP-QCloud"))

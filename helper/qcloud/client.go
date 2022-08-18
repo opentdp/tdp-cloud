@@ -10,14 +10,15 @@ import (
 )
 
 type Params struct {
-	Service   string `note:"产品名称"`
-	Version   string `note:"接口版本"`
-	Action    string `note:"接口名称"`
-	Payload   []byte `note:"结构化数据"`
-	Region    string `note:"资源所在区域"`
-	Endpoint  string `note:"指定接口区域"`
-	SecretId  string `note:"访问密钥 Id"`
-	SecretKey string `note:"访问密钥 Key"`
+	Service    string `note:"产品名称"`
+	Version    string `note:"接口版本"`
+	Action     string `note:"接口名称"`
+	Payload    []byte `note:"结构化数据"`
+	Region     string `note:"资源所在区域"`
+	Endpoint   string `note:"指定接口区域"`
+	SecretId   string `note:"访问密钥 Id"`
+	SecretKey  string `note:"访问密钥 Key"`
+	RootDomain string `note:"API 根域名"`
 }
 
 type Response struct {
@@ -67,13 +68,15 @@ func NewClient(rp *Params) *tc.Client {
 
 	// 启用地域容灾
 	cpf.DisableRegionBreaker = false
-	cpf.BackupEndpoint = "ap-hongkong.tencentcloudapi.com"
+	cpf.BackupEndpoint = "ap-hongkong." + rp.RootDomain
 
-	// 使用地域接口，避免限频
+	// 分地域接入，避免限频
 	if rp.Endpoint != "" {
-		cpf.HttpProfile.Endpoint = rp.Service + "." + rp.Endpoint + ".tencentcloudapi.com"
+		cpf.HttpProfile.Endpoint = rp.Service + "." + rp.Endpoint + "." + rp.RootDomain
 	} else if rp.Region != "" {
-		cpf.HttpProfile.Endpoint = rp.Service + "." + rp.Region + ".tencentcloudapi.com"
+		cpf.HttpProfile.Endpoint = rp.Service + "." + rp.Region + "." + rp.RootDomain
+	} else {
+		cpf.HttpProfile.RootDomain = rp.RootDomain
 	}
 
 	cred := tc.NewCredential(rp.SecretId, rp.SecretKey)
