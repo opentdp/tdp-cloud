@@ -22,7 +22,7 @@ type Session struct {
 	UpdatedAt int64
 }
 
-// CAM 密钥
+// 腾讯云 CAM
 
 type Secret struct {
 	Id          uint   `gorm:"primaryKey"`
