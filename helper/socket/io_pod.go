@@ -20,9 +20,9 @@ func NewIOPod(w http.ResponseWriter, r *http.Request) (*IOPod, error) {
 		},
 	}
 
-	ws, err := upgrader.Upgrade(w, r, nil)
+	conn, err := upgrader.Upgrade(w, r, nil)
 
-	return &IOPod{ws}, err
+	return &IOPod{conn}, err
 
 }
 

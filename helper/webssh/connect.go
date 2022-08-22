@@ -38,39 +38,32 @@ func Connect(p *ConnectParam) error {
 
 	defer client.Close()
 
-	// 转发 SSH 会话
-
-	quit := make(chan bool, 1)
-	go sshProxy(client, pod, quit)
-	<-quit
-
-	return nil
-
-}
-
-func sshProxy(client *ssh.Client, pod *socket.IOPod, quit chan bool) {
-
-	defer func() {
-		quit <- true
-	}()
-
-	rw := io.ReadWriter(pod)
-
 	session, err := client.NewSession()
 
 	if err != nil {
-		rw.Write([]byte(err.Error() + "\r\n"))
-		return
+		pod.Write([]byte(err.Error() + "\r\n"))
+		return err
 	}
 
 	defer session.Close()
 
-	// 客户端断开时清理资源
 	pod.OnClose(session.Close)
+
+	// 代理 SSH 会话
+
+	return sshProxy(session, pod)
+
+}
+
+func sshProxy(session *ssh.Session, rw io.ReadWriter) error {
+
+	// 绑定输入输出
 
 	session.Stdin = rw
 	session.Stdout = rw
 	session.Stderr = rw
+
+	// 创建模拟终端
 
 	fd := int(os.Stdin.Fd())
 	width, height, _ := term.GetSize(fd)
@@ -81,16 +74,21 @@ func sshProxy(client *ssh.Client, pod *socket.IOPod, quit chan bool) {
 		ssh.TTY_OP_OSPEED: 14400,
 	}
 
-	if err := session.RequestPty("xterm", width, height, modes); err != nil {
+	if err := session.RequestPty("xterm", height, width, modes); err != nil {
 		rw.Write([]byte(err.Error() + "\r\n"))
+		return err
 	}
 
 	if err := session.Shell(); err != nil {
 		rw.Write([]byte(err.Error() + "\r\n"))
+		return err
 	}
 
 	if err := session.Wait(); err != nil {
 		rw.Write([]byte(err.Error() + "\r\n"))
+		return err
 	}
+
+	return nil
 
 }

@@ -20,9 +20,9 @@ func NewJsonPod(w http.ResponseWriter, r *http.Request) (*JsonPod, error) {
 		},
 	}
 
-	ws, err := upgrader.Upgrade(w, r, nil)
+	conn, err := upgrader.Upgrade(w, r, nil)
 
-	return &JsonPod{ws}, err
+	return &JsonPod{conn}, err
 
 }
 
