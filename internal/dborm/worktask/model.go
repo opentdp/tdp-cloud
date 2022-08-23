@@ -12,9 +12,9 @@ type CreateParam struct {
 	HostId   string `binding:"required"`
 	HostName string `binding:"required"`
 	Subject  string `binding:"required"`
-	Content  string `binding:"required"`
 	Status   string `binding:"required"`
-	Result   string
+	Request  string `binding:"required"`
+	Response string
 }
 
 func Create(post *CreateParam) (uint, error) {
@@ -24,9 +24,9 @@ func Create(post *CreateParam) (uint, error) {
 		HostId:   post.HostId,
 		HostName: post.HostName,
 		Subject:  post.Subject,
-		Content:  post.Content,
 		Status:   post.Status,
-		Result:   post.Result,
+		Request:  post.Request,
+		Response: post.Response,
 	}
 
 	result := dborm.Db.Create(item)
@@ -40,12 +40,12 @@ func Create(post *CreateParam) (uint, error) {
 type UpdateParam struct {
 	Id       uint `binding:"required"`
 	UserId   uint
-	HostId   string `binding:"required"`
-	HostName string `binding:"required"`
-	Subject  string `binding:"required"`
-	Content  string `binding:"required"`
+	HostId   string
+	HostName string
+	Subject  string
 	Status   string `binding:"required"`
-	Result   string
+	Request  string
+	Response string
 }
 
 func Update(post *UpdateParam) error {
@@ -56,9 +56,9 @@ func Update(post *UpdateParam) error {
 			HostId:   post.HostId,
 			HostName: post.HostName,
 			Subject:  post.Subject,
-			Content:  post.Content,
 			Status:   post.Status,
-			Result:   post.Result,
+			Request:  post.Request,
+			Response: post.Response,
 		})
 
 	return result.Error
@@ -110,19 +110,19 @@ func Delete(id, userId uint) error {
 
 type TaskItem struct {
 	*dborm.Worktask
-	Content any
-	Result  any
+	Request  any
+	Response any
 }
 
 func ParseItem(item *dborm.Worktask) *TaskItem {
 
-	var content any
-	json.Unmarshal([]byte(item.Content), &content)
+	var request any
+	json.Unmarshal([]byte(item.Request), &request)
 
-	var result any
-	json.Unmarshal([]byte(item.Content), &result)
+	var response any
+	json.Unmarshal([]byte(item.Response), &response)
 
-	return &TaskItem{item, content, result}
+	return &TaskItem{item, request, response}
 
 }
 

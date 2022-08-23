@@ -110,9 +110,9 @@ type Worktask struct {
 	HostId    string `gorm:"index"`
 	HostName  string
 	Subject   string
-	Content   string
 	Status    string
-	Result    string
+	Request   string
+	Response  string
 	CreatedAt int64
 	UpdatedAt int64
 }

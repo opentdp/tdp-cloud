@@ -22,9 +22,9 @@ func (pod *SendPod) Exec(data *ExecPayload) (uint, error) {
 		HostId:   pod.SystemStat.HostId,
 		HostName: pod.SystemStat.HostName,
 		Subject:  "Exec: " + data.Name,
-		Content:  json.ToString(data),
 		Status:   "Doing",
-		Result:   "",
+		Request:  json.ToString(data),
+		Response: "",
 	}
 
 	taskId, _ := worktask.Create(item)
@@ -44,9 +44,9 @@ func (pod *SendPod) Exec(data *ExecPayload) (uint, error) {
 func (pod *RespPod) Exec(rq *SocketData) {
 
 	item := &worktask.UpdateParam{
-		Id:     rq.TaskId,
-		UserId: pod.UserId,
-		Result: json.ToString(rq.Payload),
+		Id:       rq.TaskId,
+		UserId:   pod.UserId,
+		Response: json.ToString(rq.Payload),
 	}
 
 	if rq.Success {
