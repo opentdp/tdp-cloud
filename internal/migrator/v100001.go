@@ -52,7 +52,7 @@ func newMigration() error {
 		Name:        "Migration",
 		Value:       Versions,
 		Module:      "System",
-		Description: "自动迁移记录",
+		Description: "版本迁移记录",
 	})
 
 	return err

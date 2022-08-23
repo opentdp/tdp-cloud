@@ -15,14 +15,14 @@ func list(c *gin.Context) {
 	userId := c.GetUint("UserId")
 
 	if res, err := worktask.FetchAll(userId); err == nil {
-		c.Set("Payload", res)
+		c.Set("Payload", worktask.ParseItems(res))
 	} else {
 		c.Set("Error", err)
 	}
 
 }
 
-// 获取密钥
+// 获取任务
 
 func detail(c *gin.Context) {
 
@@ -30,7 +30,7 @@ func detail(c *gin.Context) {
 	id, _ := strconv.Atoi(c.Param("id"))
 
 	if res, err := worktask.Fetch(uint(id), userId); err == nil {
-		c.Set("Payload", res)
+		c.Set("Payload", worktask.ParseItem(res))
 	} else {
 		c.Set("Error", err)
 	}

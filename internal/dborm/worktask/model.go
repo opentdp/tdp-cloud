@@ -1,6 +1,7 @@
 package worktask
 
 import (
+	"encoding/json"
 	"tdp-cloud/internal/dborm"
 )
 
@@ -100,5 +101,39 @@ func Delete(id, userId uint) error {
 	result := dborm.Db.Where(&dborm.Worktask{Id: id, UserId: userId}).Delete(&item)
 
 	return result.Error
+
+}
+
+////////////////////////////////////
+
+// 解析任务
+
+type TaskItem struct {
+	*dborm.Worktask
+	Content any
+	Result  any
+}
+
+func ParseItem(item *dborm.Worktask) *TaskItem {
+
+	var content any
+	json.Unmarshal([]byte(item.Content), &content)
+
+	var result any
+	json.Unmarshal([]byte(item.Content), &result)
+
+	return &TaskItem{item, content, result}
+
+}
+
+func ParseItems(items []*dborm.Worktask) []*TaskItem {
+
+	var tasks []*TaskItem
+
+	for _, item := range items {
+		tasks = append(tasks, ParseItem(item))
+	}
+
+	return tasks
 
 }
