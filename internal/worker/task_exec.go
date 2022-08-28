@@ -18,7 +18,7 @@ import (
 	"tdp-cloud/internal/master"
 )
 
-type ExecPayload master.ExecPayload
+type ExecPayload = master.ExecPayload
 
 func (pod *RecvPod) Exec(rq *SocketData) error {
 

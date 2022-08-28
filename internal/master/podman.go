@@ -7,9 +7,11 @@ import (
 type RecvPod struct {
 	*Worker
 }
+
 type RespPod struct {
 	*Worker
 }
+
 type SendPod struct {
 	*Worker
 }

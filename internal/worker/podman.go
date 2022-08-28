@@ -22,7 +22,7 @@ type SendPod struct {
 	*socket.JsonPod
 }
 
-type SocketData master.SocketData
+type SocketData = master.SocketData
 
 func Register(url string) {
 
