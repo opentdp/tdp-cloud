@@ -1,4 +1,4 @@
-package worker
+package podhub
 
 import (
 	"github.com/gin-gonic/gin"
@@ -13,8 +13,8 @@ func Router(api *gin.RouterGroup) {
 	rg.Use(midware.AuthGuard())
 
 	{
-		rg.GET("/worker", list)
-		rg.POST("/worker/exec", exec)
+		rg.GET("/podhub", list)
+		rg.POST("/podhub/exec", exec)
 	}
 
 }

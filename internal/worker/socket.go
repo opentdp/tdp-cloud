@@ -7,7 +7,7 @@ import (
 	"github.com/shirou/gopsutil/v3/host"
 
 	"tdp-cloud/helper/socket"
-	"tdp-cloud/internal/server"
+	"tdp-cloud/internal/podhub"
 )
 
 type RecvPod struct {
@@ -22,7 +22,7 @@ type SendPod struct {
 	*socket.JsonPod
 }
 
-type SocketData = server.SocketData
+type SocketData = podhub.SocketData
 
 func Register(url string) {
 

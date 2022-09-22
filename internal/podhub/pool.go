@@ -1,4 +1,4 @@
-package server
+package podhub
 
 import (
 	"github.com/gin-gonic/gin"
