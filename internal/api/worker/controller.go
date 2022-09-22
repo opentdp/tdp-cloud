@@ -3,14 +3,14 @@ package worker
 import (
 	"github.com/gin-gonic/gin"
 
-	"tdp-cloud/internal/master"
+	"tdp-cloud/internal/server"
 )
 
 func list(c *gin.Context) {
 
 	userId := c.GetUint("UserId")
 
-	res := master.NodesOfUser(userId)
+	res := server.NodesOfUser(userId)
 
 	c.Set("Payload", res)
 
@@ -18,7 +18,7 @@ func list(c *gin.Context) {
 
 type execParam struct {
 	HostId  string
-	Payload master.ExecPayload
+	Payload server.ExecPayload
 }
 
 func exec(c *gin.Context) {
@@ -30,7 +30,7 @@ func exec(c *gin.Context) {
 		return
 	}
 
-	send := master.NewSender(rq.HostId)
+	send := server.NewSender(rq.HostId)
 
 	if send == nil {
 		c.Set("Error", "客户端已断开连接")

@@ -3,7 +3,7 @@ package main
 import (
 	"embed"
 	"tdp-cloud/cmd/args"
-	"tdp-cloud/cmd/master"
+	"tdp-cloud/cmd/server"
 	"tdp-cloud/cmd/worker"
 )
 
@@ -14,8 +14,8 @@ func main() {
 
 	args.Flags()
 
-	if args.Master == "" {
-		master.Create(&vfs)
+	if args.Server == "" {
+		server.Create(&vfs)
 	} else {
 		worker.Create()
 	}

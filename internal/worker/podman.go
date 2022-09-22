@@ -7,7 +7,7 @@ import (
 	"github.com/shirou/gopsutil/v3/host"
 
 	"tdp-cloud/helper/socket"
-	"tdp-cloud/internal/master"
+	"tdp-cloud/internal/server"
 )
 
 type RecvPod struct {
@@ -22,7 +22,7 @@ type SendPod struct {
 	*socket.JsonPod
 }
 
-type SocketData = master.SocketData
+type SocketData = server.SocketData
 
 func Register(url string) {
 

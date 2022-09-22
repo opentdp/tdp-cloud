@@ -13,7 +13,7 @@ func Create() {
 
 	defer delayer()
 
-	worker.Register(args.Master)
+	worker.Register(args.Server)
 
 }
 
