@@ -4,6 +4,8 @@ import (
 	"tdp-cloud/internal/dborm"
 )
 
+// 添加脚本
+
 type CreateParam struct {
 	UserId           uint
 	Name             string `binding:"required"`
@@ -33,6 +35,8 @@ func Create(post *CreateParam) (uint, error) {
 	return item.Id, result.Error
 
 }
+
+// 更新脚本
 
 type UpdateParam struct {
 	Id               uint `binding:"required"`
@@ -64,6 +68,8 @@ func Update(post *UpdateParam) error {
 
 }
 
+// 获取脚本列表
+
 func FetchAll(userId uint) ([]*dborm.TATScript, error) {
 
 	var items []*dborm.TATScript
@@ -74,6 +80,8 @@ func FetchAll(userId uint) ([]*dborm.TATScript, error) {
 
 }
 
+// 获取脚本
+
 func Fetch(id, userId uint) (*dborm.TATScript, error) {
 
 	var item *dborm.TATScript
@@ -83,6 +91,8 @@ func Fetch(id, userId uint) (*dborm.TATScript, error) {
 	return item, result.Error
 
 }
+
+// 删除脚本
 
 func Delete(id, userId uint) error {
 

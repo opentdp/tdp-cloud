@@ -4,6 +4,8 @@ import (
 	"tdp-cloud/internal/dborm"
 )
 
+// 添加历史
+
 type CreateParam struct {
 	UserId       uint
 	KeyId        uint
@@ -30,6 +32,8 @@ func Create(post *CreateParam) (uint, error) {
 
 }
 
+// 更新历史
+
 type UpdateParam struct {
 	Id                   uint
 	UserId               uint
@@ -51,6 +55,8 @@ func Update(post *UpdateParam) error {
 
 }
 
+// 获取历史列表
+
 func FetchAll(userId, keyId uint) ([]*dborm.TATHistory, error) {
 
 	var items []*dborm.TATHistory
@@ -64,6 +70,8 @@ func FetchAll(userId, keyId uint) ([]*dborm.TATHistory, error) {
 
 }
 
+// 获取历史
+
 func Fetch(id, userId uint) (*dborm.TATHistory, error) {
 
 	var item *dborm.TATHistory
@@ -73,6 +81,8 @@ func Fetch(id, userId uint) (*dborm.TATHistory, error) {
 	return item, result.Error
 
 }
+
+// 删除历史
 
 func Delete(id, userId uint) error {
 
