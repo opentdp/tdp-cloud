@@ -10,14 +10,13 @@ import (
 	"tdp-cloud/internal/api/machine"
 	"tdp-cloud/internal/api/podhub"
 	"tdp-cloud/internal/api/qcloud"
+	"tdp-cloud/internal/api/socket"
 	"tdp-cloud/internal/api/sshkey"
 	"tdp-cloud/internal/api/tat_history"
 	"tdp-cloud/internal/api/tat_script"
 	"tdp-cloud/internal/api/user"
 	"tdp-cloud/internal/api/vendor"
 	"tdp-cloud/internal/api/worktask"
-
-	"tdp-cloud/internal/api/socket"
 )
 
 func Router(engine *gin.Engine) {
