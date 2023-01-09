@@ -1,10 +1,9 @@
 package tat_script
 
 import (
-	"strconv"
-
 	"github.com/gin-gonic/gin"
 
+	"tdp-cloud/helper/strings"
 	script "tdp-cloud/internal/dborm/tat_script"
 )
 
@@ -61,10 +60,9 @@ func update(c *gin.Context) {
 func delete(c *gin.Context) {
 
 	userId := c.GetUint("UserId")
+	id := strings.Uint(c.Param("id"))
 
-	id, _ := strconv.Atoi(c.Param("id"))
-
-	if err := script.Delete(uint(id), userId); err == nil {
+	if err := script.Delete(id, userId); err == nil {
 		c.Set("Payload", "删除成功")
 	} else {
 		c.Set("Error", err)

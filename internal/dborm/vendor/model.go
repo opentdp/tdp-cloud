@@ -1,24 +1,26 @@
-package secret
+package vendor
 
 import (
 	"tdp-cloud/internal/dborm"
 )
 
-// 添加密钥
+// 添加厂商
 
 type CreateParam struct {
 	UserId      uint
 	SecretId    string `binding:"required"`
 	SecretKey   string `binding:"required"`
+	Provider    string `binding:"required"`
 	Description string `binding:"required"`
 }
 
 func Create(post *CreateParam) (uint, error) {
 
-	item := &dborm.Secret{
+	item := &dborm.Vendor{
 		UserId:      post.UserId,
 		SecretId:    post.SecretId,
 		SecretKey:   post.SecretKey,
+		Provider:    post.Provider,
 		Description: post.Description,
 	}
 
@@ -28,23 +30,25 @@ func Create(post *CreateParam) (uint, error) {
 
 }
 
-// 更新密钥
+// 更新厂商
 
 type UpdateParam struct {
 	Id          uint `binding:"required"`
 	UserId      uint
 	SecretId    string `binding:"required"`
 	SecretKey   string `binding:"required"`
+	Provider    string `binding:"required"`
 	Description string `binding:"required"`
 }
 
 func Update(post *UpdateParam) error {
 
 	result := dborm.Db.
-		Where(&dborm.Secret{Id: post.Id, UserId: post.UserId}).
-		Updates(dborm.Secret{
+		Where(&dborm.Vendor{Id: post.Id, UserId: post.UserId}).
+		Updates(dborm.Vendor{
 			SecretId:    post.SecretId,
 			SecretKey:   post.SecretKey,
+			Provider:    post.Provider,
 			Description: post.Description,
 		})
 
@@ -52,37 +56,37 @@ func Update(post *UpdateParam) error {
 
 }
 
-// 获取密钥列表
+// 获取厂商列表
 
-func FetchAll(userId uint) ([]*dborm.Secret, error) {
+func FetchAll(userId uint) ([]*dborm.Vendor, error) {
 
-	var items []*dborm.Secret
+	var items []*dborm.Vendor
 
-	result := dborm.Db.Where(&dborm.Secret{UserId: userId}).Find(&items)
+	result := dborm.Db.Where(&dborm.Vendor{UserId: userId}).Find(&items)
 
 	return items, result.Error
 
 }
 
-// 获取密钥
+// 获取厂商
 
-func Fetch(id, userId uint) (*dborm.Secret, error) {
+func Fetch(id, userId uint) (*dborm.Vendor, error) {
 
-	var item *dborm.Secret
+	var item *dborm.Vendor
 
-	result := dborm.Db.Where(&dborm.Secret{Id: id, UserId: userId}).First(&item)
+	result := dborm.Db.Where(&dborm.Vendor{Id: id, UserId: userId}).First(&item)
 
 	return item, result.Error
 
 }
 
-// 删除密钥
+// 删除厂商
 
 func Delete(id, userId uint) error {
 
-	var item *dborm.Secret
+	var item *dborm.Vendor
 
-	result := dborm.Db.Where(&dborm.Secret{Id: id, UserId: userId}).Delete(&item)
+	result := dborm.Db.Where(&dborm.Vendor{Id: id, UserId: userId}).Delete(&item)
 
 	return result.Error
 

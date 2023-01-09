@@ -1,10 +1,9 @@
 package worktask
 
 import (
-	"strconv"
-
 	"github.com/gin-gonic/gin"
 
+	"tdp-cloud/helper/strings"
 	"tdp-cloud/internal/dborm/worktask"
 )
 
@@ -27,9 +26,9 @@ func list(c *gin.Context) {
 func detail(c *gin.Context) {
 
 	userId := c.GetUint("UserId")
-	id, _ := strconv.Atoi(c.Param("id"))
+	id := strings.Uint(c.Param("id"))
 
-	if res, err := worktask.Fetch(uint(id), userId); err == nil {
+	if res, err := worktask.Fetch(id, userId); err == nil {
 		c.Set("Payload", worktask.ParseItem(res))
 	} else {
 		c.Set("Error", err)
@@ -84,9 +83,9 @@ func update(c *gin.Context) {
 func delete(c *gin.Context) {
 
 	userId := c.GetUint("UserId")
-	id, _ := strconv.Atoi(c.Param("id"))
+	id := strings.Uint(c.Param("id"))
 
-	if err := worktask.Delete(uint(id), userId); err == nil {
+	if err := worktask.Delete(id, userId); err == nil {
 		c.Set("Payload", "删除成功")
 	} else {
 		c.Set("Error", err)

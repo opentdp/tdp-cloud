@@ -9,24 +9,25 @@ import (
 	"github.com/gin-gonic/gin"
 
 	"tdp-cloud/helper/qcloud"
-	"tdp-cloud/internal/dborm/secret"
+	"tdp-cloud/helper/strings"
+	"tdp-cloud/internal/dborm/vendor"
 )
 
 func apiProxy(c *gin.Context) {
 
-	keyId := c.GetUint("KeyId")
 	userId := c.GetUint("UserId")
+	vendorId := strings.Uint(c.GetHeader("TDP-Vendor"))
 
-	secret, err := secret.Fetch(keyId, userId)
+	vendor, err := vendor.Fetch(vendorId, userId)
 
-	if err != nil || secret.Id == 0 {
-		c.Set("Error", "密钥不存在")
+	if err != nil || vendor.Id == 0 {
+		c.Set("Error", "厂商不存在")
 		return
 	}
 
 	params := &qcloud.Params{
-		SecretId:   secret.SecretId,
-		SecretKey:  secret.SecretKey,
+		SecretId:   vendor.SecretId,
+		SecretKey:  vendor.SecretKey,
 		RootDomain: "tencentcloudapi.com",
 	}
 

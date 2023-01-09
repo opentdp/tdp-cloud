@@ -34,10 +34,22 @@ func Rand(length uint) string {
 
 // 转换编码 gb18030 -> utf-8
 
-func Gb18030ToUtf8(str string) string {
+func Gb18030ToUtf8(s string) string {
 
-	ret, _ := simplifiedchinese.GB18030.NewDecoder().String(str)
+	ret, _ := simplifiedchinese.GB18030.NewDecoder().String(s)
 
 	return string(ret)
+
+}
+
+// 转为无符号整数
+
+func Uint(s string) uint {
+
+	if s, err := strconv.Atoi(s); err == nil {
+		return uint(s)
+	}
+
+	return 0
 
 }

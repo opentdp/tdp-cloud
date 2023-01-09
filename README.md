@@ -33,7 +33,7 @@ go env -w GOPROXY=https://goproxy.cn,direct
 
 2、浏览器打开 `http://localhost:7800`，默认账号 `admin`，密码 `123456`
 
-3、登录账号，添加一组或多组 `腾讯云CAM密钥`，即可管理云资源
+3、登录账号，添加一组或多组 `腾讯云CAM`，即可管理云资源
 
 ### 支持的数据库
 
@@ -41,7 +41,7 @@ go env -w GOPROXY=https://goproxy.cn,direct
 
 - **MySQL**  数据源格式 `user:password@tcp(localhost:3306)/dbname?charset=utf8&parseTime=True&loc=Local`
 
-### 添加腾讯云密钥
+### 添加腾讯云CAM
 
 1、进入腾讯云 [CAM - 策略](https://console.cloud.tencent.com/cam/policy) 页面，创建一个自定义策略 `TDPCloudAccess`，权限JSON如下：
 
@@ -66,7 +66,7 @@ go env -w GOPROXY=https://goproxy.cn,direct
 
 2、进入腾讯云 [CAM - 用户](https://console.cloud.tencent.com/cam) 页面，创建一个用户，允许 `编程访问`，并关联策略 `TDPCloudAccess`
 
-3、进入 `TDP Cloud` 后台，密钥管理，添加获取到的 `SecretId` 和 `SecretKey`
+3、进入 `TDP Cloud` 后台，厂商管理，添加获取到的 `SecretId` 和 `SecretKey`
 
 ## 四、其他
 

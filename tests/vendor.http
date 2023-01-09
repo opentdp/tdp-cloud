@@ -1,14 +1,14 @@
-# Local Secret Api
+# Local Vendor Api
 
-### 获取密钥
+### 获取厂商
 
-GET {{$dotenv baseapi}}/secret
+GET {{$dotenv baseapi}}/vendor
 Authorization: {{$dotenv authorization}}
 Origin: {{$dotenv origin}}
 
-### 添加密钥
+### 添加厂商
 
-POST {{$dotenv baseapi}}/secret
+POST {{$dotenv baseapi}}/vendor
 Authorization: {{$dotenv authorization}}
 Content-Type: application/json
 Origin: {{$dotenv origin}}
@@ -16,11 +16,12 @@ Origin: {{$dotenv origin}}
 {
     "SecretId":  "{{$dotenv secret_id}}",
     "SecretKey": "{{$dotenv secret_key}}",
+	"Provider":  "qcloud",
     "Description":  "也没所谓"
 }
 
-### 删除密钥
+### 删除厂商
 
-DELETE {{$dotenv baseapi}}/secret/2
+DELETE {{$dotenv baseapi}}/vendor/2
 Authorization: {{$dotenv authorization}}
 Origin: {{$dotenv origin}}

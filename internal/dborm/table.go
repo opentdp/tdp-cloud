@@ -12,35 +12,30 @@ type Config struct {
 	UpdatedAt   int64
 }
 
-// 用户会话
+// 域名资源
 
-type Session struct {
-	Id        uint   `gorm:"primaryKey"`
-	UserId    uint   `gorm:"index"`
-	Token     string `gorm:"uniqueIndex"`
-	CreatedAt int64
-	UpdatedAt int64
-}
-
-// 腾讯云 CAM
-
-type Secret struct {
-	Id          uint   `gorm:"primaryKey"`
-	UserId      uint   `gorm:"index"`
-	SecretId    string `gorm:"uniqueIndex"`
-	SecretKey   string
+type Domain struct {
+	Id          uint `gorm:"primaryKey"`
+	UserId      uint `gorm:"index"`
+	VendorId    uint
+	Domain      string
+	Status      string
+	CloudData   string
 	Description string
 	CreatedAt   int64
 	UpdatedAt   int64
 }
 
-// SSH 密钥
+// 主机资源
 
-type Sshkey struct {
+type Machine struct {
 	Id          uint `gorm:"primaryKey"`
 	UserId      uint `gorm:"index"`
-	PublicKey   string
-	PrivateKey  string
+	VendorId    uint
+	HostName    string
+	Address     string
+	Status      string
+	CloudData   string
 	Description string
 	CreatedAt   int64
 	UpdatedAt   int64
@@ -67,12 +62,34 @@ type TATScript struct {
 type TATHistory struct {
 	Id                   uint `gorm:"primaryKey"`
 	UserId               uint `gorm:"index"`
-	KeyId                uint `gorm:"index"`
+	VendorId             uint `gorm:"index"`
 	Name                 string
 	Region               string
 	InvocationId         string
 	InvocationStatus     string
 	InvocationResultJson string
+}
+
+// 用户会话
+
+type Session struct {
+	Id        uint   `gorm:"primaryKey"`
+	UserId    uint   `gorm:"index"`
+	Token     string `gorm:"uniqueIndex"`
+	CreatedAt int64
+	UpdatedAt int64
+}
+
+// SSH 密钥
+
+type Sshkey struct {
+	Id          uint `gorm:"primaryKey"`
+	UserId      uint `gorm:"index"`
+	PublicKey   string
+	PrivateKey  string
+	Description string
+	CreatedAt   int64
+	UpdatedAt   int64
 }
 
 // 用户
@@ -83,8 +100,21 @@ type User struct {
 	Password    string
 	AppToken    string `gorm:"uniqueIndex"`
 	Description string `gorm:"default:什么也没有"`
-	Secrets     []Secret
+	Vendors     []Vendor
 	Sessions    []Session
+	CreatedAt   int64
+	UpdatedAt   int64
+}
+
+// 厂商
+
+type Vendor struct {
+	Id          uint   `gorm:"primaryKey"`
+	UserId      uint   `gorm:"index"`
+	SecretId    string `gorm:"uniqueIndex"`
+	SecretKey   string
+	Provider    string
+	Description string
 	CreatedAt   int64
 	UpdatedAt   int64
 }

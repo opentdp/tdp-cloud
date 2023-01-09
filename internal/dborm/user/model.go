@@ -127,11 +127,10 @@ type LoginParam struct {
 }
 
 type LoginResult struct {
-	KeyId        uint
-	AppToken     string
-	SessionToken string
 	Username     string
+	AppToken     string
 	Description  string
+	SessionToken string
 }
 
 func Login(post *LoginParam) (*LoginResult, error) {
@@ -140,7 +139,7 @@ func Login(post *LoginParam) (*LoginResult, error) {
 
 	// 验证账号
 
-	dborm.Db.Preload("Secrets").Where(&dborm.User{Username: post.Username}).First(&item)
+	dborm.Db.Preload("Vendors").Where(&dborm.User{Username: post.Username}).First(&item)
 
 	if item.Id == 0 {
 		return nil, errors.New("账号错误")
@@ -160,10 +159,6 @@ func Login(post *LoginParam) (*LoginResult, error) {
 		AppToken:     item.AppToken,
 		Description:  item.Description,
 		SessionToken: token,
-	}
-
-	if len(item.Secrets) > 0 {
-		res.KeyId = item.Secrets[0].Id
 	}
 
 	return res, nil

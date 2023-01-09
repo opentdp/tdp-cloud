@@ -8,7 +8,7 @@ import (
 
 type CreateParam struct {
 	UserId       uint
-	KeyId        uint
+	VendorId     uint
 	Name         string `binding:"required"`
 	Region       string `binding:"required"`
 	InvocationId string `binding:"required"`
@@ -18,7 +18,7 @@ func Create(post *CreateParam) (uint, error) {
 
 	item := &dborm.TATHistory{
 		UserId:               post.UserId,
-		KeyId:                post.KeyId,
+		VendorId:             post.VendorId,
 		Name:                 post.Name,
 		Region:               post.Region,
 		InvocationId:         post.InvocationId,
@@ -57,12 +57,12 @@ func Update(post *UpdateParam) error {
 
 // 获取历史列表
 
-func FetchAll(userId, keyId uint) ([]*dborm.TATHistory, error) {
+func FetchAll(userId uint) ([]*dborm.TATHistory, error) {
 
 	var items []*dborm.TATHistory
 
 	result := dborm.Db.
-		Where(&dborm.TATHistory{UserId: userId, KeyId: keyId}).
+		Where(&dborm.TATHistory{UserId: userId}).
 		Limit(50).Order("id DESC").
 		Find(&items)
 
@@ -86,7 +86,7 @@ func Fetch(id, userId uint) (*dborm.TATHistory, error) {
 
 func Delete(id, userId uint) error {
 
-	var item *dborm.Secret
+	var item *dborm.Vendor
 
 	result := dborm.Db.Where(&dborm.TATHistory{Id: id, UserId: userId}).Delete(&item)
 

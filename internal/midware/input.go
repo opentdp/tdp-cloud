@@ -1,9 +1,6 @@
 package midware
 
 import (
-	"strconv"
-	"strings"
-
 	"github.com/gin-gonic/gin"
 
 	"tdp-cloud/internal/dborm/session"
@@ -13,16 +10,9 @@ func AuthGuard() gin.HandlerFunc {
 
 	return func(c *gin.Context) {
 
-		input := c.Request.Header.Get("Authorization")
-		field := strings.Split(input, ":")
+		token := c.Request.Header.Get("Authorization")
 
-		if len(field) != 2 {
-			c.Set("Error", "登录后重试")
-			c.Abort()
-			return
-		}
-
-		sess, err := session.Fetch(field[1])
+		sess, err := session.Fetch(token)
 
 		if err != nil || sess.UserId == 0 {
 			c.Set("Error", "会话已失效")
@@ -30,9 +20,6 @@ func AuthGuard() gin.HandlerFunc {
 			return
 		}
 
-		keyId, _ := strconv.Atoi(field[0])
-
-		c.Set("KeyId", uint(keyId))
 		c.Set("UserId", sess.UserId)
 
 	}

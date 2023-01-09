@@ -8,11 +8,11 @@ import (
 	"tdp-cloud/internal/api/config"
 	"tdp-cloud/internal/api/podhub"
 	"tdp-cloud/internal/api/qcloud"
-	"tdp-cloud/internal/api/secret"
 	"tdp-cloud/internal/api/sshkey"
 	"tdp-cloud/internal/api/tat_history"
 	"tdp-cloud/internal/api/tat_script"
 	"tdp-cloud/internal/api/user"
+	"tdp-cloud/internal/api/vendor"
 	"tdp-cloud/internal/api/worktask"
 
 	"tdp-cloud/internal/api/socket"
@@ -28,7 +28,7 @@ func Router(engine *gin.Engine) {
 		config.Router(api)
 		podhub.Router(api)
 		qcloud.Router(api)
-		secret.Router(api)
+		vendor.Router(api)
 		sshkey.Router(api)
 		tat_history.Router(api)
 		tat_script.Router(api)

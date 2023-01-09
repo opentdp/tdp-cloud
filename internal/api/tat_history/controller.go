@@ -1,19 +1,17 @@
 package tat_history
 
 import (
-	"strconv"
-
 	"github.com/gin-gonic/gin"
 
+	"tdp-cloud/helper/strings"
 	history "tdp-cloud/internal/dborm/tat_history"
 )
 
 func list(c *gin.Context) {
 
-	keyId := c.GetUint("KeyId")
 	userId := c.GetUint("UserId")
 
-	if res, err := history.FetchAll(userId, keyId); err == nil {
+	if res, err := history.FetchAll(userId); err == nil {
 		c.Set("Payload", res)
 	} else {
 		c.Set("Error", err)
@@ -30,7 +28,6 @@ func create(c *gin.Context) {
 		return
 	}
 
-	rq.KeyId = c.GetUint("KeyId")
 	rq.UserId = c.GetUint("UserId")
 
 	if _, err := history.Create(rq); err == nil {
@@ -63,10 +60,9 @@ func update(c *gin.Context) {
 func delete(c *gin.Context) {
 
 	userId := c.GetUint("UserId")
+	id := strings.Uint(c.Param("id"))
 
-	id, _ := strconv.Atoi(c.Param("id"))
-
-	if err := history.Delete(uint(id), userId); err == nil {
+	if err := history.Delete(id, userId); err == nil {
 		c.Set("Payload", "删除成功")
 	} else {
 		c.Set("Error", err)

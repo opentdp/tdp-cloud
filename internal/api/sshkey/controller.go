@@ -1,10 +1,9 @@
 package sshkey
 
 import (
-	"strconv"
-
 	"github.com/gin-gonic/gin"
 
+	"tdp-cloud/helper/strings"
 	"tdp-cloud/internal/dborm/sshkey"
 )
 
@@ -48,9 +47,9 @@ func create(c *gin.Context) {
 func delete(c *gin.Context) {
 
 	userId := c.GetUint("UserId")
-	id, _ := strconv.Atoi(c.Param("id"))
+	id := strings.Uint(c.Param("id"))
 
-	if err := sshkey.Delete(uint(id), userId); err == nil {
+	if err := sshkey.Delete(id, userId); err == nil {
 		c.Set("Payload", "删除成功")
 	} else {
 		c.Set("Error", err)
