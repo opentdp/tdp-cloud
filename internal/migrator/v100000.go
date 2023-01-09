@@ -16,7 +16,6 @@ func v100001() error {
 		&dborm.TATHistory{},
 		&dborm.User{},
 		&dborm.Vendor{},
-		&dborm.Worker{},
 		&dborm.Worktask{},
 	)
 

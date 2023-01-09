@@ -121,19 +121,6 @@ type Vendor struct {
 	UpdatedAt   int64
 }
 
-// 子节点
-
-type Worker struct {
-	Id        uint   `gorm:"primaryKey"`
-	UserId    string `gorm:"index"`
-	HostId    string `gorm:"index"`
-	HostName  string
-	Address   string
-	Status    string
-	CreatedAt int64
-	UpdatedAt int64
-}
-
 // 子节点任务
 
 type Worktask struct {

@@ -8,7 +8,7 @@ import (
 
 	"tdp-cloud/helper/webssh"
 	"tdp-cloud/internal/dborm/user"
-	"tdp-cloud/internal/podhub"
+	"tdp-cloud/internal/workhub"
 )
 
 func agent(c *gin.Context) {
@@ -26,7 +26,7 @@ func agent(c *gin.Context) {
 
 	c.Set("UserId", u.Id)
 
-	podhub.Upgrader(c)
+	workhub.Upgrader(c)
 
 }
 

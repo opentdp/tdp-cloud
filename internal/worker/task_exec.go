@@ -15,10 +15,10 @@ import (
 	"github.com/mitchellh/mapstructure"
 
 	"tdp-cloud/helper/strings"
-	"tdp-cloud/internal/podhub"
+	"tdp-cloud/internal/workhub"
 )
 
-type ExecPayload = podhub.ExecPayload
+type ExecPayload = workhub.ExecPayload
 
 func (pod *RecvPod) Exec(rq *SocketData) error {
 

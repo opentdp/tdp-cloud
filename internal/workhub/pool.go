@@ -1,4 +1,4 @@
-package podhub
+package workhub
 
 import (
 	"github.com/gin-gonic/gin"
