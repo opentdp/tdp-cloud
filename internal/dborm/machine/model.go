@@ -7,13 +7,13 @@ import (
 // 添加主机
 
 type CreateParam struct {
-	UserId      uint   `binding:"required"`
+	UserId      uint
 	VendorId    uint   `binding:"required"`
 	HostName    string `binding:"required"`
 	Address     string `binding:"required"`
 	Status      string
 	CloudData   string `binding:"required"`
-	Description string `binding:"required"`
+	Description string
 }
 
 func Create(post *CreateParam) (uint, error) {
@@ -37,14 +37,14 @@ func Create(post *CreateParam) (uint, error) {
 // 更新主机
 
 type UpdateParam struct {
-	Id          uint   `binding:"required"`
-	UserId      uint   `binding:"required"`
+	Id          uint `binding:"required"`
+	UserId      uint
 	VendorId    uint   `binding:"required"`
 	HostName    string `binding:"required"`
 	Address     string `binding:"required"`
 	Status      string
 	CloudData   string `binding:"required"`
-	Description string `binding:"required"`
+	Description string
 }
 
 func Update(post *UpdateParam) error {
