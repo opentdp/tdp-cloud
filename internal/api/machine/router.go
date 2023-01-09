@@ -1,0 +1,22 @@
+package machine
+
+import (
+	"github.com/gin-gonic/gin"
+
+	"tdp-cloud/internal/midware"
+)
+
+func Router(api *gin.RouterGroup) {
+
+	rg := api.Group("/")
+
+	rg.Use(midware.AuthGuard())
+
+	{
+		rg.GET("/machine", list)
+		rg.POST("/machine", create)
+		rg.PATCH("/machine/:id", update)
+		rg.DELETE("/machine/:id", delete)
+	}
+
+}

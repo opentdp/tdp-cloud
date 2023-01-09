@@ -6,6 +6,8 @@ import (
 	"tdp-cloud/internal/midware"
 
 	"tdp-cloud/internal/api/config"
+	"tdp-cloud/internal/api/domain"
+	"tdp-cloud/internal/api/machine"
 	"tdp-cloud/internal/api/podhub"
 	"tdp-cloud/internal/api/qcloud"
 	"tdp-cloud/internal/api/sshkey"
@@ -26,6 +28,8 @@ func Router(engine *gin.Engine) {
 
 	{
 		config.Router(api)
+		domain.Router(api)
+		machine.Router(api)
 		podhub.Router(api)
 		qcloud.Router(api)
 		vendor.Router(api)

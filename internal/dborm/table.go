@@ -18,7 +18,7 @@ type Domain struct {
 	Id          uint `gorm:"primaryKey"`
 	UserId      uint `gorm:"index"`
 	VendorId    uint
-	Domain      string
+	Name        string
 	Status      string
 	CloudData   string
 	Description string
@@ -100,8 +100,8 @@ type User struct {
 	Password    string
 	AppToken    string `gorm:"uniqueIndex"`
 	Description string `gorm:"default:什么也没有"`
-	Vendors     []Vendor
 	Sessions    []Session
+	Vendors     []Vendor
 	CreatedAt   int64
 	UpdatedAt   int64
 }
@@ -115,6 +115,8 @@ type Vendor struct {
 	SecretKey   string
 	Provider    string
 	Description string
+	Domains     []Domain
+	Machines    []Machine
 	CreatedAt   int64
 	UpdatedAt   int64
 }
