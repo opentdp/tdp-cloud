@@ -7,7 +7,7 @@ import (
 	"tdp-cloud/internal/dborm/machine"
 )
 
-// 域名列表
+// 主机列表
 
 func list(c *gin.Context) {
 
@@ -21,7 +21,22 @@ func list(c *gin.Context) {
 
 }
 
-// 添加域名
+// 获取主机
+
+func detail(c *gin.Context) {
+
+	userId := c.GetUint("UserId")
+	id := strings.Uint(c.Param("id"))
+
+	if res, err := machine.Fetch(id, userId); err == nil {
+		c.Set("Payload", res)
+	} else {
+		c.Set("Error", err)
+	}
+
+}
+
+// 添加主机
 
 func create(c *gin.Context) {
 
@@ -42,7 +57,7 @@ func create(c *gin.Context) {
 
 }
 
-// 修改域名
+// 修改主机
 
 func update(c *gin.Context) {
 
@@ -63,7 +78,7 @@ func update(c *gin.Context) {
 
 }
 
-// 删除域名
+// 删除主机
 
 func delete(c *gin.Context) {
 

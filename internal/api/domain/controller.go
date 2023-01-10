@@ -21,6 +21,21 @@ func list(c *gin.Context) {
 
 }
 
+// 获取域名
+
+func detail(c *gin.Context) {
+
+	userId := c.GetUint("UserId")
+	id := strings.Uint(c.Param("id"))
+
+	if res, err := domain.Fetch(id, userId); err == nil {
+		c.Set("Payload", res)
+	} else {
+		c.Set("Error", err)
+	}
+
+}
+
 // 添加域名
 
 func create(c *gin.Context) {

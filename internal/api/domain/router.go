@@ -15,6 +15,7 @@ func Router(api *gin.RouterGroup) {
 	{
 		rg.GET("/domain", list)
 		rg.POST("/domain", create)
+		rg.GET("/domain/:id", detail)
 		rg.PATCH("/domain/:id", update)
 		rg.DELETE("/domain/:id", delete)
 	}
