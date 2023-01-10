@@ -21,7 +21,9 @@ type Domain struct {
 	UserId      uint `gorm:"index"`
 	VendorId    uint
 	Name        string
-	CloudData   datatypes.JSON
+	Model       string
+	CloudId     string `gorm:"uniqueIndex"`
+	CloudMeta   datatypes.JSON
 	Description string
 	Status      string
 	CreatedAt   int64
@@ -34,12 +36,13 @@ type Machine struct {
 	Id          uint `gorm:"primaryKey"`
 	UserId      uint `gorm:"index"`
 	VendorId    uint
-	Name        string
-	Address     string
+	HostName    string
+	IpAddress   string
 	Region      string
-	RegZone     string
-	CloudData   datatypes.JSON
-	CloudModel  string
+	RegionZone  string
+	Model       string
+	CloudId     string `gorm:"uniqueIndex"`
+	CloudMeta   datatypes.JSON
 	Description string
 	Status      string
 	CreatedAt   int64

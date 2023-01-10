@@ -12,9 +12,11 @@ type CreateParam struct {
 	UserId      uint
 	VendorId    uint   `binding:"required"`
 	Name        string `binding:"required"`
-	Status      string
-	CloudData   string `binding:"required"`
+	Model       string `binding:"required"`
+	CloudId     string
+	CloudMeta   string
 	Description string
+	Status      string
 }
 
 func Create(post *CreateParam) (uint, error) {
@@ -23,9 +25,11 @@ func Create(post *CreateParam) (uint, error) {
 		UserId:      post.UserId,
 		VendorId:    post.VendorId,
 		Name:        post.Name,
-		Status:      post.Status,
-		CloudData:   datatypes.JSON(post.CloudData),
+		Model:       post.Model,
+		CloudId:     post.CloudId,
+		CloudMeta:   datatypes.JSON(post.CloudMeta),
 		Description: post.Description,
+		Status:      post.Status,
 	}
 
 	result := dborm.Db.Create(item)
@@ -41,9 +45,11 @@ type UpdateParam struct {
 	UserId      uint
 	VendorId    uint   `binding:"required"`
 	Name        string `binding:"required"`
-	Status      string
-	CloudData   string `binding:"required"`
+	Model       string `binding:"required"`
+	CloudId     string
+	CloudMeta   string
 	Description string
+	Status      string
 }
 
 func Update(post *UpdateParam) error {
@@ -53,9 +59,11 @@ func Update(post *UpdateParam) error {
 		Updates(dborm.Domain{
 			VendorId:    post.VendorId,
 			Name:        post.Name,
-			Status:      post.Status,
-			CloudData:   datatypes.JSON(post.CloudData),
+			Model:       post.Model,
+			CloudId:     post.CloudId,
+			CloudMeta:   datatypes.JSON(post.CloudMeta),
 			Description: post.Description,
+			Status:      post.Status,
 		})
 
 	return result.Error

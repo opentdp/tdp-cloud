@@ -11,12 +11,13 @@ import (
 type CreateParam struct {
 	UserId      uint
 	VendorId    uint   `binding:"required"`
-	Name        string `binding:"required"`
-	Address     string `binding:"required"`
+	HostName    string `binding:"required"`
+	IpAddress   string `binding:"required"`
 	Region      string
-	RegZone     string
-	CloudData   string `binding:"required"`
-	CloudModel  string `binding:"required"`
+	RegionZone  string
+	Model       string `binding:"required"`
+	CloudId     string
+	CloudMeta   string
 	Description string
 	Status      string
 }
@@ -26,12 +27,13 @@ func Create(post *CreateParam) (uint, error) {
 	item := &dborm.Machine{
 		UserId:      post.UserId,
 		VendorId:    post.VendorId,
-		Name:        post.Name,
-		Address:     post.Address,
+		HostName:    post.HostName,
+		IpAddress:   post.IpAddress,
 		Region:      post.Region,
-		RegZone:     post.RegZone,
-		CloudData:   datatypes.JSON(post.CloudData),
-		CloudModel:  post.CloudModel,
+		RegionZone:  post.RegionZone,
+		Model:       post.Model,
+		CloudId:     post.CloudId,
+		CloudMeta:   datatypes.JSON(post.CloudMeta),
 		Description: post.Description,
 		Status:      post.Status,
 	}
@@ -48,12 +50,13 @@ type UpdateParam struct {
 	Id          uint `binding:"required"`
 	UserId      uint
 	VendorId    uint   `binding:"required"`
-	Name        string `binding:"required"`
-	Address     string `binding:"required"`
+	HostName    string `binding:"required"`
+	IpAddress   string `binding:"required"`
 	Region      string
-	RegZone     string
-	CloudData   string `binding:"required"`
-	CloudModel  string `binding:"required"`
+	RegionZone  string
+	Model       string `binding:"required"`
+	CloudId     string
+	CloudMeta   string
 	Description string
 	Status      string
 }
@@ -64,12 +67,13 @@ func Update(post *UpdateParam) error {
 		Where(&dborm.Machine{Id: post.Id, UserId: post.UserId}).
 		Updates(dborm.Machine{
 			VendorId:    post.VendorId,
-			Name:        post.Name,
-			Address:     post.Address,
+			HostName:    post.HostName,
+			IpAddress:   post.IpAddress,
 			Region:      post.Region,
-			RegZone:     post.RegZone,
-			CloudData:   datatypes.JSON(post.CloudData),
-			CloudModel:  post.CloudModel,
+			RegionZone:  post.RegionZone,
+			Model:       post.Model,
+			CloudId:     post.CloudId,
+			CloudMeta:   datatypes.JSON(post.CloudMeta),
 			Description: post.Description,
 			Status:      post.Status,
 		})
