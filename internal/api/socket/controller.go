@@ -2,7 +2,6 @@ package socket
 
 import (
 	"errors"
-	"strings"
 
 	"github.com/gin-gonic/gin"
 
@@ -11,12 +10,12 @@ import (
 	"tdp-cloud/internal/workhub"
 )
 
-func agent(c *gin.Context) {
+func worker(c *gin.Context) {
 
-	at := strings.Replace(c.Param("auth"), "0:", "", 1)
+	token := c.Param("token")
 
 	u, err := user.Fetch(&user.FetchParam{
-		AppToken: at,
+		AppToken: token,
 	})
 
 	if err != nil || u.Id == 0 {
@@ -26,7 +25,7 @@ func agent(c *gin.Context) {
 
 	c.Set("UserId", u.Id)
 
-	workhub.Upgrader(c)
+	workhub.Register(c)
 
 }
 

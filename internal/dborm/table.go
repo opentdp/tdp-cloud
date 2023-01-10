@@ -25,7 +25,7 @@ type Domain struct {
 	CloudId     string `gorm:"uniqueIndex"`
 	CloudMeta   datatypes.JSON
 	Description string
-	Status      string
+	Status      datatypes.JSON
 	CreatedAt   int64
 	UpdatedAt   int64
 }
@@ -43,7 +43,7 @@ type Machine struct {
 	CloudId     string `gorm:"uniqueIndex"`
 	CloudMeta   datatypes.JSON
 	Description string
-	Status      string
+	Status      datatypes.JSON
 	CreatedAt   int64
 	UpdatedAt   int64
 }

@@ -23,6 +23,12 @@ type SocketData struct {
 	Payload any
 }
 
+func Daemon(node *Worker) {
+
+	Receiver(node)
+
+}
+
 func Receiver(node *Worker) error {
 
 	recv := &RecvPod{node}

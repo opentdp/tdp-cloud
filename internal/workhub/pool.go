@@ -16,7 +16,7 @@ type Worker struct {
 
 var NodePool = map[string]*Worker{}
 
-func Upgrader(c *gin.Context) {
+func Register(c *gin.Context) {
 
 	pod, err := socket.NewJsonPod(c.Writer, c.Request)
 
@@ -32,15 +32,19 @@ func Upgrader(c *gin.Context) {
 	hostId := c.Query("HostId")
 	userId := c.GetUint("UserId")
 
-	NodePool[hostId] = &Worker{
+	worker := &Worker{
 		pod, userId, hostId, &psutil.SystemStat{},
 	}
 
+	createMachine(worker)
+	defer deleteMachine(worker)
+
+	NodePool[hostId] = worker
 	defer delete(NodePool, hostId)
 
-	// 监听数据
+	// 启动服务
 
-	Receiver(NodePool[hostId])
+	Daemon(worker)
 
 }
 

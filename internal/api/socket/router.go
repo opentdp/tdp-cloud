@@ -13,7 +13,7 @@ func Socket(wsi *gin.RouterGroup) {
 	// 匿名接口
 
 	{
-		rg.GET("/agent", agent)
+		rg.GET("/worker", worker)
 	}
 
 	// 需授权接口

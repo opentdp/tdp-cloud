@@ -16,7 +16,7 @@ type CreateParam struct {
 	CloudId     string
 	CloudMeta   string
 	Description string
-	Status      string
+	Status      string `binding:"required"`
 }
 
 func Create(post *CreateParam) (uint, error) {
@@ -29,7 +29,7 @@ func Create(post *CreateParam) (uint, error) {
 		CloudId:     post.CloudId,
 		CloudMeta:   datatypes.JSON(post.CloudMeta),
 		Description: post.Description,
-		Status:      post.Status,
+		Status:      datatypes.JSON(post.Status),
 	}
 
 	result := dborm.Db.Create(item)
@@ -49,7 +49,7 @@ type UpdateParam struct {
 	CloudId     string
 	CloudMeta   string
 	Description string
-	Status      string
+	Status      string `binding:"required"`
 }
 
 func Update(post *UpdateParam) error {
@@ -63,7 +63,7 @@ func Update(post *UpdateParam) error {
 			CloudId:     post.CloudId,
 			CloudMeta:   datatypes.JSON(post.CloudMeta),
 			Description: post.Description,
-			Status:      post.Status,
+			Status:      datatypes.JSON(post.Status),
 		})
 
 	return result.Error

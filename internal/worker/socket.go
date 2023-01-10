@@ -24,7 +24,7 @@ type SendPod struct {
 
 type SocketData = workhub.SocketData
 
-func Register(url string) {
+func Daemon(url string) {
 
 	if hostId, err := host.HostID(); err == nil {
 		url += "?HostId=" + hostId
@@ -40,6 +40,23 @@ func Register(url string) {
 
 	go Sender(pod)
 	Receiver(pod)
+
+}
+
+func Sender(pod *socket.JsonPod) error {
+
+	send := &SendPod{pod}
+
+	for {
+
+		if _, err := send.Ping(); err != nil {
+			log.Println("Send:error", err)
+			return err
+		}
+
+		time.Sleep(time.Second * 15)
+
+	}
 
 }
 
@@ -64,23 +81,6 @@ func Receiver(pod *socket.JsonPod) error {
 		default:
 			log.Println("Task:unknown", rq)
 		}
-	}
-
-}
-
-func Sender(pod *socket.JsonPod) error {
-
-	send := &SendPod{pod}
-
-	for {
-
-		if _, err := send.Ping(); err != nil {
-			log.Println("Send:error", err)
-			return err
-		}
-
-		time.Sleep(time.Second * 15)
-
 	}
 
 }
