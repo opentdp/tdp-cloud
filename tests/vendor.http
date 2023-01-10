@@ -2,26 +2,26 @@
 
 ### 获取厂商
 
-GET {{$dotenv baseapi}}/vendor
-Authorization: {{$dotenv authorization}}
-Origin: {{$dotenv origin}}
+GET {{$dotenv API_BASE}}/vendor
+Authorization: {{$dotenv AUTHORIZATION}}
+Origin: {{$dotenv ORIGIN}}
 
 ### 添加厂商
 
-POST {{$dotenv baseapi}}/vendor
-Authorization: {{$dotenv authorization}}
+POST {{$dotenv API_BASE}}/vendor
+Authorization: {{$dotenv AUTHORIZATION}}
 Content-Type: application/json
-Origin: {{$dotenv origin}}
+Origin: {{$dotenv ORIGIN}}
 
 {
-    "SecretId":  "{{$dotenv secret_id}}",
-    "SecretKey": "{{$dotenv secret_key}}",
+    "SecretId":  "{{$dotenv SECRET_ID}}",
+    "SecretKey": "{{$dotenv SECRET_KEY}}",
 	"Provider":  "qcloud",
     "Description":  "也没所谓"
 }
 
 ### 删除厂商
 
-DELETE {{$dotenv baseapi}}/vendor/2
-Authorization: {{$dotenv authorization}}
-Origin: {{$dotenv origin}}
+DELETE {{$dotenv API_BASE}}/vendor/2
+Authorization: {{$dotenv AUTHORIZATION}}
+Origin: {{$dotenv ORIGIN}}

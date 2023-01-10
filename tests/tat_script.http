@@ -2,25 +2,25 @@
 
 ### 列表
 
-GET {{$dotenv baseapi}}/tat/script
-Authorization: {{$dotenv authorization}}
+GET {{$dotenv API_BASE}}/tat/script
+Authorization: {{$dotenv AUTHORIZATION}}
 Content-Type: application/json
-Origin: {{$dotenv origin}}
+Origin: {{$dotenv ORIGIN}}
 
 
 ### 查看一条
 
-GET {{$dotenv baseapi}}/tat/script/1
-Authorization: {{$dotenv authorization}}
+GET {{$dotenv API_BASE}}/tat/script/1
+Authorization: {{$dotenv AUTHORIZATION}}
 Content-Type: application/json
-Origin: {{$dotenv origin}}
+Origin: {{$dotenv ORIGIN}}
 
 ### 添加
 
-POST {{$dotenv baseapi}}/tat/script
-Authorization: {{$dotenv authorization}}
+POST {{$dotenv API_BASE}}/tat/script
+Authorization: {{$dotenv AUTHORIZATION}}
 Content-Type: application/json
-Origin: {{$dotenv origin}}
+Origin: {{$dotenv ORIGIN}}
 
 {
     "Name":  "name",
@@ -30,10 +30,10 @@ Origin: {{$dotenv origin}}
 
 ### 更新
 
-PATCH {{$dotenv baseapi}}/tat/script/1
-Authorization: {{$dotenv authorization}}
+PATCH {{$dotenv API_BASE}}/tat/script/1
+Authorization: {{$dotenv AUTHORIZATION}}
 Content-Type: application/json
-Origin: {{$dotenv origin}}
+Origin: {{$dotenv ORIGIN}}
 
 {
     "Id": 1,
@@ -44,7 +44,7 @@ Origin: {{$dotenv origin}}
 
 ### 删除
 
-DELETE {{$dotenv baseapi}}/tat/script/1
-Authorization: {{$dotenv authorization}}
+DELETE {{$dotenv API_BASE}}/tat/script/1
+Authorization: {{$dotenv AUTHORIZATION}}
 Content-Type: application/json
-Origin: {{$dotenv origin}}
+Origin: {{$dotenv ORIGIN}}

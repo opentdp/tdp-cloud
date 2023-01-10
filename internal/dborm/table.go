@@ -1,5 +1,7 @@
 package dborm
 
+import "gorm.io/datatypes"
+
 // 配置
 
 type Config struct {
@@ -20,7 +22,7 @@ type Domain struct {
 	VendorId    uint
 	Name        string
 	Status      string
-	CloudData   string
+	CloudData   datatypes.JSON
 	Description string
 	CreatedAt   int64
 	UpdatedAt   int64
@@ -35,7 +37,7 @@ type Machine struct {
 	HostName    string
 	Address     string
 	Status      string
-	CloudData   string
+	CloudData   datatypes.JSON
 	Description string
 	CreatedAt   int64
 	UpdatedAt   int64

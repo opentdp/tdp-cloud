@@ -1,6 +1,8 @@
 package domain
 
 import (
+	"gorm.io/datatypes"
+
 	"tdp-cloud/internal/dborm"
 )
 
@@ -22,7 +24,7 @@ func Create(post *CreateParam) (uint, error) {
 		VendorId:    post.VendorId,
 		Name:        post.Name,
 		Status:      post.Status,
-		CloudData:   post.CloudData,
+		CloudData:   datatypes.JSON(post.CloudData),
 		Description: post.Description,
 	}
 
@@ -52,7 +54,7 @@ func Update(post *UpdateParam) error {
 			VendorId:    post.VendorId,
 			Name:        post.Name,
 			Status:      post.Status,
-			CloudData:   post.CloudData,
+			CloudData:   datatypes.JSON(post.CloudData),
 			Description: post.Description,
 		})
 

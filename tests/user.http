@@ -2,31 +2,31 @@
 
 ### 注册账号
 
-POST {{$dotenv baseapi}}/user/register
-Origin: {{$dotenv origin}}
+POST {{$dotenv API_BASE}}/user/register
+Origin: {{$dotenv ORIGIN}}
 Content-Type: application/json
 
 {
-    "Username":"{{$dotenv username}}",
-    "Password": "{{$dotenv password}}"
+    "Username":"{{$dotenv USERNAME}}",
+    "Password": "{{$dotenv PASSWORD}}"
 }
 
 ### 登录账号
 
-POST {{$dotenv baseapi}}/user/login
-Origin: {{$dotenv origin}}
+POST {{$dotenv API_BASE}}/user/login
+Origin: {{$dotenv ORIGIN}}
 Content-Type: application/json
 
 {
-    "Username":"{{$dotenv username}}",
-    "Password": "{{$dotenv password}}"
+    "Username":"{{$dotenv USERNAME}}",
+    "Password": "{{$dotenv PASSWORD}}"
 }
 
 ### 修改资料
 
-PATCH {{$dotenv baseapi}}/user/info
-Authorization: {{$dotenv authorization}}
-Origin: {{$dotenv origin}}
+PATCH {{$dotenv API_BASE}}/user/info
+Authorization: {{$dotenv AUTHORIZATION}}
+Origin: {{$dotenv ORIGIN}}
 Content-Type: application/json
 
 {
@@ -35,12 +35,12 @@ Content-Type: application/json
 
 ### 修改密码
 
-PATCH {{$dotenv baseapi}}/user/password
-Authorization: {{$dotenv authorization}}
-Origin: {{$dotenv origin}}
+PATCH {{$dotenv API_BASE}}/user/PASSWORD
+Authorization: {{$dotenv AUTHORIZATION}}
+Origin: {{$dotenv ORIGIN}}
 Content-Type: application/json
 
 {
-    "OldPassword": "{{$dotenv password}}",
-    "NewPassword": "{{$dotenv password}}"
+    "OldPassword": "{{$dotenv PASSWORD}}",
+    "NewPassword": "{{$dotenv PASSWORD}}"
 }
