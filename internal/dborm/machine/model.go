@@ -14,7 +14,6 @@ type CreateParam struct {
 	HostName    string `binding:"required"`
 	IpAddress   string `binding:"required"`
 	Region      string
-	RegionZone  string
 	Model       string `binding:"required"`
 	CloudId     string
 	CloudMeta   string
@@ -30,7 +29,6 @@ func Create(post *CreateParam) (uint, error) {
 		HostName:    post.HostName,
 		IpAddress:   post.IpAddress,
 		Region:      post.Region,
-		RegionZone:  post.RegionZone,
 		Model:       post.Model,
 		CloudId:     post.CloudId,
 		CloudMeta:   datatypes.JSON(post.CloudMeta),
@@ -53,7 +51,6 @@ type UpdateParam struct {
 	HostName    string `binding:"required"`
 	IpAddress   string `binding:"required"`
 	Region      string
-	RegionZone  string
 	Model       string `binding:"required"`
 	CloudId     string
 	CloudMeta   string
@@ -70,7 +67,6 @@ func Update(post *UpdateParam) error {
 			HostName:    post.HostName,
 			IpAddress:   post.IpAddress,
 			Region:      post.Region,
-			RegionZone:  post.RegionZone,
 			Model:       post.Model,
 			CloudId:     post.CloudId,
 			CloudMeta:   datatypes.JSON(post.CloudMeta),

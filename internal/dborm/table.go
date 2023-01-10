@@ -39,7 +39,6 @@ type Machine struct {
 	HostName    string
 	IpAddress   string
 	Region      string
-	RegionZone  string
 	Model       string
 	CloudId     string `gorm:"uniqueIndex"`
 	CloudMeta   datatypes.JSON
