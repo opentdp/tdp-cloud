@@ -11,11 +11,14 @@ import (
 type CreateParam struct {
 	UserId      uint
 	VendorId    uint   `binding:"required"`
-	HostName    string `binding:"required"`
+	Name        string `binding:"required"`
 	Address     string `binding:"required"`
-	Status      string
+	Region      string
+	RegZone     string
 	CloudData   string `binding:"required"`
+	CloudModel  string `binding:"required"`
 	Description string
+	Status      string
 }
 
 func Create(post *CreateParam) (uint, error) {
@@ -23,11 +26,14 @@ func Create(post *CreateParam) (uint, error) {
 	item := &dborm.Machine{
 		UserId:      post.UserId,
 		VendorId:    post.VendorId,
-		HostName:    post.HostName,
+		Name:        post.Name,
 		Address:     post.Address,
-		Status:      post.Status,
+		Region:      post.Region,
+		RegZone:     post.RegZone,
 		CloudData:   datatypes.JSON(post.CloudData),
+		CloudModel:  post.CloudModel,
 		Description: post.Description,
+		Status:      post.Status,
 	}
 
 	result := dborm.Db.Create(item)
@@ -42,11 +48,14 @@ type UpdateParam struct {
 	Id          uint `binding:"required"`
 	UserId      uint
 	VendorId    uint   `binding:"required"`
-	HostName    string `binding:"required"`
+	Name        string `binding:"required"`
 	Address     string `binding:"required"`
-	Status      string
+	Region      string
+	RegZone     string
 	CloudData   string `binding:"required"`
+	CloudModel  string `binding:"required"`
 	Description string
+	Status      string
 }
 
 func Update(post *UpdateParam) error {
@@ -55,11 +64,14 @@ func Update(post *UpdateParam) error {
 		Where(&dborm.Machine{Id: post.Id, UserId: post.UserId}).
 		Updates(dborm.Machine{
 			VendorId:    post.VendorId,
-			HostName:    post.HostName,
+			Name:        post.Name,
 			Address:     post.Address,
-			Status:      post.Status,
+			Region:      post.Region,
+			RegZone:     post.RegZone,
 			CloudData:   datatypes.JSON(post.CloudData),
+			CloudModel:  post.CloudModel,
 			Description: post.Description,
+			Status:      post.Status,
 		})
 
 	return result.Error

@@ -21,9 +21,9 @@ type Domain struct {
 	UserId      uint `gorm:"index"`
 	VendorId    uint
 	Name        string
-	Status      string
 	CloudData   datatypes.JSON
 	Description string
+	Status      string
 	CreatedAt   int64
 	UpdatedAt   int64
 }
@@ -34,11 +34,14 @@ type Machine struct {
 	Id          uint `gorm:"primaryKey"`
 	UserId      uint `gorm:"index"`
 	VendorId    uint
-	HostName    string
+	Name        string
 	Address     string
-	Status      string
+	Region      string
+	RegZone     string
 	CloudData   datatypes.JSON
+	CloudModel  string
 	Description string
+	Status      string
 	CreatedAt   int64
 	UpdatedAt   int64
 }
@@ -131,9 +134,9 @@ type Worktask struct {
 	HostId    string `gorm:"index"`
 	HostName  string
 	Subject   string
-	Status    string
 	Request   string
 	Response  string
+	Status    string
 	CreatedAt int64
 	UpdatedAt int64
 }
