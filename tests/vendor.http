@@ -2,26 +2,26 @@
 
 ### 获取厂商
 
-GET {{$dotenv API_BASE}}/vendor
-Authorization: {{$dotenv AUTHORIZATION}}
-Origin: {{$dotenv ORIGIN}}
+GET {{$dotenv TDP_API_BASE}}/vendor
+Authorization: {{$dotenv TDP_AUTHORIZATION}}
+Origin: {{$dotenv TDP_ORIGIN}}
 
 ### 添加厂商
 
-POST {{$dotenv API_BASE}}/vendor
-Authorization: {{$dotenv AUTHORIZATION}}
+POST {{$dotenv TDP_API_BASE}}/vendor
+Authorization: {{$dotenv TDP_AUTHORIZATION}}
 Content-Type: application/json
-Origin: {{$dotenv ORIGIN}}
+Origin: {{$dotenv TDP_ORIGIN}}
 
 {
-    "SecretId":  "{{$dotenv SECRET_ID}}",
-    "SecretKey": "{{$dotenv SECRET_KEY}}",
+    "SecretId":  "{{$dotenv TDP_SECRET_ID}}",
+    "SecretKey": "{{$dotenv TDP_SECRET_KEY}}",
 	"Provider":  "qcloud",
     "Description":  "也没所谓"
 }
 
 ### 删除厂商
 
-DELETE {{$dotenv API_BASE}}/vendor/2
-Authorization: {{$dotenv AUTHORIZATION}}
-Origin: {{$dotenv ORIGIN}}
+DELETE {{$dotenv TDP_API_BASE}}/vendor/2
+Authorization: {{$dotenv TDP_AUTHORIZATION}}
+Origin: {{$dotenv TDP_ORIGIN}}

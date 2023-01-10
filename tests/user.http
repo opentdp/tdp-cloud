@@ -2,31 +2,31 @@
 
 ### 注册账号
 
-POST {{$dotenv API_BASE}}/user/register
-Origin: {{$dotenv ORIGIN}}
+POST {{$dotenv TDP_API_BASE}}/user/register
+Origin: {{$dotenv TDP_ORIGIN}}
 Content-Type: application/json
 
 {
-    "Username":"{{$dotenv USERNAME}}",
-    "Password": "{{$dotenv PASSWORD}}"
+    "Username":"{{$dotenv TDP_USERNAME}}",
+    "Password": "{{$dotenv TDP_PASSWORD}}"
 }
 
 ### 登录账号
 
-POST {{$dotenv API_BASE}}/user/login
-Origin: {{$dotenv ORIGIN}}
+POST {{$dotenv TDP_API_BASE}}/user/login
+Origin: {{$dotenv TDP_ORIGIN}}
 Content-Type: application/json
 
 {
-    "Username":"{{$dotenv USERNAME}}",
-    "Password": "{{$dotenv PASSWORD}}"
+    "Username":"{{$dotenv TDP_USERNAME}}",
+    "Password": "{{$dotenv TDP_PASSWORD}}"
 }
 
 ### 修改资料
 
-PATCH {{$dotenv API_BASE}}/user/info
-Authorization: {{$dotenv AUTHORIZATION}}
-Origin: {{$dotenv ORIGIN}}
+PATCH {{$dotenv TDP_API_BASE}}/user/info
+Authorization: {{$dotenv TDP_AUTHORIZATION}}
+Origin: {{$dotenv TDP_ORIGIN}}
 Content-Type: application/json
 
 {
@@ -35,12 +35,12 @@ Content-Type: application/json
 
 ### 修改密码
 
-PATCH {{$dotenv API_BASE}}/user/PASSWORD
-Authorization: {{$dotenv AUTHORIZATION}}
-Origin: {{$dotenv ORIGIN}}
+PATCH {{$dotenv TDP_API_BASE}}/user/TDP_PASSWORD
+Authorization: {{$dotenv TDP_AUTHORIZATION}}
+Origin: {{$dotenv TDP_ORIGIN}}
 Content-Type: application/json
 
 {
-    "OldPassword": "{{$dotenv PASSWORD}}",
-    "NewPassword": "{{$dotenv PASSWORD}}"
+    "OldPassword": "{{$dotenv TDP_PASSWORD}}",
+    "NewPassword": "{{$dotenv TDP_PASSWORD}}"
 }

@@ -2,8 +2,8 @@
 
 ### 获取账号信息
 
-POST {{$dotenv API_BASE}}/qcloud/cam/2019-01-16/GetAccountSummary
-Authorization: {{$dotenv AUTHORIZATION}}
-Origin: {{$dotenv ORIGIN}}
+POST {{$dotenv TDP_API_BASE}}/qcloud/cam/2019-01-16/GetAccountSummary
+Authorization: {{$dotenv TDP_AUTHORIZATION}}
+Origin: {{$dotenv TDP_ORIGIN}}
 
 ###

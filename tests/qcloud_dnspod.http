@@ -2,8 +2,8 @@
 
 ### 获取域名列表
 
-POST {{$dotenv API_BASE}}/qcloud/dnspod/2021-03-23/DescribeDomainList
-Authorization: {{$dotenv AUTHORIZATION}}
-Origin: {{$dotenv ORIGIN}}
+POST {{$dotenv TDP_API_BASE}}/qcloud/dnspod/2021-03-23/DescribeDomainList
+Authorization: {{$dotenv TDP_AUTHORIZATION}}
+Origin: {{$dotenv TDP_ORIGIN}}
 
 ###

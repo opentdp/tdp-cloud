@@ -2,10 +2,10 @@
 
 ### 获取监控数据
 
-POST {{$dotenv API_BASE}}/qcloud/monitor/2018-07-24/GetMonitorData/ap-guangzhou
-Authorization: {{$dotenv AUTHORIZATION}}
+POST {{$dotenv TDP_API_BASE}}/qcloud/monitor/2018-07-24/GetMonitorData/ap-guangzhou
+Authorization: {{$dotenv TDP_AUTHORIZATION}}
 Content-Type: application/json
-Origin: {{$dotenv ORIGIN}}
+Origin: {{$dotenv TDP_ORIGIN}}
 
 {
     "Namespace": "QCE/LIGHTHOUSE",
