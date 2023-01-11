@@ -1,12 +1,12 @@
 package workhub
 
 type ExecPayload struct {
-	Name             string
-	CommandType      string
-	Content          string
-	Username         string
-	WorkingDirectory string
-	Timeout          uint
+	Name          string
+	CommandType   string
+	Content       string
+	Username      string
+	WorkDirectory string
+	Timeout       uint
 }
 
 func (pod *SendPod) Exec(data *ExecPayload) (uint, error) {

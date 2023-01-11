@@ -37,11 +37,11 @@ func createHistory(pod *SendPod, data *ExecPayload) uint {
 	item := &history.CreateParam{
 		UserId:   pod.UserId,
 		HostId:   pod.SystemStat.HostId,
-		HostName: pod.SystemStat.HostName,
 		Subject:  "Exec: " + data.Name,
-		Status:   "Doing",
+		HostName: pod.SystemStat.HostName,
 		Request:  json.ToString(data),
 		Response: "",
+		Status:   "Doing",
 	}
 
 	id, _ := history.Create(item)
