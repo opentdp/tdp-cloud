@@ -71,7 +71,7 @@ func update(c *gin.Context) {
 	rq.UserId = c.GetUint("UserId")
 
 	if err := machine.Update(rq); err == nil {
-		c.Set("Payload", "操作成功")
+		c.Set("Payload", "修改成功")
 	} else {
 		c.Set("Error", err)
 	}

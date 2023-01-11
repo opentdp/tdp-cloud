@@ -7,6 +7,8 @@ import (
 	script "tdp-cloud/internal/dborm/task_script"
 )
 
+// 脚本列表
+
 func list(c *gin.Context) {
 
 	userId := c.GetUint("UserId")
@@ -18,6 +20,8 @@ func list(c *gin.Context) {
 	}
 
 }
+
+// 添加脚本
 
 func create(c *gin.Context) {
 
@@ -38,6 +42,8 @@ func create(c *gin.Context) {
 
 }
 
+// 修改脚本
+
 func update(c *gin.Context) {
 
 	var rq *script.UpdateParam
@@ -56,6 +62,8 @@ func update(c *gin.Context) {
 	}
 
 }
+
+// 删除脚本
 
 func delete(c *gin.Context) {
 

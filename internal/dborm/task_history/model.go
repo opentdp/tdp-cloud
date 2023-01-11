@@ -1,7 +1,6 @@
 package task_history
 
 import (
-	"encoding/json"
 	"tdp-cloud/internal/dborm"
 
 	"gorm.io/datatypes"
@@ -103,39 +102,5 @@ func Delete(id, userId uint) error {
 	result := dborm.Db.Where(&dborm.TaskHistory{Id: id, UserId: userId}).Delete(&item)
 
 	return result.Error
-
-}
-
-////////////////////////////////////
-
-// 解析任务
-
-type TaskItem struct {
-	*dborm.TaskHistory
-	Request  any
-	Response any
-}
-
-func ParseItem(item *dborm.TaskHistory) *TaskItem {
-
-	var request any
-	json.Unmarshal([]byte(item.Request), &request)
-
-	var response any
-	json.Unmarshal([]byte(item.Response), &response)
-
-	return &TaskItem{item, request, response}
-
-}
-
-func ParseItems(items []*dborm.TaskHistory) []*TaskItem {
-
-	var tasks []*TaskItem
-
-	for _, item := range items {
-		tasks = append(tasks, ParseItem(item))
-	}
-
-	return tasks
 
 }

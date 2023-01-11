@@ -74,7 +74,7 @@ func updateInfo(c *gin.Context) {
 	rq.Id = c.GetUint("UserId")
 
 	if err := user.UpdateInfo(rq); err == nil {
-		c.Set("Payload", "操作成功")
+		c.Set("Payload", "修改成功")
 	} else {
 		c.Set("Error", err)
 	}
@@ -95,7 +95,7 @@ func updatePassword(c *gin.Context) {
 	rq.Id = c.GetUint("UserId")
 
 	if err := user.UpdatePassword(rq); err == nil {
-		c.Set("Payload", "操作成功")
+		c.Set("Payload", "修改成功")
 	} else {
 		c.Set("Error", err)
 	}

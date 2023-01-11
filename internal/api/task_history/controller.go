@@ -7,21 +7,21 @@ import (
 	history "tdp-cloud/internal/dborm/task_history"
 )
 
-// 任务列表
+// 记录列表
 
 func list(c *gin.Context) {
 
 	userId := c.GetUint("UserId")
 
 	if res, err := history.FetchAll(userId); err == nil {
-		c.Set("Payload", history.ParseItems(res))
+		c.Set("Payload", res)
 	} else {
 		c.Set("Error", err)
 	}
 
 }
 
-// 获取任务
+// 获取记录
 
 func detail(c *gin.Context) {
 
@@ -29,14 +29,14 @@ func detail(c *gin.Context) {
 	id := cast.ToUint(c.Param("id"))
 
 	if res, err := history.Fetch(id, userId); err == nil {
-		c.Set("Payload", history.ParseItem(res))
+		c.Set("Payload", res)
 	} else {
 		c.Set("Error", err)
 	}
 
 }
 
-// 添加任务
+// 添加记录
 
 func create(c *gin.Context) {
 
@@ -57,7 +57,7 @@ func create(c *gin.Context) {
 
 }
 
-// 修改配置
+// 修改记录
 
 func update(c *gin.Context) {
 
@@ -71,14 +71,14 @@ func update(c *gin.Context) {
 	rq.UserId = c.GetUint("UserId")
 
 	if err := history.Update(rq); err == nil {
-		c.Set("Payload", "操作成功")
+		c.Set("Payload", "更新成功")
 	} else {
 		c.Set("Error", err)
 	}
 
 }
 
-// 删除任务
+// 删除记录
 
 func delete(c *gin.Context) {
 
