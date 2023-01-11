@@ -13,13 +13,13 @@ func (pod *SendPod) Exec(data *ExecPayload) (uint, error) {
 
 	taskId := createHistory(pod, data)
 
-	v := &SocketData{
+	rq := &SocketData{
 		Method:  "Exec",
 		TaskId:  taskId,
 		Payload: data,
 	}
 
-	return v.TaskId, pod.Write(v)
+	return rq.TaskId, pod.Write(rq)
 
 }
 

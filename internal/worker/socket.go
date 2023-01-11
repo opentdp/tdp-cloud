@@ -10,6 +10,8 @@ import (
 	"tdp-cloud/internal/workhub"
 )
 
+type SocketData = workhub.SocketData
+
 type RecvPod struct {
 	*socket.JsonPod
 }
@@ -21,8 +23,6 @@ type RespPod struct {
 type SendPod struct {
 	*socket.JsonPod
 }
-
-type SocketData = workhub.SocketData
 
 func Daemon(url string) {
 
@@ -66,20 +66,20 @@ func Receiver(pod *socket.JsonPod) error {
 	resp := &RespPod{pod}
 
 	for {
-		var rq *SocketData
+		var rs *SocketData
 
-		if err := pod.Read(&rq); err != nil {
+		if err := pod.Read(&rs); err != nil {
 			log.Println("Read:error", err)
 			return err
 		}
 
-		switch rq.Method {
+		switch rs.Method {
 		case "Exec":
-			recv.Exec(rq)
+			recv.Exec(rs)
 		case "Ping:resp":
-			resp.Ping(rq)
+			resp.Ping(rs)
 		default:
-			log.Println("Task:unknown", rq)
+			log.Println("Task:unknown", rs)
 		}
 	}
 

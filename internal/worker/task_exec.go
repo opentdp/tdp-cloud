@@ -20,14 +20,14 @@ import (
 
 type ExecPayload = workhub.ExecPayload
 
-func (pod *RecvPod) Exec(rq *SocketData) error {
+func (pod *RecvPod) Exec(rs *SocketData) error {
 
 	var err error
 	var ret string
 
 	var data *ExecPayload
 
-	err = mapstructure.Decode(rq.Payload, &data)
+	err = mapstructure.Decode(rs.Payload, &data)
 
 	log.Println("Exec:recv", data.Name)
 
@@ -42,16 +42,16 @@ func (pod *RecvPod) Exec(rq *SocketData) error {
 		}
 	}
 
-	v := &SocketData{
+	rq := &SocketData{
 		Method:  "Exec:resp",
-		TaskId:  rq.TaskId,
+		TaskId:  rs.TaskId,
 		Success: err == nil,
 		Payload: map[string]string{
 			"Output": ret,
 		},
 	}
 
-	if err := pod.Write(v); err != nil {
+	if err := pod.Write(rq); err != nil {
 		log.Println("Exec:error ", err)
 		return err
 	}

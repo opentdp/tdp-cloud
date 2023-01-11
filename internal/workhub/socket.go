@@ -2,9 +2,17 @@ package workhub
 
 import (
 	"log"
+
 	"tdp-cloud/helper/psutil"
 	"tdp-cloud/helper/socket"
 )
+
+type SocketData struct {
+	Method  string
+	TaskId  uint
+	Success bool
+	Payload any
+}
 
 type Worker struct {
 	*socket.JsonPod
@@ -23,13 +31,6 @@ type RespPod struct {
 
 type SendPod struct {
 	*Worker
-}
-
-type SocketData struct {
-	Method  string
-	TaskId  uint
-	Success bool
-	Payload any
 }
 
 func Daemon(node *Worker) {

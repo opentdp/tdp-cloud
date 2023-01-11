@@ -8,7 +8,7 @@ import (
 
 func (pod *SendPod) Ping() (uint, error) {
 
-	v := &SocketData{
+	rq := &SocketData{
 		Method:  "Ping",
 		TaskId:  0,
 		Payload: psutil.GetSystemStat(),
@@ -16,12 +16,12 @@ func (pod *SendPod) Ping() (uint, error) {
 
 	log.Println("Ping:send", "SystemStat")
 
-	return v.TaskId, pod.Write(v)
+	return rq.TaskId, pod.Write(rq)
 
 }
 
-func (pod *RespPod) Ping(rq *SocketData) {
+func (pod *RespPod) Ping(rs *SocketData) {
 
-	log.Println("Ping:resp", rq.Payload)
+	log.Println("Ping:resp", rs.Payload)
 
 }
