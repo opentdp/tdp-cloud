@@ -14,8 +14,6 @@ func v100001() error {
 		&dborm.Sshkey{},
 		&dborm.TaskHistory{},
 		&dborm.TaskScript{},
-		&dborm.TATHistory{},
-		&dborm.TATScript{},
 		&dborm.User{},
 		&dborm.Vendor{},
 	)

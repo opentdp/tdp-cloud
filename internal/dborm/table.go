@@ -50,35 +50,6 @@ type Machine struct {
 	UpdatedAt   int64
 }
 
-// 自动化助手 - 脚本
-
-type TATScript struct {
-	Id               uint `gorm:"primaryKey"`
-	UserId           uint `gorm:"index"`
-	Name             string
-	Username         string
-	Content          string
-	Description      string
-	CommandType      string
-	WorkingDirectory string
-	Timeout          uint
-	CreatedAt        int64
-	UpdatedAt        int64
-}
-
-// 自动化助手 - 历史记录
-
-type TATHistory struct {
-	Id                   uint `gorm:"primaryKey"`
-	UserId               uint `gorm:"index"`
-	VendorId             uint `gorm:"index"`
-	Name                 string
-	Region               string
-	InvocationId         string
-	InvocationStatus     string
-	InvocationResultJson string
-}
-
 // 用户会话
 
 type Session struct {
