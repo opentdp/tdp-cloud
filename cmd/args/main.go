@@ -19,7 +19,7 @@ func Flags() {
 	flag.StringVar(&Listen, "listen", ":7800", "服务端监听的IP地址和端口")
 
 	// 客户端模式
-	flag.StringVar(&Server, "server", "", `客户端注册地址（e.g. "ws://ip:7800/wsi/agent/*"）`)
+	flag.StringVar(&Server, "server", "", `客户端注册地址（e.g. "ws://ip:7800/wsi/*/worker"）`)
 
 	flag.Usage = usage
 
