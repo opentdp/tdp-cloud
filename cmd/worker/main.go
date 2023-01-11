@@ -11,7 +11,7 @@ func Create() {
 
 	defer delayer()
 
-	worker.Daemon(Remote)
+	worker.Daemon(vRemote)
 
 }
 

@@ -20,7 +20,7 @@ func Create(vfs *embed.FS) {
 
 	// 连接数据库
 
-	dborm.Connect(Dsn)
+	dborm.Connect(vDsn)
 
 	// 实施自动迁移
 
@@ -32,7 +32,7 @@ func Create(vfs *embed.FS) {
 		gin.SetMode(gin.ReleaseMode)
 	}
 
-	httpd.WebServer(Listen, newEngine(vfs))
+	httpd.WebServer(vListen, newEngine(vfs))
 
 }
 

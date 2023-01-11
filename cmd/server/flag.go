@@ -7,8 +7,8 @@ import (
 )
 
 var (
-	Dsn    string
-	Listen string
+	vDsn    string
+	vListen string
 )
 
 func Flags() *cmd.FlagSet {
@@ -18,8 +18,8 @@ func Flags() *cmd.FlagSet {
 		Comment: "服务端",
 	}
 
-	cmd.StringVar(&Dsn, "dsn", "cloud.db", "数据源名称，支持MySQL和SQLite")
-	cmd.StringVar(&Listen, "listen", ":7800", "服务端监听的IP地址和端口")
+	cmd.StringVar(&vDsn, "dsn", "cloud.db", "数据源名称，支持MySQL和SQLite")
+	cmd.StringVar(&vListen, "listen", ":7800", "服务端监听的IP地址和端口")
 
 	return cmd
 

@@ -7,7 +7,7 @@ import (
 )
 
 var (
-	Remote string
+	vRemote string
 )
 
 func Flags() *cmd.FlagSet {
@@ -17,7 +17,7 @@ func Flags() *cmd.FlagSet {
 		Comment: "客户端",
 	}
 
-	cmd.StringVar(&Remote, "remote", "", `客户端注册地址（e.g. "ws://ip:7800/wsi/*/worker"）`)
+	cmd.StringVar(&vRemote, "remote", "", `客户端注册地址（e.g. "ws://ip:7800/wsi/*/worker"）`)
 
 	return cmd
 
