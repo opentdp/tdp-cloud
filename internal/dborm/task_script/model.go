@@ -42,9 +42,9 @@ type UpdateParam struct {
 	Id            uint `binding:"required"`
 	UserId        uint
 	Name          string `binding:"required"`
+	Username      string `binding:"required"`
 	Description   string
 	Content       string `binding:"required"`
-	Username      string `binding:"required"`
 	CommandType   string `binding:"required"`
 	WorkDirectory string `binding:"required"`
 	Timeout       uint   `binding:"required"`
@@ -56,9 +56,9 @@ func Update(post *UpdateParam) error {
 		Where(&dborm.TaskScript{Id: post.Id, UserId: post.UserId}).
 		Updates(dborm.TaskScript{
 			Name:          post.Name,
+			Username:      post.Username,
 			Description:   post.Description,
 			Content:       post.Content,
-			Username:      post.Username,
 			CommandType:   post.CommandType,
 			WorkDirectory: post.WorkDirectory,
 			Timeout:       post.Timeout,

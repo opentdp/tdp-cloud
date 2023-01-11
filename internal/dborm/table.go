@@ -94,8 +94,8 @@ type TaskScript struct {
 	UserId        uint `gorm:"index"`
 	Name          string
 	Username      string
-	Content       string
 	Description   string
+	Content       string
 	CommandType   string
 	WorkDirectory string
 	Timeout       uint
