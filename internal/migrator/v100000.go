@@ -12,11 +12,12 @@ func v100001() error {
 		&dborm.Machine{},
 		&dborm.Session{},
 		&dborm.Sshkey{},
-		&dborm.TATScript{},
+		&dborm.TaskHistory{},
+		&dborm.TaskScript{},
 		&dborm.TATHistory{},
+		&dborm.TATScript{},
 		&dborm.User{},
 		&dborm.Vendor{},
-		&dborm.Worktask{},
 	)
 
 }

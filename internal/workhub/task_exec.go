@@ -1,11 +1,5 @@
 package workhub
 
-import (
-	"tdp-cloud/helper/json"
-
-	"tdp-cloud/internal/dborm/worktask"
-)
-
 type ExecPayload struct {
 	Name             string
 	CommandType      string
@@ -17,19 +11,7 @@ type ExecPayload struct {
 
 func (pod *SendPod) Exec(data *ExecPayload) (uint, error) {
 
-	item := &worktask.CreateParam{
-		UserId:   pod.UserId,
-		HostId:   pod.SystemStat.HostId,
-		HostName: pod.SystemStat.HostName,
-		Subject:  "Exec: " + data.Name,
-		Status:   "Doing",
-		Request:  json.ToString(data),
-		Response: "",
-	}
-
-	taskId, _ := worktask.Create(item)
-
-	// 发送给节点执行该任务
+	taskId := createHistory(pod, data)
 
 	v := &SocketData{
 		Method:  "Exec",
@@ -43,18 +25,6 @@ func (pod *SendPod) Exec(data *ExecPayload) (uint, error) {
 
 func (pod *RespPod) Exec(rq *SocketData) {
 
-	item := &worktask.UpdateParam{
-		Id:       rq.TaskId,
-		UserId:   pod.UserId,
-		Response: json.ToString(rq.Payload),
-	}
-
-	if rq.Success {
-		item.Status = "Success"
-	} else {
-		item.Status = "Failed"
-	}
-
-	worktask.Update(item)
+	updateHistory(pod, rq)
 
 }

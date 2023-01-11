@@ -7,14 +7,7 @@ import (
 	"tdp-cloud/helper/socket"
 )
 
-type Worker struct {
-	*socket.JsonPod
-	UserId     uint
-	HostId     string
-	SystemStat *psutil.SystemStat
-}
-
-var NodePool = map[string]*Worker{}
+var nodePool = map[string]*Worker{}
 
 func Register(c *gin.Context) {
 
@@ -39,8 +32,8 @@ func Register(c *gin.Context) {
 	createMachine(worker)
 	defer deleteMachine(worker)
 
-	NodePool[hostId] = worker
-	defer delete(NodePool, hostId)
+	nodePool[hostId] = worker
+	defer delete(nodePool, hostId)
 
 	// 启动服务
 
@@ -52,7 +45,7 @@ func NodesOfUser(userId uint) *[]any {
 
 	items := []any{}
 
-	for _, v := range NodePool {
+	for _, v := range nodePool {
 		if userId == v.UserId {
 			items = append(items, map[string]any{
 				"HostId":     v.HostId,
@@ -68,7 +61,7 @@ func NodesOfUser(userId uint) *[]any {
 
 func NewSender(hostId string) *SendPod {
 
-	if node, ok := NodePool[hostId]; ok {
+	if node, ok := nodePool[hostId]; ok {
 		return &SendPod{node}
 	}
 

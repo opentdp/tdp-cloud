@@ -1,8 +1,10 @@
-package worktask
+package task_history
 
 import (
 	"encoding/json"
 	"tdp-cloud/internal/dborm"
+
+	"gorm.io/datatypes"
 )
 
 // 添加任务
@@ -19,14 +21,14 @@ type CreateParam struct {
 
 func Create(post *CreateParam) (uint, error) {
 
-	item := &dborm.Worktask{
+	item := &dborm.TaskHistory{
 		UserId:   post.UserId,
 		HostId:   post.HostId,
 		HostName: post.HostName,
 		Subject:  post.Subject,
 		Status:   post.Status,
-		Request:  post.Request,
-		Response: post.Response,
+		Request:  datatypes.JSON(post.Request),
+		Response: datatypes.JSON(post.Response),
 	}
 
 	result := dborm.Db.Create(item)
@@ -51,14 +53,14 @@ type UpdateParam struct {
 func Update(post *UpdateParam) error {
 
 	result := dborm.Db.
-		Where(&dborm.Worktask{Id: post.Id, UserId: post.UserId}).
-		Updates(dborm.Worktask{
+		Where(&dborm.TaskHistory{Id: post.Id, UserId: post.UserId}).
+		Updates(dborm.TaskHistory{
 			HostId:   post.HostId,
 			HostName: post.HostName,
 			Subject:  post.Subject,
 			Status:   post.Status,
-			Request:  post.Request,
-			Response: post.Response,
+			Request:  datatypes.JSON(post.Request),
+			Response: datatypes.JSON(post.Response),
 		})
 
 	return result.Error
@@ -67,12 +69,12 @@ func Update(post *UpdateParam) error {
 
 // 获取任务列表
 
-func FetchAll(userId uint) ([]*dborm.Worktask, error) {
+func FetchAll(userId uint) ([]*dborm.TaskHistory, error) {
 
-	var items []*dborm.Worktask
+	var items []*dborm.TaskHistory
 
 	result := dborm.Db.
-		Where(&dborm.Worktask{UserId: userId}).
+		Where(&dborm.TaskHistory{UserId: userId}).
 		Limit(50).Order("id DESC").
 		Find(&items)
 
@@ -82,11 +84,11 @@ func FetchAll(userId uint) ([]*dborm.Worktask, error) {
 
 // 获取任务
 
-func Fetch(id, userId uint) (*dborm.Worktask, error) {
+func Fetch(id, userId uint) (*dborm.TaskHistory, error) {
 
-	var item *dborm.Worktask
+	var item *dborm.TaskHistory
 
-	result := dborm.Db.Where(&dborm.Worktask{Id: id, UserId: userId}).First(&item)
+	result := dborm.Db.Where(&dborm.TaskHistory{Id: id, UserId: userId}).First(&item)
 
 	return item, result.Error
 
@@ -96,9 +98,9 @@ func Fetch(id, userId uint) (*dborm.Worktask, error) {
 
 func Delete(id, userId uint) error {
 
-	var item *dborm.Worktask
+	var item *dborm.TaskHistory
 
-	result := dborm.Db.Where(&dborm.Worktask{Id: id, UserId: userId}).Delete(&item)
+	result := dborm.Db.Where(&dborm.TaskHistory{Id: id, UserId: userId}).Delete(&item)
 
 	return result.Error
 
@@ -109,12 +111,12 @@ func Delete(id, userId uint) error {
 // 解析任务
 
 type TaskItem struct {
-	*dborm.Worktask
+	*dborm.TaskHistory
 	Request  any
 	Response any
 }
 
-func ParseItem(item *dborm.Worktask) *TaskItem {
+func ParseItem(item *dborm.TaskHistory) *TaskItem {
 
 	var request any
 	json.Unmarshal([]byte(item.Request), &request)
@@ -126,7 +128,7 @@ func ParseItem(item *dborm.Worktask) *TaskItem {
 
 }
 
-func ParseItems(items []*dborm.Worktask) []*TaskItem {
+func ParseItems(items []*dborm.TaskHistory) []*TaskItem {
 
 	var tasks []*TaskItem
 

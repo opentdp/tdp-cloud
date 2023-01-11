@@ -41,15 +41,3 @@ func Gb18030ToUtf8(s string) string {
 	return string(ret)
 
 }
-
-// 转为无符号整数
-
-func Uint(s string) uint {
-
-	if s, err := strconv.Atoi(s); err == nil {
-		return uint(s)
-	}
-
-	return 0
-
-}

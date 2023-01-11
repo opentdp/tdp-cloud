@@ -2,8 +2,8 @@ package tat_history
 
 import (
 	"github.com/gin-gonic/gin"
+	"github.com/spf13/cast"
 
-	"tdp-cloud/helper/strings"
 	history "tdp-cloud/internal/dborm/tat_history"
 )
 
@@ -60,7 +60,7 @@ func update(c *gin.Context) {
 func delete(c *gin.Context) {
 
 	userId := c.GetUint("UserId")
-	id := strings.Uint(c.Param("id"))
+	id := cast.ToUint(c.Param("id"))
 
 	if err := history.Delete(id, userId); err == nil {
 		c.Set("Payload", "删除成功")

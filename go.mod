@@ -29,8 +29,10 @@ require (
 	github.com/robfig/cron/v3 v3.0.1
 	// 系统信息采集
 	github.com/shirou/gopsutil/v3 v3.22.12
+	// 类型转换
+	github.com/spf13/cast v1.5.0
 	// 腾讯云 SDK
-	github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/common v1.0.576
+	github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/common v1.0.577
 	// 加密扩充库
 	golang.org/x/crypto v0.5.0
 	// 终端和控制台支持包
@@ -55,7 +57,7 @@ require (
 	github.com/jinzhu/now v1.1.5 // indirect
 	github.com/json-iterator/go v1.1.12 // indirect
 	github.com/leodido/go-urn v1.2.1 // indirect
-	github.com/lufia/plan9stats v0.0.0-20220913051719-115f729f3c8c // indirect
+	github.com/lufia/plan9stats v0.0.0-20230110061619-bbe2e5e100de // indirect
 	github.com/mattn/go-isatty v0.0.17 // indirect
 	github.com/modern-go/concurrent v0.0.0-20180306012644-bacd9c7ef1dd // indirect
 	github.com/modern-go/reflect2 v1.0.2 // indirect

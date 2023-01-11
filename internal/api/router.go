@@ -11,12 +11,13 @@ import (
 	"tdp-cloud/internal/api/qcloud"
 	"tdp-cloud/internal/api/socket"
 	"tdp-cloud/internal/api/sshkey"
+	"tdp-cloud/internal/api/task_history"
+	"tdp-cloud/internal/api/task_script"
 	"tdp-cloud/internal/api/tat_history"
 	"tdp-cloud/internal/api/tat_script"
 	"tdp-cloud/internal/api/user"
 	"tdp-cloud/internal/api/vendor"
 	"tdp-cloud/internal/api/workhub"
-	"tdp-cloud/internal/api/worktask"
 )
 
 func Router(engine *gin.Engine) {
@@ -32,11 +33,12 @@ func Router(engine *gin.Engine) {
 		qcloud.Router(api)
 		vendor.Router(api)
 		sshkey.Router(api)
+		task_history.Router(api)
+		task_script.Router(api)
 		tat_history.Router(api)
 		tat_script.Router(api)
 		user.Router(api)
 		workhub.Router(api)
-		worktask.Router(api)
 	}
 
 	// websocket interface

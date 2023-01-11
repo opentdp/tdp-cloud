@@ -7,16 +7,16 @@ import (
 	"regexp"
 
 	"github.com/gin-gonic/gin"
+	"github.com/spf13/cast"
 
 	"tdp-cloud/helper/qcloud"
-	"tdp-cloud/helper/strings"
 	"tdp-cloud/internal/dborm/vendor"
 )
 
 func apiProxy(c *gin.Context) {
 
 	userId := c.GetUint("UserId")
-	vendorId := strings.Uint(c.GetHeader("TDP-Vendor"))
+	vendorId := cast.ToUint(c.GetHeader("TDP-Vendor"))
 
 	vendor, err := vendor.Fetch(vendorId, userId)
 

@@ -2,7 +2,16 @@ package workhub
 
 import (
 	"log"
+	"tdp-cloud/helper/psutil"
+	"tdp-cloud/helper/socket"
 )
+
+type Worker struct {
+	*socket.JsonPod
+	UserId     uint
+	HostId     string
+	SystemStat *psutil.SystemStat
+}
 
 type RecvPod struct {
 	*Worker

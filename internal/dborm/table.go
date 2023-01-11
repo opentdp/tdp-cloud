@@ -99,6 +99,37 @@ type Sshkey struct {
 	UpdatedAt   int64
 }
 
+// 任务记录
+
+type TaskHistory struct {
+	Id        uint   `gorm:"primaryKey"`
+	UserId    uint   `gorm:"index"`
+	HostId    string `gorm:"index"`
+	Subject   string
+	HostName  string
+	Request   datatypes.JSON
+	Response  datatypes.JSON
+	Status    string
+	CreatedAt int64
+	UpdatedAt int64
+}
+
+// 任务脚本
+
+type TaskScript struct {
+	Id            uint `gorm:"primaryKey"`
+	UserId        uint `gorm:"index"`
+	Name          string
+	Username      string
+	Content       string
+	Description   string
+	CommandType   string
+	WorkDirectory string
+	Timeout       uint
+	CreatedAt     int64
+	UpdatedAt     int64
+}
+
 // 用户
 
 type User struct {
@@ -126,19 +157,4 @@ type Vendor struct {
 	Machines    []Machine
 	CreatedAt   int64
 	UpdatedAt   int64
-}
-
-// 子节点任务
-
-type Worktask struct {
-	Id        uint   `gorm:"primaryKey"`
-	UserId    uint   `gorm:"index"`
-	HostId    string `gorm:"index"`
-	HostName  string
-	Subject   string
-	Request   string
-	Response  string
-	Status    string
-	CreatedAt int64
-	UpdatedAt int64
 }

@@ -1,10 +1,10 @@
-package worktask
+package task_history
 
 import (
 	"github.com/gin-gonic/gin"
+	"github.com/spf13/cast"
 
-	"tdp-cloud/helper/strings"
-	"tdp-cloud/internal/dborm/worktask"
+	history "tdp-cloud/internal/dborm/task_history"
 )
 
 // 任务列表
@@ -13,8 +13,8 @@ func list(c *gin.Context) {
 
 	userId := c.GetUint("UserId")
 
-	if res, err := worktask.FetchAll(userId); err == nil {
-		c.Set("Payload", worktask.ParseItems(res))
+	if res, err := history.FetchAll(userId); err == nil {
+		c.Set("Payload", history.ParseItems(res))
 	} else {
 		c.Set("Error", err)
 	}
@@ -26,10 +26,10 @@ func list(c *gin.Context) {
 func detail(c *gin.Context) {
 
 	userId := c.GetUint("UserId")
-	id := strings.Uint(c.Param("id"))
+	id := cast.ToUint(c.Param("id"))
 
-	if res, err := worktask.Fetch(id, userId); err == nil {
-		c.Set("Payload", worktask.ParseItem(res))
+	if res, err := history.Fetch(id, userId); err == nil {
+		c.Set("Payload", history.ParseItem(res))
 	} else {
 		c.Set("Error", err)
 	}
@@ -40,7 +40,7 @@ func detail(c *gin.Context) {
 
 func create(c *gin.Context) {
 
-	var rq *worktask.CreateParam
+	var rq *history.CreateParam
 
 	if c.ShouldBind(&rq) != nil {
 		c.Set("Error", "请求参数错误")
@@ -49,7 +49,7 @@ func create(c *gin.Context) {
 
 	rq.UserId = c.GetUint("UserId")
 
-	if _, err := worktask.Create(rq); err == nil {
+	if _, err := history.Create(rq); err == nil {
 		c.Set("Payload", "添加成功")
 	} else {
 		c.Set("Error", err)
@@ -61,7 +61,7 @@ func create(c *gin.Context) {
 
 func update(c *gin.Context) {
 
-	var rq *worktask.UpdateParam
+	var rq *history.UpdateParam
 
 	if c.ShouldBind(&rq) != nil {
 		c.Set("Error", "请求参数错误")
@@ -70,7 +70,7 @@ func update(c *gin.Context) {
 
 	rq.UserId = c.GetUint("UserId")
 
-	if err := worktask.Update(rq); err == nil {
+	if err := history.Update(rq); err == nil {
 		c.Set("Payload", "操作成功")
 	} else {
 		c.Set("Error", err)
@@ -83,9 +83,9 @@ func update(c *gin.Context) {
 func delete(c *gin.Context) {
 
 	userId := c.GetUint("UserId")
-	id := strings.Uint(c.Param("id"))
+	id := cast.ToUint(c.Param("id"))
 
-	if err := worktask.Delete(id, userId); err == nil {
+	if err := history.Delete(id, userId); err == nil {
 		c.Set("Payload", "删除成功")
 	} else {
 		c.Set("Error", err)

@@ -2,8 +2,8 @@ package domain
 
 import (
 	"github.com/gin-gonic/gin"
+	"github.com/spf13/cast"
 
-	"tdp-cloud/helper/strings"
 	"tdp-cloud/internal/dborm/domain"
 )
 
@@ -26,7 +26,7 @@ func list(c *gin.Context) {
 func detail(c *gin.Context) {
 
 	userId := c.GetUint("UserId")
-	id := strings.Uint(c.Param("id"))
+	id := cast.ToUint(c.Param("id"))
 
 	if res, err := domain.Fetch(id, userId); err == nil {
 		c.Set("Payload", res)
@@ -83,7 +83,7 @@ func update(c *gin.Context) {
 func delete(c *gin.Context) {
 
 	userId := c.GetUint("UserId")
-	id := strings.Uint(c.Param("id"))
+	id := cast.ToUint(c.Param("id"))
 
 	if err := domain.Delete(id, userId); err == nil {
 		c.Set("Payload", "删除成功")

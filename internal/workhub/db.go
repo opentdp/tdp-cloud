@@ -3,11 +3,14 @@ package workhub
 import (
 	"tdp-cloud/helper/json"
 	"tdp-cloud/internal/dborm/machine"
+	history "tdp-cloud/internal/dborm/task_history"
 )
+
+// 主机
 
 func createMachine(node *Worker) {
 
-	machine.Create(&machine.CreateParam{
+	item := &machine.CreateParam{
 		UserId:      node.UserId,
 		VendorId:    0,
 		HostName:    node.SystemStat.HostName,
@@ -18,9 +21,49 @@ func createMachine(node *Worker) {
 		CloudMeta:   json.ToString(node.SystemStat),
 		Description: "",
 		Status:      "{}",
-	})
+	}
+
+	machine.Create(item)
 
 }
 
 func deleteMachine(node *Worker) {
+}
+
+// 任务历史
+
+func createHistory(pod *SendPod, data *ExecPayload) uint {
+
+	item := &history.CreateParam{
+		UserId:   pod.UserId,
+		HostId:   pod.SystemStat.HostId,
+		HostName: pod.SystemStat.HostName,
+		Subject:  "Exec: " + data.Name,
+		Status:   "Doing",
+		Request:  json.ToString(data),
+		Response: "",
+	}
+
+	id, _ := history.Create(item)
+
+	return id
+
+}
+
+func updateHistory(pod *RespPod, rq *SocketData) error {
+
+	status := "Failed"
+	if rq.Success {
+		status = "Success"
+	}
+
+	item := &history.UpdateParam{
+		Id:       rq.TaskId,
+		UserId:   pod.UserId,
+		Response: json.ToString(rq.Payload),
+		Status:   status,
+	}
+
+	return history.Update(item)
+
 }
