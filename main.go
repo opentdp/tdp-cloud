@@ -2,6 +2,7 @@ package main
 
 import (
 	"embed"
+
 	"tdp-cloud/cmd/args"
 	"tdp-cloud/cmd/server"
 	"tdp-cloud/cmd/worker"
@@ -12,11 +13,12 @@ var vfs embed.FS
 
 func main() {
 
-	args.Flags()
+	args.Parser()
 
-	if args.Server == "" {
+	switch args.CmdName {
+	case "server":
 		server.Create(&vfs)
-	} else {
+	case "worker":
 		worker.Create()
 	}
 

@@ -1,47 +1,64 @@
 package args
 
 import (
-	"flag"
 	"fmt"
 	"os"
+
+	"tdp-cloud/cmd"
+	"tdp-cloud/cmd/server"
+	"tdp-cloud/cmd/worker"
 )
 
-var (
-	Dsn    string
-	Listen string
-	Server string
-)
+var CmdName string
 
-func Flags() {
+func Parser() {
 
-	// 服务器模式
-	flag.StringVar(&Dsn, "dsn", "cloud.db", "数据源名称，支持MySQL和SQLite")
-	flag.StringVar(&Listen, "listen", ":7800", "服务端监听的IP地址和端口")
+	commands := getCommands()
 
-	// 客户端模式
-	flag.StringVar(&Server, "server", "", `客户端注册地址（e.g. "ws://ip:7800/wsi/*/worker"）`)
+	// 未输入子命令
+	if len(os.Args) < 2 {
+		showUsage(commands)
+		return
+	}
 
-	flag.Usage = usage
+	// 设置全局参数
+	CmdName = os.Args[1]
 
-	flag.Parse()
+	// 尝试解析子命令
+	if cmd := commands[CmdName]; cmd != nil {
+		cmd.Parse(os.Args[2:])
+		return
+	}
+
+	// 显示全局帮助
+	showUsage(commands)
 
 }
 
-func usage() {
+func getCommands() map[string]*cmd.FlagSet {
 
-	fmt.Fprintf(os.Stdout, `
-轻量服务器控制面板
+	s := server.Flags()
+	w := worker.Flags()
 
-可选参数:
+	return map[string]*cmd.FlagSet{
+		s.Name(): s,
+		w.Name(): w,
+	}
 
-`)
+}
 
-	flag.PrintDefaults()
+func showUsage(commands map[string]*cmd.FlagSet) {
 
-	fmt.Fprintf(os.Stdout, `
-开源项目 https://github.com/tdp-resource/tdp-cloud
-问题提交 https://github.com/tdp-resource/tdp-cloud/issues
+	fmt.Println(header)
 
-`)
+	for _, v := range commands {
+		fmt.Printf("%s %s\n\n", v.Name(), v.Comment)
+		v.PrintDefaults()
+		fmt.Println()
+	}
+
+	fmt.Println(footer)
+
+	os.Exit(2)
 
 }

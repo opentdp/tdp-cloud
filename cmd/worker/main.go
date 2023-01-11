@@ -4,8 +4,6 @@ import (
 	"log"
 	"time"
 
-	"tdp-cloud/cmd/args"
-
 	"tdp-cloud/internal/worker"
 )
 
@@ -13,7 +11,7 @@ func Create() {
 
 	defer delayer()
 
-	worker.Daemon(args.Server)
+	worker.Daemon(Remote)
 
 }
 

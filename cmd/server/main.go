@@ -8,8 +8,6 @@ import (
 
 	"github.com/gin-gonic/gin"
 
-	"tdp-cloud/cmd/args"
-
 	"tdp-cloud/helper/httpd"
 	"tdp-cloud/internal/api"
 	"tdp-cloud/internal/dborm"
@@ -22,7 +20,7 @@ func Create(vfs *embed.FS) {
 
 	// 连接数据库
 
-	dborm.Connect(args.Dsn)
+	dborm.Connect(Dsn)
 
 	// 实施自动迁移
 
@@ -34,7 +32,7 @@ func Create(vfs *embed.FS) {
 		gin.SetMode(gin.ReleaseMode)
 	}
 
-	httpd.WebServer(args.Listen, newEngine(vfs))
+	httpd.WebServer(Listen, newEngine(vfs))
 
 }
 
