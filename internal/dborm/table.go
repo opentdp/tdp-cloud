@@ -1,6 +1,8 @@
 package dborm
 
-import "gorm.io/datatypes"
+import (
+	"gorm.io/datatypes"
+)
 
 // 配置
 
