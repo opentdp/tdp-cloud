@@ -1,4 +1,4 @@
-# 轻量控制面板
+# 土豆片控制面板
 
 基于腾讯云API实现的轻量级云资源控制面板
 
@@ -29,7 +29,7 @@ go env -w GOPROXY=https://goproxy.cn,direct
 
 ## 三、部署说明
 
-1、根据系统类型下载编译好的二进制文件，重命名为 `tdpc`
+1、根据系统类型下载编译好的[二进制程序](https://github.com/tdp-resource/tdp-cloud/releases)，重命名为 `tdpc`
 
 2、运行 `tdpc server`，此时会生成 `cloud.db` 数据库文件，请注意权限
 
@@ -74,4 +74,4 @@ go env -w GOPROXY=https://goproxy.cn,direct
 
 License [GPL-3.0](https://opensource.org/licenses/GPL-3.0)
 
-Copyright (c) 2022 TDP Cloud
+Copyright (c) 2022 - 2023 TDP Cloud
