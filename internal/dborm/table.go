@@ -23,6 +23,7 @@ type Domain struct {
 	UserId      uint `gorm:"index"`
 	VendorId    uint
 	Name        string
+	NSList      string
 	Model       string
 	CloudId     string `gorm:"uniqueIndex"`
 	CloudMeta   datatypes.JSON

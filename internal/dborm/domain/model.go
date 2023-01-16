@@ -12,6 +12,7 @@ type CreateParam struct {
 	UserId      uint
 	VendorId    uint   `binding:"required"`
 	Name        string `binding:"required"`
+	NSList      string `binding:"required"`
 	Model       string `binding:"required"`
 	CloudId     string
 	CloudMeta   string
@@ -25,6 +26,7 @@ func Create(post *CreateParam) (uint, error) {
 		UserId:      post.UserId,
 		VendorId:    post.VendorId,
 		Name:        post.Name,
+		NSList:      post.NSList,
 		Model:       post.Model,
 		CloudId:     post.CloudId,
 		CloudMeta:   datatypes.JSON(post.CloudMeta),
@@ -45,6 +47,7 @@ type UpdateParam struct {
 	UserId      uint
 	VendorId    uint   `binding:"required"`
 	Name        string `binding:"required"`
+	NSList      string `binding:"required"`
 	Model       string `binding:"required"`
 	CloudId     string
 	CloudMeta   string
@@ -59,6 +62,7 @@ func Update(post *UpdateParam) error {
 		Updates(dborm.Domain{
 			VendorId:    post.VendorId,
 			Name:        post.Name,
+			NSList:      post.NSList,
 			Model:       post.Model,
 			CloudId:     post.CloudId,
 			CloudMeta:   datatypes.JSON(post.CloudMeta),
