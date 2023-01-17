@@ -41,6 +41,7 @@ type Machine struct {
 	VendorId    uint
 	HostName    string
 	IpAddress   string
+	OSType      string
 	Region      string
 	Model       string
 	CloudId     string `gorm:"uniqueIndex"`

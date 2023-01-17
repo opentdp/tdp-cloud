@@ -13,6 +13,7 @@ type CreateParam struct {
 	VendorId    uint   `binding:"required"`
 	HostName    string `binding:"required"`
 	IpAddress   string `binding:"required"`
+	OSType      string `binding:"required"`
 	Region      string
 	Model       string `binding:"required"`
 	CloudId     string
@@ -28,6 +29,7 @@ func Create(post *CreateParam) (uint, error) {
 		VendorId:    post.VendorId,
 		HostName:    post.HostName,
 		IpAddress:   post.IpAddress,
+		OSType:      post.OSType,
 		Region:      post.Region,
 		Model:       post.Model,
 		CloudId:     post.CloudId,
@@ -50,6 +52,7 @@ type UpdateParam struct {
 	VendorId    uint   `binding:"required"`
 	HostName    string `binding:"required"`
 	IpAddress   string `binding:"required"`
+	OSType      string `binding:"required"`
 	Region      string
 	Model       string `binding:"required"`
 	CloudId     string
@@ -66,6 +69,7 @@ func Update(post *UpdateParam) error {
 			VendorId:    post.VendorId,
 			HostName:    post.HostName,
 			IpAddress:   post.IpAddress,
+			OSType:      post.OSType,
 			Region:      post.Region,
 			Model:       post.Model,
 			CloudId:     post.CloudId,
