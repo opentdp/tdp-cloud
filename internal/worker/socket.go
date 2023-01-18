@@ -2,6 +2,7 @@ package worker
 
 import (
 	"log"
+	"strings"
 	"time"
 
 	"github.com/shirou/gopsutil/v3/host"
@@ -26,10 +27,26 @@ type SendPod struct {
 
 func Daemon(url string) {
 
-	if hostId, err := host.HostID(); err == nil {
-		url += "?HostId=" + hostId
+	args := []string{}
+	info, _ := host.Info()
+
+	if osType := info.OS; len(osType) > 0 {
+		args = append(args, "OSType="+osType)
 	}
 
+	if hostName := info.Hostname; len(hostName) > 0 {
+		args = append(args, "HostName="+hostName)
+	}
+
+	if hostId := info.HostID; len(hostId) > 0 {
+		args = append(args, "HostId="+hostId)
+	}
+
+	if len(args) > 0 {
+		url += "?" + strings.Join(args, "&")
+	}
+
+	log.Println("Connecting", url)
 	pod, err := socket.NewJsonPodClient(url)
 
 	if err != nil {
