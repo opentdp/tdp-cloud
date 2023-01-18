@@ -2,34 +2,8 @@ package workhub
 
 import (
 	"tdp-cloud/helper/json"
-	"tdp-cloud/internal/dborm/machine"
 	history "tdp-cloud/internal/dborm/task_history"
 )
-
-// 主机
-
-func createMachine(node *Worker) {
-
-	item := &machine.CreateParam{
-		UserId:      node.UserId,
-		VendorId:    0,
-		HostName:    node.HostName,
-		IpAddress:   node.Conn.RemoteAddr().String(),
-		OSType:      node.OSType,
-		Region:      "",
-		Model:       "worker",
-		CloudId:     node.HostId,
-		CloudMeta:   json.ToString(node.SystemStat),
-		Description: "",
-		Status:      "{}",
-	}
-
-	machine.Create(item)
-
-}
-
-func deleteMachine(node *Worker) {
-}
 
 // 任务历史
 

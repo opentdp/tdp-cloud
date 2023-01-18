@@ -40,9 +40,6 @@ func Register(c *gin.Context) {
 	nodePool[hostId] = worker
 	defer delete(nodePool, hostId)
 
-	createMachine(worker)
-	defer deleteMachine(worker)
-
 	// 启动服务
 
 	Daemon(worker)
