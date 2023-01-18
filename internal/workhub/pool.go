@@ -22,23 +22,17 @@ func Register(c *gin.Context) {
 
 	// 注册节点
 
-	osType := c.Query("OSType")
-	hostId := c.Query("HostId")
-	hostName := c.Query("HostName")
-
-	userId := c.GetUint("UserId")
-
 	worker := &Worker{
 		pod,
-		userId,
-		osType,
-		hostId,
-		hostName,
+		c.GetUint("UserId"),
+		c.Query("OSType"),
+		c.Query("HostId"),
+		c.Query("HostName"),
 		&psutil.SystemStat{},
 	}
 
-	nodePool[hostId] = worker
-	defer delete(nodePool, hostId)
+	nodePool[worker.HostId] = worker
+	defer delete(nodePool, worker.HostId)
 
 	// 启动服务
 
