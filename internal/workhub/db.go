@@ -13,8 +13,9 @@ func createMachine(node *Worker) {
 	item := &machine.CreateParam{
 		UserId:      node.UserId,
 		VendorId:    0,
-		HostName:    node.SystemStat.HostName,
+		HostName:    node.HostName,
 		IpAddress:   node.Conn.RemoteAddr().String(),
+		OSType:      node.OSType,
 		Region:      "",
 		Model:       "worker",
 		CloudId:     node.HostId,
