@@ -27,7 +27,7 @@ go env -w GO111MODULE=on
 go env -w GOPROXY=https://goproxy.cn,direct
 ```
 
-## 三、部署说明
+## 三、服务端部署说明
 
 1、根据系统类型下载编译好的[二进制程序](https://github.com/tdp-resource/tdp-cloud/releases)，重命名为 `tdpc`
 
@@ -37,11 +37,11 @@ go env -w GOPROXY=https://goproxy.cn,direct
 
 4、登录账号，添加一组或多组 `腾讯云CAM`，即可管理云资源
 
-### 支持的数据库
+### 数据库配置参数
 
-- **SQLite** 数据源格式 `data/cloud.db?_pragma=busy_timeout=5000&_pragma=journa_mode(WAL)`
+- 使用 **SQLite** 数据源 `--dsn "data/cloud.db?_pragma=busy_timeout=5000&_pragma=journa_mode(WAL)"`
 
-- **MySQL**  数据源格式 `user:password@tcp(localhost:3306)/dbname?charset=utf8&parseTime=True&loc=Local`
+- 使用 **MySQL**  数据源 `--dsn "user:password@tcp(localhost:3306)/dbname?charset=utf8&parseTime=True&loc=Local"`
 
 ### 添加腾讯云CAM
 
