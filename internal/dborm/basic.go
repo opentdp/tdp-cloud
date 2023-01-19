@@ -27,7 +27,7 @@ func Connect(dsn string) {
 		config.Logger = logger.Default.LogMode(logger.Info)
 	}
 
-	if strings.Index(dsn, "@") > 0 {
+	if strings.Index(dsn, "@tcp") > 0 {
 		Db, err = gorm.Open(mysql.Open(dsn), config)
 	} else {
 		Db, err = gorm.Open(sqlite.Open(dsn), config)

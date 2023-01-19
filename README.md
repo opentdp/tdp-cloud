@@ -39,7 +39,7 @@ go env -w GOPROXY=https://goproxy.cn,direct
 
 ### 支持的数据库
 
-- **SQLite** 数据源格式 `cloud.db`
+- **SQLite** 数据源格式 `data/cloud.db?_pragma=busy_timeout=5000&_pragma=journa_mode(WAL)`
 
 - **MySQL**  数据源格式 `user:password@tcp(localhost:3306)/dbname?charset=utf8&parseTime=True&loc=Local`
 
