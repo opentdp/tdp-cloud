@@ -11,11 +11,9 @@ CALL :build android arm64
 CALL :build darwin amd64
 CALL :build darwin arm64
 
-CALL :build linux 386
 CALL :build linux amd64
 CALL :build linux arm64
 
-CALL :build windows 386 .exe
 CALL :build windows amd64 .exe
 CALL :build windows arm64 .exe
 
