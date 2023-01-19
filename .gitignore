@@ -1,7 +1,7 @@
 .DS_Store
 
 build
-cloud.db
+cloud.db*
 
 # local env files
 __debug_*
