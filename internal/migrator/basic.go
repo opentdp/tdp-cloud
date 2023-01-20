@@ -9,7 +9,7 @@ import (
 
 var Versions = "100000"
 
-func Start() {
+func Deploy() {
 
 	if err := doMigrate(); err != nil {
 		log.Panic(err)
@@ -21,11 +21,11 @@ func doMigrate() error {
 
 	getMigration()
 
-	if err := v100001(); err != nil {
+	if err := v100000(); err != nil {
 		return err
 	}
 
-	if err := v100002(); err != nil {
+	if err := v100001(); err != nil {
 		return err
 	}
 
@@ -41,7 +41,7 @@ func isMigrated(v string) bool {
 
 }
 
-func getMigration() string {
+func getMigration() error {
 
 	item, err := config.Fetch("Migration")
 
@@ -49,7 +49,7 @@ func getMigration() string {
 		Versions = item.Value
 	}
 
-	return Versions
+	return err
 
 }
 

@@ -14,35 +14,35 @@ import (
 	"tdp-cloud/internal/migrator"
 )
 
-var engine *gin.Engine
+var frontFS *embed.FS
 
 func Create(vfs *embed.FS) {
 
-	// 连接数据库
+	frontFS = vfs
 
+	// 连接数据库
 	dborm.Connect(vDsn)
 
 	// 实施自动迁移
+	migrator.Deploy()
 
-	migrator.Start()
-
-	// 启动HTTP服务器
-
+	// 设置调试模式
 	if os.Getenv("TDP_DEBUG") == "" {
 		gin.SetMode(gin.ReleaseMode)
 	}
 
-	httpd.WebServer(vListen, newEngine(vfs))
+	// 启动HTTP服务器
+	httpd.WebServer(vListen, newEngine())
 
 }
 
-func newEngine(vfs *embed.FS) *gin.Engine {
+func newEngine() *gin.Engine {
 
-	engine = gin.Default()
+	engine := gin.Default()
 
 	api.Router(engine)
 
-	fs, _ := fs.Sub(vfs, "front")
+	fs, _ := fs.Sub(frontFS, "front")
 	engine.StaticFS("/ui", http.FS(fs))
 
 	engine.GET("/", func(c *gin.Context) {
