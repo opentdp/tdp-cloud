@@ -10,7 +10,7 @@ TDP_SERVICE_NAME=tdp-cloud
 TDP_SERVICE_FILE=/etc/init.d/${TDP_SERVICE_NAME}
 
 TDP_EXEC_FILE=/usr/local/bin/tdp-cloud
-TDP_EXEC_ARGS="server --dsn \"/var/lib/tdp-cloud/cloud.db\""
+TDP_EXEC_ARGS="server --dsn /var/lib/tdp-cloud/cloud.db"
 
 TDP_DOWNLOAD_URL=http://tdp.icu/build/tdpc-linux-$(uname -m)
 
