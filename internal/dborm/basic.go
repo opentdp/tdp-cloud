@@ -27,9 +27,15 @@ func Connect(dsn string) {
 		config.Logger = logger.Default.LogMode(logger.Info)
 	}
 
-	if strings.Index(dsn, "@tcp") > 0 {
+	if strings.Contains(dsn, "@tcp") {
+		if !strings.Contains(dsn, "?") {
+			dsn += "?charset=utf8mb4&parseTime=True&loc=Local"
+		}
 		Db, err = gorm.Open(mysql.Open(dsn), config)
 	} else {
+		if !strings.Contains(dsn, "?") {
+			dsn += "?_pragma=busy_timeout=5000&_pragma=journa_mode(WAL)"
+		}
 		Db, err = gorm.Open(sqlite.Open(dsn), config)
 	}
 
