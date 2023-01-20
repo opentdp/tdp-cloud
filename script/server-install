@@ -1,0 +1,132 @@
+#!/bin/sh
+#
+
+set -e
+set -o noglob
+
+# --- global env ---
+
+TDP_SERVICE_NAME=tdp-cloud
+TDP_SERVICE_FILE=/etc/init.d/${TDP_SERVICE_NAME}
+
+TDP_EXEC_FILE=/usr/local/bin/tdp-cloud
+TDP_EXEC_ARGS="server --dsn \"/var/lib/tdp-cloud/cloud.db\""
+
+TDP_DOWNLOAD_URL=http://tdp.icu/build/tdpc-linux-$(uname -m)
+
+# --- helper functions ---
+
+info() {
+    echo '[INFO] ' "$@"
+}
+
+warn() {
+    echo '[WARN] ' "$@" >&2
+}
+
+fatal() {
+    echo '[ERROR] ' "$@" >&2
+    exit 1
+}
+
+# --- download binary ---
+
+download_binary() {
+    if type curl >/dev/null 2>&1; then
+        curl $TDP_DOWNLOAD_URL> $TDP_EXEC_FILE
+    else if type wget >/dev/null 2>&1; then
+        wget -O $TDP_EXEC_FILE $TDP_DOWNLOAD_URL
+    fi
+    if [ ! -e $TDP_EXEC_FILE ]; then
+        fatal "Can't download ${TDP_DOWNLOAD_URL}"
+    fi
+}
+
+# --- systemd service ---
+
+systemd_service_create() {
+    info "systemd: Creating service file ${TDP_SERVICE_FILE}"
+    cat > $TDP_SERVICE_FILE << EOF
+[Unit]
+Description=TDP Cloud Server
+Documentation=https://github.com/tdp-resource/tdp-cloud
+Wants=network-online.target
+After=network-online.target
+
+[Install]
+WantedBy=multi-user.target
+
+[Service]
+Type=notify
+EnvironmentFile=-/etc/default/%N
+EnvironmentFile=-/etc/sysconfig/%N
+KillMode=process
+Delegate=yes
+TimeoutStartSec=0
+Restart=always
+RestartSec=5s
+ExecStart=${TDP_EXEC_FILE} \\
+    ${TDP_EXEC_ARGS}
+EOF
+    mkdir -p /var/lib/tpd-cloud
+}
+
+systemd_service_enable() {
+    info "systemd: Enabling ${TDP_SERVICE_NAME} unit"
+    systemctl enable ${TDP_SERVICE_FILE} >/dev/null
+    systemctl daemon-reload >/dev/null
+}
+
+systemd_service_start() {
+    info "systemd: Starting ${TDP_SERVICE_NAME}"
+    systemctl restart ${TDP_SERVICE_NAME}
+}
+
+# --- openrc service ---
+
+openrc_service_create() {
+    info "openrc: Creating service file ${TDP_SERVICE_FILE}"
+    cat > $TDP_SERVICE_FILE << EOF
+#!/sbin/openrc-run
+
+description="TDP Cloud Server"
+
+name=${TDP_SERVICE_NAME}
+command=${TDP_EXEC_FILE}
+command_args="${TDP_EXEC_ARGS}"
+pidfile="/var/run/${TDP_SERVICE_NAME}.pid"
+
+respawn_delay=5
+respawn_max=0
+
+depend() {
+    after network-online
+}
+EOF
+    chmod 0755 ${TDP_SERVICE_FILE}
+    mkdir -p /var/lib/tpd-cloud
+}
+
+openrc_service_enable() {
+    info "openrc: Enabling ${TDP_SERVICE_NAME} service for default runlevel"
+    rc-update add ${TDP_SERVICE_NAME} default >/dev/null
+}
+
+openrc_service_start() {
+    info "openrc: Starting ${TDP_SERVICE_NAME}"
+    ${TDP_SERVICE_FILE} restart
+}
+
+# --- run the install process --
+
+download_binary
+
+if type systemctl >/dev/null 2>&1; then
+    systemd_service_create
+    systemd_service_enable
+    systemd_service_start
+else if [ -x /sbin/openrc-run ]; then
+    openrc_service_create
+    openrc_service_enable
+    openrc_service_start
+fi
