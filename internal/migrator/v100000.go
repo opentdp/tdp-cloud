@@ -4,7 +4,7 @@ import (
 	"tdp-cloud/internal/dborm"
 )
 
-func v100001() error {
+func v100000() error {
 
 	return dborm.Db.AutoMigrate(
 		&dborm.Config{},

@@ -5,7 +5,7 @@ import (
 	"tdp-cloud/internal/dborm/user"
 )
 
-func v100002() error {
+func v100001() error {
 
 	if isMigrated("100001") {
 		return nil
