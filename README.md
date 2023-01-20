@@ -31,7 +31,7 @@ go env -w GOPROXY=https://goproxy.cn,direct
 
 1、根据系统类型下载编译好的[二进制程序](https://github.com/tdp-resource/tdp-cloud/releases)，重命名为 `tdpc`
 
-2、运行 `tdpc server`，此时会生成 `cloud.db` 数据库文件，请注意权限
+2、运行 `tdpc server`，此时会生成 `server.db` 数据库文件，请注意权限
 
 3、浏览器打开 `http://localhost:7800`，默认账号 `admin`，密码 `123456`
 
@@ -39,7 +39,7 @@ go env -w GOPROXY=https://goproxy.cn,direct
 
 ### 数据库配置参数
 
-- 使用 **SQLite** 数据源 `--dsn "data/cloud.db"`。默认会追加参数 `?_pragma=busy_timeout=5000&_pragma=journa_mode(WAL)`
+- 使用 **SQLite** 数据源 `--dsn "data/server.db"`。默认会追加参数 `?_pragma=busy_timeout=5000&_pragma=journa_mode(WAL)`
 
 - 使用 **MySQL**  数据源 `--dsn "user:password@tcp(localhost:3306)/dbname"`。默认会追加参数 `?charset=utf8mb4&parseTime=True&loc=Local`
 
