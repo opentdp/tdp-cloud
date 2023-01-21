@@ -35,13 +35,14 @@ func Parser() {
 func getCommands() cmd.FlagSets {
 
 	se := server.Flags()
-	sr := service.Flags()
 	wo := worker.Flags()
+
+	sr := service.Flags()
 
 	return cmd.FlagSets{
 		se.Name(): se,
-		sr.Name(): sr,
 		wo.Name(): wo,
+		sr.Name(): sr,
 	}
 
 }
