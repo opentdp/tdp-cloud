@@ -20,7 +20,7 @@ func WebServer(addr string, engine http.Handler) {
 		WriteTimeout: 30 * time.Second,
 	}
 
-	log.Printf("Web server listen on " + addr)
+	log.Print("Web server listen on " + addr)
 
 	// 以协程方式启用监听，防止阻塞后续的中断信号处理
 	go func() {
