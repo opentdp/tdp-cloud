@@ -7,18 +7,18 @@ import (
 func Create() {
 
 	if len(vInstall) > 0 {
-		logPrint("install", serviceInstall())
+		logPrint("install", install())
 		return
 	}
 
 	if len(vUninstall) > 0 {
-		logPrint("uninstall", serviceUninstall())
+		logPrint("uninstall", uninstall())
 		return
 	}
 
 }
 
-func serviceInstall() error {
+func install() error {
 
 	switch vInstall {
 	case "server":
@@ -31,7 +31,7 @@ func serviceInstall() error {
 
 }
 
-func serviceUninstall() error {
+func uninstall() error {
 
 	switch vUninstall {
 	case "server":
