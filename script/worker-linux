@@ -1,0 +1,40 @@
+#!/bin/sh
+#
+
+set -e
+set -o noglob
+
+# --- global env ---
+
+TDP_DOWNLOAD_URL=http://tdp.icu/build/tdp-cloud-linux-amd64.gz
+
+TDP_EXEC_FILE=/usr/local/bin/tdp-cloud
+
+if [ ! $TDP_EXEC_ARGS ]; then
+    echo "[ERROR] Missing environment variable \$TDP_EXEC_ARGS"
+    exit 1
+fi
+
+# --- download binary ---
+
+if type curl >/dev/null 2>&1; then
+    curl $TDP_DOWNLOAD_URL | gunzip > $TDP_EXEC_FILE
+else if type wget >/dev/null 2>&1; then
+    wget -O- $TDP_DOWNLOAD_URL | gunzip > $TDP_EXEC_FILE
+fi
+
+if [ ! -e $TDP_EXEC_FILE ]; then
+    echo "[ERROR] Can't download ${TDP_DOWNLOAD_URL}"
+    exit 1
+fi
+
+# --- install service ---
+
+chmod +x $TDP_EXEC_FILE
+
+mkdir -p /var/lib/tdp-cloud
+mkdir -p /var/log/tdp-cloud
+
+$TDP_EXEC_FILE service --install worker - $TDP_EXEC_ARGS
+
+service start tpd-worker
