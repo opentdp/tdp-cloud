@@ -29,9 +29,12 @@ func serverService() service.Service {
 
 	config := &service.Config{
 		Name:        "tdp-server",
-		DisplayName: "tdp cloud server",
-		Description: "tdp cloud server",
+		DisplayName: "TDP Cloud Server",
+		Description: "TDP Cloud Control Panel",
 		Arguments:   args,
+		Option: service.KeyValue{
+			"LogDirectory": "/var/log/tdp-cloud",
+		},
 	}
 
 	s, err := service.New(&server{}, config)
