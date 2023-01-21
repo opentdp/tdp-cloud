@@ -23,6 +23,8 @@ require (
 require (
 	// 生成 UUID
 	github.com/google/uuid v1.3.0
+	// 服务管理
+	github.com/kardianos/service v1.2.2
 	// Map 转结构体
 	github.com/mitchellh/mapstructure v1.5.0
 	// 计划任务
@@ -32,7 +34,7 @@ require (
 	// 类型转换
 	github.com/spf13/cast v1.5.0
 	// 腾讯云 SDK
-	github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/common v1.0.577
+	github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/common v1.0.582
 	// 加密扩充库
 	golang.org/x/crypto v0.5.0
 	// 终端和控制台支持包
@@ -44,7 +46,7 @@ require (
 // 间接依赖
 
 require (
-	github.com/dustin/go-humanize v1.0.0 // indirect
+	github.com/dustin/go-humanize v1.0.1 // indirect
 	github.com/gin-contrib/sse v0.1.0 // indirect
 	github.com/glebarez/go-sqlite v1.20.0 // indirect
 	github.com/go-ole/go-ole v1.2.6 // indirect

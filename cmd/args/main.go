@@ -6,10 +6,9 @@ import (
 
 	"tdp-cloud/cmd"
 	"tdp-cloud/cmd/server"
+	"tdp-cloud/cmd/service"
 	"tdp-cloud/cmd/worker"
 )
-
-var CmdName string
 
 func Parser() {
 
@@ -21,33 +20,33 @@ func Parser() {
 		return
 	}
 
-	// 设置全局参数
-	CmdName = os.Args[1]
+	// 设置全局子命令
+	cmd.SubCommand = os.Args[1]
 
 	// 尝试解析子命令
-	if cmd := commands[CmdName]; cmd != nil {
-		cmd.Parse(os.Args[2:])
-		return
-	}
-
-	// 显示全局帮助
-	showUsage(commands)
-
-}
-
-func getCommands() map[string]*cmd.FlagSet {
-
-	s := server.Flags()
-	w := worker.Flags()
-
-	return map[string]*cmd.FlagSet{
-		s.Name(): s,
-		w.Name(): w,
+	if sub := commands[cmd.SubCommand]; sub != nil {
+		sub.Parse(os.Args[2:])
+	} else {
+		showUsage(commands)
 	}
 
 }
 
-func showUsage(commands map[string]*cmd.FlagSet) {
+func getCommands() cmd.FlagSets {
+
+	se := server.Flags()
+	sr := service.Flags()
+	wo := worker.Flags()
+
+	return cmd.FlagSets{
+		se.Name(): se,
+		sr.Name(): sr,
+		wo.Name(): wo,
+	}
+
+}
+
+func showUsage(commands cmd.FlagSets) {
 
 	fmt.Println(header)
 

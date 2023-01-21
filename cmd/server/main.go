@@ -1,24 +1,20 @@
 package server
 
 import (
-	"embed"
 	"io/fs"
 	"net/http"
 	"os"
 
 	"github.com/gin-gonic/gin"
 
+	"tdp-cloud/cmd"
 	"tdp-cloud/helper/httpd"
 	"tdp-cloud/internal/api"
 	"tdp-cloud/internal/dborm"
 	"tdp-cloud/internal/migrator"
 )
 
-var frontFS *embed.FS
-
-func Create(vfs *embed.FS) {
-
-	frontFS = vfs
+func Create() {
 
 	// 连接数据库
 	dborm.Connect(vDsn)
@@ -31,7 +27,7 @@ func Create(vfs *embed.FS) {
 		gin.SetMode(gin.ReleaseMode)
 	}
 
-	// 启动HTTP服务器
+	// 启动HTTP服务
 	httpd.WebServer(vListen, newEngine())
 
 }
@@ -40,11 +36,14 @@ func newEngine() *gin.Engine {
 
 	engine := gin.Default()
 
+	// 接口路由
 	api.Router(engine)
 
-	fs, _ := fs.Sub(frontFS, "front")
+	// 静态文件路由
+	fs, _ := fs.Sub(cmd.FrontFS, "front")
 	engine.StaticFS("/ui", http.FS(fs))
 
+	// 默认首页路由
 	engine.GET("/", func(c *gin.Context) {
 		c.Redirect(302, "/ui/")
 	})
