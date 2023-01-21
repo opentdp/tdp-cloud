@@ -10,10 +10,12 @@ import (
 type worker struct{}
 
 func (p *worker) Start(s service.Service) error {
+	log.Print("service start")
 	return nil
 }
 
 func (p *worker) Stop(s service.Service) error {
+	log.Print("service stop")
 	return nil
 }
 
@@ -25,43 +27,19 @@ func workerService() service.Service {
 		args = append(args, os.Args[5:]...)
 	}
 
-	svcConfig := &service.Config{
-		Name:        "tdp-cloud",
+	config := &service.Config{
+		Name:        "tdp-worker",
 		DisplayName: "tdp cloud worker",
 		Description: "tdp cloud worker",
 		Arguments:   args,
 	}
 
-	s, err := service.New(&worker{}, svcConfig)
+	s, err := service.New(&worker{}, config)
 
 	if err != nil {
 		log.Fatal("init service error:", err)
 	}
 
 	return s
-
-}
-
-func workerInstall() {
-
-	s := workerService()
-
-	if x := s.Install(); x != nil {
-		log.Print("install service error:", x.Error())
-	} else {
-		log.Print("install service done")
-	}
-
-}
-
-func workerUninstall() {
-
-	s := workerService()
-
-	if x := s.Uninstall(); x != nil {
-		log.Print("uninstall service error:", x.Error())
-	} else {
-		log.Print("uninstall service done")
-	}
 
 }
