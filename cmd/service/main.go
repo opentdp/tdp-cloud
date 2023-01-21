@@ -1,3 +1,13 @@
 package service
 
-func Create() {}
+func Create() {
+
+	if vInstall == "server" {
+		serverInstall()
+	}
+
+	if vUninstall == "server" {
+		serverUninstall()
+	}
+
+}

@@ -29,9 +29,9 @@ go env -w GOPROXY=https://goproxy.cn,direct
 
 ## 三、服务端部署说明
 
-1、根据系统类型下载编译好的[二进制程序](https://github.com/tdp-resource/tdp-cloud/releases)，重命名为 `tdpc`
+1、根据系统类型下载编译好的[二进制程序](https://github.com/tdp-resource/tdp-cloud/releases)，重命名为 `tdp-cloud`
 
-2、运行 `tdpc server`，此时会生成 `server.db` 数据库文件，请注意权限
+2、运行 `tdp-cloud server`，此时会生成 `server.db` 数据库文件，请注意权限
 
 3、浏览器打开 `http://localhost:7800`，默认账号 `admin`，密码 `123456`
 

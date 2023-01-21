@@ -3,7 +3,7 @@ package args
 var header = `
 土豆片控制面板
 
-使用说明: tdpc COMMAND
+使用说明: tdp-cloud COMMAND
 `
 
 var footer = `
