@@ -19,11 +19,17 @@ func (p *server) Stop(s service.Service) error {
 
 func serverService() service.Service {
 
+	var args []string
+
+	if len(os.Args) > 5 {
+		args = append(os.Args[3:4], os.Args[5:]...)
+	}
+
 	svcConfig := &service.Config{
 		Name:        "tdp-cloud",
 		DisplayName: "tdp cloud server",
 		Description: "tdp cloud server",
-		Arguments:   os.Args[2:],
+		Arguments:   args,
 	}
 
 	s, err := service.New(&server{}, svcConfig)
