@@ -33,14 +33,26 @@ download_binary() {
     fi
 }
 
-download_binary
-chmod +x $TDP_EXEC_FILE
+# --- service helper ---
 
-# --- install service ---
+service_install() {
+    download_binary
+    chmod +x $TDP_EXEC_FILE
 
-$TDP_EXEC_FILE service --install server - $TDP_EXEC_ARGS
+    $TDP_EXEC_FILE service --install server - $TDP_EXEC_ARGS
+    mkdir -p /var/lib/tdp-cloud
+    mkdir -p /var/log/tdp-cloud
+    service tpd-server start
+}
 
-mkdir -p /var/lib/tdp-cloud
-mkdir -p /var/log/tdp-cloud
+service_uninstall() {
+    service tpd-server stop
 
-service tpd-server start
+    tdp-cloud service --uninstall server
+    rm -rf `which tdp-cloud`
+    rm -rf /var/*/tdp-cloud*
+}
+
+# ---
+
+service_install
