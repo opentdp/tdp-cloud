@@ -49,8 +49,8 @@ service_install() {
 
 service_uninstall() {
     service tpd-worker stop
-
     tdp-cloud service --uninstall worker
+
     rm -rf `which tdp-cloud`
     rm -rf /var/*/tdp-cloud*
 }

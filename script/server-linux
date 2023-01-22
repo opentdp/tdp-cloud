@@ -42,13 +42,14 @@ service_install() {
     $TDP_EXEC_FILE service --install server - $TDP_EXEC_ARGS
     mkdir -p /var/lib/tdp-cloud
     mkdir -p /var/log/tdp-cloud
+
     service tpd-server start
 }
 
 service_uninstall() {
     service tpd-server stop
-
     tdp-cloud service --uninstall server
+
     rm -rf `which tdp-cloud`
     rm -rf /var/*/tdp-cloud*
 }
