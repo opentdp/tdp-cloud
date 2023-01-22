@@ -16,22 +16,31 @@ fi
 
 # --- download binary ---
 
-if type curl >/dev/null 2>&1; then
-    curl $TDP_DOWNLOAD_URL | gunzip > $TDP_EXEC_FILE
-else if type wget >/dev/null 2>&1; then
-    wget -O- $TDP_DOWNLOAD_URL | gunzip > $TDP_EXEC_FILE
-fi
+download_binary() {
+    if type curl >/dev/null 2>&1; then
+        curl -sfL $TDP_DOWNLOAD_URL | gunzip > $TDP_EXEC_FILE
+        return
+    fi
 
-if [ ! -e $TDP_EXEC_FILE ]; then
-    fatal "[ERROR] Can't download ${TDP_DOWNLOAD_URL}"
-    exit 1
-fi
+    if type wget >/dev/null 2>&1; then
+        wget -qO- $TDP_DOWNLOAD_URL | gunzip > $TDP_EXEC_FILE
+        return
+    fi
+
+    if [ ! -e $TDP_EXEC_FILE ]; then
+        fatal "[ERROR] Can't download ${TDP_DOWNLOAD_URL}"
+        exit 1
+    fi
+}
+
+download_binary
+chmod +x $TDP_EXEC_FILE
 
 # --- install service ---
+
+$TDP_EXEC_FILE service --install server - $TDP_EXEC_ARGS
 
 mkdir -p /var/lib/tdp-cloud
 mkdir -p /var/log/tdp-cloud
 
-$TDP_EXEC_FILE service --install server - $TDP_EXEC_ARGS
-
-service start tpd-server
+service tpd-server start
