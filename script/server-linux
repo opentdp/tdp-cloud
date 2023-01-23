@@ -43,11 +43,11 @@ service_install() {
     mkdir -p /var/lib/tdp-cloud
     mkdir -p /var/log/tdp-cloud
 
-    service tpd-server start
+    service tdp-server start
 }
 
 service_uninstall() {
-    service tpd-server stop
+    service tdp-server stop
     tdp-cloud service --uninstall server
 
     rm -rf `which tdp-cloud`
