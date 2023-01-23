@@ -8,7 +8,7 @@
 
 WebUI界面请查看文档 [界面预览](https://github.com/tdp-resource/tdp-cloud/blob/main/docs/界面预览.md)
 
-## 二、开发说明
+## 开发说明
 
 ### 启动开发服务
 
@@ -27,7 +27,7 @@ go env -w GO111MODULE=on
 go env -w GOPROXY=https://goproxy.cn,direct
 ```
 
-## 服务端部署说明
+## 部署服务端
 
 1、根据系统类型下载编译好的[二进制程序](https://github.com/tdp-resource/tdp-cloud/releases)，重命名为 `tdp-cloud`
 
