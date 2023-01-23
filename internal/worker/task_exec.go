@@ -64,7 +64,7 @@ func (pod *RecvPod) Exec(rs *SocketData) error {
 
 func cmdScript(data *ExecPayload) (string, error) {
 
-	tf, err := ioutil.TempFile(os.TempDir(), "tat-*.bat")
+	tf, err := ioutil.TempFile(os.TempDir(), "tdp-*.bat")
 
 	if err != nil {
 		return "", errors.New("创建临时文件失败")
@@ -87,7 +87,7 @@ func cmdScript(data *ExecPayload) (string, error) {
 
 func ps1Script(data *ExecPayload) (string, error) {
 
-	tf, err := ioutil.TempFile(os.TempDir(), "tat-*.ps1")
+	tf, err := ioutil.TempFile(os.TempDir(), "tdp-*.ps1")
 
 	if err != nil {
 		return "", errors.New("创建临时文件失败")
@@ -110,7 +110,7 @@ func ps1Script(data *ExecPayload) (string, error) {
 
 func shellScript(data *ExecPayload) (string, error) {
 
-	tf, err := ioutil.TempFile(os.TempDir(), "tat-*")
+	tf, err := ioutil.TempFile(os.TempDir(), "tdp-*")
 
 	if err != nil {
 		return "", errors.New("创建临时文件失败")
