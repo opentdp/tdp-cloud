@@ -45,6 +45,19 @@ go env -w GOPROXY=https://goproxy.cn,direct
 
 **注意：** 如果 `dsn` 字符串任意位置含有 `?` ，将忽略所有追加参数
 
+## 添加子节点
+
+1、进入 `TDP Cloud` 后台，`资产管理 - 子节点`，可以看到如下命令
+
+```shell
+export TDP_EXEC_ARGS="--remote ws://{domain}/wsi/{appid}/worker"
+wget -qO- http://tdp.icu/worker-linux | sh -
+```
+
+2、在需要添加的节点上执行上述命令（不同平台可能需要适当修改命令）
+
+3、在 `资产管理 - 子节点` 中选中刚加入的节点，点击 `导入` 即可完成绑定操作
+
 ## 添加腾讯云账号
 
 1、进入腾讯云 [CAM - 策略](https://console.cloud.tencent.com/cam/policy) 页面，创建一个自定义策略 `TDPCloudAccess`，权限JSON如下：
@@ -73,19 +86,6 @@ go env -w GOPROXY=https://goproxy.cn,direct
 3、进入 `TDP Cloud` 后台，`资产管理 - 公有云`，添加获取到的 `SecretId` 和 `SecretKey`
 
 4、在 `资产管理 - 公有云 - 密钥列表` 中点击 `导入` 按钮，选择需要导入资源，完成绑定操作
-
-## 添加子节点
-
-1、进入 `TDP Cloud` 后台，`资产管理 - 子节点`，可以看到如下命令
-
-```shell
-export TDP_EXEC_ARGS="--remote ws://{domain}/wsi/{appid}/worker"
-wget -qO- http://tdp.icu/worker-linux | sh -
-```
-
-2、在需要添加的节点上执行上述命令（不同平台可能需要适当修改命令）
-
-3、在 `资产管理 - 子节点` 中选中刚加入的节点，点击 `导入` 即可完成绑定操作
 
 ## 其他
 
