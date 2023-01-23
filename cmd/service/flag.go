@@ -13,14 +13,14 @@ var (
 
 func Flags() *cmd.FlagSet {
 
-	cmd := &cmd.FlagSet{
+	command := &cmd.FlagSet{
 		FlagSet: flag.NewFlagSet("service", flag.ExitOnError),
 		Comment: "服务管理",
 	}
 
-	cmd.StringVar(&vInstall, "install", "", "安装服务 [ server | worker ] [ - 其他参数 ]")
-	cmd.StringVar(&vUninstall, "uninstall", "", "卸载服务 [ server | worker ]")
+	command.StringVar(&vInstall, "install", "", "安装服务 [ server | worker ] [ - 其他参数 ]")
+	command.StringVar(&vUninstall, "uninstall", "", "卸载服务 [ server | worker ]")
 
-	return cmd
+	return command
 
 }

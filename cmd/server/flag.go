@@ -13,14 +13,14 @@ var (
 
 func Flags() *cmd.FlagSet {
 
-	cmd := &cmd.FlagSet{
+	command := &cmd.FlagSet{
 		FlagSet: flag.NewFlagSet("server", flag.ExitOnError),
 		Comment: "服务端",
 	}
 
-	cmd.StringVar(&vDsn, "dsn", "server.db", "数据源名称，支持MySQL和SQLite")
-	cmd.StringVar(&vListen, "listen", ":7800", "服务端监听的IP地址和端口")
+	command.StringVar(&vDsn, "dsn", "server.db", "数据源名称，支持MySQL和SQLite")
+	command.StringVar(&vListen, "listen", ":7800", "服务端监听的IP地址和端口")
 
-	return cmd
+	return command
 
 }
