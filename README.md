@@ -45,7 +45,7 @@ go env -w GOPROXY=https://goproxy.cn,direct
 
 **注意：** 如果 `dsn` 字符串任意位置含有 `?` ，将忽略所有追加参数
 
-### 添加腾讯云CAM
+## 四、添加腾讯云账号
 
 1、进入腾讯云 [CAM - 策略](https://console.cloud.tencent.com/cam/policy) 页面，创建一个自定义策略 `TDPCloudAccess`，权限JSON如下：
 
@@ -72,7 +72,14 @@ go env -w GOPROXY=https://goproxy.cn,direct
 
 3、进入 `TDP Cloud` 后台，`资产管理 - 公有云`，添加获取到的 `SecretId` 和 `SecretKey`
 
-## 四、其他
+## 五、添加子节点
+
+```
+export TDP_EXEC_ARGS="--remote ws://{domain}/wsi/{appid}/worker"
+wget -qO- http://tdp.icu/worker-linux | sh -
+```
+
+## 六、其他
 
 License [GPL-3.0](https://opensource.org/licenses/GPL-3.0)
 
