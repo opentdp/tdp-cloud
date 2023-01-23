@@ -40,7 +40,7 @@ func serverService() service.Service {
 	s, err := service.New(&server{}, config)
 
 	if err != nil {
-		log.Fatal("init service error:", err)
+		log.Fatal("init service error: ", err)
 	}
 
 	return s

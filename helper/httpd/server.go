@@ -24,9 +24,10 @@ func WebServer(addr string, engine http.Handler) {
 
 	// 以协程方式启用监听，防止阻塞后续的中断信号处理
 	go func() {
-		err := server.ListenAndServe()
-		if err != nil && errors.Is(err, http.ErrServerClosed) {
-			log.Printf("%s\n", err)
+		if err := server.ListenAndServe(); err != nil {
+			if errors.Is(err, http.ErrServerClosed) {
+				log.Printf("%s\n", err)
+			}
 		}
 	}()
 
@@ -47,7 +48,7 @@ func WebServer(addr string, engine http.Handler) {
 
 	// 优雅地关闭服务器而不中断任何活动连接
 	if err := server.Shutdown(ctx); err != nil {
-		log.Fatal("Server forced to shutdown:", err)
+		log.Fatal("Server forced to shutdown: ", err)
 	}
 
 	log.Println("Server exiting...")

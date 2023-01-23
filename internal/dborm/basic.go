@@ -1,6 +1,7 @@
 package dborm
 
 import (
+	"log"
 	"os"
 	"strings"
 
@@ -41,7 +42,7 @@ func Connect(dsn string) {
 	}
 
 	if err != nil {
-		panic("Connect to database failed")
+		log.Panic(err)
 	}
 
 }
