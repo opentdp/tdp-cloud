@@ -12,10 +12,8 @@ import (
 
 func worker(c *gin.Context) {
 
-	token := c.Param("token")
-
 	u, err := user.Fetch(&user.FetchParam{
-		AppToken: token,
+		AppId: c.Param("appid"),
 	})
 
 	if err != nil || u.Id == 0 {

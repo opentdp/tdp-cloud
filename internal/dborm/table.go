@@ -109,9 +109,9 @@ type TaskScript struct {
 
 type User struct {
 	Id          uint   `gorm:"primaryKey"`
+	AppId       string `gorm:"uniqueIndex"`
 	Username    string `gorm:"uniqueIndex"`
 	Password    string
-	AppToken    string `gorm:"uniqueIndex"`
 	Description string `gorm:"default:什么也没有"`
 	Sessions    []Session
 	Vendors     []Vendor

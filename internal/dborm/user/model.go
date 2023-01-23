@@ -19,9 +19,9 @@ type CreateParam struct {
 func Create(post *CreateParam) (uint, error) {
 
 	item := &dborm.User{
+		AppId:    uuid.NewString(),
 		Username: post.Username,
 		Password: HashPassword(post.Password),
-		AppToken: uuid.NewString(),
 	}
 
 	result := dborm.Db.Create(item)
@@ -96,8 +96,8 @@ func UpdatePassword(post *UpdatePasswordParam) error {
 
 type FetchParam struct {
 	Id       uint
+	AppId    string
 	Username string
-	AppToken string
 }
 
 func Fetch(post *FetchParam) (*dborm.User, error) {
@@ -107,8 +107,8 @@ func Fetch(post *FetchParam) (*dborm.User, error) {
 	result := dborm.Db.
 		Where(&dborm.User{
 			Id:       post.Id,
+			AppId:    post.AppId,
 			Username: post.Username,
-			AppToken: post.AppToken,
 		}).
 		First(&item)
 
@@ -127,8 +127,8 @@ type LoginParam struct {
 }
 
 type LoginResult struct {
+	AppId        string
 	Username     string
-	AppToken     string
 	Description  string
 	SessionToken string
 }
@@ -155,8 +155,8 @@ func Login(post *LoginParam) (*LoginResult, error) {
 	// 返回结果
 
 	res := &LoginResult{
+		AppId:        item.AppId,
 		Username:     item.Username,
-		AppToken:     item.AppToken,
 		Description:  item.Description,
 		SessionToken: token,
 	}

@@ -39,7 +39,7 @@ func Router(engine *gin.Engine) {
 
 	// websocket interface
 
-	wsi := engine.Group("/wsi/:token")
+	wsi := engine.Group("/wsi/:appid")
 
 	wsi.Use(midware.SocketPreset())
 
