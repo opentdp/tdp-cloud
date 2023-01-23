@@ -10,7 +10,7 @@ import (
 
 type CreateParam struct {
 	UserId      uint
-	VendorId    uint   `binding:"required"`
+	VendorId    uint
 	HostName    string `binding:"required"`
 	IpAddress   string `binding:"required"`
 	OSType      string `binding:"required"`
@@ -49,7 +49,7 @@ func Create(post *CreateParam) (uint, error) {
 type UpdateParam struct {
 	Id          uint `binding:"required"`
 	UserId      uint
-	VendorId    uint   `binding:"required"`
+	VendorId    uint
 	HostName    string `binding:"required"`
 	IpAddress   string `binding:"required"`
 	OSType      string `binding:"required"`
