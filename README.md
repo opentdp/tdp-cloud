@@ -70,7 +70,7 @@ go env -w GOPROXY=https://goproxy.cn,direct
 
 2、进入腾讯云 [CAM - 用户](https://console.cloud.tencent.com/cam) 页面，创建一个用户，允许 `编程访问`，并关联策略 `TDPCloudAccess`
 
-3、进入 `TDP Cloud` 后台，厂商管理，添加获取到的 `SecretId` 和 `SecretKey`
+3、进入 `TDP Cloud` 后台，`资产管理 - 公有云`，添加获取到的 `SecretId` 和 `SecretKey`
 
 ## 四、其他
 
