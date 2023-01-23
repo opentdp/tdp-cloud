@@ -18,7 +18,7 @@ func Flags() *cmd.FlagSet {
 		Comment: "服务管理",
 	}
 
-	cmd.StringVar(&vInstall, "install", "", "安装服务 [ server | worker ]")
+	cmd.StringVar(&vInstall, "install", "", "安装服务 [ server | worker ] [ - 其他参数 ]")
 	cmd.StringVar(&vUninstall, "uninstall", "", "卸载服务 [ server | worker ]")
 
 	return cmd
