@@ -26,7 +26,7 @@ func WebServer(addr string, engine http.Handler) {
 	go func() {
 		if err := server.ListenAndServe(); err != nil {
 			if errors.Is(err, http.ErrServerClosed) {
-				log.Printf("%s\n", err)
+				log.Println(err.Error())
 			}
 		}
 	}()
