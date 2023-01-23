@@ -8,12 +8,12 @@ func (pod *RecvPod) Ping(rq *SocketData) error {
 
 	mapstructure.Decode(rq.Payload, &pod.SystemStat)
 
-	v := &SocketData{
+	rs := &SocketData{
 		Method:  "Ping:resp",
 		TaskId:  rq.TaskId,
 		Payload: "OK",
 	}
 
-	return pod.Write(v)
+	return pod.Write(rs)
 
 }
