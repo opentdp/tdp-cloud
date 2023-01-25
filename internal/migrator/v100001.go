@@ -10,7 +10,7 @@ func v100001() error {
 		return nil
 	}
 
-	if err := initAdminUser(); err != nil {
+	if err := v100001AddUser(); err != nil {
 		return err
 	}
 
@@ -18,15 +18,9 @@ func v100001() error {
 
 }
 
-func initAdminUser() error {
+func v100001AddUser() error {
 
-	item, err := user.Fetch(&user.FetchParam{Id: 1})
-
-	if err == nil && item.Id > 0 {
-		return nil
-	}
-
-	_, err = user.Create(&user.CreateParam{
+	_, err := user.Create(&user.CreateParam{
 		Username: "admin",
 		Password: "123456",
 	})
