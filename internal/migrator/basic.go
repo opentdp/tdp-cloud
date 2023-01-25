@@ -2,12 +2,9 @@ package migrator
 
 import (
 	"log"
-	"strings"
 
 	"tdp-cloud/internal/dborm/config"
 )
-
-var Versions = "100000"
 
 func Deploy() {
 
@@ -17,9 +14,30 @@ func Deploy() {
 
 }
 
-func doMigrate() error {
+func addMigration(k, v string) error {
 
-	getMigration()
+	_, err := config.Create(&config.CreateParam{
+		Name:        k,
+		Value:       v,
+		Module:      "Migration",
+		Description: "数据库自动迁移记录",
+	})
+
+	return err
+
+}
+
+func isMigrated(k string) bool {
+
+	if item, err := config.Fetch(k); err == nil {
+		return item.Id > 0
+	}
+
+	return false
+
+}
+
+func doMigrate() error {
 
 	if err := v100000(); err != nil {
 		return err
@@ -29,43 +47,6 @@ func doMigrate() error {
 		return err
 	}
 
-	Versions = "" // 释放资源
-
 	return nil
-
-}
-
-func isMigrated(v string) bool {
-
-	return strings.Contains(Versions, v)
-
-}
-
-func getMigration() error {
-
-	item, err := config.Fetch("Migration")
-
-	if err == nil && item.Value != "" {
-		Versions = item.Value
-	}
-
-	return err
-
-}
-
-func addMigration(v string) error {
-
-	if isMigrated(v) {
-		return nil
-	}
-
-	Versions += ":" + v
-
-	return config.Update(&config.UpdateParam{
-		Name:        "Migration",
-		Value:       Versions,
-		Module:      "System",
-		Description: "自动迁移记录",
-	})
 
 }
