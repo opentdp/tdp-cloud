@@ -8,9 +8,9 @@ import (
 
 type Config struct {
 	Id          uint   `gorm:"primaryKey"`
-	Name        string `gorm:"uniqueIndex:idx_config_module_name"`
+	Name        string `gorm:"uniqueIndex:idx_config"`
 	Value       string
-	Module      string `gorm:"uniqueIndex:idx_config_module_name"`
+	Module      string `gorm:"uniqueIndex:idx_config"`
 	Description string
 	CreatedAt   int64
 	UpdatedAt   int64
