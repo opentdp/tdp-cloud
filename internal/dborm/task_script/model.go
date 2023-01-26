@@ -74,7 +74,7 @@ func FetchAll(userId uint) ([]*dborm.TaskScript, error) {
 
 	var items []*dborm.TaskScript
 
-	result := dborm.Db.Where("user_id = 0").Or(&dborm.TaskScript{UserId: userId}).Find(&items)
+	result := dborm.Db.Where(&dborm.TaskScript{UserId: userId}).Find(&items)
 
 	return items, result.Error
 
