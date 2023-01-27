@@ -3,9 +3,9 @@ package workhub
 type ExecPayload struct {
 	Name          string
 	CommandType   string
-	Content       string
 	Username      string
 	WorkDirectory string
+	Content       string
 	Timeout       uint
 }
 

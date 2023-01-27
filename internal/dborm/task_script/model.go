@@ -9,12 +9,12 @@ import (
 type CreateParam struct {
 	UserId        uint
 	Name          string `binding:"required"`
-	Username      string `binding:"required"`
-	Description   string
-	Content       string `binding:"required"`
 	CommandType   string `binding:"required"`
+	Username      string `binding:"required"`
 	WorkDirectory string `binding:"required"`
-	Timeout       uint   `binding:"required"`
+	Content       string `binding:"required"`
+	Description   string
+	Timeout       uint `binding:"required"`
 }
 
 func Create(post *CreateParam) (uint, error) {
@@ -22,11 +22,11 @@ func Create(post *CreateParam) (uint, error) {
 	item := &dborm.TaskScript{
 		UserId:        post.UserId,
 		Name:          post.Name,
-		Username:      post.Username,
-		Description:   post.Description,
-		Content:       post.Content,
-		WorkDirectory: post.WorkDirectory,
 		CommandType:   post.CommandType,
+		Username:      post.Username,
+		WorkDirectory: post.WorkDirectory,
+		Content:       post.Content,
+		Description:   post.Description,
 		Timeout:       post.Timeout,
 	}
 
@@ -42,12 +42,12 @@ type UpdateParam struct {
 	Id            uint `binding:"required"`
 	UserId        uint
 	Name          string `binding:"required"`
-	Username      string `binding:"required"`
-	Description   string
-	Content       string `binding:"required"`
 	CommandType   string `binding:"required"`
+	Username      string `binding:"required"`
 	WorkDirectory string `binding:"required"`
-	Timeout       uint   `binding:"required"`
+	Content       string `binding:"required"`
+	Description   string
+	Timeout       uint `binding:"required"`
 }
 
 func Update(post *UpdateParam) error {
@@ -56,11 +56,11 @@ func Update(post *UpdateParam) error {
 		Where(&dborm.TaskScript{Id: post.Id, UserId: post.UserId}).
 		Updates(dborm.TaskScript{
 			Name:          post.Name,
-			Username:      post.Username,
-			Description:   post.Description,
-			Content:       post.Content,
 			CommandType:   post.CommandType,
+			Username:      post.Username,
 			WorkDirectory: post.WorkDirectory,
+			Content:       post.Content,
+			Description:   post.Description,
 			Timeout:       post.Timeout,
 		})
 

@@ -95,11 +95,11 @@ type TaskScript struct {
 	Id            uint `gorm:"primaryKey"`
 	UserId        uint `gorm:"index"`
 	Name          string
-	Username      string
-	Description   string
-	Content       string
 	CommandType   string
+	Username      string
 	WorkDirectory string
+	Content       string
+	Description   string
 	Timeout       uint
 	CreatedAt     int64
 	UpdatedAt     int64
