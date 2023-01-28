@@ -2,8 +2,6 @@ package task_history
 
 import (
 	"tdp-cloud/module/dborm"
-
-	"gorm.io/datatypes"
 )
 
 // 添加任务
@@ -14,8 +12,8 @@ type CreateParam struct {
 	HostName string `binding:"required"`
 	Subject  string `binding:"required"`
 	Status   string `binding:"required"`
-	Request  string `binding:"required"`
-	Response string
+	Request  any    `binding:"required"`
+	Response any
 }
 
 func Create(post *CreateParam) (uint, error) {
@@ -26,8 +24,8 @@ func Create(post *CreateParam) (uint, error) {
 		HostName: post.HostName,
 		Subject:  post.Subject,
 		Status:   post.Status,
-		Request:  datatypes.JSON(post.Request),
-		Response: datatypes.JSON(post.Response),
+		Request:  post.Request,
+		Response: post.Response,
 	}
 
 	result := dborm.Db.Create(item)
@@ -45,8 +43,8 @@ type UpdateParam struct {
 	HostName string
 	Subject  string
 	Status   string `binding:"required"`
-	Request  string
-	Response string
+	Request  any
+	Response any
 }
 
 func Update(post *UpdateParam) error {
@@ -58,8 +56,8 @@ func Update(post *UpdateParam) error {
 			HostName: post.HostName,
 			Subject:  post.Subject,
 			Status:   post.Status,
-			Request:  datatypes.JSON(post.Request),
-			Response: datatypes.JSON(post.Response),
+			Request:  post.Request,
+			Response: post.Response,
 		})
 
 	return result.Error

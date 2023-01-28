@@ -1,9 +1,5 @@
 package dborm
 
-import (
-	"gorm.io/datatypes"
-)
-
 // 配置
 
 type Config struct {
@@ -26,9 +22,9 @@ type Domain struct {
 	NSList      string
 	Model       string
 	CloudId     string `gorm:"uniqueIndex"`
-	CloudMeta   datatypes.JSON
+	CloudMeta   any    `gorm:"serializer:json"`
 	Description string
-	Status      datatypes.JSON
+	Status      uint
 	CreatedAt   int64
 	UpdatedAt   int64
 }
@@ -45,9 +41,9 @@ type Machine struct {
 	Region      string
 	Model       string
 	CloudId     string `gorm:"uniqueIndex"`
-	CloudMeta   datatypes.JSON
+	CloudMeta   any    `gorm:"serializer:json"`
 	Description string
-	Status      datatypes.JSON
+	Status      uint
 	CreatedAt   int64
 	UpdatedAt   int64
 }
@@ -82,8 +78,8 @@ type TaskHistory struct {
 	HostId    string `gorm:"index"`
 	Subject   string
 	HostName  string
-	Request   datatypes.JSON
-	Response  datatypes.JSON
+	Request   any `gorm:"serializer:json"`
+	Response  any `gorm:"serializer:json"`
 	Status    string
 	CreatedAt int64
 	UpdatedAt int64

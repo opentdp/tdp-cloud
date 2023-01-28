@@ -1,8 +1,6 @@
 package domain
 
 import (
-	"gorm.io/datatypes"
-
 	"tdp-cloud/module/dborm"
 )
 
@@ -15,9 +13,9 @@ type CreateParam struct {
 	NSList      string `binding:"required"`
 	Model       string `binding:"required"`
 	CloudId     string
-	CloudMeta   string
+	CloudMeta   any
 	Description string
-	Status      string `binding:"required"`
+	Status      uint
 }
 
 func Create(post *CreateParam) (uint, error) {
@@ -29,9 +27,9 @@ func Create(post *CreateParam) (uint, error) {
 		NSList:      post.NSList,
 		Model:       post.Model,
 		CloudId:     post.CloudId,
-		CloudMeta:   datatypes.JSON(post.CloudMeta),
+		CloudMeta:   post.CloudMeta,
 		Description: post.Description,
-		Status:      datatypes.JSON(post.Status),
+		Status:      post.Status,
 	}
 
 	result := dborm.Db.Create(item)
@@ -50,9 +48,9 @@ type UpdateParam struct {
 	NSList      string `binding:"required"`
 	Model       string `binding:"required"`
 	CloudId     string
-	CloudMeta   string
+	CloudMeta   any
 	Description string
-	Status      string `binding:"required"`
+	Status      uint
 }
 
 func Update(post *UpdateParam) error {
@@ -65,9 +63,9 @@ func Update(post *UpdateParam) error {
 			NSList:      post.NSList,
 			Model:       post.Model,
 			CloudId:     post.CloudId,
-			CloudMeta:   datatypes.JSON(post.CloudMeta),
+			CloudMeta:   post.CloudMeta,
 			Description: post.Description,
-			Status:      datatypes.JSON(post.Status),
+			Status:      post.Status,
 		})
 
 	return result.Error

@@ -1,7 +1,6 @@
 package workhub
 
 import (
-	"tdp-cloud/helper/json"
 	history "tdp-cloud/module/dborm/task_history"
 )
 
@@ -14,7 +13,7 @@ func createHistory(pod *SendPod, data *ExecPayload) uint {
 		HostId:   pod.SystemStat.HostId,
 		Subject:  "Exec: " + data.Name,
 		HostName: pod.SystemStat.HostName,
-		Request:  json.ToString(data),
+		Request:  data,
 		Response: "",
 		Status:   "Doing",
 	}
@@ -35,7 +34,7 @@ func updateHistory(pod *RespPod, rq *SocketData) error {
 	item := &history.UpdateParam{
 		Id:       rq.TaskId,
 		UserId:   pod.UserId,
-		Response: json.ToString(rq.Payload),
+		Response: rq.Payload,
 		Status:   status,
 	}
 

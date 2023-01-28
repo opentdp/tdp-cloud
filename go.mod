@@ -13,12 +13,11 @@ require (
 
 require (
 	github.com/glebarez/sqlite v1.6.0
-	gorm.io/datatypes v1.1.0
 	gorm.io/driver/mysql v1.4.5
 	gorm.io/gorm v1.24.3
 )
 
-// 其他依赖
+// 工具类
 
 require (
 	// 生成 UUID
@@ -65,7 +64,7 @@ require (
 	github.com/modern-go/reflect2 v1.0.2 // indirect
 	github.com/pelletier/go-toml/v2 v2.0.6 // indirect
 	github.com/power-devops/perfstat v0.0.0-20221212215047-62379fc7944b // indirect
-	github.com/remyoudompheng/bigfft v0.0.0-20220927061507-ef77025ab5aa // indirect
+	github.com/remyoudompheng/bigfft v0.0.0-20230126093431-47fa9a501578 // indirect
 	github.com/tklauser/go-sysconf v0.3.11 // indirect
 	github.com/tklauser/numcpus v0.6.0 // indirect
 	github.com/ugorji/go/codec v1.2.8 // indirect
@@ -77,5 +76,5 @@ require (
 	modernc.org/libc v1.22.2 // indirect
 	modernc.org/mathutil v1.5.0 // indirect
 	modernc.org/memory v1.5.0 // indirect
-	modernc.org/sqlite v1.20.2 // indirect
+	modernc.org/sqlite v1.20.3 // indirect
 )
