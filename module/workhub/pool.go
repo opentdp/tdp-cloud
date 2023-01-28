@@ -39,8 +39,11 @@ func Register(c *gin.Context) {
 
 	// 绑定主机
 
-	if id := c.Param("id"); len(id) > 0 {
-		bindMachine(id, workerId)
+	err = bindMachine(c.Param("id"), workerId)
+
+	if err != nil {
+		c.AbortWithError(500, err)
+		return
 	}
 
 	// 启动服务
