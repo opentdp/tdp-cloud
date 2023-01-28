@@ -7,11 +7,11 @@ import (
 
 	"github.com/gin-gonic/gin"
 
+	"tdp-cloud/api"
 	"tdp-cloud/cmd"
-	"tdp-cloud/helper/httpd"
-	"tdp-cloud/internal/api"
-	"tdp-cloud/internal/dborm"
-	"tdp-cloud/internal/migrator"
+	"tdp-cloud/module/dborm"
+	"tdp-cloud/module/httpd"
+	"tdp-cloud/module/migrator"
 )
 
 func Create() {

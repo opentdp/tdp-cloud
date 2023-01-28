@@ -4,7 +4,7 @@ import (
 	"log"
 	"time"
 
-	"tdp-cloud/internal/worker"
+	"tdp-cloud/module/worker"
 )
 
 func Create() {
