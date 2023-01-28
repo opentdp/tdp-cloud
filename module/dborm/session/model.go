@@ -4,7 +4,7 @@ import (
 	"errors"
 	"time"
 
-	"tdp-cloud/helper/strings"
+	"tdp-cloud/helper/strutil"
 	"tdp-cloud/module/dborm"
 )
 
@@ -14,7 +14,7 @@ func Create(userId uint) (string, error) {
 
 	item := &dborm.Session{
 		UserId: userId,
-		Token:  strings.Rand(32),
+		Token:  strutil.Rand(32),
 	}
 
 	result := dborm.Db.Create(item)

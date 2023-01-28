@@ -8,9 +8,9 @@ import (
 
 type CreateParam struct {
 	UserId   uint
-	HostId   string `binding:"required"`
-	HostName string `binding:"required"`
 	Subject  string `binding:"required"`
+	HostName string `binding:"required"`
+	WorkerId string `binding:"required"`
 	Status   string `binding:"required"`
 	Request  any    `binding:"required"`
 	Response any
@@ -20,9 +20,9 @@ func Create(post *CreateParam) (uint, error) {
 
 	item := &dborm.TaskHistory{
 		UserId:   post.UserId,
-		HostId:   post.HostId,
-		HostName: post.HostName,
 		Subject:  post.Subject,
+		HostName: post.HostName,
+		WorkerId: post.WorkerId,
 		Status:   post.Status,
 		Request:  post.Request,
 		Response: post.Response,
@@ -39,9 +39,9 @@ func Create(post *CreateParam) (uint, error) {
 type UpdateParam struct {
 	Id       uint `binding:"required"`
 	UserId   uint
-	HostId   string
-	HostName string
 	Subject  string
+	HostName string
+	WorkerId string
 	Status   string `binding:"required"`
 	Request  any
 	Response any
@@ -52,9 +52,9 @@ func Update(post *UpdateParam) error {
 	result := dborm.Db.
 		Where(&dborm.TaskHistory{Id: post.Id, UserId: post.UserId}).
 		Updates(dborm.TaskHistory{
-			HostId:   post.HostId,
-			HostName: post.HostName,
 			Subject:  post.Subject,
+			HostName: post.HostName,
+			WorkerId: post.WorkerId,
 			Status:   post.Status,
 			Request:  post.Request,
 			Response: post.Response,

@@ -14,7 +14,7 @@ import (
 
 	"github.com/mitchellh/mapstructure"
 
-	"tdp-cloud/helper/strings"
+	"tdp-cloud/helper/strutil"
 	"tdp-cloud/module/workhub"
 )
 
@@ -167,7 +167,7 @@ func execCommand(name string, params []string, timeout uint) (string, error) {
 		}
 
 		if runtime.GOOS == "windows" {
-			ret = strings.Gb18030ToUtf8(ret)
+			ret = strutil.Gb18030ToUtf8(ret)
 		}
 	}()
 

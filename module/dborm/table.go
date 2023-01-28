@@ -42,8 +42,8 @@ type Machine struct {
 	Model       string
 	CloudId     string `gorm:"uniqueIndex"`
 	CloudMeta   any    `gorm:"serializer:json"`
-	WorkerId    string
-	WorkerMeta  any `gorm:"serializer:json"`
+	WorkerId    string `gorm:"uniqueIndex"`
+	WorkerMeta  any    `gorm:"serializer:json"`
 	Description string
 	Status      uint
 	CreatedAt   int64
@@ -75,13 +75,13 @@ type Sshkey struct {
 // 任务记录
 
 type TaskHistory struct {
-	Id        uint   `gorm:"primaryKey"`
-	UserId    uint   `gorm:"index"`
-	HostId    string `gorm:"index"`
+	Id        uint `gorm:"primaryKey"`
+	UserId    uint `gorm:"index"`
 	Subject   string
 	HostName  string
-	Request   any `gorm:"serializer:json"`
-	Response  any `gorm:"serializer:json"`
+	WorkerId  string `gorm:"index"`
+	Request   any    `gorm:"serializer:json"`
+	Response  any    `gorm:"serializer:json"`
 	Status    string
 	CreatedAt int64
 	UpdatedAt int64

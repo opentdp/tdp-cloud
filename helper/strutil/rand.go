@@ -1,12 +1,10 @@
-package strings
+package strutil
 
 import (
 	"math/rand"
 	"strconv"
 	"strings"
 	"time"
-
-	"golang.org/x/text/encoding/simplifiedchinese"
 )
 
 // 随机字符串
@@ -29,15 +27,5 @@ func Rand(length uint) string {
 	}
 
 	return strings.Join(rs, "")
-
-}
-
-// 转换编码 gb18030 -> utf-8
-
-func Gb18030ToUtf8(s string) string {
-
-	ret, _ := simplifiedchinese.GB18030.NewDecoder().String(s)
-
-	return string(ret)
 
 }

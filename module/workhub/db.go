@@ -10,9 +10,9 @@ func createHistory(pod *SendPod, data *ExecPayload) uint {
 
 	item := &history.CreateParam{
 		UserId:   pod.UserId,
-		HostId:   pod.SystemStat.HostId,
 		Subject:  "Exec: " + data.Name,
 		HostName: pod.SystemStat.HostName,
+		WorkerId: pod.WorkerId,
 		Request:  data,
 		Response: "",
 		Status:   "Doing",

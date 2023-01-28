@@ -2,12 +2,14 @@ package worker
 
 import (
 	"log"
+	"net/url"
 	"strings"
 	"time"
 
 	"github.com/shirou/gopsutil/v3/host"
 
 	"tdp-cloud/helper/socket"
+	"tdp-cloud/helper/strutil"
 	"tdp-cloud/module/workhub"
 )
 
@@ -25,29 +27,21 @@ type SendPod struct {
 	*socket.JsonPod
 }
 
-func Daemon(url string) {
+func Daemon(ws string) {
 
-	args := []string{}
 	info, _ := host.Info()
+	workerId := strutil.Md5(info.HostID)
 
-	if osType := info.OS; len(osType) > 0 {
-		args = append(args, "OSType="+osType)
+	args := []string{
+		"WorkerId=" + workerId,
+		"HostName=" + url.QueryEscape(info.Hostname),
+		"OSType=" + info.OS,
 	}
 
-	if hostName := info.Hostname; len(hostName) > 0 {
-		args = append(args, "HostName="+hostName)
-	}
+	ws += "?" + strings.Join(args, "&")
 
-	if hostId := info.HostID; len(hostId) > 0 {
-		args = append(args, "HostId="+hostId)
-	}
-
-	if len(args) > 0 {
-		url += "?" + strings.Join(args, "&")
-	}
-
-	log.Println("Connecting", url)
-	pod, err := socket.NewJsonPodClient(url)
+	log.Println("Connecting", ws)
+	pod, err := socket.NewJsonPodClient(ws)
 
 	if err != nil {
 		return

@@ -22,17 +22,20 @@ func Register(c *gin.Context) {
 
 	// 注册节点
 
+	userId := c.GetUint("UserId")
+	workerId := c.Query("WorkerId")
+
 	worker := &Worker{
 		pod,
-		c.GetUint("UserId"),
+		userId,
+		workerId,
 		c.Query("OSType"),
-		c.Query("HostId"),
 		c.Query("HostName"),
 		&psutil.SystemStat{},
 	}
 
-	nodePool[worker.HostId] = worker
-	defer delete(nodePool, worker.HostId)
+	nodePool[workerId] = worker
+	defer delete(nodePool, workerId)
 
 	// 启动服务
 
@@ -44,10 +47,10 @@ func NodesOfUser(userId uint) *[]any {
 
 	items := []any{}
 
-	for _, v := range nodePool {
+	for k, v := range nodePool {
 		if userId == v.UserId {
 			items = append(items, map[string]any{
-				"HostId":     v.HostId,
+				"WorkerId":   k,
 				"RemoteAddr": v.Conn.RemoteAddr().String(),
 				"SystemStat": v.SystemStat,
 			})
@@ -58,9 +61,9 @@ func NodesOfUser(userId uint) *[]any {
 
 }
 
-func NewSender(hostId string) *SendPod {
+func NewSender(workerId string) *SendPod {
 
-	if node, ok := nodePool[hostId]; ok {
+	if node, ok := nodePool[workerId]; ok {
 		return &SendPod{node}
 	}
 

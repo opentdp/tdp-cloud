@@ -17,8 +17,8 @@ func list(c *gin.Context) {
 }
 
 type execParam struct {
-	HostId  string
-	Payload workhub.ExecPayload
+	WorkerId string
+	Payload  workhub.ExecPayload
 }
 
 func exec(c *gin.Context) {
@@ -30,7 +30,7 @@ func exec(c *gin.Context) {
 		return
 	}
 
-	send := workhub.NewSender(rq.HostId)
+	send := workhub.NewSender(rq.WorkerId)
 
 	if send == nil {
 		c.Set("Error", "客户端已断开连接")

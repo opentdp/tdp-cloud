@@ -17,8 +17,8 @@ type SocketData struct {
 type Worker struct {
 	*socket.JsonPod
 	UserId     uint
+	WorkerId   string
 	OSType     string
-	HostId     string
 	HostName   string
 	SystemStat *psutil.SystemStat
 }
