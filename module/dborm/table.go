@@ -42,6 +42,8 @@ type Machine struct {
 	Model       string
 	CloudId     string `gorm:"uniqueIndex"`
 	CloudMeta   any    `gorm:"serializer:json"`
+	WorkerId    string
+	WorkerMeta  any `gorm:"serializer:json"`
 	Description string
 	Status      uint
 	CreatedAt   int64

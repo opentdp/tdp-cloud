@@ -16,6 +16,8 @@ type CreateParam struct {
 	Model       string `binding:"required"`
 	CloudId     string
 	CloudMeta   any
+	WorkerId    string
+	WorkerMeta  any
 	Description string
 	Status      uint
 }
@@ -32,6 +34,8 @@ func Create(post *CreateParam) (uint, error) {
 		Model:       post.Model,
 		CloudId:     post.CloudId,
 		CloudMeta:   post.CloudMeta,
+		WorkerId:    post.WorkerId,
+		WorkerMeta:  post.WorkerMeta,
 		Description: post.Description,
 		Status:      post.Status,
 	}
@@ -55,6 +59,8 @@ type UpdateParam struct {
 	Model       string `binding:"required"`
 	CloudId     string
 	CloudMeta   any
+	WorkerId    string
+	WorkerMeta  any
 	Description string
 	Status      uint
 }
@@ -72,6 +78,8 @@ func Update(post *UpdateParam) error {
 			Model:       post.Model,
 			CloudId:     post.CloudId,
 			CloudMeta:   post.CloudMeta,
+			WorkerId:    post.WorkerId,
+			WorkerMeta:  post.WorkerMeta,
 			Description: post.Description,
 			Status:      post.Status,
 		})
