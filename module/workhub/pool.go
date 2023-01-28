@@ -37,6 +37,12 @@ func Register(c *gin.Context) {
 	nodePool[workerId] = worker
 	defer delete(nodePool, workerId)
 
+	// 绑定主机
+
+	if id := c.Param("id"); len(id) > 0 {
+		bindMachine(id, workerId)
+	}
+
 	// 启动服务
 
 	Daemon(worker)
