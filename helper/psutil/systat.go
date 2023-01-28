@@ -1,6 +1,7 @@
 package psutil
 
 import (
+	"encoding/json"
 	"time"
 
 	"github.com/shirou/gopsutil/v3/cpu"
@@ -23,6 +24,19 @@ type SystemStat struct {
 	DiskUsed     uint64
 	NetBytesRecv uint64
 	NetBytesSent uint64
+}
+
+func (p *SystemStat) From(s string) {
+
+	json.Unmarshal([]byte(s), p)
+
+}
+
+func (p *SystemStat) String() string {
+
+	jsonbyte, _ := json.Marshal(p)
+	return string(jsonbyte)
+
 }
 
 func GetSystemStat() *SystemStat {

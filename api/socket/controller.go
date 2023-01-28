@@ -22,8 +22,12 @@ func worker(c *gin.Context) {
 	}
 
 	c.Set("UserId", u.Id)
+	c.Set("MachineId", c.Param("mid"))
 
-	workhub.Register(c)
+	if err := workhub.Register(c); err != nil {
+		c.AbortWithError(500, err)
+		return
+	}
 
 }
 

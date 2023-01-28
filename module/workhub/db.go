@@ -1,19 +1,22 @@
 package workhub
 
 import (
-	"github.com/spf13/cast"
-
 	"tdp-cloud/module/dborm/machine"
 	history "tdp-cloud/module/dborm/task_history"
 )
 
 // 绑定主机
 
-func bindMachine(id, workerId string) error {
+func bindMachine(node *Worker) error {
+
+	if node.MachineId == 0 {
+		return nil
+	}
 
 	item := &machine.UpdateParam{
-		Id:       cast.ToUint(id),
-		WorkerId: workerId,
+		Id:         node.MachineId,
+		WorkerId:   node.WorkerId,
+		WorkerMeta: node.SystemStat,
 	}
 
 	return machine.Update(item)

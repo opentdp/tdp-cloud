@@ -10,7 +10,7 @@ func AuthGuard() gin.HandlerFunc {
 
 	return func(c *gin.Context) {
 
-		token := c.Request.Header.Get("Authorization")
+		token := c.GetHeader("Authorization")
 
 		sess, err := session.Fetch(token)
 

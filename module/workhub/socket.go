@@ -17,9 +17,8 @@ type SocketData struct {
 type Worker struct {
 	*socket.JsonPod
 	UserId     uint
+	MachineId  uint
 	WorkerId   string
-	OSType     string
-	HostName   string
 	SystemStat *psutil.SystemStat
 }
 
@@ -35,9 +34,9 @@ type SendPod struct {
 	*Worker
 }
 
-func Daemon(node *Worker) {
+func Daemon(node *Worker) error {
 
-	Receiver(node)
+	return Receiver(node)
 
 }
 

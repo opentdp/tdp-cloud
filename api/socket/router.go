@@ -14,7 +14,7 @@ func Socket(wsi *gin.RouterGroup) {
 
 	{
 		rg.GET("/worker", worker)
-		rg.GET("/worker/:id", worker)
+		rg.GET("/worker/:mid", worker)
 	}
 
 	// 需授权接口

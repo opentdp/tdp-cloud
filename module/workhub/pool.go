@@ -9,64 +9,55 @@ import (
 
 var nodePool = map[string]*Worker{}
 
-func Register(c *gin.Context) {
+func Register(c *gin.Context) error {
 
 	pod, err := socket.NewJsonPod(c.Writer, c.Request)
 
 	if err != nil {
-		c.AbortWithError(500, err)
-		return
+		return err
 	}
 
 	defer pod.Close()
 
 	// 注册节点
 
-	userId := c.GetUint("UserId")
-	workerId := c.Query("WorkerId")
+	systemStat := &psutil.SystemStat{}
+	systemStat.From(c.GetHeader("TDP-HostStat"))
 
 	worker := &Worker{
 		pod,
-		userId,
-		workerId,
-		c.Query("OSType"),
-		c.Query("HostName"),
-		&psutil.SystemStat{},
+		c.GetUint("UserId"),
+		c.GetUint("MachineId"),
+		c.GetHeader("TDP-WorkerId"),
+		systemStat,
 	}
 
-	nodePool[workerId] = worker
-	defer delete(nodePool, workerId)
+	nodePool[worker.WorkerId] = worker
+	defer delete(nodePool, worker.WorkerId)
 
 	// 绑定主机
 
-	err = bindMachine(c.Param("id"), workerId)
-
-	if err != nil {
-		c.AbortWithError(500, err)
-		return
+	if err = bindMachine(worker); err != nil {
+		return err
 	}
 
 	// 启动服务
 
-	Daemon(worker)
+	return Daemon(worker)
 
 }
 
-func NodesOfUser(userId uint) *[]any {
+func NodesOfUser(userId uint) []*Worker {
 
-	items := []any{}
+	items := []*Worker{}
 
-	for k, v := range nodePool {
+	for _, v := range nodePool {
 		if userId == v.UserId {
-			items = append(items, map[string]any{
-				"WorkerId":   k,
-				"RemoteAddr": v.Conn.RemoteAddr().String(),
-				"SystemStat": v.SystemStat,
-			})
+			items = append(items, v)
 		}
 	}
 
-	return &items
+	return items
 
 }
 
