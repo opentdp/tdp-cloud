@@ -1,10 +1,15 @@
 package workhub
 
 import (
+	"errors"
+
 	"github.com/gin-gonic/gin"
 
+	"tdp-cloud/module/dborm/user"
 	"tdp-cloud/module/workhub"
 )
+
+// 节点列表
 
 func list(c *gin.Context) {
 
@@ -15,6 +20,8 @@ func list(c *gin.Context) {
 	c.Set("Payload", res)
 
 }
+
+// 执行脚本
 
 type execParam struct {
 	WorkerId string
@@ -44,6 +51,29 @@ func exec(c *gin.Context) {
 		})
 	} else {
 		c.Set("Error", err)
+	}
+
+}
+
+// 注册节点
+
+func register(c *gin.Context) {
+
+	u, err := user.Fetch(&user.FetchParam{
+		AppId: c.Param("appid"),
+	})
+
+	if err != nil || u.Id == 0 {
+		c.AbortWithError(400, errors.New("授权失败"))
+		return
+	}
+
+	c.Set("UserId", u.Id)
+	c.Set("MachineId", c.Param("mid"))
+
+	if err := workhub.Register(c); err != nil {
+		c.AbortWithError(500, err)
+		return
 	}
 
 }

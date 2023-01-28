@@ -22,6 +22,7 @@ type SystemStat struct {
 	MemoryUsed   uint64
 	DiskTotal    uint64
 	DiskUsed     uint64
+	IpAddress    []string
 	NetBytesRecv uint64
 	NetBytesSent uint64
 }
@@ -45,7 +46,8 @@ func GetSystemStat() *SystemStat {
 	cp, _ := cpu.Percent(time.Second, false)
 	mv, _ := mem.VirtualMemory()
 	dp, _ := disk.Partitions(false)
-	ni, _ := net.IOCounters(true)
+	ni, _ := net.Interfaces()
+	no, _ := net.IOCounters(true)
 	hi, _ := host.Info()
 
 	diskTotal := uint64(0)
@@ -56,9 +58,16 @@ func GetSystemStat() *SystemStat {
 		diskUsed += du.Used
 	}
 
+	ipAddress := []string{}
+	for _, nif := range ni {
+		for _, ifa := range nif.Addrs {
+			ipAddress = append(ipAddress, ifa.Addr)
+		}
+	}
+
 	netBytesRecv := uint64(0)
 	netBytesSent := uint64(0)
-	for _, nio := range ni {
+	for _, nio := range no {
 		netBytesRecv += nio.BytesRecv
 		netBytesSent += nio.BytesSent
 	}
@@ -74,6 +83,7 @@ func GetSystemStat() *SystemStat {
 		MemoryUsed:   mv.Used,
 		DiskTotal:    diskTotal,
 		DiskUsed:     diskUsed,
+		IpAddress:    ipAddress,
 		NetBytesRecv: netBytesRecv,
 		NetBytesSent: netBytesSent,
 	}

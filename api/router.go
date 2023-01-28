@@ -7,10 +7,10 @@ import (
 	"tdp-cloud/api/domain"
 	"tdp-cloud/api/machine"
 	"tdp-cloud/api/qcloud"
-	"tdp-cloud/api/socket"
 	"tdp-cloud/api/sshkey"
 	"tdp-cloud/api/task_history"
 	"tdp-cloud/api/task_script"
+	"tdp-cloud/api/terminal"
 	"tdp-cloud/api/user"
 	"tdp-cloud/api/vendor"
 	"tdp-cloud/api/workhub"
@@ -44,7 +44,8 @@ func Router(engine *gin.Engine) {
 	wsi.Use(midware.SocketPreset())
 
 	{
-		socket.Socket(wsi)
+		terminal.Socket(wsi)
+		workhub.Socket(wsi)
 	}
 
 }

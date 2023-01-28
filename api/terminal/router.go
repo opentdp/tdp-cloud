@@ -1,4 +1,4 @@
-package socket
+package terminal
 
 import (
 	"github.com/gin-gonic/gin"
@@ -8,14 +8,7 @@ import (
 
 func Socket(wsi *gin.RouterGroup) {
 
-	rg := wsi.Group("/")
-
-	// 匿名接口
-
-	{
-		rg.GET("/worker", worker)
-		rg.GET("/worker/:mid", worker)
-	}
+	rg := wsi.Group("/terminal")
 
 	// 需授权接口
 

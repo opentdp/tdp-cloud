@@ -18,3 +18,14 @@ func Router(api *gin.RouterGroup) {
 	}
 
 }
+
+func Socket(wsi *gin.RouterGroup) {
+
+	rg := wsi.Group("/")
+
+	{
+		rg.GET("/workhub", register)
+		rg.GET("/workhub/:mid", register)
+	}
+
+}
