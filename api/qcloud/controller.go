@@ -31,7 +31,7 @@ func apiProxy(c *gin.Context) {
 		RootDomain: "tencentcloudapi.com",
 	}
 
-	header := []byte(c.GetHeader("TDP-QCloud"))
+	header := []byte(c.GetHeader("TDP-Qcloud"))
 
 	if err := json.Unmarshal(header, params); err != nil {
 		c.Set("Error", err)
