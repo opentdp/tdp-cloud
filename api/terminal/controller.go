@@ -13,7 +13,7 @@ func ssh(c *gin.Context) {
 	var option *webssh.SSHClientOption
 
 	if err := c.ShouldBindQuery(&option); err != nil {
-		c.AbortWithError(400, err)
+		c.Set("Error", err)
 		return
 	}
 
@@ -26,7 +26,7 @@ func ssh(c *gin.Context) {
 	})
 
 	if err != nil {
-		c.AbortWithError(500, err)
+		c.Set("Error", err)
 		return
 	}
 

@@ -1,9 +1,8 @@
 package workhub
 
 import (
-	"errors"
-
 	"github.com/gin-gonic/gin"
+	"github.com/spf13/cast"
 
 	"tdp-cloud/module/dborm/user"
 	"tdp-cloud/module/workhub"
@@ -64,15 +63,15 @@ func register(c *gin.Context) {
 	})
 
 	if err != nil || u.Id == 0 {
-		c.AbortWithError(400, errors.New("授权失败"))
+		c.Set("Error", "授权失败")
 		return
 	}
 
 	c.Set("UserId", u.Id)
-	c.Set("MachineId", c.Param("mid"))
+	c.Set("MachineId", cast.ToUint(c.Param("mid")))
 
 	if err := workhub.Register(c); err != nil {
-		c.AbortWithError(500, err)
+		c.Set("Error", err)
 		return
 	}
 

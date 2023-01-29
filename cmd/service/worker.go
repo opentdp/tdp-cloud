@@ -10,13 +10,17 @@ import (
 type worker struct{}
 
 func (p *worker) Start(s service.Service) error {
+
 	log.Print("service start")
 	return nil
+
 }
 
 func (p *worker) Stop(s service.Service) error {
+
 	log.Print("service stop")
 	return nil
+
 }
 
 func workerService() service.Service {

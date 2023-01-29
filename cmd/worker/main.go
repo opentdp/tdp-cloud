@@ -11,13 +11,15 @@ func Create() {
 
 	defer delayer()
 
-	worker.Daemon(vRemote)
+	if err := worker.Daemon(vRemote); err != nil {
+		log.Print(err)
+	}
 
 }
 
 func delayer() {
 
-	log.Println("连接失败，将在5秒后重试")
+	log.Println("连接已断开，将在5秒后重试")
 
 	time.Sleep(time.Second * 5)
 	Create()

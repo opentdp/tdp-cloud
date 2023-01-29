@@ -24,7 +24,7 @@ func Router(engine *gin.Engine) {
 
 	api := engine.Group("/api")
 
-	api.Use(midware.JsonHandle())
+	api.Use(midware.OutputHandle())
 
 	{
 		config.Router(api)

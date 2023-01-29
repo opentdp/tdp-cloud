@@ -10,13 +10,17 @@ import (
 type server struct{}
 
 func (p *server) Start(s service.Service) error {
+
 	log.Print("service start")
 	return nil
+
 }
 
 func (p *server) Stop(s service.Service) error {
+
 	log.Print("service stop")
 	return nil
+
 }
 
 func serverService() service.Service {
