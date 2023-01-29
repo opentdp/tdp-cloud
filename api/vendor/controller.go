@@ -34,8 +34,8 @@ func create(c *gin.Context) {
 
 	var rq *vendor.CreateParam
 
-	if c.ShouldBind(&rq) != nil {
-		c.Set("Error", "请求参数错误")
+	if err := c.ShouldBind(&rq); err != nil {
+		c.Set("Error", err)
 		return
 	}
 
@@ -55,8 +55,8 @@ func update(c *gin.Context) {
 
 	var rq *vendor.UpdateParam
 
-	if c.ShouldBind(&rq) != nil {
-		c.Set("Error", "请求参数错误")
+	if err := c.ShouldBind(&rq); err != nil {
+		c.Set("Error", err)
 		return
 	}
 

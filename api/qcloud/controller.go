@@ -33,8 +33,8 @@ func apiProxy(c *gin.Context) {
 
 	header := []byte(c.GetHeader("TDP-QCloud"))
 
-	if json.Unmarshal(header, params) != nil {
-		c.Set("Error", "请求参数错误")
+	if err := json.Unmarshal(header, params); err != nil {
+		c.Set("Error", err)
 		return
 	}
 

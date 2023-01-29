@@ -32,8 +32,8 @@ func exec(c *gin.Context) {
 
 	var rq *execParam
 
-	if c.ShouldBind(&rq) != nil {
-		c.Set("Error", "请求参数错误")
+	if err := c.ShouldBind(&rq); err != nil {
+		c.Set("Error", err)
 		return
 	}
 
@@ -60,7 +60,7 @@ func exec(c *gin.Context) {
 func register(c *gin.Context) {
 
 	u, err := user.Fetch(&user.FetchParam{
-		AppId: c.Param("appid"),
+		AppId: c.Param("auth"),
 	})
 
 	if err != nil || u.Id == 0 {

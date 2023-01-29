@@ -25,15 +25,3 @@ func AuthGuard() gin.HandlerFunc {
 	}
 
 }
-
-func SocketPreset() gin.HandlerFunc {
-
-	return func(c *gin.Context) {
-
-		if auth := c.Param("auth"); auth != "" {
-			c.Request.Header.Set("Authorization", auth)
-		}
-
-	}
-
-}

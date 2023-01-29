@@ -12,8 +12,8 @@ func create(c *gin.Context) {
 
 	var rq *user.CreateParam
 
-	if c.ShouldBind(&rq) != nil {
-		c.Set("Error", "请求参数错误")
+	if err := c.ShouldBind(&rq); err != nil {
+		c.Set("Error", err)
 		return
 	}
 
@@ -47,8 +47,8 @@ func login(c *gin.Context) {
 
 	var rq *user.LoginParam
 
-	if c.ShouldBind(&rq) != nil {
-		c.Set("Error", "请求参数错误")
+	if err := c.ShouldBind(&rq); err != nil {
+		c.Set("Error", err)
 		return
 	}
 
@@ -66,8 +66,8 @@ func updateInfo(c *gin.Context) {
 
 	var rq *user.UpdateInfoParam
 
-	if c.ShouldBind(&rq) != nil {
-		c.Set("Error", "请求参数错误")
+	if err := c.ShouldBind(&rq); err != nil {
+		c.Set("Error", err)
 		return
 	}
 
@@ -87,8 +87,8 @@ func updatePassword(c *gin.Context) {
 
 	var rq *user.UpdatePasswordParam
 
-	if c.ShouldBind(&rq) != nil {
-		c.Set("Error", "请求参数错误")
+	if err := c.ShouldBind(&rq); err != nil {
+		c.Set("Error", err)
 		return
 	}
 

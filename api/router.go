@@ -20,9 +20,11 @@ import (
 
 func Router(engine *gin.Engine) {
 
+	// application interface
+
 	api := engine.Group("/api")
 
-	api.Use(midware.AbortHandle())
+	api.Use(midware.JsonHandle())
 
 	{
 		config.Router(api)
@@ -39,9 +41,9 @@ func Router(engine *gin.Engine) {
 
 	// websocket interface
 
-	wsi := engine.Group("/wsi/:appid")
+	wsi := engine.Group("/wsi/:auth")
 
-	wsi.Use(midware.SocketPreset())
+	wsi.Use(midware.SocketHandle())
 
 	{
 		terminal.Socket(wsi)

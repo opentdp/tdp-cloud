@@ -6,7 +6,7 @@ import (
 	"tdp-cloud/module/httpd"
 )
 
-func AbortHandle() gin.HandlerFunc {
+func JsonHandle() gin.HandlerFunc {
 
 	return func(c *gin.Context) {
 

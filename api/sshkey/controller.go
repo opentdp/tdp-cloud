@@ -27,8 +27,8 @@ func create(c *gin.Context) {
 
 	var rq *sshkey.CreateParam
 
-	if c.ShouldBind(&rq) != nil {
-		c.Set("Error", "请求参数错误")
+	if err := c.ShouldBind(&rq); err != nil {
+		c.Set("Error", err)
 		return
 	}
 
