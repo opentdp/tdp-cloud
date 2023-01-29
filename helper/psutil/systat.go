@@ -75,7 +75,7 @@ func GetSystemInfo() *SystemInfo {
 		MemoryUsed:   mv.Used,
 		DiskTotal:    diskTotal,
 		DiskUsed:     diskUsed,
-		IpAddress:    "",
+		IpAddress:    getIpAddress(false),
 		NetBytesRecv: netBytesRecv,
 		NetBytesSent: netBytesSent,
 	}

@@ -1,16 +1,22 @@
 package psutil
 
 import (
-	"log"
+	"strings"
 
 	"github.com/imroc/req/v3"
 )
 
-func getIpAddress() string {
+var ipAddress string
 
-	resp, err := req.Get("https://ipip.rpc.im/ip")
-	log.Print(resp, err)
+func getIpAddress(f bool) string {
 
-	return string(resp.Bytes())
+	if f || ipAddress == "" {
+		resp, err := req.Get("http://ipip.rpc.im/ip")
+		if err == nil {
+			ipAddress = strings.TrimSpace(resp.String())
+		}
+	}
+
+	return ipAddress
 
 }
