@@ -19,23 +19,22 @@ func Register(c *gin.Context) error {
 
 	defer pod.Close()
 
-	// 注册节点
-
-	systemStat := &psutil.SystemStat{}
-	systemStat.From(c.GetHeader("TDP-HostStat"))
+	// 节点信息
 
 	worker := &Worker{
 		pod,
 		c.GetUint("UserId"),
 		c.GetUint("MachineId"),
-		c.GetHeader("TDP-WorkerId"),
-		systemStat,
+		c.GetHeader("TDP-Worker-Id"),
+		&psutil.SystemInfo{},
 	}
+
+	worker.WorkerMeta.From(c.GetHeader("TDP-Worker-Meta"))
+
+	// 注册主机
 
 	nodePool[worker.WorkerId] = worker
 	defer delete(nodePool, worker.WorkerId)
-
-	// 绑定主机
 
 	if err = bindMachine(worker); err != nil {
 		return err

@@ -6,7 +6,7 @@ import (
 
 func (pod *RecvPod) Ping(rq *SocketData) error {
 
-	mapstructure.Decode(rq.Payload, &pod.SystemStat)
+	mapstructure.Decode(rq.Payload, &pod.WorkerMeta)
 
 	rs := &SocketData{
 		Method:  "Ping:resp",

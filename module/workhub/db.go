@@ -16,7 +16,7 @@ func bindMachine(node *Worker) error {
 	item := &machine.UpdateParam{
 		Id:         node.MachineId,
 		WorkerId:   node.WorkerId,
-		WorkerMeta: node.SystemStat,
+		WorkerMeta: node.WorkerMeta,
 	}
 
 	return machine.Update(item)
@@ -30,7 +30,7 @@ func createHistory(pod *SendPod, data *ExecPayload) uint {
 	item := &history.CreateParam{
 		UserId:   pod.UserId,
 		Subject:  "Exec: " + data.Name,
-		HostName: pod.SystemStat.HostName,
+		HostName: pod.WorkerMeta.HostName,
 		WorkerId: pod.WorkerId,
 		Request:  data,
 		Response: "",

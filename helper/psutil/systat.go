@@ -11,7 +11,7 @@ import (
 	"github.com/shirou/gopsutil/v3/net"
 )
 
-type SystemStat struct {
+type SystemInfo struct {
 	HostId       string
 	HostName     string
 	Uptime       uint64
@@ -22,31 +22,30 @@ type SystemStat struct {
 	MemoryUsed   uint64
 	DiskTotal    uint64
 	DiskUsed     uint64
-	IpAddress    []string
+	IpAddress    string
 	NetBytesRecv uint64
 	NetBytesSent uint64
 }
 
-func (p *SystemStat) From(s string) {
+func (p *SystemInfo) From(s string) {
 
 	json.Unmarshal([]byte(s), p)
 
 }
 
-func (p *SystemStat) String() string {
+func (p *SystemInfo) String() string {
 
 	jsonbyte, _ := json.Marshal(p)
 	return string(jsonbyte)
 
 }
 
-func GetSystemStat() *SystemStat {
+func GetSystemInfo() *SystemInfo {
 
 	cc, _ := cpu.Counts(true)
 	cp, _ := cpu.Percent(time.Second, false)
 	mv, _ := mem.VirtualMemory()
 	dp, _ := disk.Partitions(false)
-	ni, _ := net.Interfaces()
 	no, _ := net.IOCounters(true)
 	hi, _ := host.Info()
 
@@ -58,13 +57,6 @@ func GetSystemStat() *SystemStat {
 		diskUsed += du.Used
 	}
 
-	ipAddress := []string{}
-	for _, nif := range ni {
-		for _, ifa := range nif.Addrs {
-			ipAddress = append(ipAddress, ifa.Addr)
-		}
-	}
-
 	netBytesRecv := uint64(0)
 	netBytesSent := uint64(0)
 	for _, nio := range no {
@@ -72,7 +64,7 @@ func GetSystemStat() *SystemStat {
 		netBytesSent += nio.BytesSent
 	}
 
-	return &SystemStat{
+	return &SystemInfo{
 		HostId:       hi.HostID,
 		HostName:     hi.Hostname,
 		Uptime:       hi.Uptime,
@@ -83,7 +75,7 @@ func GetSystemStat() *SystemStat {
 		MemoryUsed:   mv.Used,
 		DiskTotal:    diskTotal,
 		DiskUsed:     diskUsed,
-		IpAddress:    ipAddress,
+		IpAddress:    "",
 		NetBytesRecv: netBytesRecv,
 		NetBytesSent: netBytesSent,
 	}

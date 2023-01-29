@@ -27,12 +27,12 @@ type SendPod struct {
 
 func Daemon(ws string) error {
 
-	stat := psutil.GetSystemStat()
-	workerId := strutil.Md5(stat.HostId)
+	info := psutil.GetSystemInfo()
+	workerId := strutil.Md5(info.HostId)
 
 	header := http.Header{}
-	header.Add("TDP-WorkerId", workerId)
-	header.Add("TDP-HostStat", stat.String())
+	header.Add("TDP-Worker-Id", workerId)
+	header.Add("TDP-Worker-Meta", info.String())
 
 	log.Println("Connecting", ws, header)
 	pod, err := socket.NewJsonPodClient(ws, header)
