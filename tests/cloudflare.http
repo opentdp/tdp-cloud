@@ -1,0 +1,23 @@
+# Cloudflare Api
+
+### 获取账号信息
+
+GET {{$dotenv TDP_API_BASE}}/cloudflare/3
+Authorization: {{$dotenv TDP_AUTHORIZATION}}
+Origin: {{$dotenv TDP_ORIGIN}}
+
+{
+    "Uri": "/user"
+}
+
+### 获取域名列表
+
+GET {{$dotenv TDP_API_BASE}}/cloudflare/3
+Authorization: {{$dotenv TDP_AUTHORIZATION}}
+Origin: {{$dotenv TDP_ORIGIN}}
+
+{
+    "Uri": "/zones"
+}
+
+###
