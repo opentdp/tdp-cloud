@@ -1,9 +1,10 @@
 package psutil
 
 import (
+	"log"
 	"strings"
 
-	"github.com/imroc/req/v3"
+	"tdp-cloud/helper/request"
 )
 
 var ipAddress string
@@ -11,9 +12,10 @@ var ipAddress string
 func getIpAddress(f bool) string {
 
 	if f || ipAddress == "" {
-		resp, err := req.Get("http://ipip.rpc.im/ip")
+		log.Println("fetch public ip from http://ipip.rpc.im")
+		body, err := request.Get("http://ipip.rpc.im/ip", nil)
 		if err == nil {
-			ipAddress = strings.TrimSpace(resp.String())
+			ipAddress = strings.TrimSpace(body)
 		}
 	}
 
