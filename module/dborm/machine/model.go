@@ -52,11 +52,11 @@ type UpdateParam struct {
 	Id          uint `binding:"required"`
 	UserId      uint
 	VendorId    uint
-	HostName    string `binding:"required"`
-	IpAddress   string `binding:"required"`
-	OSType      string `binding:"required"`
+	HostName    string
+	IpAddress   string
+	OSType      string
 	Region      string
-	Model       string `binding:"required"`
+	Model       string
 	CloudId     string
 	CloudMeta   any
 	WorkerId    string

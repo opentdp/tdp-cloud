@@ -43,10 +43,10 @@ func Create(post *CreateParam) (uint, error) {
 type UpdateParam struct {
 	Id          uint `binding:"required"`
 	UserId      uint
-	VendorId    uint   `binding:"required"`
-	Name        string `binding:"required"`
-	NSList      string `binding:"required"`
-	Model       string `binding:"required"`
+	VendorId    uint
+	Name        string
+	NSList      string
+	Model       string
 	CloudId     string
 	CloudMeta   any
 	Description string
