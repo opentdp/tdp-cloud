@@ -7,8 +7,10 @@ server.db*
 __debug_*
 tests/.env
 font/*
+/*.bat
 
 # Log files
+*.err
 *.log
 
 # Editor directories and files
