@@ -5,7 +5,7 @@ import (
 	"net/http"
 )
 
-func Client(req *http.Request, headers map[string]string) (string, error) {
+func Client(req *http.Request, headers map[string]string) ([]byte, error) {
 
 	for k, v := range headers {
 		req.Header.Set(k, v)
@@ -13,13 +13,11 @@ func Client(req *http.Request, headers map[string]string) (string, error) {
 
 	resp, err := http.DefaultClient.Do(req)
 
-	if err != nil {
-		return "", err
+	if err == nil {
+		defer resp.Body.Close()
+		return io.ReadAll(resp.Body)
 	}
 
-	defer resp.Body.Close()
-
-	body, err := io.ReadAll(resp.Body)
-	return string(body), err
+	return nil, err
 
 }

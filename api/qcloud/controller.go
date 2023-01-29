@@ -1,7 +1,6 @@
 package qcloud
 
 import (
-	"encoding/json"
 	"io/ioutil"
 	"net/http"
 	"regexp"
@@ -16,7 +15,7 @@ import (
 func apiProxy(c *gin.Context) {
 
 	userId := c.GetUint("UserId")
-	vendorId := cast.ToUint(c.GetHeader("TDP-Vendor"))
+	vendorId := cast.ToUint(c.Param("id"))
 
 	vendor, err := vendor.Fetch(vendorId, userId)
 
@@ -31,15 +30,9 @@ func apiProxy(c *gin.Context) {
 		RootDomain: "tencentcloudapi.com",
 	}
 
-	header := []byte(c.GetHeader("TDP-Qcloud"))
-
-	if err := json.Unmarshal(header, params); err != nil {
+	if err = c.ShouldBindJSON(params); err != nil {
 		c.Set("Error", err)
 		return
-	}
-
-	if payload, err := c.GetRawData(); err == nil {
-		params.Payload = payload
 	}
 
 	if res, err := qcloud.NewRequest(params); err == nil {

@@ -21,7 +21,7 @@ func Router(api *gin.RouterGroup) {
 	rg.Use(midware.AuthGuard())
 
 	{
-		rg.POST("/qcloud", apiProxy)
+		rg.POST("/qcloud/:id", apiProxy)
 	}
 
 }

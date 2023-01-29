@@ -14,18 +14,26 @@ func Post(url, query string, headers map[string]string) (string, error) {
 	}
 
 	if req, err := http.NewRequest("POST", url, rd); err == nil {
-		return Client(req, headers)
+		body, err := Client(req, headers)
+		return string(body), err
 	} else {
 		return "", err
 	}
 
 }
 
-func PostJson(url, query string, headers map[string]string) (string, error) {
+func PostJson(url string, query []byte, headers map[string]string) ([]byte, error) {
 
-	headers["Content-Type"] = "application/json"
-	headers["Accept"] = "application/json"
+	rd := strings.NewReader(string(query))
 
-	return Post(url, query, headers)
+	if headers["Content-Type"] == "" {
+		headers["Content-Type"] = "application/json"
+	}
+
+	if req, err := http.NewRequest("POST", url, rd); err == nil {
+		return Client(req, headers)
+	} else {
+		return nil, err
+	}
 
 }

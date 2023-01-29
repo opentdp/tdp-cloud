@@ -16,7 +16,7 @@ Origin: {{$dotenv TDP_ORIGIN}}
 {
     "SecretId":  "{{$dotenv TDP_SECRET_ID}}",
     "SecretKey": "{{$dotenv TDP_SECRET_KEY}}",
-	"Provider":  "qcloud",
+	"Provider":  "{{$dotenv TDP_SECRET_VENDOR}}",
     "Description":  "也没所谓"
 }
 
