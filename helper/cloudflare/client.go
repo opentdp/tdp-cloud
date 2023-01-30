@@ -7,25 +7,19 @@ import (
 	"tdp-cloud/helper/request"
 )
 
-func Get(rq *Params) (any, error) {
+func Request(rq *Params) (any, error) {
 
-	url := rq.GetUrl()
-	header := rq.GetHeader()
-	body, err := request.GetJson(url, header)
-
-	if err != nil {
-		return nil, err
+	client := request.Client{
+		Method: rq.Method,
+		Url:    endpoint + rq.Path + "?" + rq.Query,
+		Data:   string(rq.Payload),
+		Headers: request.H{
+			"Content-Type":  "application/json",
+			"Authorization": "Bearer " + rq.Token,
+		},
 	}
 
-	return parseBody(body)
-
-}
-
-func Post(rq *Params) (any, error) {
-
-	url := rq.GetUrl()
-	header := rq.GetHeader()
-	body, err := request.PostJson(url, rq.Payload, header)
+	body, err := client.JsonRequest()
 
 	if err != nil {
 		return nil, err

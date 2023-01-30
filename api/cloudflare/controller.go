@@ -33,13 +33,7 @@ func apiProxy(c *gin.Context) {
 
 	// 发起请求
 
-	var res any
-
-	if params.Payload == nil {
-		res, err = cloudflare.Get(params)
-	} else {
-		res, err = cloudflare.Post(params)
-	}
+	res, err := cloudflare.Request(params)
 
 	if err == nil {
 		c.Set("Payload", res)
