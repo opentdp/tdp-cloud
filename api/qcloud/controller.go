@@ -39,7 +39,7 @@ func apiProxy(c *gin.Context) {
 
 	// 发起请求
 
-	if res, err := qcloud.NewRequest(params); err == nil {
+	if res, err := qcloud.Request(params); err == nil {
 		c.Set("Payload", res.Response)
 	} else {
 		re, _ := regexp.Compile(`^.+, Message=`)

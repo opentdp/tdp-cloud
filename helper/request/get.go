@@ -6,21 +6,24 @@ import (
 
 func Get(url string, headers map[string]string) (string, error) {
 
-	if req, err := http.NewRequest("GET", url, nil); err == nil {
-		body, err := Client(req, headers)
-		return string(body), err
-	} else {
+	req, err := http.NewRequest("GET", url, nil)
+
+	if err != nil {
 		return "", err
 	}
+
+	return TextClient(req, headers)
 
 }
 
 func GetJson(url string, headers map[string]string) ([]byte, error) {
 
-	if req, err := http.NewRequest("GET", url, nil); err == nil {
-		return Client(req, headers)
-	} else {
+	req, err := http.NewRequest("GET", url, nil)
+
+	if err != nil {
 		return nil, err
 	}
+
+	return Client(req, headers)
 
 }

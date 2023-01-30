@@ -2,70 +2,58 @@ package cloudflare
 
 import (
 	"encoding/json"
+	"errors"
 
 	"tdp-cloud/helper/request"
 )
 
-type Params struct {
-	ApiToken string
-	Uri      string `binding:"required"`
-	Query    string
-	Payload  any
-}
+func Get(rq *Params) (any, error) {
 
-type Response struct {
-	Result     any
-	Success    bool
-	Errors     any
-	Messages   any
-	ResultInfo any
-}
-
-var Endpoint = "https://api.cloudflare.com/client/v4"
-
-func Get(rq *Params) (*Response, error) {
-
-	res := &Response{}
-
-	url := Endpoint + rq.Uri + "?" + rq.Query
-
-	header := map[string]string{
-		"Content-Type":  "application/json",
-		"Authorization": "Bearer " + rq.ApiToken,
-	}
-
+	url := rq.GetUrl()
+	header := rq.GetHeader()
 	body, err := request.GetJson(url, header)
+
 	if err != nil {
-		return res, err
+		return nil, err
 	}
 
-	err = json.Unmarshal(body, res)
-	return res, err
+	return parseBody(body)
 
 }
 
-func Post(rq *Params) (*Response, error) {
+func Post(rq *Params) (any, error) {
+
+	url := rq.GetUrl()
+	header := rq.GetHeader()
+	body, err := request.PostJson(url, rq.Payload, header)
+
+	if err != nil {
+		return nil, err
+	}
+
+	return parseBody(body)
+
+}
+
+func parseBody(body []byte) (any, error) {
 
 	res := &Response{}
+	err := json.Unmarshal(body, res)
 
-	url := Endpoint + rq.Uri + "?" + rq.Query
-
-	header := map[string]string{
-		"Content-Type":  "application/json",
-		"Authorization": "Bearer " + rq.ApiToken,
-	}
-
-	data, err := json.Marshal(rq.Payload)
 	if err != nil {
 		return res, err
 	}
 
-	body, err := request.PostJson(url, data, header)
-	if err != nil {
+	if cap(res.Errors) > 0 {
+		err = errors.New((res.Errors[0]).Message)
 		return res, err
 	}
 
-	err = json.Unmarshal(body, res)
+	if cap(res.Messages) > 0 {
+		msg := (res.Messages[0]).Message
+		return msg, err
+	}
+
 	return res, err
 
 }

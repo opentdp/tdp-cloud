@@ -9,23 +9,7 @@ import (
 	tp "github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/common/profile"
 )
 
-type Params struct {
-	Service    string `note:"产品名称"`
-	Version    string `note:"接口版本"`
-	Action     string `note:"接口名称"`
-	Payload    any    `note:"结构化数据"`
-	Region     string `note:"资源所在区域"`
-	Endpoint   string `note:"指定接口区域"`
-	SecretId   string `note:"访问密钥 Id"`
-	SecretKey  string `note:"访问密钥 Key"`
-	RootDomain string `note:"API 根域名"`
-}
-
-type Response struct {
-	Response any
-}
-
-func NewRequest(rp *Params) (*Response, error) {
+func Request(rp *Params) (*Response, error) {
 
 	request := th.NewCommonRequest(rp.Service, rp.Version, rp.Action)
 
@@ -33,7 +17,7 @@ func NewRequest(rp *Params) (*Response, error) {
 		request.SetActionParameters(rp.Payload)
 	}
 
-	client := NewClient(rp)
+	client := newClient(rp)
 	response := th.NewCommonResponse()
 
 	if err := client.Send(request, response); err != nil {
@@ -51,7 +35,7 @@ func NewRequest(rp *Params) (*Response, error) {
 
 }
 
-func NewClient(rp *Params) *tc.Client {
+func newClient(rp *Params) *tc.Client {
 
 	cpf := tp.NewClientProfile()
 

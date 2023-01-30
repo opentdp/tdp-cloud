@@ -1,6 +1,7 @@
 package request
 
 import (
+	"encoding/json"
 	"net/http"
 	"strings"
 )
@@ -8,32 +9,39 @@ import (
 func Post(url, query string, headers map[string]string) (string, error) {
 
 	rd := strings.NewReader(query)
+	req, err := http.NewRequest("POST", url, rd)
+
+	if err != nil {
+		return "", err
+	}
 
 	if headers["Content-Type"] == "" {
 		headers["Content-Type"] = "application/x-www-form-urlencoded; charset=UTF-8"
 	}
 
-	if req, err := http.NewRequest("POST", url, rd); err == nil {
-		body, err := Client(req, headers)
-		return string(body), err
-	} else {
-		return "", err
-	}
+	return TextClient(req, headers)
 
 }
 
-func PostJson(url string, query []byte, headers map[string]string) ([]byte, error) {
+func PostJson(url string, query any, headers map[string]string) ([]byte, error) {
 
-	rd := strings.NewReader(string(query))
+	data, err := json.Marshal(query)
+
+	if err != nil {
+		return nil, err
+	}
+
+	rd := strings.NewReader(string(data))
+	req, err := http.NewRequest("POST", url, rd)
+
+	if err != nil {
+		return nil, err
+	}
 
 	if headers["Content-Type"] == "" {
 		headers["Content-Type"] = "application/json"
 	}
 
-	if req, err := http.NewRequest("POST", url, rd); err == nil {
-		return Client(req, headers)
-	} else {
-		return nil, err
-	}
+	return Client(req, headers)
 
 }

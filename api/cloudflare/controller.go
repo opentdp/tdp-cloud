@@ -23,7 +23,7 @@ func apiProxy(c *gin.Context) {
 	// 构造参数
 
 	params := &cloudflare.Params{
-		ApiToken: vendor.SecretKey,
+		Token: vendor.SecretKey,
 	}
 
 	if err := c.ShouldBindJSON(params); err != nil {
@@ -33,7 +33,7 @@ func apiProxy(c *gin.Context) {
 
 	// 发起请求
 
-	var res *cloudflare.Response
+	var res any
 
 	if c.Request.Method == "GET" {
 		res, err = cloudflare.Get(params)
