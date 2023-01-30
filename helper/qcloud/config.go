@@ -11,3 +11,7 @@ type Params struct {
 	SecretKey  string `note:"访问密钥 Key"`
 	RootDomain string `note:"API 根域名"`
 }
+
+type Response struct {
+	Response any
+}
