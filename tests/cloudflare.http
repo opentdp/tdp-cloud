@@ -7,7 +7,7 @@ Authorization: {{$dotenv TDP_AUTHORIZATION}}
 Origin: {{$dotenv TDP_ORIGIN}}
 
 {
-    "Uri": "/user"
+    "Path": "/user"
 }
 
 ### 获取域名列表
@@ -17,7 +17,7 @@ Authorization: {{$dotenv TDP_AUTHORIZATION}}
 Origin: {{$dotenv TDP_ORIGIN}}
 
 {
-    "Uri": "/zones"
+    "Path": "/zones"
 }
 
 ### 获取域名列表 - 根据条件筛选
@@ -27,7 +27,7 @@ Authorization: {{$dotenv TDP_AUTHORIZATION}}
 Origin: {{$dotenv TDP_ORIGIN}}
 
 {
-    "Uri": "/zones",
+    "Path": "/zones",
     "Query": "name=anrip.com"
 }
 
@@ -38,7 +38,7 @@ Authorization: {{$dotenv TDP_AUTHORIZATION}}
 Origin: {{$dotenv TDP_ORIGIN}}
 
 {
-    "Uri": "/zones/3bf29adb3736dda1506aca5084a71dfc"
+    "Path": "/zones/3bf29adb3736dda1506aca5084a71dfc"
 }
 
 ###

@@ -4,14 +4,14 @@ var endpoint = "https://api.cloudflare.com/client/v4"
 
 type Params struct {
 	Token   string `note:"Api Token"`
-	Uri     string `binding:"required"`
+	Path    string `binding:"required"`
 	Query   string `note:"请求参数"`
 	Payload any    `note:"结构化数据"`
 }
 
 func (rq *Params) GetUrl() string {
 
-	return endpoint + rq.Uri + "?" + rq.Query
+	return endpoint + rq.Path + "?" + rq.Query
 
 }
 
