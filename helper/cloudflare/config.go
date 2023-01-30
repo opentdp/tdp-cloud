@@ -1,6 +1,8 @@
 package cloudflare
 
-import "encoding/json"
+import (
+	"encoding/json"
+)
 
 var endpoint = "https://api.cloudflare.com/client/v4"
 

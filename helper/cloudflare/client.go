@@ -7,15 +7,15 @@ import (
 	"tdp-cloud/helper/request"
 )
 
-func Request(rq *Params) (any, error) {
+func Request(rp *Params) (any, error) {
 
 	client := request.Client{
-		Method: rq.Method,
-		Url:    endpoint + rq.Path + "?" + rq.Query,
-		Data:   string(rq.Payload),
+		Method: rp.Method,
+		Url:    endpoint + rp.Path + "?" + rp.Query,
+		Data:   string(rp.Payload),
 		Headers: request.H{
 			"Content-Type":  "application/json",
-			"Authorization": "Bearer " + rq.Token,
+			"Authorization": "Bearer " + rp.Token,
 		},
 	}
 
