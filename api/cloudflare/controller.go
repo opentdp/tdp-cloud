@@ -8,7 +8,7 @@ import (
 	"tdp-cloud/module/dborm/vendor"
 )
 
-func getProxy(c *gin.Context) {
+func apiProxy(c *gin.Context) {
 
 	userId := c.GetUint("UserId")
 	vendorId := cast.ToUint(c.Param("id"))
@@ -20,6 +20,8 @@ func getProxy(c *gin.Context) {
 		return
 	}
 
+	// 构造参数
+
 	params := &cloudflare.Params{
 		ApiToken: vendor.SecretKey,
 	}
@@ -29,36 +31,17 @@ func getProxy(c *gin.Context) {
 		return
 	}
 
-	if res, err := cloudflare.Get(params); err == nil {
-		c.Set("Payload", res)
+	// 发起请求
+
+	var res *cloudflare.Response
+
+	if c.Request.Method == "GET" {
+		res, err = cloudflare.Get(params)
 	} else {
-		c.Set("Error", err)
+		res, err = cloudflare.Post(params)
 	}
 
-}
-
-func postProxy(c *gin.Context) {
-
-	userId := c.GetUint("UserId")
-	vendorId := cast.ToUint(c.Param("id"))
-
-	vendor, err := vendor.Fetch(vendorId, userId)
-
-	if err != nil || vendor.Id == 0 {
-		c.Set("Error", "厂商不存在")
-		return
-	}
-
-	params := &cloudflare.Params{
-		ApiToken: vendor.SecretKey,
-	}
-
-	if err := c.ShouldBindJSON(params); err != nil {
-		c.Set("Error", err)
-		return
-	}
-
-	if res, err := cloudflare.Post(params); err == nil {
+	if err == nil {
 		c.Set("Payload", res)
 	} else {
 		c.Set("Error", err)

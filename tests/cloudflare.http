@@ -20,4 +20,25 @@ Origin: {{$dotenv TDP_ORIGIN}}
     "Uri": "/zones"
 }
 
+### 获取域名列表 - 根据条件筛选
+
+GET {{$dotenv TDP_API_BASE}}/cloudflare/3
+Authorization: {{$dotenv TDP_AUTHORIZATION}}
+Origin: {{$dotenv TDP_ORIGIN}}
+
+{
+    "Uri": "/zones",
+    "Query": "name=anrip.com"
+}
+
+### 获取域名详情
+
+GET {{$dotenv TDP_API_BASE}}/cloudflare/3
+Authorization: {{$dotenv TDP_AUTHORIZATION}}
+Origin: {{$dotenv TDP_ORIGIN}}
+
+{
+    "Uri": "/zones/3bf29adb3736dda1506aca5084a71dfc"
+}
+
 ###

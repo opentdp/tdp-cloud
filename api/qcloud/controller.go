@@ -24,6 +24,8 @@ func apiProxy(c *gin.Context) {
 		return
 	}
 
+	// 构造参数
+
 	params := &qcloud.Params{
 		SecretId:   vendor.SecretId,
 		SecretKey:  vendor.SecretKey,
@@ -34,6 +36,8 @@ func apiProxy(c *gin.Context) {
 		c.Set("Error", err)
 		return
 	}
+
+	// 发起请求
 
 	if res, err := qcloud.NewRequest(params); err == nil {
 		c.Set("Payload", res.Response)

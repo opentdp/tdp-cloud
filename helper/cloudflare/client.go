@@ -35,11 +35,11 @@ func Get(rq *Params) (*Response, error) {
 	}
 
 	body, err := request.GetJson(url, header)
-
-	if err == nil {
-		err = json.Unmarshal(body, res)
+	if err != nil {
+		return res, err
 	}
 
+	err = json.Unmarshal(body, res)
 	return res, err
 
 }
@@ -55,15 +55,17 @@ func Post(rq *Params) (*Response, error) {
 		"Authorization": "Bearer " + rq.ApiToken,
 	}
 
-	//rq.Payload
-	var data []byte
-
-	body, err := request.PostJson(url, data, header)
-
-	if err == nil {
-		err = json.Unmarshal(body, res)
+	data, err := json.Marshal(rq.Payload)
+	if err != nil {
+		return res, err
 	}
 
+	body, err := request.PostJson(url, data, header)
+	if err != nil {
+		return res, err
+	}
+
+	err = json.Unmarshal(body, res)
 	return res, err
 
 }
