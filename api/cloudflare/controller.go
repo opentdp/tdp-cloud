@@ -35,7 +35,7 @@ func apiProxy(c *gin.Context) {
 
 	var res any
 
-	if c.Request.Method == "GET" {
+	if params.Payload == nil {
 		res, err = cloudflare.Get(params)
 	} else {
 		res, err = cloudflare.Post(params)

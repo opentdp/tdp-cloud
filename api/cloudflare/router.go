@@ -13,7 +13,6 @@ func Router(api *gin.RouterGroup) {
 	rg.Use(midware.AuthGuard())
 
 	{
-		rg.GET("/:id", apiProxy)
 		rg.POST("/:id", apiProxy)
 	}
 
