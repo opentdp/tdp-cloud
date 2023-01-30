@@ -52,7 +52,7 @@ func (pod *RecvPod) Exec(rs *SocketData) error {
 	}
 
 	if err := pod.Write(rq); err != nil {
-		log.Println("Exec:error ", err)
+		log.Println("Exec:error", err)
 		return err
 	}
 

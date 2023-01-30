@@ -9,7 +9,7 @@ import (
 func Deploy() {
 
 	if err := doMigrate(); err != nil {
-		log.Panic(err)
+		log.Panicln(err)
 	}
 
 }

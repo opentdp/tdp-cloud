@@ -11,14 +11,14 @@ type worker struct{}
 
 func (p *worker) Start(s service.Service) error {
 
-	log.Print("service start")
+	log.Println("service start")
 	return nil
 
 }
 
 func (p *worker) Stop(s service.Service) error {
 
-	log.Print("service stop")
+	log.Println("service stop")
 	return nil
 
 }
@@ -44,7 +44,7 @@ func workerService() service.Service {
 	s, err := service.New(&worker{}, config)
 
 	if err != nil {
-		log.Fatal("init service error: ", err)
+		log.Fatalln("init service error:", err)
 	}
 
 	return s

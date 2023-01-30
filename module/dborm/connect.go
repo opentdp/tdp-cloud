@@ -42,7 +42,7 @@ func Connect(dsn string) {
 	}
 
 	if err != nil {
-		log.Panic(err)
+		log.Panicln(err)
 	}
 
 }

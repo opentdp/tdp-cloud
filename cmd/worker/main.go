@@ -12,7 +12,7 @@ func Create() {
 	defer delayer()
 
 	if err := worker.Daemon(vRemote); err != nil {
-		log.Print(err)
+		log.Println(err)
 	}
 
 }

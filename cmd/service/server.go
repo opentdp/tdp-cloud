@@ -11,14 +11,14 @@ type server struct{}
 
 func (p *server) Start(s service.Service) error {
 
-	log.Print("service start")
+	log.Println("service start")
 	return nil
 
 }
 
 func (p *server) Stop(s service.Service) error {
 
-	log.Print("service stop")
+	log.Println("service stop")
 	return nil
 
 }
@@ -44,7 +44,7 @@ func serverService() service.Service {
 	s, err := service.New(&server{}, config)
 
 	if err != nil {
-		log.Fatal("init service error: ", err)
+		log.Fatalln("init service error: ", err)
 	}
 
 	return s

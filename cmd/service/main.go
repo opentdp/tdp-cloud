@@ -47,9 +47,9 @@ func uninstall() error {
 func logPrint(n string, e error) {
 
 	if e != nil {
-		log.Fatal(n, " service error: ", e.Error())
+		log.Fatalln(n, "service error:", e.Error())
 	} else {
-		log.Print(n, " service done")
+		log.Println(n, "service done")
 	}
 
 }
