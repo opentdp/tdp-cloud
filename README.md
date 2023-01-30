@@ -37,9 +37,13 @@ https://github.com/tdp-resource/tdp-cloud/blob/main/docs/部署服务端.md
 
 https://github.com/tdp-resource/tdp-cloud/blob/main/docs/添加子节点.md
 
-### 添加腾讯云账号
+### 绑定腾讯云
 
-https://github.com/tdp-resource/tdp-cloud/blob/main/docs/添加腾讯云账号.md
+https://github.com/tdp-resource/tdp-cloud/blob/main/docs/绑定腾讯云.md
+
+### 绑定Cloudflare
+
+https://github.com/tdp-resource/tdp-cloud/blob/main/docs/绑定Cloudflare.md
 
 ## 其他
 
