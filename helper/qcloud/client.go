@@ -2,14 +2,16 @@ package qcloud
 
 import (
 	"encoding/json"
+	"errors"
 	"os"
+	"regexp"
 
 	tc "github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/common"
 	th "github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/common/http"
 	tp "github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/common/profile"
 )
 
-func Request(rp *Params) (*Response, error) {
+func Request(rp *Params) (any, error) {
 
 	request := th.NewCommonRequest(rp.Service, rp.Version, rp.Action)
 
@@ -21,7 +23,9 @@ func Request(rp *Params) (*Response, error) {
 	response := th.NewCommonResponse()
 
 	if err := client.Send(request, response); err != nil {
-		return nil, err
+		re, _ := regexp.Compile(`^.+, Message=`)
+		msg := re.ReplaceAllString(err.Error(), "")
+		return nil, errors.New(msg)
 	}
 
 	res := &Response{}
@@ -31,7 +35,7 @@ func Request(rp *Params) (*Response, error) {
 		return nil, err
 	}
 
-	return res, nil
+	return res.Response, nil
 
 }
 
@@ -42,6 +46,11 @@ func newClient(rp *Params) *tc.Client {
 	// 调试模式
 	if os.Getenv("TDP_DEBUG") != "" {
 		cpf.Debug = true
+	}
+
+	// 接口根域名
+	if rp.RootDomain == "" {
+		rp.RootDomain = "tencentcloudapi.com"
 	}
 
 	// 网络错误重试

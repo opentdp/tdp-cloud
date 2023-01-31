@@ -3,7 +3,6 @@ package qcloud
 import (
 	"io/ioutil"
 	"net/http"
-	"regexp"
 
 	"github.com/gin-gonic/gin"
 	"github.com/spf13/cast"
@@ -27,9 +26,8 @@ func apiProxy(c *gin.Context) {
 	// 构造参数
 
 	params := &qcloud.Params{
-		SecretId:   vendor.SecretId,
-		SecretKey:  vendor.SecretKey,
-		RootDomain: "tencentcloudapi.com",
+		SecretId:  vendor.SecretId,
+		SecretKey: vendor.SecretKey,
 	}
 
 	if err = c.ShouldBindJSON(params); err != nil {
@@ -40,11 +38,9 @@ func apiProxy(c *gin.Context) {
 	// 发起请求
 
 	if res, err := qcloud.Request(params); err == nil {
-		c.Set("Payload", res.Response)
+		c.Set("Payload", res)
 	} else {
-		re, _ := regexp.Compile(`^.+, Message=`)
-		msg := re.ReplaceAllString(err.Error(), "")
-		c.Set("Error", msg)
+		c.Set("Error", err)
 	}
 
 }

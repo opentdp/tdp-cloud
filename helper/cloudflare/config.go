@@ -42,14 +42,20 @@ type ResultInfoCursors struct {
 	After  string
 }
 
-////
+//// Output
 
-type OutputResult struct {
-	Result   any
+type Output struct {
+	Datasets any
 	Messages string `json:",omitempty"`
-	DataInfo struct {
-		Page    int `json:",omitempty"`
-		PerPage int `json:",omitempty"`
-		Total   int `json:",omitempty"`
-	}
+}
+
+type OutputInfo struct {
+	Page    int
+	PerPage int
+	Total   int
+}
+
+type OutputWithInfo struct {
+	*Output
+	DataInfo *OutputInfo
 }

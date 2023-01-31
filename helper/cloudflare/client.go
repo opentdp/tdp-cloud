@@ -7,7 +7,7 @@ import (
 	"tdp-cloud/helper/request"
 )
 
-func Request(rp *Params) (*OutputResult, error) {
+func Request(rp *Params) (any, error) {
 
 	client := request.Client{
 		Method: rp.Method,
@@ -29,7 +29,7 @@ func Request(rp *Params) (*OutputResult, error) {
 
 }
 
-func parseBody(body []byte) (*OutputResult, error) {
+func parseBody(body []byte) (any, error) {
 
 	res := &Response{}
 	err := json.Unmarshal(body, res)
@@ -38,9 +38,7 @@ func parseBody(body []byte) (*OutputResult, error) {
 		return nil, err
 	}
 
-	out := &OutputResult{
-		Result: res.Result,
-	}
+	out := &Output{res.Result, ""}
 
 	if cap(res.Messages) > 0 {
 		out.Messages = (res.Messages[0]).Message
@@ -50,12 +48,14 @@ func parseBody(body []byte) (*OutputResult, error) {
 		err = errors.New((res.Errors[0]).Message)
 	}
 
-	if res.ResultInfo.PerPage > 0 {
-		out.DataInfo.Page = res.ResultInfo.Page
-		out.DataInfo.PerPage = res.ResultInfo.PerPage
-		out.DataInfo.Total = res.ResultInfo.Total
+	if res.ResultInfo.PerPage == 0 {
+		return out, err
 	}
 
-	return out, err
+	inf := &OutputInfo{
+		res.ResultInfo.Page, res.ResultInfo.PerPage, res.ResultInfo.Total,
+	}
+
+	return &OutputWithInfo{out, inf}, err
 
 }
