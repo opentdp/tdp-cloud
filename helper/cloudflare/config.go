@@ -15,29 +15,41 @@ type Params struct {
 }
 
 type Response struct {
-	Success    bool           `json:"success"`
-	Errors     []ResponseInfo `json:"errors"`
-	Messages   []ResponseInfo `json:"messages"`
-	Result     any            `json:"result"`
+	Success    bool
+	Errors     []ResponseInfo
+	Messages   []ResponseInfo
+	Result     any
 	ResultInfo ResultInfo
 }
 
 type ResponseInfo struct {
-	Code    int    `json:"code"`
-	Message string `json:"message"`
+	Code    int
+	Message string
 }
 
 type ResultInfo struct {
-	Page       int               `json:"page" url:"page,omitempty"`
-	PerPage    int               `json:"per_page" url:"per_page,omitempty"`
-	TotalPages int               `json:"total_pages" url:"-"`
-	Count      int               `json:"count" url:"-"`
-	Total      int               `json:"total_count" url:"-"`
-	Cursor     string            `json:"cursor" url:"cursor,omitempty"`
-	Cursors    ResultInfoCursors `json:"cursors" url:"cursors,omitempty"`
+	Page       int
+	PerPage    int
+	TotalPages int
+	Count      int
+	Total      int
+	Cursor     string
+	Cursors    ResultInfoCursors
 }
 
 type ResultInfoCursors struct {
-	Before string `json:"before" url:"before,omitempty"`
-	After  string `json:"after" url:"after,omitempty"`
+	Before string
+	After  string
+}
+
+////
+
+type OutputResult struct {
+	Result   any
+	Messages string `json:",omitempty"`
+	DataInfo struct {
+		Page    int `json:",omitempty"`
+		PerPage int `json:",omitempty"`
+		Total   int `json:",omitempty"`
+	}
 }
