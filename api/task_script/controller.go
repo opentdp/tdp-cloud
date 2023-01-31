@@ -13,8 +13,8 @@ func list(c *gin.Context) {
 
 	userId := c.GetUint("UserId")
 
-	if res, err := script.FetchAll(userId); err == nil {
-		c.Set("Payload", res)
+	if lst, err := script.FetchAll(userId); err == nil {
+		c.Set("Payload", gin.H{"Datasets": lst})
 	} else {
 		c.Set("Error", err)
 	}

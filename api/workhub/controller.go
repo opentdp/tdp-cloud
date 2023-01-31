@@ -14,9 +14,9 @@ func list(c *gin.Context) {
 
 	userId := c.GetUint("UserId")
 
-	res := workhub.NodesOfUser(userId)
+	lst := workhub.NodesOfUser(userId)
 
-	c.Set("Payload", res)
+	c.Set("Payload", gin.H{"Datasets": lst})
 
 }
 

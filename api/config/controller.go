@@ -10,8 +10,8 @@ import (
 
 func list(c *gin.Context) {
 
-	if res, err := config.FetchAll(); err == nil {
-		c.Set("Payload", res)
+	if lst, err := config.FetchAll(); err == nil {
+		c.Set("Payload", gin.H{"Datasets": lst})
 	} else {
 		c.Set("Error", err)
 	}

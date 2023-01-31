@@ -1,8 +1,6 @@
 package vendor
 
 import (
-	"regexp"
-
 	"github.com/gin-gonic/gin"
 	"github.com/spf13/cast"
 
@@ -15,13 +13,9 @@ func list(c *gin.Context) {
 
 	userId := c.GetUint("UserId")
 
-	if res, err := vendor.FetchAll(userId); err == nil {
-		re, _ := regexp.Compile(`^(\w{8}).+(\w{8})$`)
-		for k, v := range res {
-			res[k].SecretId = re.ReplaceAllString(v.SecretId, "$1*******$2")
-			res[k].SecretKey = re.ReplaceAllString(v.SecretKey, "$1******$2")
-		}
-		c.Set("Payload", res)
+	if lst, err := vendor.FetchAll(userId); err == nil {
+		vendor.SecretMask(lst)
+		c.Set("Payload", gin.H{"Datasets": lst})
 	} else {
 		c.Set("Error", err)
 	}
