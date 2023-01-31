@@ -3,7 +3,7 @@ package midware
 import (
 	"github.com/gin-gonic/gin"
 
-	"tdp-cloud/module/httpd"
+	"tdp-cloud/helper/httpd"
 )
 
 func OutputHandle() gin.HandlerFunc {
