@@ -3,7 +3,7 @@ package terminal
 import (
 	"github.com/gin-gonic/gin"
 
-	"tdp-cloud/module/webssh"
+	"tdp-cloud/helper/webssh"
 )
 
 func ssh(c *gin.Context) {
