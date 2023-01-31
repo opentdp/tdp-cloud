@@ -2,8 +2,6 @@ package midware
 
 import (
 	"github.com/gin-gonic/gin"
-
-	"tdp-cloud/helper/httpd"
 )
 
 func SocketHandle() gin.HandlerFunc {
@@ -19,7 +17,7 @@ func SocketHandle() gin.HandlerFunc {
 		// 输出错误信息
 
 		if err, exists := c.Get("Error"); exists && err != nil {
-			c.AbortWithError(errorCode(c), httpd.NewError(err))
+			c.AbortWithError(errorCode(c), NewError(err))
 			return
 		}
 
