@@ -1,5 +1,7 @@
 # 土豆片控制面板
 
+[![TDP Cloud Builder](https://github.com/tdp-resource/tdp-cloud/actions/workflows/release.yml/badge.svg)](https://github.com/tdp-resource/tdp-cloud/actions/workflows/release.yml)
+
 已支持管理的云资源：
 
  - CloudFlare：DNS
