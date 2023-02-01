@@ -11,12 +11,16 @@ func Request(rp *Params) (any, error) {
 
 	client := request.Client{
 		Method: rp.Method,
-		Url:    endpoint + rp.Path + "?" + rp.Query,
+		Url:    endpoint + rp.Path,
 		Data:   string(rp.Payload),
 		Headers: request.H{
 			"Content-Type":  "application/json",
 			"Authorization": "Bearer " + rp.Token,
 		},
+	}
+
+	if rp.Query != "" {
+		client.Url += "?" + rp.Query
 	}
 
 	body, err := client.JsonRequest()
