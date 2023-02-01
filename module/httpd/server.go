@@ -11,7 +11,7 @@ import (
 	"time"
 )
 
-func WebServer(addr string, engine http.Handler) {
+func Server(addr string, engine http.Handler) {
 
 	server := &http.Server{
 		Addr:         addr,
