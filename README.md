@@ -2,11 +2,11 @@
 
 已支持管理的云资源：
 
- - CloudFlare： DNS
+ - CloudFlare：DNS
 
- - 腾讯云： Lighthouse、CVM、DNSPod
+ - 腾讯云：Lighthouse、CVM、DNSPod
 
- - 独立服务器：TDP Worker
+ - 独立主机：TDP Worker
 
 ##  功能列表
 
@@ -33,23 +33,9 @@ go env -w GO111MODULE=on
 go env -w GOPROXY=https://goproxy.cn,direct
 ```
 
-## 部署说明
+## 使用说明
 
-### 安装服务端
-
-https://github.com/tdp-resource/tdp-cloud/blob/main/docs/部署服务端.md
-
-### 添加子节点
-
-https://github.com/tdp-resource/tdp-cloud/blob/main/docs/添加子节点.md
-
-### 绑定腾讯云
-
-https://github.com/tdp-resource/tdp-cloud/blob/main/docs/绑定腾讯云.md
-
-### 绑定Cloudflare
-
-https://github.com/tdp-resource/tdp-cloud/blob/main/docs/绑定Cloudflare.md
+https://apps.rehiy.com/tdp-cloud/docs
 
 ## 其他
 
