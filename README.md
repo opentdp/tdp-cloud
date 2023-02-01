@@ -1,12 +1,18 @@
 # 土豆片控制面板
 
-已支持导入腾讯云轻量服务器和DNSPod资源
+已支持管理的云资源：
+
+ - CloudFlare： DNS
+
+ - 腾讯云： Lighthouse、CVM、DNSPod
+
+ - 独立服务器：TDP Worker
 
 ##  功能列表
 
 支持的功能和开发进度，请参阅 [Issues #1](https://github.com/tdp-resource/tdp-cloud/issues/1)
 
-WebUI界面请查看文档 [界面预览](https://github.com/tdp-resource/tdp-cloud/blob/main/docs/界面预览.md)
+前端界面展示，请参看 [界面预览](https://github.com/tdp-resource/tdp-cloud/blob/main/docs/界面预览.md)
 
 ## 开发说明
 
