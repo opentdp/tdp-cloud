@@ -7,6 +7,7 @@ Authorization: {{$dotenv TDP_AUTHORIZATION}}
 Origin: {{$dotenv TDP_ORIGIN}}
 
 {
+    "Method": "GET",
     "Path": "/user"
 }
 
@@ -17,6 +18,7 @@ Authorization: {{$dotenv TDP_AUTHORIZATION}}
 Origin: {{$dotenv TDP_ORIGIN}}
 
 {
+    "Method": "GET",
     "Path": "/zones"
 }
 
@@ -27,6 +29,7 @@ Authorization: {{$dotenv TDP_AUTHORIZATION}}
 Origin: {{$dotenv TDP_ORIGIN}}
 
 {
+    "Method": "GET",
     "Path": "/zones",
     "Query": "name=anrip.com"
 }
@@ -38,6 +41,7 @@ Authorization: {{$dotenv TDP_AUTHORIZATION}}
 Origin: {{$dotenv TDP_ORIGIN}}
 
 {
+    "Method": "GET",
     "Path": "/zones/3bf29adb3736dda1506aca5084a71dfc"
 }
 
