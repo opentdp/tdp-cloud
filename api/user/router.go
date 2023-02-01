@@ -23,7 +23,7 @@ func Router(api *gin.RouterGroup) {
 
 	{
 		rg.GET("/info", detail)
-		rg.PATCH("/info", updateInfo)
+		rg.PATCH("/info", update)
 		rg.PATCH("/password", updatePassword)
 	}
 

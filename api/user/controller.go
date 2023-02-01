@@ -6,7 +6,23 @@ import (
 	"tdp-cloud/module/dborm/user"
 )
 
-// 创建账号
+// 获取用户
+
+func detail(c *gin.Context) {
+
+	rq := &user.FetchParam{
+		Id: c.GetUint("UserId"),
+	}
+
+	if res, err := user.Fetch(rq); err == nil {
+		c.Set("Payload", res)
+	} else {
+		c.Set("Error", err)
+	}
+
+}
+
+// 创建用户
 
 func create(c *gin.Context) {
 
@@ -19,22 +35,6 @@ func create(c *gin.Context) {
 
 	if _, err := user.Create(rq); err == nil {
 		c.Set("Payload", "注册成功")
-	} else {
-		c.Set("Error", err)
-	}
-
-}
-
-// 获取用户
-
-func detail(c *gin.Context) {
-
-	rq := &user.FetchParam{
-		Id: c.GetUint("UserId"),
-	}
-
-	if res, err := user.Fetch(rq); err == nil {
-		c.Set("Payload", res)
 	} else {
 		c.Set("Error", err)
 	}
@@ -62,9 +62,9 @@ func login(c *gin.Context) {
 
 // 修改资料
 
-func updateInfo(c *gin.Context) {
+func update(c *gin.Context) {
 
-	var rq *user.UpdateInfoParam
+	var rq *user.UpdateParam
 
 	if err := c.ShouldBind(&rq); err != nil {
 		c.Set("Error", err)
@@ -73,7 +73,7 @@ func updateInfo(c *gin.Context) {
 
 	rq.Id = c.GetUint("UserId")
 
-	if err := user.UpdateInfo(rq); err == nil {
+	if err := user.Update(rq); err == nil {
 		c.Set("Payload", "修改成功")
 	} else {
 		c.Set("Error", err)

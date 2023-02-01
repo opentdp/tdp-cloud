@@ -9,7 +9,7 @@ import (
 	"tdp-cloud/module/dborm/session"
 )
 
-// 创建账号
+// 添加用户
 
 type CreateParam struct {
 	Username string `binding:"required"`
@@ -30,30 +30,20 @@ func Create(post *CreateParam) (uint, error) {
 
 }
 
-// 修改资料
+// 更新用户
 
-type UpdateInfoParam struct {
+type UpdateParam struct {
 	Id          uint
 	Description string `binding:"required"`
 }
 
-func UpdateInfo(post *UpdateInfoParam) error {
+func Update(post *UpdateParam) error {
 
-	var item *dborm.User
-
-	// 验证账号
-
-	dborm.Db.Where(&dborm.User{Id: post.Id}).First(&item)
-
-	if item.Id == 0 {
-		return errors.New("账号错误")
-	}
-
-	// 更新资料
-
-	item.Description = post.Description
-
-	result := dborm.Db.Select("Description").Save(&item)
+	result := dborm.Db.
+		Where(&dborm.User{Id: post.Id}).
+		Updates(dborm.User{
+			Description: post.Description,
+		})
 
 	return result.Error
 
