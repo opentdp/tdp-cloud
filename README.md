@@ -22,7 +22,7 @@
 
 ### 编译为二进制
 
-在项目目录运行 `build.bat` 或 `./build.sh`。你还可以下载 [稳定版](https://github.com/tdp-resource/tdp-cloud/releases) 或 [午夜构建版](http://tdp.icu/build/)
+在项目目录运行 `build.bat` 或 `./build.sh`。你还可以下载 [稳定版](https://apps.rehiy.com/tdp-cloud/release) 或 [午夜构建版](https://apps.rehiy.com/tdp-cloud/nightly)
 
 ### 额外参数设置
 
