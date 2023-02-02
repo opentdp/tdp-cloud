@@ -6,7 +6,9 @@
 
  - CloudFlare：DNS
 
- - 腾讯云：Lighthouse、CVM、DNSPod
+ - 腾讯云：DNSPod、CVM、Lighthouse
+
+ - 腾讯云国际版：CVM、Lighthouse
 
  - 独立主机：TDP Worker
 
