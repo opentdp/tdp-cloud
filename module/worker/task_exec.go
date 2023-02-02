@@ -42,6 +42,11 @@ func (pod *RecvPod) Exec(rs *SocketData) error {
 		}
 	}
 
+	if err != nil {
+		ret += err.Error()
+		log.Println("Exec:error", err)
+	}
+
 	rq := &SocketData{
 		Method:  "Exec:resp",
 		TaskId:  rs.TaskId,
@@ -81,6 +86,8 @@ func cmdScript(data *ExecPayload) (string, error) {
 	name := "cmd.exe"
 	params := []string{"/c", "CALL", tf.Name()}
 
+	tf.Close()
+
 	return execCommand(name, params, data.Timeout)
 
 }
@@ -104,13 +111,15 @@ func ps1Script(data *ExecPayload) (string, error) {
 	name := "powershell.exe"
 	params := []string{"-File", tf.Name()}
 
+	tf.Close()
+
 	return execCommand(name, params, data.Timeout)
 
 }
 
 func shellScript(data *ExecPayload) (string, error) {
 
-	tf, err := ioutil.TempFile(os.TempDir(), "tdp-*")
+	tf, err := ioutil.TempFile("", "tdp-*")
 
 	if err != nil {
 		return "", errors.New("创建临时文件失败")
@@ -124,10 +133,11 @@ func shellScript(data *ExecPayload) (string, error) {
 		return "", errors.New("写入临时文件失败")
 	}
 
-	tf.Chmod(0755)
-
 	name := tf.Name()
 	params := []string{}
+
+	tf.Chmod(0755)
+	tf.Close()
 
 	return execCommand(name, params, data.Timeout)
 
