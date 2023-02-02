@@ -2,8 +2,8 @@ name: TDP Cloud Builder
 
 on:
   push:
-    paths:
-      - "docs/RELEASE.md"
+    tags:
+      - "v*.*.*"
 
 jobs:
   build:
@@ -28,6 +28,7 @@ jobs:
 
       - name: Create github release
         uses: softprops/action-gh-release@v1
+        if: startsWith(github.ref, 'refs/tags/')
         with:
           body_path: docs/RELEASE.md
           draft: false
