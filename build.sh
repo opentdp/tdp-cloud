@@ -25,16 +25,17 @@ build windows arm64 .exe
 
 ####################################################################
 
-if type apt >/dev/null 2>&1; then
-    sudo apt install -y upx-ucl
-fi
-
-if type apk >/dev/null 2>&1; then
-    apk add upx
+if ! type upx >/dev/null 2>&1; then
+    if type apt >/dev/null 2>&1; then
+        sudo apt install -y upx-ucl
+    fi
+    if type apk >/dev/null 2>&1; then
+        apk add upx
+    fi
 fi
 
 if type upx >/dev/null 2>&1; then
     cd build
-    upx --best `ls .`
+    upx `ls .`
     cd ..
 fi
