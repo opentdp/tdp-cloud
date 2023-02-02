@@ -33,8 +33,8 @@ func create(c *gin.Context) {
 		return
 	}
 
-	if _, err := user.Create(rq); err == nil {
-		c.Set("Payload", "注册成功")
+	if id, err := user.Create(rq); err == nil {
+		c.Set("Payload", gin.H{"Id": id, "Message": "注册成功"})
 	} else {
 		c.Set("Error", err)
 	}
