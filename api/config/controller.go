@@ -44,7 +44,8 @@ func create(c *gin.Context) {
 	}
 
 	if id, err := config.Create(rq); err == nil {
-		c.Set("Payload", gin.H{"Id": id, "Message": "添加成功"})
+		c.Set("Message", "添加成功")
+		c.Set("Payload", gin.H{"Id": id})
 	} else {
 		c.Set("Error", err)
 	}
@@ -63,7 +64,7 @@ func update(c *gin.Context) {
 	}
 
 	if err := config.Update(rq); err == nil {
-		c.Set("Payload", "修改成功")
+		c.Set("Message", "修改成功")
 	} else {
 		c.Set("Error", err)
 	}
@@ -77,7 +78,7 @@ func delete(c *gin.Context) {
 	name := c.Param("name")
 
 	if err := config.Delete(name); err == nil {
-		c.Set("Payload", "删除成功")
+		c.Set("Message", "删除成功")
 	} else {
 		c.Set("Error", err)
 	}

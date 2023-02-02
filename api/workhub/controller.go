@@ -44,10 +44,8 @@ func exec(c *gin.Context) {
 	}
 
 	if id, err := send.Exec(&rq.Payload); err == nil {
-		c.Set("Payload", map[string]any{
-			"Message": "命令下发完成",
-			"TaskId":  id,
-		})
+		c.Set("Message", "命令下发完成")
+		c.Set("Payload", gin.H{"Id": id})
 	} else {
 		c.Set("Error", err)
 	}

@@ -12,41 +12,33 @@ func OutputHandle() gin.HandlerFunc {
 
 		// 输出错误信息
 
-		if err, exists := c.Get("Error"); exists && err != nil {
-			c.AbortWithStatusJSON(errorCode(c), NewMessage(err))
+		if err, exists := c.Get("Error"); exists {
+			c.AbortWithStatusJSON(errCode(c), NewErrorMessage(err))
 			return
 		}
 
 		// 输出请求结果
 
-		if res, exists := c.Get("Payload"); exists && res != nil {
-			c.AbortWithStatusJSON(200, NewPayload(res))
+		msg := c.GetString("Message")
+
+		if res, exists := c.Get("Payload"); msg != "" || exists {
+			c.AbortWithStatusJSON(200, NewPayloadMessage(res, msg))
 			return
 		}
 
 		// 输出HTML内容
 
-		if res, exists := c.Get("HTML"); exists && res != nil {
+		if htm := c.GetString("HTML"); htm != "" {
 			c.Header("Content-Type", "text/html; charset=utf-8")
-			c.String(200, res.(string))
+			c.String(200, htm)
 			c.Abort()
 			return
 		}
 
 		// 捕获异常返回
 
-		c.AbortWithStatusJSON(500, NewMessage("内部错误"))
+		c.AbortWithStatusJSON(500, NewErrorMessage("内部错误"))
 
 	}
-
-}
-
-func errorCode(c *gin.Context) int {
-
-	if code := c.GetInt("ErrorCode"); code > 400 {
-		return code
-	}
-
-	return 400
 
 }

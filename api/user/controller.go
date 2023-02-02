@@ -34,7 +34,8 @@ func create(c *gin.Context) {
 	}
 
 	if id, err := user.Create(rq); err == nil {
-		c.Set("Payload", gin.H{"Id": id, "Message": "注册成功"})
+		c.Set("Message", "添加成功")
+		c.Set("Payload", gin.H{"Id": id})
 	} else {
 		c.Set("Error", err)
 	}
@@ -74,7 +75,7 @@ func update(c *gin.Context) {
 	rq.Id = c.GetUint("UserId")
 
 	if err := user.Update(rq); err == nil {
-		c.Set("Payload", "修改成功")
+		c.Set("Message", "修改成功")
 	} else {
 		c.Set("Error", err)
 	}
@@ -95,7 +96,7 @@ func updatePassword(c *gin.Context) {
 	rq.Id = c.GetUint("UserId")
 
 	if err := user.UpdatePassword(rq); err == nil {
-		c.Set("Payload", "修改成功")
+		c.Set("Message", "修改成功")
 	} else {
 		c.Set("Error", err)
 	}

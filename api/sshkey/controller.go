@@ -35,7 +35,8 @@ func create(c *gin.Context) {
 	rq.UserId = c.GetUint("UserId")
 
 	if id, err := sshkey.Create(rq); err == nil {
-		c.Set("Payload", gin.H{"Id": id, "Message": "添加成功"})
+		c.Set("Message", "添加成功")
+		c.Set("Payload", gin.H{"Id": id})
 	} else {
 		c.Set("Error", err)
 	}
@@ -50,7 +51,7 @@ func delete(c *gin.Context) {
 	id := cast.ToUint(c.Param("id"))
 
 	if err := sshkey.Delete(id, userId); err == nil {
-		c.Set("Payload", "删除成功")
+		c.Set("Message", "删除成功")
 	} else {
 		c.Set("Error", err)
 	}
