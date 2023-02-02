@@ -53,8 +53,8 @@ func create(c *gin.Context) {
 
 	rq.UserId = c.GetUint("UserId")
 
-	if _, err := vendor.Create(rq); err == nil {
-		c.Set("Payload", "添加成功")
+	if id, err := vendor.Create(rq); err == nil {
+		c.Set("Payload", gin.H{"Id": id, "Message": "添加成功"})
 	} else {
 		c.Set("Error", err)
 	}
