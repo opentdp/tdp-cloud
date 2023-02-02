@@ -22,6 +22,15 @@
 
 在项目目录运行  `serve.bat` 或 `./serve.sh`
 
+### 版本大于 **v0.5.0** 时，`git commit` 请使用下面标识
+
+- `feat` 新功能（feature）
+- `fix` 修补bug
+- `docs` 文档（documentation）
+- `style` 格式（不影响代码运行的变动）
+- `refactor` 重构（即不是新功能，也不是修补bug的代码变动）
+- `perf` 优化
+
 ### 编译为二进制
 
 在项目目录运行 `build.bat` 或 `./build.sh`。你还可以下载 [稳定版](https://apps.rehiy.com/tdp-cloud/release) 或 [午夜构建版](https://apps.rehiy.com/tdp-cloud/nightly)
