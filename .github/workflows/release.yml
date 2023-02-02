@@ -28,7 +28,6 @@ jobs:
 
       - name: Create github release
         uses: softprops/action-gh-release@v1
-        if: startsWith(github.ref, 'refs/tags/')
         with:
           body_path: docs/RELEASE.md
           draft: false
