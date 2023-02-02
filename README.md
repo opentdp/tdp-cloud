@@ -2,7 +2,7 @@
 
 [![TDP Cloud Builder](https://github.com/tdp-resource/tdp-cloud/actions/workflows/release.yml/badge.svg)](https://github.com/tdp-resource/tdp-cloud/actions/workflows/release.yml)
 
-已支持管理的云资源：
+可以跨平台部署的云资源管理面板，支持同时绑定多个云账号，目前已实现管理下列云资源：
 
  - CloudFlare：DNS
 
