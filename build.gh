@@ -10,7 +10,7 @@ cd $WKDIR
 
 ###########################################
 
-echo "Download source code"
+echo ">> Download source code"
 
 if [ ! -d tdp-cloud ]; then
     git clone https://github.com/tdp-resource/tdp-cloud.git
@@ -24,7 +24,7 @@ chmod +x $WKDIR/*/build.sh
 
 ###########################################
 
-echo "Compile front-end components"
+echo ">> Compile front-end components"
 
 cd $WKDIR/tdp-cloud-ui
 npm i && ./build.sh
@@ -33,7 +33,7 @@ cp -av $WKDIR/tdp-cloud-ui/build/* $WKDIR/tdp-cloud/front/
 
 ###########################################
 
-echo "Compile backend components"
+echo ">> Compile backend components"
 
 cd $WKDIR/tdp-cloud
 go mod tidy && ./build.sh
