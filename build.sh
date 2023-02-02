@@ -6,7 +6,7 @@ export GO111MODULE=on
 
 build() {
     echo building for $1/$2
-    GOOS=$1 GOARCH=$2 go build -o build/tdp-cloud-$1-$2$3 main.go
+    GOOS=$1 GOARCH=$2 go build -ldflags="-s -w" -o build/tdp-cloud-$1-$2$3 main.go
 }
 
 ####################################################################
