@@ -23,9 +23,6 @@ jobs:
         with:
           node-version: 16
 
-      - name: Setup upx
-        run: apt install -y upx-ucl
-
       - name: Run release script
         run: sh build.gh
 
