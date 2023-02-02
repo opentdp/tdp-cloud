@@ -54,6 +54,7 @@ func login(c *gin.Context) {
 	}
 
 	if res, err := user.Login(rq); err == nil {
+		c.Set("Message", "登录成功")
 		c.Set("Payload", res)
 	} else {
 		c.Set("Error", err)
