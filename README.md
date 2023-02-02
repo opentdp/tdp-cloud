@@ -10,11 +10,11 @@
 
  - 独立主机：TDP Worker
 
-##  功能列表
+##  功能预览
 
-支持的功能和开发进度，请参阅 [Issues #1](https://github.com/tdp-resource/tdp-cloud/issues/1)
+- 在线体验开发版功能，请进入 [演示站点](https://apps.rehiy.com/tdp-cloud/preview)
 
-前端界面展示，请参看 [界面预览](https://github.com/tdp-resource/tdp-cloud/blob/main/docs/界面预览.md)
+- 功能支持和开发进度，请参阅 [Issues #1](https://github.com/tdp-resource/tdp-cloud/issues/1)
 
 ## 开发说明
 
