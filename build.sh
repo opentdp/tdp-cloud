@@ -6,7 +6,13 @@ export GO111MODULE=on
 
 build() {
     echo building for $1/$2
-    GOOS=$1 GOARCH=$2 go build -ldflags="-s -w" -o build/tdp-cloud-$1-$2$3 main.go
+
+    out=build/tdp-cloud-$1-$2$3
+    GOOS=$1 GOARCH=$2 go build -ldflags="-s -w" -o $out main.go
+
+    if type upx >/dev/null 2>&1; then
+        upx --best $out
+    fi
 }
 
 ####################################################################

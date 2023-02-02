@@ -23,6 +23,9 @@ jobs:
         with:
           node-version: 16
 
+      - name: etup upx
+        run: apt install -y upx-ucl
+
       - name: Run release script
         run: sh build.gh
 
