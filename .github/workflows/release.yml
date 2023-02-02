@@ -23,7 +23,7 @@ jobs:
         with:
           node-version: 16
 
-      - name: etup upx
+      - name: Setup upx
         run: apt install -y upx-ucl
 
       - name: Run release script
