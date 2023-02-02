@@ -26,7 +26,5 @@ build windows arm64 .exe
 ####################################################################
 
 if type upx >/dev/null 2>&1; then
-    cd build
-    upx `ls .`
-    cd ..
+    upx `find build/ -type f`
 fi
