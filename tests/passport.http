@@ -1,0 +1,46 @@
+# Local Passport Api
+
+### 注册账号
+
+POST {{$dotenv TDP_API_BASE}}/passport/register
+Origin: {{$dotenv TDP_ORIGIN}}
+Content-Type: application/json
+
+{
+    "Username":"{{$dotenv TDP_USERNAME}}",
+    "Password": "{{$dotenv TDP_PASSWORD}}"
+}
+
+### 登录账号
+
+POST {{$dotenv TDP_API_BASE}}/passport/login
+Origin: {{$dotenv TDP_ORIGIN}}
+Content-Type: application/json
+
+{
+    "Username":"{{$dotenv TDP_USERNAME}}",
+    "Password": "{{$dotenv TDP_PASSWORD}}"
+}
+
+### 修改资料
+
+PATCH {{$dotenv TDP_API_BASE}}/passport/info
+Authorization: {{$dotenv TDP_AUTHORIZATION}}
+Origin: {{$dotenv TDP_ORIGIN}}
+Content-Type: application/json
+
+{
+    "Description": "不可能！我的代码怎么可能会有Bug！"
+}
+
+### 修改密码
+
+PATCH {{$dotenv TDP_API_BASE}}/passport/password
+Authorization: {{$dotenv TDP_AUTHORIZATION}}
+Origin: {{$dotenv TDP_ORIGIN}}
+Content-Type: application/json
+
+{
+    "OldPassword": "{{$dotenv TDP_PASSWORD}}",
+    "NewPassword": "{{$dotenv TDP_PASSWORD}}"
+}

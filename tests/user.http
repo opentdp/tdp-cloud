@@ -1,46 +1,8 @@
 # Local User Api
 
-### 注册账号
+### 用户列表
 
-POST {{$dotenv TDP_API_BASE}}/user/register
-Origin: {{$dotenv TDP_ORIGIN}}
-Content-Type: application/json
-
-{
-    "Username":"{{$dotenv TDP_USERNAME}}",
-    "Password": "{{$dotenv TDP_PASSWORD}}"
-}
-
-### 登录账号
-
-POST {{$dotenv TDP_API_BASE}}/user/login
-Origin: {{$dotenv TDP_ORIGIN}}
-Content-Type: application/json
-
-{
-    "Username":"{{$dotenv TDP_USERNAME}}",
-    "Password": "{{$dotenv TDP_PASSWORD}}"
-}
-
-### 修改资料
-
-PATCH {{$dotenv TDP_API_BASE}}/user/info
+GET {{$dotenv TDP_API_BASE}}/user
 Authorization: {{$dotenv TDP_AUTHORIZATION}}
 Origin: {{$dotenv TDP_ORIGIN}}
 Content-Type: application/json
-
-{
-    "Description": "不可能！我的代码怎么可能会有Bug！"
-}
-
-### 修改密码
-
-PATCH {{$dotenv TDP_API_BASE}}/user/TDP_PASSWORD
-Authorization: {{$dotenv TDP_AUTHORIZATION}}
-Origin: {{$dotenv TDP_ORIGIN}}
-Content-Type: application/json
-
-{
-    "OldPassword": "{{$dotenv TDP_PASSWORD}}",
-    "NewPassword": "{{$dotenv TDP_PASSWORD}}"
-}
