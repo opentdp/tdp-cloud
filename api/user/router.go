@@ -13,6 +13,7 @@ func Router(api *gin.RouterGroup) {
 	// 需授权接口
 
 	rg.Use(midware.AuthGuard())
+	rg.Use(midware.AdminGuard())
 
 	{
 		rg.GET("/user", list)

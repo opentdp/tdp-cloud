@@ -110,6 +110,7 @@ type User struct {
 	AppId       string `gorm:"uniqueIndex"`
 	Username    string `gorm:"uniqueIndex"`
 	Password    string `json:"-"`
+	Level       uint   `gorm:"default:5"`
 	Description string `gorm:"default:什么也没有"`
 	Sessions    []Session
 	Vendors     []Vendor

@@ -18,6 +18,8 @@ func register(c *gin.Context) {
 		return
 	}
 
+	rq.Level = 0 //防止逃逸
+
 	if id, err := user.Create(rq); err == nil {
 		c.Set("Message", "注册成功")
 		c.Set("Payload", gin.H{"Id": id})
@@ -75,6 +77,7 @@ func updateInfo(c *gin.Context) {
 	}
 
 	rq.Id = c.GetUint("UserId")
+	rq.Level = 0 //防止逃逸
 
 	if err := user.Update(rq); err == nil {
 		c.Set("Message", "修改成功")

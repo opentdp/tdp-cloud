@@ -11,6 +11,7 @@ import (
 type CreateParam struct {
 	Username string `binding:"required"`
 	Password string `binding:"required"`
+	Level    uint
 }
 
 func Create(post *CreateParam) (uint, error) {
@@ -35,8 +36,9 @@ func Create(post *CreateParam) (uint, error) {
 
 type UpdateParam struct {
 	Id          uint
-	Description string
 	Password    string
+	Description string
+	Level       uint
 }
 
 func Update(post *UpdateParam) error {

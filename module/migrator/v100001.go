@@ -23,6 +23,7 @@ func v100001AddUser() error {
 	_, err := user.Create(&user.CreateParam{
 		Username: "admin",
 		Password: "123456",
+		Level:    1,
 	})
 
 	return err
