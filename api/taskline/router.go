@@ -8,7 +8,7 @@ import (
 
 func Router(api *gin.RouterGroup) {
 
-	rg := api.Group("/task")
+	rg := api.Group("/")
 
 	rg.Use(midware.AuthGuard())
 
