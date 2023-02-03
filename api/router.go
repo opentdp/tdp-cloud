@@ -6,6 +6,7 @@ import (
 	"tdp-cloud/api/config"
 	"tdp-cloud/api/domain"
 	"tdp-cloud/api/machine"
+	"tdp-cloud/api/passport"
 	"tdp-cloud/api/sshkey"
 	"tdp-cloud/api/task_history"
 	"tdp-cloud/api/task_script"
@@ -32,11 +33,12 @@ func Router(engine *gin.Engine) {
 		config.Router(api)
 		domain.Router(api)
 		machine.Router(api)
-		vendor.Router(api)
+		passport.Router(api)
 		sshkey.Router(api)
 		task_history.Router(api)
 		task_script.Router(api)
 		user.Router(api)
+		vendor.Router(api)
 		workhub.Router(api)
 
 		cloudflare.Router(api)

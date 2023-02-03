@@ -109,7 +109,7 @@ type User struct {
 	Id          uint   `gorm:"primaryKey"`
 	AppId       string `gorm:"uniqueIndex"`
 	Username    string `gorm:"uniqueIndex"`
-	Password    string
+	Password    string `json:"-"`
 	Description string `gorm:"default:什么也没有"`
 	Sessions    []Session
 	Vendors     []Vendor
@@ -123,7 +123,7 @@ type Vendor struct {
 	Id          uint   `gorm:"primaryKey"`
 	UserId      uint   `gorm:"index"`
 	SecretId    string `gorm:"uniqueIndex"`
-	SecretKey   string
+	SecretKey   string `json:"-"`
 	Provider    string
 	Description string
 	Domains     []Domain

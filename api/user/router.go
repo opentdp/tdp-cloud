@@ -8,23 +8,18 @@ import (
 
 func Router(api *gin.RouterGroup) {
 
-	rg := api.Group("/user")
-
-	// 匿名接口
-
-	{
-		rg.POST("/login", login)
-		rg.POST("/register", create)
-	}
+	rg := api.Group("/")
 
 	// 需授权接口
 
 	rg.Use(midware.AuthGuard())
 
 	{
-		rg.GET("/info", detail)
-		rg.PATCH("/info", update)
-		rg.PATCH("/password", updatePassword)
+		rg.GET("/user", list)
+		rg.POST("/user", create)
+		rg.GET("/user/:id", detail)
+		rg.PATCH("/user/:id", update)
+		rg.DELETE("/user/:id", delete)
 	}
 
 }
