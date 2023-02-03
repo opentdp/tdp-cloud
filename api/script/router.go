@@ -1,4 +1,4 @@
-package task_script
+package script
 
 import (
 	"github.com/gin-gonic/gin"

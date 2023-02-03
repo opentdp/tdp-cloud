@@ -60,6 +60,22 @@ type Session struct {
 	UpdatedAt int64
 }
 
+// 命令脚本
+
+type Script struct {
+	Id            uint `gorm:"primaryKey"`
+	UserId        uint `gorm:"index"`
+	Name          string
+	CommandType   string
+	Username      string
+	WorkDirectory string
+	Content       string
+	Description   string
+	Timeout       uint
+	CreatedAt     int64
+	UpdatedAt     int64
+}
+
 // SSH 密钥
 
 type Sshkey struct {
@@ -74,7 +90,7 @@ type Sshkey struct {
 
 // 任务记录
 
-type TaskHistory struct {
+type Taskline struct {
 	Id        uint `gorm:"primaryKey"`
 	UserId    uint `gorm:"index"`
 	Subject   string
@@ -85,22 +101,6 @@ type TaskHistory struct {
 	Status    string
 	CreatedAt int64
 	UpdatedAt int64
-}
-
-// 任务脚本
-
-type TaskScript struct {
-	Id            uint `gorm:"primaryKey"`
-	UserId        uint `gorm:"index"`
-	Name          string
-	CommandType   string
-	Username      string
-	WorkDirectory string
-	Content       string
-	Description   string
-	Timeout       uint
-	CreatedAt     int64
-	UpdatedAt     int64
 }
 
 // 用户

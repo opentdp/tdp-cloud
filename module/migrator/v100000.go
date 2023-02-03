@@ -12,8 +12,8 @@ func v100000() error {
 		&dborm.Machine{},
 		&dborm.Session{},
 		&dborm.Sshkey{},
-		&dborm.TaskHistory{},
-		&dborm.TaskScript{},
+		&dborm.Taskline{},
+		&dborm.Script{},
 		&dborm.User{},
 		&dborm.Vendor{},
 	)

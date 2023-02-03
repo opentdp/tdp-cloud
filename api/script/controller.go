@@ -1,19 +1,19 @@
-package task_history
+package script
 
 import (
 	"github.com/gin-gonic/gin"
 	"github.com/spf13/cast"
 
-	history "tdp-cloud/module/dborm/task_history"
+	"tdp-cloud/module/dborm/script"
 )
 
-// 记录列表
+// 脚本列表
 
 func list(c *gin.Context) {
 
 	userId := c.GetUint("UserId")
 
-	if lst, err := history.FetchAll(userId); err == nil {
+	if lst, err := script.FetchAll(userId); err == nil {
 		c.Set("Payload", gin.H{"Datasets": lst})
 	} else {
 		c.Set("Error", err)
@@ -21,26 +21,11 @@ func list(c *gin.Context) {
 
 }
 
-// 获取记录
-
-func detail(c *gin.Context) {
-
-	userId := c.GetUint("UserId")
-	id := cast.ToUint(c.Param("id"))
-
-	if res, err := history.Fetch(id, userId); err == nil {
-		c.Set("Payload", res)
-	} else {
-		c.Set("Error", err)
-	}
-
-}
-
-// 添加记录
+// 添加脚本
 
 func create(c *gin.Context) {
 
-	var rq *history.CreateParam
+	var rq *script.CreateParam
 
 	if err := c.ShouldBind(&rq); err != nil {
 		c.Set("Error", err)
@@ -49,7 +34,7 @@ func create(c *gin.Context) {
 
 	rq.UserId = c.GetUint("UserId")
 
-	if id, err := history.Create(rq); err == nil {
+	if id, err := script.Create(rq); err == nil {
 		c.Set("Message", "添加成功")
 		c.Set("Payload", gin.H{"Id": id})
 	} else {
@@ -58,11 +43,11 @@ func create(c *gin.Context) {
 
 }
 
-// 修改记录
+// 修改脚本
 
 func update(c *gin.Context) {
 
-	var rq *history.UpdateParam
+	var rq *script.UpdateParam
 
 	if err := c.ShouldBind(&rq); err != nil {
 		c.Set("Error", err)
@@ -71,7 +56,7 @@ func update(c *gin.Context) {
 
 	rq.UserId = c.GetUint("UserId")
 
-	if err := history.Update(rq); err == nil {
+	if err := script.Update(rq); err == nil {
 		c.Set("Message", "更新成功")
 	} else {
 		c.Set("Error", err)
@@ -79,14 +64,14 @@ func update(c *gin.Context) {
 
 }
 
-// 删除记录
+// 删除脚本
 
 func delete(c *gin.Context) {
 
 	userId := c.GetUint("UserId")
 	id := cast.ToUint(c.Param("id"))
 
-	if err := history.Delete(id, userId); err == nil {
+	if err := script.Delete(id, userId); err == nil {
 		c.Set("Message", "删除成功")
 	} else {
 		c.Set("Error", err)

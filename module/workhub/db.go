@@ -2,7 +2,7 @@ package workhub
 
 import (
 	"tdp-cloud/module/dborm/machine"
-	history "tdp-cloud/module/dborm/task_history"
+	"tdp-cloud/module/dborm/taskline"
 )
 
 // 绑定主机
@@ -27,7 +27,7 @@ func bindMachine(node *Worker) error {
 
 func createHistory(pod *SendPod, data *ExecPayload) uint {
 
-	item := &history.CreateParam{
+	item := &taskline.CreateParam{
 		UserId:   pod.UserId,
 		Subject:  "Exec: " + data.Name,
 		HostName: pod.WorkerMeta.HostName,
@@ -37,7 +37,7 @@ func createHistory(pod *SendPod, data *ExecPayload) uint {
 		Status:   "Doing",
 	}
 
-	id, _ := history.Create(item)
+	id, _ := taskline.Create(item)
 
 	return id
 
@@ -50,13 +50,13 @@ func updateHistory(pod *RespPod, rq *SocketData) error {
 		status = "Success"
 	}
 
-	item := &history.UpdateParam{
+	item := &taskline.UpdateParam{
 		Id:       rq.TaskId,
 		UserId:   pod.UserId,
 		Response: rq.Payload,
 		Status:   status,
 	}
 
-	return history.Update(item)
+	return taskline.Update(item)
 
 }

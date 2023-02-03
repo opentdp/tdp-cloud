@@ -1,4 +1,4 @@
-package task_script
+package script
 
 import (
 	"tdp-cloud/module/dborm"
@@ -19,7 +19,7 @@ type CreateParam struct {
 
 func Create(post *CreateParam) (uint, error) {
 
-	item := &dborm.TaskScript{
+	item := &dborm.Script{
 		UserId:        post.UserId,
 		Name:          post.Name,
 		CommandType:   post.CommandType,
@@ -53,8 +53,8 @@ type UpdateParam struct {
 func Update(post *UpdateParam) error {
 
 	result := dborm.Db.
-		Where(&dborm.TaskScript{Id: post.Id, UserId: post.UserId}).
-		Updates(dborm.TaskScript{
+		Where(&dborm.Script{Id: post.Id, UserId: post.UserId}).
+		Updates(dborm.Script{
 			Name:          post.Name,
 			CommandType:   post.CommandType,
 			Username:      post.Username,
@@ -70,11 +70,11 @@ func Update(post *UpdateParam) error {
 
 // 获取脚本列表
 
-func FetchAll(userId uint) ([]*dborm.TaskScript, error) {
+func FetchAll(userId uint) ([]*dborm.Script, error) {
 
-	var items []*dborm.TaskScript
+	var items []*dborm.Script
 
-	result := dborm.Db.Where(&dborm.TaskScript{UserId: userId}).Find(&items)
+	result := dborm.Db.Where(&dborm.Script{UserId: userId}).Find(&items)
 
 	return items, result.Error
 
@@ -82,11 +82,11 @@ func FetchAll(userId uint) ([]*dborm.TaskScript, error) {
 
 // 获取脚本
 
-func Fetch(id, userId uint) (*dborm.TaskScript, error) {
+func Fetch(id, userId uint) (*dborm.Script, error) {
 
-	var item *dborm.TaskScript
+	var item *dborm.Script
 
-	result := dborm.Db.Where(&dborm.TaskScript{Id: id, UserId: userId}).Find(&item)
+	result := dborm.Db.Where(&dborm.Script{Id: id, UserId: userId}).Find(&item)
 
 	return item, result.Error
 
@@ -96,9 +96,9 @@ func Fetch(id, userId uint) (*dborm.TaskScript, error) {
 
 func Delete(id, userId uint) error {
 
-	var item *dborm.TaskScript
+	var item *dborm.Script
 
-	result := dborm.Db.Where(&dborm.TaskScript{Id: id, UserId: userId}).Delete(&item)
+	result := dborm.Db.Where(&dborm.Script{Id: id, UserId: userId}).Delete(&item)
 
 	return result.Error
 

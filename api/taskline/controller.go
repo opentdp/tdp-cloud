@@ -1,19 +1,19 @@
-package task_script
+package taskline
 
 import (
 	"github.com/gin-gonic/gin"
 	"github.com/spf13/cast"
 
-	script "tdp-cloud/module/dborm/task_script"
+	taskline "tdp-cloud/module/dborm/taskline"
 )
 
-// 脚本列表
+// 记录列表
 
 func list(c *gin.Context) {
 
 	userId := c.GetUint("UserId")
 
-	if lst, err := script.FetchAll(userId); err == nil {
+	if lst, err := taskline.FetchAll(userId); err == nil {
 		c.Set("Payload", gin.H{"Datasets": lst})
 	} else {
 		c.Set("Error", err)
@@ -21,11 +21,26 @@ func list(c *gin.Context) {
 
 }
 
-// 添加脚本
+// 获取记录
+
+func detail(c *gin.Context) {
+
+	userId := c.GetUint("UserId")
+	id := cast.ToUint(c.Param("id"))
+
+	if res, err := taskline.Fetch(id, userId); err == nil {
+		c.Set("Payload", res)
+	} else {
+		c.Set("Error", err)
+	}
+
+}
+
+// 添加记录
 
 func create(c *gin.Context) {
 
-	var rq *script.CreateParam
+	var rq *taskline.CreateParam
 
 	if err := c.ShouldBind(&rq); err != nil {
 		c.Set("Error", err)
@@ -34,7 +49,7 @@ func create(c *gin.Context) {
 
 	rq.UserId = c.GetUint("UserId")
 
-	if id, err := script.Create(rq); err == nil {
+	if id, err := taskline.Create(rq); err == nil {
 		c.Set("Message", "添加成功")
 		c.Set("Payload", gin.H{"Id": id})
 	} else {
@@ -43,11 +58,11 @@ func create(c *gin.Context) {
 
 }
 
-// 修改脚本
+// 修改记录
 
 func update(c *gin.Context) {
 
-	var rq *script.UpdateParam
+	var rq *taskline.UpdateParam
 
 	if err := c.ShouldBind(&rq); err != nil {
 		c.Set("Error", err)
@@ -56,7 +71,7 @@ func update(c *gin.Context) {
 
 	rq.UserId = c.GetUint("UserId")
 
-	if err := script.Update(rq); err == nil {
+	if err := taskline.Update(rq); err == nil {
 		c.Set("Message", "更新成功")
 	} else {
 		c.Set("Error", err)
@@ -64,14 +79,14 @@ func update(c *gin.Context) {
 
 }
 
-// 删除脚本
+// 删除记录
 
 func delete(c *gin.Context) {
 
 	userId := c.GetUint("UserId")
 	id := cast.ToUint(c.Param("id"))
 
-	if err := script.Delete(id, userId); err == nil {
+	if err := taskline.Delete(id, userId); err == nil {
 		c.Set("Message", "删除成功")
 	} else {
 		c.Set("Error", err)

@@ -1,4 +1,4 @@
-package task_history
+package taskline
 
 import (
 	"tdp-cloud/module/dborm"
@@ -18,7 +18,7 @@ type CreateParam struct {
 
 func Create(post *CreateParam) (uint, error) {
 
-	item := &dborm.TaskHistory{
+	item := &dborm.Taskline{
 		UserId:   post.UserId,
 		Subject:  post.Subject,
 		HostName: post.HostName,
@@ -50,8 +50,8 @@ type UpdateParam struct {
 func Update(post *UpdateParam) error {
 
 	result := dborm.Db.
-		Where(&dborm.TaskHistory{Id: post.Id, UserId: post.UserId}).
-		Updates(dborm.TaskHistory{
+		Where(&dborm.Taskline{Id: post.Id, UserId: post.UserId}).
+		Updates(dborm.Taskline{
 			Subject:  post.Subject,
 			HostName: post.HostName,
 			WorkerId: post.WorkerId,
@@ -66,12 +66,12 @@ func Update(post *UpdateParam) error {
 
 // 获取任务列表
 
-func FetchAll(userId uint) ([]*dborm.TaskHistory, error) {
+func FetchAll(userId uint) ([]*dborm.Taskline, error) {
 
-	var items []*dborm.TaskHistory
+	var items []*dborm.Taskline
 
 	result := dborm.Db.
-		Where(&dborm.TaskHistory{UserId: userId}).
+		Where(&dborm.Taskline{UserId: userId}).
 		Limit(50).Order("id DESC").
 		Find(&items)
 
@@ -81,11 +81,11 @@ func FetchAll(userId uint) ([]*dborm.TaskHistory, error) {
 
 // 获取任务
 
-func Fetch(id, userId uint) (*dborm.TaskHistory, error) {
+func Fetch(id, userId uint) (*dborm.Taskline, error) {
 
-	var item *dborm.TaskHistory
+	var item *dborm.Taskline
 
-	result := dborm.Db.Where(&dborm.TaskHistory{Id: id, UserId: userId}).First(&item)
+	result := dborm.Db.Where(&dborm.Taskline{Id: id, UserId: userId}).First(&item)
 
 	return item, result.Error
 
@@ -95,9 +95,9 @@ func Fetch(id, userId uint) (*dborm.TaskHistory, error) {
 
 func Delete(id, userId uint) error {
 
-	var item *dborm.TaskHistory
+	var item *dborm.Taskline
 
-	result := dborm.Db.Where(&dborm.TaskHistory{Id: id, UserId: userId}).Delete(&item)
+	result := dborm.Db.Where(&dborm.Taskline{Id: id, UserId: userId}).Delete(&item)
 
 	return result.Error
 
