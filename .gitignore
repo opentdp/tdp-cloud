@@ -8,6 +8,7 @@ __debug_*
 tests/.env
 font/*
 /*.bat
+/*.yml
 
 # Log files
 *.err
