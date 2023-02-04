@@ -1,6 +1,8 @@
 package cmd
 
 import (
+	"os"
+
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 
@@ -26,7 +28,7 @@ func Execute() {
 	)
 
 	if err := cli.Execute(); err != nil {
-		panic(err)
+		os.Exit(1)
 	}
 
 }
@@ -39,7 +41,7 @@ func initViper() {
 	viper.SafeWriteConfigAs(args.ConfigFile)
 
 	if err := viper.ReadInConfig(); err != nil {
-		panic(err)
+		os.Exit(1)
 	}
 
 }

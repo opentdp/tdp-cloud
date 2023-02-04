@@ -42,7 +42,7 @@ func Connect(dsn string) {
 	}
 
 	if err != nil {
-		log.Panicln(err)
+		log.Fatalln("Connect to databse error:", err)
 	}
 
 }

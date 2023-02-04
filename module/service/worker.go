@@ -44,7 +44,7 @@ func Worker() service.Service {
 	s, err := service.New(&worker{}, config)
 
 	if err != nil {
-		log.Fatalln("init service error:", err)
+		log.Fatalln("Init service error:", err)
 	}
 
 	return s
