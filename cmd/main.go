@@ -1,6 +1,7 @@
 package cmd
 
 import (
+	"log"
 	"os"
 
 	"github.com/spf13/cobra"
@@ -38,6 +39,7 @@ func initViper() {
 	viper.AutomaticEnv()
 
 	if args.ConfigFile == "" {
+		log.Println("Config file will be ignored")
 		return
 	}
 
