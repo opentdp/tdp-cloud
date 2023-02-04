@@ -6,10 +6,10 @@ import (
 
 var EmbedFs *embed.FS
 
+var ConfigFile string
+
 var Version = "0.5.1"
 var BuildVersion = "202301"
-
-var ConfigFile = "tdp-cloud.yml"
 
 var ReadmeText = `土豆片控制面板
 

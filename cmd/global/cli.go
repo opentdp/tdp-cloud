@@ -14,7 +14,7 @@ var cli = &cobra.Command{
 
 func WithCli() *cobra.Command {
 
-	cli.PersistentFlags().StringVarP(&args.ConfigFile, "config", "c", args.ConfigFile, "config file")
+	cli.PersistentFlags().StringVarP(&args.ConfigFile, "config", "c", "", "config file")
 
 	return cli
 
