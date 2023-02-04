@@ -37,6 +37,10 @@ func initViper() {
 
 	viper.AutomaticEnv()
 
+	if args.ConfigFile == "" {
+		return
+	}
+
 	viper.SetConfigFile(args.ConfigFile)
 	viper.SafeWriteConfigAs(args.ConfigFile)
 
