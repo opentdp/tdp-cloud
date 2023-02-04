@@ -8,7 +8,7 @@ import (
 	"github.com/gin-gonic/gin"
 
 	"tdp-cloud/api"
-	"tdp-cloud/cmd"
+	"tdp-cloud/cmd/args"
 )
 
 func Start(addr string) {
@@ -30,7 +30,7 @@ func Engine() *gin.Engine {
 	api.Router(engine)
 
 	// 静态文件路由
-	fs, _ := fs.Sub(cmd.FrontFS, "front")
+	fs, _ := fs.Sub(args.FrontFS, "front")
 	engine.StaticFS("/ui", http.FS(fs))
 
 	// 默认首页路由

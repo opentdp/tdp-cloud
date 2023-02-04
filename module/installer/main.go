@@ -1,26 +1,24 @@
-package service
+package installer
 
 import (
 	"log"
 )
 
-func Create() {
+func Execute(iName, uName string) {
 
-	if len(vInstall) > 0 {
-		logPrint("install", install())
-		return
+	if len(uName) > 0 {
+		logPrint("uninstall", uninstall(uName))
 	}
 
-	if len(vUninstall) > 0 {
-		logPrint("uninstall", uninstall())
-		return
+	if len(iName) > 0 {
+		logPrint("install", install(iName))
 	}
 
 }
 
-func install() error {
+func install(name string) error {
 
-	switch vInstall {
+	switch name {
 	case "server":
 		return serverService().Install()
 	case "worker":
@@ -31,9 +29,9 @@ func install() error {
 
 }
 
-func uninstall() error {
+func uninstall(name string) error {
 
-	switch vUninstall {
+	switch name {
 	case "server":
 		return serverService().Uninstall()
 	case "worker":

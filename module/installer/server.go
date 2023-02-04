@@ -1,4 +1,4 @@
-package service
+package installer
 
 import (
 	"log"
@@ -7,23 +7,23 @@ import (
 	"github.com/kardianos/service"
 )
 
-type worker struct{}
+type server struct{}
 
-func (p *worker) Start(s service.Service) error {
+func (p *server) Start(s service.Service) error {
 
 	log.Println("service start")
 	return nil
 
 }
 
-func (p *worker) Stop(s service.Service) error {
+func (p *server) Stop(s service.Service) error {
 
 	log.Println("service stop")
 	return nil
 
 }
 
-func workerService() service.Service {
+func serverService() service.Service {
 
 	var args = []string{os.Args[3]}
 
@@ -32,8 +32,8 @@ func workerService() service.Service {
 	}
 
 	config := &service.Config{
-		Name:        "tdp-worker",
-		DisplayName: "TDP Cloud Worker",
+		Name:        "tdp-server",
+		DisplayName: "TDP Cloud Server",
 		Description: "TDP Cloud Control Panel",
 		Arguments:   args,
 		Option: service.KeyValue{
@@ -41,7 +41,7 @@ func workerService() service.Service {
 		},
 	}
 
-	s, err := service.New(&worker{}, config)
+	s, err := service.New(&server{}, config)
 
 	if err != nil {
 		log.Fatalln("init service error:", err)

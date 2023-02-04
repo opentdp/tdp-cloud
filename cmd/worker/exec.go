@@ -4,24 +4,27 @@ import (
 	"log"
 	"time"
 
+	"github.com/spf13/viper"
+
 	"tdp-cloud/module/worker"
 )
 
-func Create() {
+func Execute() {
 
-	defer delayer()
+	defer timer()
 
-	if err := worker.Daemon(vRemote); err != nil {
+	remote := viper.GetString("worker.remote")
+
+	if err := worker.Daemon(remote); err != nil {
 		log.Println(err)
 	}
 
 }
 
-func delayer() {
+func timer() {
 
 	log.Println("连接已断开，将在5秒后重试")
-
 	time.Sleep(time.Second * 5)
-	Create()
+	Execute()
 
 }
