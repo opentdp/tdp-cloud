@@ -3,8 +3,8 @@ package passport
 import (
 	"github.com/gin-gonic/gin"
 
+	"tdp-cloud/module/dborm/passport"
 	"tdp-cloud/module/dborm/user"
-	"tdp-cloud/module/passport"
 )
 
 // 注册用户
