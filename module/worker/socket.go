@@ -53,14 +53,12 @@ func Sender(pod *socket.JsonPod) error {
 	send := &SendPod{pod}
 
 	for {
-
 		if _, err := send.Ping(); err != nil {
 			log.Println("Send:error", err)
 			return err
 		}
 
 		time.Sleep(time.Second * 15)
-
 	}
 
 }
