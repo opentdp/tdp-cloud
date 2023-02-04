@@ -42,7 +42,7 @@ func Server(addr string, engine http.Handler) {
 
 	log.Println("Server closing...")
 
-	// 通知服务器还有5秒的时间完成当前正在处理的请求
+	// 创建一个剩余5秒超时的上下文
 	ctx, cancel := context.WithTimeout(context.Background(), time.Second*5)
 	defer cancel()
 
