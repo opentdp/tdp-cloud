@@ -1,6 +1,7 @@
 package httpd
 
 import (
+	"embed"
 	"io/fs"
 	"net/http"
 	"os"
@@ -8,20 +9,19 @@ import (
 	"github.com/gin-gonic/gin"
 
 	"tdp-cloud/api"
-	"tdp-cloud/cmd/args"
 )
 
-func Start(addr string) {
+func Start(addr string, efs *embed.FS) {
 
 	if os.Getenv("TDP_DEBUG") == "" {
 		gin.SetMode(gin.ReleaseMode)
 	}
 
-	Server(addr, Engine())
+	Server(addr, Engine(efs))
 
 }
 
-func Engine() *gin.Engine {
+func Engine(efs *embed.FS) *gin.Engine {
 
 	// 初始化
 	engine := gin.Default()
@@ -30,7 +30,7 @@ func Engine() *gin.Engine {
 	api.Router(engine)
 
 	// 静态文件路由
-	fs, _ := fs.Sub(args.FrontFS, "front")
+	fs, _ := fs.Sub(efs, "front")
 	engine.StaticFS("/ui", http.FS(fs))
 
 	// 默认首页路由

@@ -8,11 +8,11 @@ import (
 )
 
 //go:embed front
-var vfs embed.FS
+var efs embed.FS
 
 func main() {
 
-	args.FrontFS = &vfs
+	args.EmbedFs = &efs
 
 	cmd.Execute()
 

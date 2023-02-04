@@ -4,7 +4,7 @@ import (
 	"embed"
 )
 
-var FrontFS *embed.FS
+var EmbedFs *embed.FS
 
 var Version = "0.5.1"
 var BuildVersion = "202301"

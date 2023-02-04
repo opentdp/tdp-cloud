@@ -3,6 +3,7 @@ package server
 import (
 	"github.com/spf13/viper"
 
+	"tdp-cloud/cmd/args"
 	"tdp-cloud/module/dborm"
 	"tdp-cloud/module/httpd"
 	"tdp-cloud/module/migrator"
@@ -21,6 +22,6 @@ func Execute() {
 	migrator.Deploy()
 
 	// 启动HTTP服务
-	httpd.Start(listen)
+	httpd.Start(listen, args.EmbedFs)
 
 }
