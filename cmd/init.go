@@ -20,7 +20,7 @@ func init() {
 
 	cobra.OnInitialize(initViper)
 
-	rcmd.PersistentFlags().StringVarP(&args.ConfigFile, "config", "c", "", "config file")
+	rcmd.PersistentFlags().StringVarP(&args.ConfigFile, "config", "c", "", "配置文件路径")
 
 }
 
