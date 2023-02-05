@@ -2,11 +2,12 @@ package service
 
 import (
 	"log"
+
+	"github.com/kardianos/service"
+
 	"tdp-cloud/helper/strutil"
 	"tdp-cloud/service/server"
 	"tdp-cloud/service/worker"
-
-	"github.com/kardianos/service"
 )
 
 var statusMap = map[service.Status]string{
