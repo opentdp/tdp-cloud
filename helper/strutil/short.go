@@ -12,8 +12,7 @@ import (
 
 func Md5(s string) string {
 
-	ret := md5.Sum([]byte(s))
-	return fmt.Sprintf("%x", ret)
+	return fmt.Sprintf("%x", md5.Sum([]byte(s)))
 
 }
 
@@ -22,7 +21,6 @@ func Md5(s string) string {
 func Gb18030ToUtf8(s string) string {
 
 	ret, _ := simplifiedchinese.GB18030.NewDecoder().String(s)
-
 	return string(ret)
 
 }
@@ -30,11 +28,15 @@ func Gb18030ToUtf8(s string) string {
 // 字符串首字母大写
 
 func FirstUpper(s string) string {
+
 	return strings.ToUpper(s[:1]) + s[1:]
+
 }
 
 // 字符串首字母小写
 
 func FirstLower(s string) string {
+
 	return strings.ToLower(s[:1]) + s[1:]
+
 }
