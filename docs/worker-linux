@@ -40,7 +40,7 @@ service_install() {
     download_binary
     chmod +x $TDP_EXEC_FILE
 
-    $TDP_EXEC_FILE service --install worker - $TDP_EXEC_ARGS
+    $TDP_EXEC_FILE service worker -s install - $TDP_EXEC_ARGS
     mkdir -p /var/lib/tdp-cloud
     mkdir -p /var/log/tdp-cloud
 
@@ -49,7 +49,7 @@ service_install() {
 
 service_uninstall() {
     service tdp-worker stop
-    tdp-cloud service --uninstall worker
+    tdp-cloud service worker -s uninstall
 
     rm -rf `which tdp-cloud`
     rm -rf /var/*/tdp-cloud*

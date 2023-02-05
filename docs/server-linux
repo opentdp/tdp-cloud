@@ -39,7 +39,7 @@ service_install() {
     download_binary
     chmod +x $TDP_EXEC_FILE
 
-    $TDP_EXEC_FILE service --install server - $TDP_EXEC_ARGS
+    $TDP_EXEC_FILE server -s install - $TDP_EXEC_ARGS
     mkdir -p /var/lib/tdp-cloud
     mkdir -p /var/log/tdp-cloud
 
@@ -48,7 +48,7 @@ service_install() {
 
 service_uninstall() {
     service tdp-server stop
-    tdp-cloud service --uninstall server
+    tdp-cloud service server -s uninstall
 
     rm -rf `which tdp-cloud`
     rm -rf /var/*/tdp-cloud*
