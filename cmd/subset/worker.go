@@ -4,7 +4,7 @@ import (
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 
-	"tdp-cloud/service/worker"
+	"tdp-cloud/service"
 )
 
 var workerAct string
@@ -13,7 +13,7 @@ var workerCmd = &cobra.Command{
 	Use:   "worker",
 	Short: "注册子节点",
 	Run: func(cmd *cobra.Command, args []string) {
-		ctrl(worker.Service(), workerAct)
+		service.Control("worker", workerAct)
 	},
 }
 

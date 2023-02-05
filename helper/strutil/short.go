@@ -29,6 +29,10 @@ func Gb18030ToUtf8(s string) string {
 
 func FirstUpper(s string) string {
 
+	if s == "" {
+		return s
+	}
+
 	return strings.ToUpper(s[:1]) + s[1:]
 
 }
@@ -36,6 +40,10 @@ func FirstUpper(s string) string {
 // 字符串首字母小写
 
 func FirstLower(s string) string {
+
+	if s == "" {
+		return s
+	}
 
 	return strings.ToLower(s[:1]) + s[1:]
 
