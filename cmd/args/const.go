@@ -4,7 +4,7 @@ import (
 	"embed"
 )
 
-var EmbedFs *embed.FS
+var Efs *embed.FS
 
 var ConfigFile string
 

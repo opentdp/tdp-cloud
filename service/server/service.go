@@ -1,4 +1,4 @@
-package service
+package server
 
 import (
 	"log"
@@ -7,23 +7,7 @@ import (
 	"github.com/kardianos/service"
 )
 
-type server struct{}
-
-func (p *server) Start(s service.Service) error {
-
-	log.Println("service start")
-	return nil
-
-}
-
-func (p *server) Stop(s service.Service) error {
-
-	log.Println("service stop")
-	return nil
-
-}
-
-func Server() service.Service {
+func Service() service.Service {
 
 	var args = []string{"server"}
 
@@ -41,7 +25,7 @@ func Server() service.Service {
 		},
 	}
 
-	s, err := service.New(&server{}, config)
+	s, err := service.New(&origin{}, config)
 
 	if err != nil {
 		log.Fatalln("Init service error:", err)

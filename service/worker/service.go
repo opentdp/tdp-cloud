@@ -1,4 +1,4 @@
-package service
+package worker
 
 import (
 	"log"
@@ -7,23 +7,7 @@ import (
 	"github.com/kardianos/service"
 )
 
-type worker struct{}
-
-func (p *worker) Start(s service.Service) error {
-
-	log.Println("service start")
-	return nil
-
-}
-
-func (p *worker) Stop(s service.Service) error {
-
-	log.Println("service stop")
-	return nil
-
-}
-
-func Worker() service.Service {
+func Service() service.Service {
 
 	var args = []string{"worker"}
 
@@ -41,7 +25,7 @@ func Worker() service.Service {
 		},
 	}
 
-	s, err := service.New(&worker{}, config)
+	s, err := service.New(&origin{}, config)
 
 	if err != nil {
 		log.Fatalln("Init service error:", err)

@@ -12,7 +12,7 @@ var efs embed.FS
 
 func main() {
 
-	args.EmbedFs = &efs
+	args.Efs = &efs
 
 	cmd.Execute()
 

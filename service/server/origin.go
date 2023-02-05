@@ -1,30 +1,37 @@
 package server
 
 import (
-	"github.com/spf13/cobra"
+	"log"
+
+	"github.com/kardianos/service"
 	"github.com/spf13/viper"
 
 	"tdp-cloud/cmd/args"
 	"tdp-cloud/module/dborm"
 	"tdp-cloud/module/httpd"
 	"tdp-cloud/module/migrator"
-	"tdp-cloud/module/service"
 )
 
-func Execute(cmd *cobra.Command, params []string) {
+type origin struct{}
 
-	switch svc {
-	case "install":
-		service.Server().Install()
-	case "uninstall":
-		service.Server().Uninstall()
-	case "":
-		start()
-	}
+func (p *origin) Start(s service.Service) error {
+
+	log.Println("Server service start")
+
+	go p.run()
+	return nil
 
 }
 
-func start() {
+func (p *origin) Stop(s service.Service) error {
+
+	log.Println("Server service stop")
+
+	return nil
+
+}
+
+func (p *origin) run() {
 
 	// 获取参数
 	dsn := viper.GetString("server.dsn")
@@ -37,6 +44,6 @@ func start() {
 	migrator.Deploy()
 
 	// 启动HTTP服务
-	httpd.Start(listen, args.EmbedFs)
+	httpd.Start(listen, args.Efs)
 
 }
