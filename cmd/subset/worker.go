@@ -1,9 +1,12 @@
 package subset
 
 import (
+	"log"
+
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 
+	"tdp-cloud/helper/strutil"
 	"tdp-cloud/service/worker"
 )
 
@@ -12,16 +15,37 @@ var workerSvc string
 var workerCmd = &cobra.Command{
 	Use:   "worker",
 	Short: "注册子节点",
-	Run: func(cmd *cobra.Command, params []string) {
-		switch workerSvc {
-		case "install":
-			worker.Service().Install()
-		case "uninstall":
-			worker.Service().Uninstall()
-		case "":
-			worker.Service().Run()
-		}
-	},
+	Run:   workerRun,
+}
+
+func workerRun(cmd *cobra.Command, params []string) {
+
+	var err error
+	var svc = worker.Service()
+
+	log.Println(strutil.FirstUpper(workerSvc), "service tdp-worker ...")
+
+	switch workerSvc {
+	case "install":
+		err = svc.Install()
+	case "uninstall":
+		err = svc.Uninstall()
+	case "start":
+		err = svc.Start()
+	case "status":
+		_, err = svc.Status()
+	case "stop":
+		err = svc.Stop()
+	case "restart":
+		err = svc.Restart()
+	case "":
+		err = svc.Run()
+	}
+
+	if err != nil {
+		log.Println(err)
+	}
+
 }
 
 func WithWorker() *cobra.Command {

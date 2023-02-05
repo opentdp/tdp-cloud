@@ -1,9 +1,12 @@
 package subset
 
 import (
+	"log"
+
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 
+	"tdp-cloud/helper/strutil"
 	"tdp-cloud/service/server"
 )
 
@@ -12,16 +15,37 @@ var serverSvc string
 var serverCmd = &cobra.Command{
 	Use:   "server",
 	Short: "启动服务端",
-	Run: func(cmd *cobra.Command, params []string) {
-		switch serverSvc {
-		case "install":
-			server.Service().Install()
-		case "uninstall":
-			server.Service().Uninstall()
-		case "":
-			server.Service().Run()
-		}
-	},
+	Run:   serverRun,
+}
+
+func serverRun(cmd *cobra.Command, params []string) {
+
+	var err error
+	var svc = server.Service()
+
+	log.Println(strutil.FirstUpper(serverSvc), "service tdp-server ...")
+
+	switch serverSvc {
+	case "install":
+		err = svc.Install()
+	case "uninstall":
+		err = svc.Uninstall()
+	case "start":
+		err = svc.Start()
+	case "status":
+		_, err = svc.Status()
+	case "stop":
+		err = svc.Stop()
+	case "restart":
+		err = svc.Restart()
+	case "":
+		err = svc.Run()
+	}
+
+	if err != nil {
+		log.Println(err)
+	}
+
 }
 
 func WithServer() *cobra.Command {

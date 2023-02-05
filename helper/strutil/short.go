@@ -3,6 +3,7 @@ package strutil
 import (
 	"crypto/md5"
 	"fmt"
+	"strings"
 
 	"golang.org/x/text/encoding/simplifiedchinese"
 )
@@ -24,4 +25,16 @@ func Gb18030ToUtf8(s string) string {
 
 	return string(ret)
 
+}
+
+// 字符串首字母大写
+
+func FirstUpper(s string) string {
+	return strings.ToUpper(s[:1]) + s[1:]
+}
+
+// 字符串首字母小写
+
+func FirstLower(s string) string {
+	return strings.ToLower(s[:1]) + s[1:]
 }
