@@ -15,6 +15,9 @@ var cli = &cobra.Command{
 
 func WithCli() *cobra.Command {
 
+	cli.Flags().BoolP("help", "p", false, "查看帮助")
+	cli.Flags().MarkHidden("help")
+
 	cli.Flags().StringVarP(&svc, "service", "s", "", "管理系统服务")
 
 	cli.Flags().StringP("remote", "r", "", "注册地址 (e.g. ws://{domain}/wsi/{appid}/worker)")

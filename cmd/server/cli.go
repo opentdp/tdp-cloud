@@ -15,6 +15,9 @@ var cli = &cobra.Command{
 
 func WithCli() *cobra.Command {
 
+	cli.Flags().BoolP("help", "p", false, "查看帮助")
+	cli.Flags().MarkHidden("help")
+
 	cli.Flags().StringVarP(&svc, "service", "s", "", "管理系统服务")
 
 	cli.Flags().StringP("listen", "l", ":7800", "服务端监听的IP地址和端口")

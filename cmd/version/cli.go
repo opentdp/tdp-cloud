@@ -12,6 +12,9 @@ var cli = &cobra.Command{
 
 func WithCli() *cobra.Command {
 
+	cli.Flags().BoolP("help", "p", false, "查看帮助")
+	cli.Flags().MarkHidden("help")
+
 	return cli
 
 }
