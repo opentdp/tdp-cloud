@@ -2,26 +2,15 @@ module tdp-cloud
 
 go 1.18
 
-// WEB 框架
-
 require (
+	// WEB 框架
 	github.com/gin-gonic/gin v1.8.2
-	github.com/gorilla/websocket v1.5.0
-)
-
-// 数据库 ORM
-
-require (
+	// SQLite 驱动
 	github.com/glebarez/sqlite v1.6.0
-	gorm.io/driver/mysql v1.4.5
-	gorm.io/gorm v1.24.3
-)
-
-// 工具类
-
-require (
 	// 生成 UUID
 	github.com/google/uuid v1.3.0
+	// WS 框架
+	github.com/gorilla/websocket v1.5.0
 	// 服务管理
 	github.com/kardianos/service v1.2.2
 	// Map 转结构体
@@ -29,7 +18,7 @@ require (
 	// 计划任务
 	github.com/robfig/cron/v3 v3.0.1
 	// 系统信息采集
-	github.com/shirou/gopsutil/v3 v3.22.12
+	github.com/shirou/gopsutil/v3 v3.23.1
 	// 类型转换
 	github.com/spf13/cast v1.5.0
 	// CLI 参数解析
@@ -37,13 +26,17 @@ require (
 	// 配置文件读取
 	github.com/spf13/viper v1.15.0
 	// 腾讯云 SDK
-	github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/common v1.0.582
+	github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/common v1.0.587
 	// 加密扩充库
 	golang.org/x/crypto v0.5.0
 	// 终端和控制台支持包
 	golang.org/x/term v0.4.0
 	// 文本操作
 	golang.org/x/text v0.6.0
+	// MySQL 驱动
+	gorm.io/driver/mysql v1.4.5
+	// 数据库 ORM
+	gorm.io/gorm v1.24.5
 )
 
 // 间接依赖
@@ -52,15 +45,15 @@ require (
 	github.com/dustin/go-humanize v1.0.1 // indirect
 	github.com/fsnotify/fsnotify v1.6.0 // indirect
 	github.com/gin-contrib/sse v0.1.0 // indirect
-	github.com/glebarez/go-sqlite v1.20.0 // indirect
+	github.com/glebarez/go-sqlite v1.20.3 // indirect
 	github.com/go-ole/go-ole v1.2.6 // indirect
 	github.com/go-playground/locales v0.14.1 // indirect
-	github.com/go-playground/universal-translator v0.18.0 // indirect
-	github.com/go-playground/validator/v10 v10.11.1 // indirect
+	github.com/go-playground/universal-translator v0.18.1 // indirect
+	github.com/go-playground/validator/v10 v10.11.2 // indirect
 	github.com/go-sql-driver/mysql v1.7.0 // indirect
 	github.com/goccy/go-json v0.10.0 // indirect
 	github.com/hashicorp/hcl v1.0.0 // indirect
-	github.com/inconshreveable/mousetrap v1.0.1 // indirect
+	github.com/inconshreveable/mousetrap v1.1.0 // indirect
 	github.com/jinzhu/inflection v1.0.0 // indirect
 	github.com/jinzhu/now v1.1.5 // indirect
 	github.com/json-iterator/go v1.1.12 // indirect
@@ -72,14 +65,14 @@ require (
 	github.com/modern-go/reflect2 v1.0.2 // indirect
 	github.com/pelletier/go-toml/v2 v2.0.6 // indirect
 	github.com/power-devops/perfstat v0.0.0-20221212215047-62379fc7944b // indirect
-	github.com/remyoudompheng/bigfft v0.0.0-20230126093431-47fa9a501578 // indirect
+	github.com/remyoudompheng/bigfft v0.0.0-20230129092748-24d4a6f8daec // indirect
 	github.com/spf13/afero v1.9.3 // indirect
 	github.com/spf13/jwalterweatherman v1.1.0 // indirect
 	github.com/spf13/pflag v1.0.5 // indirect
 	github.com/subosito/gotenv v1.4.2 // indirect
 	github.com/tklauser/go-sysconf v0.3.11 // indirect
 	github.com/tklauser/numcpus v0.6.0 // indirect
-	github.com/ugorji/go/codec v1.2.8 // indirect
+	github.com/ugorji/go/codec v1.2.9 // indirect
 	github.com/yusufpapurcu/wmi v1.2.2 // indirect
 	golang.org/x/net v0.5.0 // indirect
 	golang.org/x/sys v0.4.0 // indirect
