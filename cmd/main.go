@@ -9,7 +9,7 @@ import (
 func Execute() {
 
 	rcmd.AddCommand(
-		subset.WithServer(), subset.WithWorker(), subset.WithVersion(),
+		subset.WithServer(), subset.WithWorker(),
 	)
 
 	if err := rcmd.Execute(); err != nil {

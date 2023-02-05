@@ -11,9 +11,10 @@ import (
 )
 
 var rcmd = &cobra.Command{
-	Use:   "tdp-cloud",
-	Short: "TDP Cloud",
-	Long:  args.ReadmeText,
+	Use:     "tdp-cloud",
+	Short:   "TDP Cloud",
+	Long:    args.ReadmeText,
+	Version: args.Version,
 }
 
 func init() {
