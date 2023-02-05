@@ -10,7 +10,6 @@ import (
 	"tdp-cloud/cmd/args"
 	"tdp-cloud/cmd/global"
 	"tdp-cloud/cmd/server"
-	"tdp-cloud/cmd/service"
 	"tdp-cloud/cmd/version"
 	"tdp-cloud/cmd/worker"
 )
@@ -22,10 +21,7 @@ func Execute() {
 	cli := global.WithCli()
 
 	cli.AddCommand(
-		server.WithCli(),
-		worker.WithCli(),
-		service.WithCli(),
-		version.WithCli(),
+		server.WithCli(), worker.WithCli(), version.WithCli(),
 	)
 
 	if err := cli.Execute(); err != nil {

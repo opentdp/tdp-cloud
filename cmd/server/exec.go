@@ -1,15 +1,30 @@
 package server
 
 import (
+	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 
 	"tdp-cloud/cmd/args"
 	"tdp-cloud/module/dborm"
 	"tdp-cloud/module/httpd"
 	"tdp-cloud/module/migrator"
+	"tdp-cloud/module/service"
 )
 
-func Execute() {
+func Execute(cmd *cobra.Command, params []string) {
+
+	switch svc {
+	case "install":
+		service.Server().Install()
+	case "uninstall":
+		service.Server().Uninstall()
+	case "":
+		start()
+	}
+
+}
+
+func start() {
 
 	// 获取参数
 	dsn := viper.GetString("server.dsn")

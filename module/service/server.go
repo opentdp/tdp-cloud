@@ -25,7 +25,7 @@ func (p *server) Stop(s service.Service) error {
 
 func Server() service.Service {
 
-	var args = []string{os.Args[3]}
+	var args = []string{"server"}
 
 	if len(os.Args) > 5 {
 		args = append(args, os.Args[5:]...)
