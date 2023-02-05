@@ -25,12 +25,12 @@ func Service() service.Service {
 		},
 	}
 
-	s, err := service.New(&origin{}, config)
+	svc, err := service.New(&origin{}, config)
 
 	if err != nil {
 		log.Fatalln("Init service error:", err)
 	}
 
-	return s
+	return svc
 
 }
