@@ -58,7 +58,7 @@ func Request(rp *Params) (any, error) {
 // 	Version:   "2014-05-26",
 // 	Region:    "cn-hangzhou",
 // 	Action:    "DescribeAvailableResource",
-// 	Payload: map[string]string{
+// 	Query:     map[string]string{
 // 		"RegionId":            "cn-hangzhou",
 // 		"DestinationResource": "Zone",
 // 	},
