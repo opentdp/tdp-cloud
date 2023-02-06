@@ -3,7 +3,8 @@ package aliyun
 import (
 	ac "github.com/alibabacloud-go/darabonba-openapi/v2/client"
 	au "github.com/alibabacloud-go/openapi-util/service"
-	at "github.com/alibabacloud-go/tea-utils/v2/service"
+	as "github.com/alibabacloud-go/tea-utils/v2/service"
+	at "github.com/alibabacloud-go/tea/tea"
 )
 
 func Request(rp *Params) (any, error) {
@@ -28,22 +29,23 @@ func Request(rp *Params) (any, error) {
 	}
 
 	params := &ac.Params{
-		Action:      String(rp.Action),
-		Version:     String(rp.Version),
-		Protocol:    String("HTTPS"),
-		Pathname:    String("/"),
-		Method:      String("POST"),
-		AuthType:    String("AK"),
-		Style:       String("RPC"),
-		ReqBodyType: String("json"),
-		BodyType:    String("json"),
+		Action:      at.String(rp.Action),
+		Version:     at.String(rp.Version),
+		Protocol:    at.String("HTTPS"),
+		Pathname:    at.String("/"),
+		Method:      at.String("POST"),
+		AuthType:    at.String("AK"),
+		Style:       at.String("RPC"),
+		ReqBodyType: at.String("json"),
+		BodyType:    at.String("json"),
 	}
 
 	request := &ac.OpenApiRequest{
-		Query: au.Query(rp.Payload),
+		Query: au.Query(rp.Query),
+		Body:  au.Query(rp.Payload),
 	}
 
-	runtime := &at.RuntimeOptions{}
+	runtime := &as.RuntimeOptions{}
 
 	return client.CallApi(params, request, runtime)
 
