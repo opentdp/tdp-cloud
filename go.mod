@@ -3,6 +3,10 @@ module tdp-cloud
 go 1.18
 
 require (
+	// 阿里云 SDK
+	github.com/alibabacloud-go/darabonba-openapi/v2 v2.0.2
+	github.com/alibabacloud-go/openapi-util v0.0.11
+	github.com/alibabacloud-go/tea-utils/v2 v2.0.0
 	// WEB 框架
 	github.com/gin-gonic/gin v1.8.2
 	// SQLite 驱动
@@ -11,6 +15,8 @@ require (
 	github.com/google/uuid v1.3.0
 	// WS 框架
 	github.com/gorilla/websocket v1.5.0
+	// JSON 文档查询
+	github.com/jmespath/go-jmespath v0.4.0
 	// 服务管理
 	github.com/kardianos/service v1.2.2
 	// Map 转结构体
@@ -39,9 +45,14 @@ require (
 	gorm.io/gorm v1.24.5
 )
 
-// 间接依赖
-
 require (
+	github.com/alibabacloud-go/alibabacloud-gateway-spi v0.0.4 // indirect
+	github.com/alibabacloud-go/debug v0.0.0-20190504072949-9472017b5c68 // indirect
+	github.com/alibabacloud-go/tea v1.1.19 // indirect
+	github.com/alibabacloud-go/tea-utils v1.4.3 // indirect
+	github.com/alibabacloud-go/tea-xml v1.1.2 // indirect
+	github.com/aliyun/credentials-go v1.1.2 // indirect
+	github.com/clbanning/mxj/v2 v2.5.5 // indirect
 	github.com/dustin/go-humanize v1.0.1 // indirect
 	github.com/fsnotify/fsnotify v1.6.0 // indirect
 	github.com/gin-contrib/sse v0.1.0 // indirect
@@ -70,6 +81,7 @@ require (
 	github.com/spf13/jwalterweatherman v1.1.0 // indirect
 	github.com/spf13/pflag v1.0.5 // indirect
 	github.com/subosito/gotenv v1.4.2 // indirect
+	github.com/tjfoc/gmsm v1.3.2 // indirect
 	github.com/tklauser/go-sysconf v0.3.11 // indirect
 	github.com/tklauser/numcpus v0.6.0 // indirect
 	github.com/ugorji/go/codec v1.2.9 // indirect
