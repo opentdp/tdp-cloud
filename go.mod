@@ -11,8 +11,6 @@ require (
 	github.com/google/uuid v1.3.0
 	// WS 框架
 	github.com/gorilla/websocket v1.5.0
-	// JSON 文档查询
-	github.com/jmespath/go-jmespath v0.4.0
 	// 服务管理
 	github.com/kardianos/service v1.2.2
 	// Map 转结构体
