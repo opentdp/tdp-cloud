@@ -15,6 +15,7 @@ import (
 	"tdp-cloud/api/vendor"
 	"tdp-cloud/api/workhub"
 
+	"tdp-cloud/api/alibaba"
 	"tdp-cloud/api/cloudflare"
 	"tdp-cloud/api/tencent"
 
@@ -41,6 +42,7 @@ func Router(engine *gin.Engine) {
 		vendor.Router(api)
 		workhub.Router(api)
 
+		alibaba.Router(api)
 		cloudflare.Router(api)
 		tencent.Router(api)
 	}

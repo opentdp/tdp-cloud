@@ -18,7 +18,7 @@ func Request(rp *Params) (any, error) {
 	config := &ac.Config{
 		AccessKeyId:     &rp.SecretId,
 		AccessKeySecret: &rp.SecretKey,
-		RegionId:        &rp.Region,
+		RegionId:        &rp.RegionId,
 		Endpoint:        &rp.Endpoint,
 	}
 

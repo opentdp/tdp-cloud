@@ -31,7 +31,7 @@ type endpointBody struct {
 
 func solveEndpoint(rp *Params) (string, error) {
 
-	key := rp.Region + rp.Service
+	key := rp.RegionId + rp.Service
 
 	// 从缓存返回
 
@@ -91,7 +91,7 @@ func requestEndpoint(rp *Params) (map[string]interface{}, error) {
 
 	request := &ac.OpenApiRequest{
 		Query: map[string]*string{
-			"Id":          &rp.Region,
+			"Id":          &rp.RegionId,
 			"ServiceCode": at.String(strings.ToLower(rp.Service)),
 			"Type":        at.String("openAPI"),
 		},
