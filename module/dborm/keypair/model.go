@@ -10,7 +10,7 @@ type CreateParam struct {
 	UserId      uint
 	PublicKey   string `binding:"required"`
 	PrivateKey  string `binding:"required"`
-	KeyType     uint   `binding:"required"`
+	KeyType     string `binding:"required"`
 	Description string `binding:"required"`
 }
 
@@ -37,7 +37,7 @@ type UpdateParam struct {
 	UserId      uint
 	PublicKey   string `binding:"required"`
 	PrivateKey  string `binding:"required"`
-	KeyType     uint
+	KeyType     string
 	Description string
 }
 

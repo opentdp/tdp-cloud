@@ -36,7 +36,7 @@ type Keypair struct {
 	UserId      uint `gorm:"index"`
 	PublicKey   string
 	PrivateKey  string
-	KeyType     uint `gorm:"index"`
+	KeyType     string `gorm:"index"`
 	Description string
 	CreatedAt   int64
 	UpdatedAt   int64
