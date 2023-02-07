@@ -1,4 +1,4 @@
-package aliyun
+package alibaba
 
 import (
 	"encoding/json"

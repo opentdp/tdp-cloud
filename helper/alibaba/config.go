@@ -1,4 +1,4 @@
-package aliyun
+package alibaba
 
 type Params struct {
 	Service   string `note:"产品名称"`
