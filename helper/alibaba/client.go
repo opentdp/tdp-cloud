@@ -1,6 +1,11 @@
 package alibaba
 
 import (
+	"errors"
+	"regexp"
+
+	"github.com/mitchellh/mapstructure"
+
 	ac "github.com/alibabacloud-go/darabonba-openapi/v2/client"
 	au "github.com/alibabacloud-go/openapi-util/service"
 	as "github.com/alibabacloud-go/tea-utils/v2/service"
@@ -18,7 +23,7 @@ func Request(rp *Params) (any, error) {
 	resp, err := newClient(rp)
 
 	if err != nil {
-		return nil, err
+		return nil, getSDKError(err)
 	}
 
 	return resp["body"], nil
@@ -58,5 +63,20 @@ func newClient(rp *Params) (map[string]any, error) {
 	} else {
 		return nil, err
 	}
+
+}
+
+func getSDKError(e error) error {
+
+	se := at.SDKError{}
+
+	if mapstructure.Decode(e, &se) != nil {
+		return e
+	}
+
+	re, _ := regexp.Compile(`^code: \d+, (.+) request id.+$`)
+	msg := re.ReplaceAllString(*se.Message, "$1")
+
+	return errors.New(msg)
 
 }

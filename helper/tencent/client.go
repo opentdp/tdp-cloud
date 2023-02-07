@@ -16,9 +16,7 @@ func Request(rp *Params) (any, error) {
 	resp, err := newClient(rp)
 
 	if err != nil {
-		re, _ := regexp.Compile(`^.+, Message=`)
-		msg := re.ReplaceAllString(err.Error(), "")
-		return nil, errors.New(msg)
+		return nil, getSDKError(err)
 	}
 
 	body := resp.GetBody()
@@ -80,5 +78,14 @@ func newClient(rp *Params) (*th.CommonResponse, error) {
 	err := client.Send(request, response)
 
 	return response, err
+
+}
+
+func getSDKError(e error) error {
+
+	re, _ := regexp.Compile(`^.+, Message=`)
+	msg := re.ReplaceAllString(e.Error(), "")
+
+	return errors.New(msg)
 
 }

@@ -61,7 +61,7 @@ func requestEndpoint(rp *Params) (*EndpointItem, error) {
 	})
 
 	if err != nil {
-		return item, err
+		return item, getSDKError(err)
 	}
 
 	// 尝试解析数据
