@@ -29,6 +29,19 @@ type Domain struct {
 	UpdatedAt   int64
 }
 
+// 密钥对
+
+type Keypair struct {
+	Id          uint `gorm:"primaryKey"`
+	UserId      uint `gorm:"index"`
+	PublicKey   string
+	PrivateKey  string
+	KeyType     uint `gorm:"index"`
+	Description string
+	CreatedAt   int64
+	UpdatedAt   int64
+}
+
 // 主机资源
 
 type Machine struct {
@@ -74,18 +87,6 @@ type Script struct {
 	Timeout       uint
 	CreatedAt     int64
 	UpdatedAt     int64
-}
-
-// SSH 密钥
-
-type Sshkey struct {
-	Id          uint `gorm:"primaryKey"`
-	UserId      uint `gorm:"index"`
-	PublicKey   string
-	PrivateKey  string
-	Description string
-	CreatedAt   int64
-	UpdatedAt   int64
 }
 
 // 任务记录

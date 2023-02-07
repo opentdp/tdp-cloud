@@ -1,4 +1,4 @@
-package sshkey
+package keypair
 
 import (
 	"github.com/gin-gonic/gin"
@@ -13,9 +13,9 @@ func Router(api *gin.RouterGroup) {
 	rg.Use(midware.AuthGuard())
 
 	{
-		rg.GET("/sshkey", list)
-		rg.POST("/sshkey", create)
-		rg.DELETE("/sshkey/:id", delete)
+		rg.GET("/keypair", list)
+		rg.POST("/keypair", create)
+		rg.DELETE("/keypair/:id", delete)
 	}
 
 }

@@ -5,10 +5,10 @@ import (
 
 	"tdp-cloud/api/config"
 	"tdp-cloud/api/domain"
+	"tdp-cloud/api/keypair"
 	"tdp-cloud/api/machine"
 	"tdp-cloud/api/passport"
 	"tdp-cloud/api/script"
-	"tdp-cloud/api/sshkey"
 	"tdp-cloud/api/taskline"
 	"tdp-cloud/api/terminal"
 	"tdp-cloud/api/user"
@@ -33,10 +33,10 @@ func Router(engine *gin.Engine) {
 	{
 		config.Router(api)
 		domain.Router(api)
+		keypair.Router(api)
 		machine.Router(api)
 		passport.Router(api)
 		script.Router(api)
-		sshkey.Router(api)
 		taskline.Router(api)
 		user.Router(api)
 		vendor.Router(api)

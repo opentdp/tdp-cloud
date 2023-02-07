@@ -1,10 +1,10 @@
-package sshkey
+package keypair
 
 import (
 	"github.com/gin-gonic/gin"
 	"github.com/spf13/cast"
 
-	"tdp-cloud/module/dborm/sshkey"
+	"tdp-cloud/module/dborm/keypair"
 )
 
 // 密钥列表
@@ -13,7 +13,7 @@ func list(c *gin.Context) {
 
 	userId := c.GetUint("UserId")
 
-	if lst, err := sshkey.FetchAll(userId); err == nil {
+	if lst, err := keypair.FetchAll(userId); err == nil {
 		c.Set("Payload", gin.H{"Datasets": lst})
 	} else {
 		c.Set("Error", err)
@@ -25,7 +25,7 @@ func list(c *gin.Context) {
 
 func create(c *gin.Context) {
 
-	var rq *sshkey.CreateParam
+	var rq *keypair.CreateParam
 
 	if err := c.ShouldBind(&rq); err != nil {
 		c.Set("Error", err)
@@ -34,7 +34,7 @@ func create(c *gin.Context) {
 
 	rq.UserId = c.GetUint("UserId")
 
-	if id, err := sshkey.Create(rq); err == nil {
+	if id, err := keypair.Create(rq); err == nil {
 		c.Set("Message", "添加成功")
 		c.Set("Payload", gin.H{"Id": id})
 	} else {
@@ -50,7 +50,7 @@ func delete(c *gin.Context) {
 	userId := c.GetUint("UserId")
 	id := cast.ToUint(c.Param("id"))
 
-	if err := sshkey.Delete(id, userId); err == nil {
+	if err := keypair.Delete(id, userId); err == nil {
 		c.Set("Message", "删除成功")
 	} else {
 		c.Set("Error", err)
