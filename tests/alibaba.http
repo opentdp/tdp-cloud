@@ -1,0 +1,35 @@
+# Alibaba Cloud Api
+
+### 获取用户信息
+
+POST {{$dotenv TDP_API_BASE}}/alibaba/5
+Authorization: {{$dotenv TDP_AUTHORIZATION}}
+Origin: {{$dotenv TDP_ORIGIN}}
+
+{
+    "Service": "ram",
+    "Version": "2015-05-01",
+    "Action": "GetUser",
+    "Query": {
+        "UserName": "tdp-cloud"
+    }
+}
+
+### 获取可用区资源
+
+POST {{$dotenv TDP_API_BASE}}/alibaba/5
+Authorization: {{$dotenv TDP_AUTHORIZATION}}
+Origin: {{$dotenv TDP_ORIGIN}}
+
+{
+    "Service": "ecs",
+    "Version": "2014-05-26",
+    "RegionId": "cn-hangzhou",
+    "Action": "DescribeAvailableResource",
+    "Query": {
+        "RegionId": "cn-hangzhou",
+        "DestinationResource": "Zone"
+    }
+}
+
+###
