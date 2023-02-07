@@ -12,6 +12,6 @@ type Params struct {
 	RootDomain string `note:"API 根域名"`
 }
 
-type Response struct {
+type Result struct {
 	Response any
 }

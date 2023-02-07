@@ -13,23 +13,16 @@ import (
 
 func Request(rp *Params) (any, error) {
 
-	request := th.NewCommonRequest(rp.Service, rp.Version, rp.Action)
+	resp, err := newClient(rp)
 
-	if rp.Payload != nil {
-		request.SetActionParameters(rp.Payload)
-	}
-
-	client := newClient(rp)
-	response := th.NewCommonResponse()
-
-	if err := client.Send(request, response); err != nil {
+	if err != nil {
 		re, _ := regexp.Compile(`^.+, Message=`)
 		msg := re.ReplaceAllString(err.Error(), "")
 		return nil, errors.New(msg)
 	}
 
-	res := &Response{}
-	body := response.GetBody()
+	body := resp.GetBody()
+	res := &Result{}
 
 	if err := json.Unmarshal(body, res); err != nil {
 		return nil, err
@@ -39,7 +32,7 @@ func Request(rp *Params) (any, error) {
 
 }
 
-func newClient(rp *Params) *tc.Client {
+func newClient(rp *Params) (*th.CommonResponse, error) {
 
 	cpf := tp.NewClientProfile()
 
@@ -63,7 +56,7 @@ func newClient(rp *Params) *tc.Client {
 	cpf.DisableRegionBreaker = false
 	cpf.BackupEndpoint = "ap-hongkong." + rp.RootDomain
 
-	// 分地域接入，避免限频
+	// 按地域设置接口
 	if rp.Endpoint != "" {
 		cpf.HttpProfile.Endpoint = rp.Service + "." + rp.Endpoint + "." + rp.RootDomain
 	} else if rp.Region != "" {
@@ -72,8 +65,20 @@ func newClient(rp *Params) *tc.Client {
 		cpf.HttpProfile.RootDomain = rp.RootDomain
 	}
 
+	// 初始化客户端
 	cred := tc.NewCredential(rp.SecretId, rp.SecretKey)
+	client := tc.NewCommonClient(cred, rp.Region, cpf)
 
-	return tc.NewCommonClient(cred, rp.Region, cpf)
+	// 构造请求信息
+	request := th.NewCommonRequest(rp.Service, rp.Version, rp.Action)
+	if rp.Payload != nil {
+		request.SetActionParameters(rp.Payload)
+	}
+
+	// 发起请求
+	response := th.NewCommonResponse()
+	err := client.Send(request, response)
+
+	return response, err
 
 }
