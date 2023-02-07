@@ -31,9 +31,13 @@ type endpointBody struct {
 
 func solveEndpoint(rp *Params) (string, error) {
 
-	key := rp.RegionId + rp.Service
+	if rp.RegionId == "" {
+		return rp.Service + ".aliyuncs.com", nil
+	}
 
 	// 从缓存返回
+
+	key := rp.RegionId + rp.Service
 
 	if endpointData[key] != "" {
 		return endpointData[key], nil
