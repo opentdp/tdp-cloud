@@ -1,8 +1,8 @@
-# Qcloud Api
+# Tencent Cloud Api
 
 ### 获取账号信息
 
-POST {{$dotenv TDP_API_BASE}}/qcloud/1
+POST {{$dotenv TDP_API_BASE}}/tencent/1
 Authorization: {{$dotenv TDP_AUTHORIZATION}}
 Origin: {{$dotenv TDP_ORIGIN}}
 

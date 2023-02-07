@@ -1,4 +1,4 @@
-package qcloud
+package tencent
 
 import (
 	"encoding/json"

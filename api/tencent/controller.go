@@ -1,4 +1,4 @@
-package qcloud
+package tencent
 
 import (
 	"io/ioutil"
@@ -7,7 +7,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/spf13/cast"
 
-	"tdp-cloud/helper/qcloud"
+	"tdp-cloud/helper/tencent"
 	"tdp-cloud/module/dborm/vendor"
 )
 
@@ -25,7 +25,7 @@ func apiProxy(c *gin.Context) {
 
 	// 构造参数
 
-	params := &qcloud.Params{
+	params := &tencent.Params{
 		SecretId:  vendor.SecretId,
 		SecretKey: vendor.SecretKey,
 	}
@@ -37,7 +37,7 @@ func apiProxy(c *gin.Context) {
 
 	// 发起请求
 
-	if res, err := qcloud.Request(params); err == nil {
+	if res, err := tencent.Request(params); err == nil {
 		c.Set("Payload", res)
 	} else {
 		c.Set("Error", err)

@@ -16,7 +16,7 @@ import (
 	"tdp-cloud/api/workhub"
 
 	"tdp-cloud/api/cloudflare"
-	"tdp-cloud/api/qcloud"
+	"tdp-cloud/api/tencent"
 
 	"tdp-cloud/module/midware"
 )
@@ -42,7 +42,7 @@ func Router(engine *gin.Engine) {
 		workhub.Router(api)
 
 		cloudflare.Router(api)
-		qcloud.Router(api)
+		tencent.Router(api)
 	}
 
 	// websocket interface

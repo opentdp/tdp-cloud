@@ -1,4 +1,4 @@
-package qcloud
+package tencent
 
 import (
 	"github.com/gin-gonic/gin"
@@ -8,7 +8,7 @@ import (
 
 func Router(api *gin.RouterGroup) {
 
-	rg := api.Group("/qcloud")
+	rg := api.Group("/tencent")
 
 	// 匿名接口
 

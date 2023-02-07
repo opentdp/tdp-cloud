@@ -1,4 +1,4 @@
-package qcloud
+package tencent
 
 type Params struct {
 	Service    string `note:"产品名称"`
