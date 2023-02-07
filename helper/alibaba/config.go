@@ -15,3 +15,24 @@ type Params struct {
 type Response struct {
 	Response any
 }
+
+//// Endpoint
+
+type EndpointItem struct {
+	Id        string
+	Endpoint  string
+	Namespace string
+	Protocols struct {
+		Protocols []string
+	}
+	SerivceCode string
+	Type        string
+}
+
+type EndpointBody struct {
+	Endpoints struct {
+		Endpoint []EndpointItem
+	}
+	RequestId string
+	Success   bool
+}

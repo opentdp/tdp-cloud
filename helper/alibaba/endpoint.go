@@ -1,33 +1,13 @@
 package alibaba
 
 import (
-	"encoding/json"
 	"errors"
 	"strings"
 
-	ac "github.com/alibabacloud-go/darabonba-openapi/v2/client"
-	as "github.com/alibabacloud-go/tea-utils/v2/service"
-	at "github.com/alibabacloud-go/tea/tea"
+	"github.com/mitchellh/mapstructure"
 )
 
 var endpointData = map[string]string{}
-
-type endpointBody struct {
-	Endpoints struct {
-		Endpoint []struct {
-			Id        string
-			Endpoint  string
-			Namespace string
-			Protocols struct {
-				Protocols []string
-			}
-			SerivceCode string
-			Type        string
-		}
-	}
-	RequestId string
-	Success   bool
-}
 
 func solveEndpoint(rp *Params) (string, error) {
 
@@ -45,23 +25,10 @@ func solveEndpoint(rp *Params) (string, error) {
 
 	// 从服务器获取
 
-	resp, err := requestEndpoint(rp)
-
-	if err != nil {
+	if ep, err := requestEndpoint(rp); err == nil {
+		endpointData[key] = ep.Endpoint
+	} else {
 		return "", err
-	}
-
-	data := &endpointBody{}
-	body := []byte(resp["body"].(string))
-
-	if err := json.Unmarshal(body, data); err != nil {
-		return "", err
-	}
-
-	// 将结果写入缓存
-
-	if len(data.Endpoints.Endpoint) > 0 {
-		endpointData[key] = data.Endpoints.Endpoint[0].Endpoint
 	}
 
 	// 校验缓存并返回
@@ -69,44 +36,49 @@ func solveEndpoint(rp *Params) (string, error) {
 	if endpointData[key] != "" {
 		return endpointData[key], nil
 	}
+
 	return "", errors.New("获取 Endpoint 失败")
 
 }
 
-func requestEndpoint(rp *Params) (map[string]interface{}, error) {
+func requestEndpoint(rp *Params) (*EndpointItem, error) {
 
-	config := &ac.Config{
-		AccessKeyId:     &rp.SecretId,
-		AccessKeySecret: &rp.SecretKey,
-		Endpoint:        at.String("location-readonly.aliyuncs.com"),
-	}
+	item := &EndpointItem{}
 
-	params := &ac.Params{
-		Action:      at.String("DescribeEndpoints"),
-		Version:     at.String("2015-06-12"),
-		Protocol:    at.String("HTTPS"),
-		Pathname:    at.String("/"),
-		Method:      at.String("GET"),
-		AuthType:    at.String("AK"),
-		Style:       at.String("RPC"),
-		ReqBodyType: at.String("json"),
-		BodyType:    at.String("string"),
-	}
+	// 从接口请求数据
 
-	request := &ac.OpenApiRequest{
-		Query: map[string]*string{
-			"Id":          &rp.RegionId,
-			"ServiceCode": at.String(strings.ToLower(rp.Service)),
-			"Type":        at.String("openAPI"),
+	resp, err := newClient(&Params{
+		SecretId:  rp.SecretId,
+		SecretKey: rp.SecretKey,
+		Version:   "2015-06-12",
+		Action:    "DescribeEndpoints",
+		Query: map[string]string{
+			"Id":          rp.RegionId,
+			"ServiceCode": strings.ToLower(rp.Service),
+			"Type":        "openAPI",
 		},
+		Endpoint: "location-readonly.aliyuncs.com",
+	})
+
+	if err != nil {
+		return item, err
 	}
 
-	runtime := &as.RuntimeOptions{}
+	// 尝试解析数据
 
-	if client, err := ac.NewClient(config); err == nil {
-		return client.CallApi(params, request, runtime)
+	data := &EndpointBody{}
+	err = mapstructure.Decode(resp["body"], data)
+
+	if err != nil {
+		return item, err
+	}
+
+	if len(data.Endpoints.Endpoint) > 0 {
+		item = &data.Endpoints.Endpoint[0]
 	} else {
-		return nil, err
+		err = errors.New("获取 Endpoint 失败")
 	}
+
+	return item, err
 
 }

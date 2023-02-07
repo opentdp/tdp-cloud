@@ -15,6 +15,18 @@ func Request(rp *Params) (any, error) {
 		return nil, err
 	}
 
+	resp, err := newClient(rp)
+
+	if err != nil {
+		return nil, err
+	}
+
+	return resp["body"], nil
+
+}
+
+func newClient(rp *Params) (map[string]any, error) {
+
 	config := &ac.Config{
 		AccessKeyId:     &rp.SecretId,
 		AccessKeySecret: &rp.SecretKey,
