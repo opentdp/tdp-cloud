@@ -9,10 +9,9 @@ import (
 
 func Request(rp *Params) (any, error) {
 
-	// 分地域接入
-	endpoint, err := getEndpoint(rp.Service, rp.Region)
-
-	if err != nil {
+	if ep, err := solveEndpoint(rp); ep != "" {
+		rp.Endpoint = ep
+	} else {
 		return nil, err
 	}
 
@@ -20,12 +19,7 @@ func Request(rp *Params) (any, error) {
 		AccessKeyId:     &rp.SecretId,
 		AccessKeySecret: &rp.SecretKey,
 		RegionId:        &rp.Region,
-		Endpoint:        &endpoint,
-	}
-
-	client, err := ac.NewClient(config)
-	if err != nil {
-		return nil, err
+		Endpoint:        &rp.Endpoint,
 	}
 
 	params := &ac.Params{
@@ -47,7 +41,11 @@ func Request(rp *Params) (any, error) {
 
 	runtime := &as.RuntimeOptions{}
 
-	return client.CallApi(params, request, runtime)
+	if client, err := ac.NewClient(config); err == nil {
+		return client.CallApi(params, request, runtime)
+	} else {
+		return nil, err
+	}
 
 }
 

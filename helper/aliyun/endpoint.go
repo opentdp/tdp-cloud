@@ -1,52 +1,108 @@
 package aliyun
 
 import (
-	"embed"
 	"encoding/json"
-	"fmt"
-	"log"
+	"errors"
 	"strings"
-	"sync"
 
-	"github.com/jmespath/go-jmespath"
+	ac "github.com/alibabacloud-go/darabonba-openapi/v2/client"
+	as "github.com/alibabacloud-go/tea-utils/v2/service"
+	at "github.com/alibabacloud-go/tea/tea"
 )
 
-var _ *embed.FS
+var endpointData = map[string]string{}
 
-var initOnce sync.Once
-var endpointConfig interface{}
+type endpointBody struct {
+	Endpoints struct {
+		Endpoint []struct {
+			Id        string
+			Endpoint  string
+			Namespace string
+			Protocols struct {
+				Protocols []string
+			}
+			SerivceCode string
+			Type        string
+		}
+	}
+	RequestId string
+	Success   bool
+}
 
-//go:embed endpoint.json
-var endpointsJson []byte
+func solveEndpoint(rp *Params) (string, error) {
 
-func getEndpoint(product, regionId string) (string, error) {
+	key := rp.Region + rp.Service
 
-	regionalExpression := fmt.Sprintf("products[?code=='%s'].regional_endpoints", strings.ToLower(product))
-	regionalData, err := jmespath.Search(regionalExpression, getEndpointConfig())
+	// 从缓存返回
 
-	if err != nil || regionalData == nil || len(regionalData.([]interface{})) == 0 {
+	if endpointData[key] != "" {
+		return endpointData[key], nil
+	}
+
+	// 从服务器获取
+
+	resp, err := requestEndpoint(rp)
+
+	if err != nil {
 		return "", err
 	}
 
-	endpointExpression := fmt.Sprintf("[0][?region=='%s'].endpoint", strings.ToLower(regionId))
-	endpointData, err := jmespath.Search(endpointExpression, regionalData)
+	data := &endpointBody{}
+	body := []byte(resp["body"].(string))
 
-	if err != nil || endpointData == nil || len(endpointData.([]interface{})) == 0 {
+	if err := json.Unmarshal(body, data); err != nil {
 		return "", err
 	}
 
-	return endpointData.([]interface{})[0].(string), nil
+	// 将结果写入缓存
+
+	if len(data.Endpoints.Endpoint) > 0 {
+		endpointData[key] = data.Endpoints.Endpoint[0].Endpoint
+	}
+
+	// 校验缓存并返回
+
+	if endpointData[key] != "" {
+		return endpointData[key], nil
+	}
+	return "", errors.New("获取 Endpoint 失败")
 
 }
 
-func getEndpointConfig() interface{} {
+func requestEndpoint(rp *Params) (map[string]interface{}, error) {
 
-	initOnce.Do(func() {
-		if err := json.Unmarshal(endpointsJson, &endpointConfig); err != nil {
-			log.Fatalln("init endpoint config data failed.", err)
-		}
-	})
+	config := &ac.Config{
+		AccessKeyId:     &rp.SecretId,
+		AccessKeySecret: &rp.SecretKey,
+		Endpoint:        at.String("location-readonly.aliyuncs.com"),
+	}
 
-	return endpointConfig
+	params := &ac.Params{
+		Action:      at.String("DescribeEndpoints"),
+		Version:     at.String("2015-06-12"),
+		Protocol:    at.String("HTTPS"),
+		Pathname:    at.String("/"),
+		Method:      at.String("GET"),
+		AuthType:    at.String("AK"),
+		Style:       at.String("RPC"),
+		ReqBodyType: at.String("json"),
+		BodyType:    at.String("string"),
+	}
+
+	request := &ac.OpenApiRequest{
+		Query: map[string]*string{
+			"Id":          &rp.Region,
+			"ServiceCode": at.String(strings.ToLower(rp.Service)),
+			"Type":        at.String("openAPI"),
+		},
+	}
+
+	runtime := &as.RuntimeOptions{}
+
+	if client, err := ac.NewClient(config); err == nil {
+		return client.CallApi(params, request, runtime)
+	} else {
+		return nil, err
+	}
 
 }
