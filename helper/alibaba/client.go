@@ -48,18 +48,3 @@ func Request(rp *Params) (any, error) {
 	}
 
 }
-
-// rs, er := aliyun.Request(&aliyun.Params{
-// 	SecretId:  "LTAI5tEmFdkxkudYqBSZZqnf",
-// 	SecretKey: "os30YWmM2wfC2pnOazSZ87NaXt6NpM",
-// 	Service:   "ecs",
-// 	Version:   "2014-05-26",
-// 	Region:    "cn-hangzhou",
-// 	Action:    "DescribeAvailableResource",
-// 	Query:     map[string]string{
-// 		"RegionId":            "cn-hangzhou",
-// 		"DestinationResource": "Zone",
-// 	},
-// })
-
-// fmt.Println(rs, er)
