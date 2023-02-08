@@ -6,55 +6,52 @@ set -o noglob
 
 # --- global env ---
 
-TDP_DOWNLOAD_URL=http://tdp.icu/build/tdp-cloud-linux-amd64.gz
+if [ ! $TDP_PACKAGE ]; then
+    TDP_PACKAGE=http://tdp.icu/build/tdp-cloud-linux-amd64.gz
+fi
 
-TDP_EXEC_FILE=/usr/local/bin/tdp-cloud
+if [ ! $TDP_BIN_FILE ]; then
+    TDP_BIN_FILE=/usr/local/bin/tdp-cloud
+fi
 
-if [ ! $TDP_EXEC_ARGS ]; then
-    echo "[ERROR] Missing environment variable \$TDP_EXEC_ARGS"
+if [ ! $TDP_BIN_ARGS ]; then
+    echo "[ERROR] Missing environment variable \$TDP_BIN_ARGS"
     exit 1
 fi
 
 # --- download binary ---
 
-download_binary() {
-    if type curl >/dev/null 2>&1; then
-        curl -sfL $TDP_DOWNLOAD_URL | gunzip > $TDP_EXEC_FILE
-        return
-    fi
+if type curl >/dev/null 2>&1; then
+    curl -sfL $TDP_PACKAGE | gunzip > $TDP_BIN_FILE
+else if type wget >/dev/null 2>&1; then
+    wget -qO- $TDP_PACKAGE | gunzip > $TDP_BIN_FILE
+fi
 
-    if type wget >/dev/null 2>&1; then
-        wget -qO- $TDP_DOWNLOAD_URL | gunzip > $TDP_EXEC_FILE
-        return
-    fi
+if [ ! -e $TDP_BIN_FILE ]; then
+    fatal "[ERROR] Can't download ${TDP_PACKAGE}"
+    exit 1
+fi
 
-    if [ ! -e $TDP_EXEC_FILE ]; then
-        fatal "[ERROR] Can't download ${TDP_DOWNLOAD_URL}"
-        exit 1
-    fi
-}
+# --- create service ---
 
-# --- service helper ---
+chmod +x $TDP_BIN_FILE
+mkdir -p /etc/tdp-cloud
+mkdir -p /var/lib/tdp-cloud
+mkdir -p /var/log/tdp-cloud
 
-service_install() {
-    download_binary
-    chmod +x $TDP_EXEC_FILE
+$TDP_BIN_FILE worker -s install $TDP_BIN_ARGS
+service tdp-worker start
 
-    $TDP_EXEC_FILE service worker -s install - $TDP_EXEC_ARGS
-    mkdir -p /var/lib/tdp-cloud
-    mkdir -p /var/log/tdp-cloud
+# --- create uninstall script ---
 
-    service tdp-worker start
-}
+cat <<EOF >$TDP_BIN_FILE-uninstall
+#!/bin/sh
+#
+service tdp-worker stop
+tdp-cloud worker -s uninstall
+rm -rf `which tdp-cloud`
+rm -rf /var/*/tdp-cloud*
+rm -rf /etc/tdp-cloud*
+EOF
 
-service_uninstall() {
-    service tdp-worker stop
-    tdp-cloud service worker -s uninstall
-
-    rm -rf `which tdp-cloud`
-    rm -rf /var/*/tdp-cloud*
-}
-
-# ---
-
-service_install
+chmod +x $TDP_BIN_FILE-uninstall
