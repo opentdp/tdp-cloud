@@ -18,13 +18,15 @@ type ExecPayload struct {
 
 func Exec(data *ExecPayload) (string, error) {
 
-	var err error
-	var tmp string
-	var cmd string
-	var arg []string
+	var (
+		err error
+		tmp string
+		cmd string
+		arg []string
+	)
 
 	switch data.CommandType {
-	case "CMD":
+	case "BAT":
 		tmp, err = newScript(data.Content, "bat")
 		arg = []string{"/c", "CALL", tmp}
 		cmd = "cmd.exe"
