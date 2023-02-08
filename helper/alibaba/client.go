@@ -53,7 +53,7 @@ func newClient(rp *Params) (map[string]any, error) {
 
 	request := &ac.OpenApiRequest{
 		Query: au.Query(rp.Query),
-		Body:  au.Query(rp.Payload),
+		Body:  rp.Payload,
 	}
 
 	runtime := &as.RuntimeOptions{}
