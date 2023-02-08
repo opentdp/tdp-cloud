@@ -32,4 +32,19 @@ Origin: {{$dotenv TDP_ORIGIN}}
     }
 }
 
-###
+### 获取可用区实例
+
+POST {{$dotenv TDP_API_BASE}}/alibaba/5
+Authorization: {{$dotenv TDP_AUTHORIZATION}}
+Origin: {{$dotenv TDP_ORIGIN}}
+
+{
+    "Service": "ecs",
+    "Version": "2014-05-26",
+    "Action": "DescribeInstances",
+    "RegionId": "cn-beijing",
+    "Payload": {
+        "RegionId": "cn-beijing",
+        "Limit": 100
+    }
+}
