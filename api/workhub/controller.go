@@ -4,6 +4,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/spf13/cast"
 
+	"tdp-cloud/helper/command"
 	"tdp-cloud/module/dborm/user"
 	"tdp-cloud/module/workhub"
 )
@@ -24,7 +25,7 @@ func list(c *gin.Context) {
 
 type execParam struct {
 	WorkerId string
-	Payload  workhub.ExecPayload
+	Payload  command.ExecPayload
 }
 
 func exec(c *gin.Context) {

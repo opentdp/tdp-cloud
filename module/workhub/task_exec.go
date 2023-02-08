@@ -1,15 +1,10 @@
 package workhub
 
-type ExecPayload struct {
-	Name          string
-	CommandType   string
-	Username      string
-	WorkDirectory string
-	Content       string
-	Timeout       uint
-}
+import (
+	"tdp-cloud/helper/command"
+)
 
-func (pod *SendPod) Exec(data *ExecPayload) (uint, error) {
+func (pod *SendPod) Exec(data *command.ExecPayload) (uint, error) {
 
 	taskId := createHistory(pod, data)
 

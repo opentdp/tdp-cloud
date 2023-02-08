@@ -1,6 +1,7 @@
 package workhub
 
 import (
+	"tdp-cloud/helper/command"
 	"tdp-cloud/module/dborm/machine"
 	"tdp-cloud/module/dborm/taskline"
 )
@@ -25,7 +26,7 @@ func bindMachine(node *Worker) error {
 
 // 任务历史
 
-func createHistory(pod *SendPod, data *ExecPayload) uint {
+func createHistory(pod *SendPod, data *command.ExecPayload) uint {
 
 	item := &taskline.CreateParam{
 		UserId:   pod.UserId,
