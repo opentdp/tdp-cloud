@@ -5,8 +5,12 @@ import (
 	"errors"
 	"os"
 	"regexp"
+	"strings"
+
+	"github.com/mitchellh/mapstructure"
 
 	tc "github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/common"
+	te "github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/common/errors"
 	th "github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/common/http"
 	tp "github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/common/profile"
 )
@@ -83,8 +87,14 @@ func newClient(rp *Params) (*th.CommonResponse, error) {
 
 func getSDKError(e error) error {
 
-	re, _ := regexp.Compile(`^.+, Message=`)
-	msg := re.ReplaceAllString(e.Error(), "")
+	se := te.TencentCloudSDKError{}
+
+	if mapstructure.Decode(e, &se) != nil {
+		return e
+	}
+
+	re, _ := regexp.Compile(`\[request id:.+\]`)
+	msg := strings.Split(re.ReplaceAllString(se.Message, ""), "\n")[0]
 
 	return errors.New(msg)
 
