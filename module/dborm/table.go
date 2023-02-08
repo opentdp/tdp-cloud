@@ -12,6 +12,27 @@ type Config struct {
 	UpdatedAt   int64
 }
 
+// 计划任务
+
+type Cron struct {
+	Id         uint `gorm:"primaryKey"`
+	UserId     uint `gorm:"index"`
+	Name       string
+	Type       string
+	Content    string
+	Second     string
+	Minute     string
+	Hour       string
+	DayofMonth string
+	Month      string
+	DayofWeek  string
+	Location   string
+	PrevTime   int64
+	NextTime   int64
+	CreatedAt  int64
+	UpdatedAt  int64
+}
+
 // 域名资源
 
 type Domain struct {
