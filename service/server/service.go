@@ -11,8 +11,8 @@ func Service() service.Service {
 
 	var args = []string{"server"}
 
-	if len(os.Args) > 5 {
-		args = append(args, os.Args[5:]...)
+	if len(os.Args) > 4 {
+		args = append(args, os.Args[4:]...)
 	}
 
 	config := &service.Config{
