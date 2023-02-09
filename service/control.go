@@ -6,7 +6,6 @@ import (
 
 	"github.com/kardianos/service"
 
-	"tdp-cloud/helper/strutil"
 	"tdp-cloud/service/server"
 	"tdp-cloud/service/worker"
 )
@@ -21,6 +20,8 @@ func Control(name, act string) {
 
 	var svc service.Service
 
+	// 获取服务抽象类
+
 	switch name {
 	case "server":
 		svc = server.Service(cliArgs())
@@ -30,20 +31,20 @@ func Control(name, act string) {
 		log.Fatalln("未知服务")
 	}
 
-	log.Println(strutil.FirstUpper(act), "service", svc.String(), "...")
+	// 执行服务动作
 
 	switch act {
-	case "":
+	case "": // 直接运行
 		if err := svc.Run(); err != nil {
 			log.Fatalln(err)
 		}
-	case "status":
+	case "status": // 查看状态
 		if sta, err := svc.Status(); err == nil {
 			log.Println(svc.String(), "Status:", statusMap[sta])
 		} else {
 			log.Fatalln(err)
 		}
-	default:
+	default: // 其他动作
 		if err := service.Control(svc, act); err != nil {
 			log.Fatalln(err)
 		}
@@ -53,17 +54,13 @@ func Control(name, act string) {
 
 func cliArgs() []string {
 
-	var args = []string{}
+	args := []string{}
 
-	if len(os.Args) > 4 {
-		n := len(os.Args)
-		for i := 1; i < n; i++ {
-			v := os.Args[i]
-			if v != "-s" && v != "--service" {
-				args = append(args, v)
-			} else {
-				i++
-			}
+	for i, n := 1, len(os.Args); i < n; i++ {
+		if v := os.Args[i]; v != "-s" && v != "--service" {
+			args = append(args, v)
+		} else {
+			i++
 		}
 	}
 

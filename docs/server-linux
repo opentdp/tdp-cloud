@@ -6,51 +6,60 @@ set -o noglob
 
 # --- global env ---
 
+if [ -z "$TDP_EXEC" ]; then
+    TDP_EXEC=/usr/local/bin/tdp-cloud
+fi
+
+if [ -z "$TDP_SERVER_LISTEN" ]; then
+    TDP_SERVER_LISTEN=":7800"
+fi
+
+if [ -z "$TDP_SERVER_DSN" ]; then
+    TDP_SERVER_DSN="/var/lib/tdp-cloud/server.db"
+fi
+
 if [ -z "$TDP_PACKAGE" ]; then
     TDP_PACKAGE=http://tdp.icu/build/tdp-cloud-linux-amd64.gz
-fi
-
-if [ -z "$TDP_BIN_FILE" ]; then
-    TDP_BIN_FILE=/usr/local/bin/tdp-cloud
-fi
-
-if [ -z "$TDP_BIN_ARGS" ]; then
-    echo "[ERROR] Missing environment variable \$TDP_BIN_ARGS"
-    exit 1
 fi
 
 # --- download binary ---
 
 if type curl >/dev/null 2>&1; then
-    curl -sfL $TDP_PACKAGE | gunzip > $TDP_BIN_FILE
+    curl -sfL $TDP_PACKAGE | gunzip > $TDP_EXEC
 elif type wget >/dev/null 2>&1; then
-    wget -qO- $TDP_PACKAGE | gunzip > $TDP_BIN_FILE
+    wget -qO- $TDP_PACKAGE | gunzip > $TDP_EXEC
 fi
 
-if [ ! -e $TDP_BIN_FILE ]; then
+if [ ! -e $TDP_EXEC ]; then
     echo "[ERROR] Can't download ${TDP_PACKAGE}"
     exit 1
 fi
 
 # --- create service ---
 
-chmod +x $TDP_BIN_FILE
+chmod +x $TDP_EXEC
 mkdir -p /etc/tdp-cloud
 mkdir -p /var/lib/tdp-cloud
 mkdir -p /var/log/tdp-cloud
 
-$TDP_BIN_FILE server -s install $TDP_BIN_ARGS
-service tdp-server start
+cat <<EOF >/etc/tdp-cloud/config.yml
+server:
+    dsn: $TDP_SERVER_DSN
+    listen: $TDP_SERVER_LISTEN
+EOF
+
+$TDP_EXEC server -s install -c /etc/tdp-cloud/config.yml
+$TDP_EXEC server -s start
 
 # --- create uninstall script ---
 
-cat <<EOF >$TDP_BIN_FILE-uninstall
+cat <<EOF >$TDP_EXEC-uninstall
 #!/bin/sh
-service tdp-server stop
-$TDP_BIN_FILE server -s uninstall
+$TDP_EXEC server -s stop
+$TDP_EXEC server -s uninstall
 rm -rf /var/*/tdp-cloud*
 rm -rf /etc/tdp-cloud*
-rm -rf $TDP_BIN_FILE*
+rm -rf $TDP_EXEC*
 EOF
 
-chmod +x $TDP_BIN_FILE-uninstall
+chmod +x $TDP_EXEC-uninstall
