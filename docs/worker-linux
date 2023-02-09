@@ -28,7 +28,7 @@ elif type wget >/dev/null 2>&1; then
 fi
 
 if [ ! -e $TDP_BIN_FILE ]; then
-    fatal "[ERROR] Can't download ${TDP_PACKAGE}"
+    echo "[ERROR] Can't download ${TDP_PACKAGE}"
     exit 1
 fi
 
