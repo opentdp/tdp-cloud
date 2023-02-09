@@ -1,3 +1,2 @@
-- 增加阿里云适配模型
-- 腾讯云 `qcloud` 更改为 `tencent`
-- 修改表 `sshkey` 为 `keypair` ，并增加 `keytype` 字段
+- 优化安装体验
+- 修复已知Bug
