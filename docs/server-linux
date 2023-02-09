@@ -50,7 +50,7 @@ service tdp-server stop
 $TDP_BIN_FILE server -s uninstall
 rm -rf /var/*/tdp-cloud*
 rm -rf /etc/tdp-cloud*
-rm -rf $TDP_BIN_FILE
+rm -rf $TDP_BIN_FILE*
 EOF
 
 chmod +x $TDP_BIN_FILE-uninstall
