@@ -2,6 +2,7 @@ package service
 
 import (
 	"log"
+	"os"
 
 	"github.com/kardianos/service"
 
@@ -22,9 +23,9 @@ func Control(name, act string) {
 
 	switch name {
 	case "server":
-		svc = server.Service()
+		svc = server.Service(cliArgs())
 	case "worker":
-		svc = worker.Service()
+		svc = worker.Service(cliArgs())
 	default:
 		log.Fatalln("未知服务")
 	}
@@ -47,5 +48,25 @@ func Control(name, act string) {
 			log.Fatalln(err)
 		}
 	}
+
+}
+
+func cliArgs() []string {
+
+	var args = []string{}
+
+	if len(os.Args) > 4 {
+		n := len(os.Args)
+		for i := 1; i < n; i++ {
+			v := os.Args[i]
+			if v != "-s" && v != "--service" {
+				args = append(args, v)
+			} else {
+				i++
+			}
+		}
+	}
+
+	return args
 
 }

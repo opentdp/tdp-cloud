@@ -2,18 +2,11 @@ package worker
 
 import (
 	"log"
-	"os"
 
 	"github.com/kardianos/service"
 )
 
-func Service() service.Service {
-
-	var args = []string{"worker"}
-
-	if len(os.Args) > 4 {
-		args = append(args, os.Args[4:]...)
-	}
+func Service(args []string) service.Service {
 
 	config := &service.Config{
 		Name:        "tdp-worker",
