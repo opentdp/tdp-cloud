@@ -9,4 +9,4 @@ export GO111MODULE=on
 ####################################################################
 
 go mod tidy
-go run main.go server --listen 127.0.0.1:7800 --dsn server.db
+go run main.go server --listen 127.0.0.1:7800
