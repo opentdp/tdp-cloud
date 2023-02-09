@@ -45,12 +45,11 @@ service tdp-server start
 
 cat <<EOF >$TDP_BIN_FILE-uninstall
 #!/bin/sh
-#
 service tdp-server stop
-tdp-cloud server -s uninstall
-rm -rf `which tdp-cloud`
+$TDP_BIN_FILE server -s uninstall
 rm -rf /var/*/tdp-cloud*
 rm -rf /etc/tdp-cloud*
+rm -rf $TDP_BIN_FILE
 EOF
 
 chmod +x $TDP_BIN_FILE-uninstall
