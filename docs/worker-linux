@@ -6,15 +6,15 @@ set -o noglob
 
 # --- global env ---
 
-if [ ! $TDP_PACKAGE ]; then
+if [ -z "$TDP_PACKAGE" ]; then
     TDP_PACKAGE=http://tdp.icu/build/tdp-cloud-linux-amd64.gz
 fi
 
-if [ ! $TDP_BIN_FILE ]; then
+if [ -z "$TDP_BIN_FILE" ]; then
     TDP_BIN_FILE=/usr/local/bin/tdp-cloud
 fi
 
-if [ ! $TDP_BIN_ARGS ]; then
+if [ -z "$TDP_BIN_ARGS" ]; then
     echo "[ERROR] Missing environment variable \$TDP_BIN_ARGS"
     exit 1
 fi
@@ -23,7 +23,7 @@ fi
 
 if type curl >/dev/null 2>&1; then
     curl -sfL $TDP_PACKAGE | gunzip > $TDP_BIN_FILE
-else if type wget >/dev/null 2>&1; then
+elif type wget >/dev/null 2>&1; then
     wget -qO- $TDP_PACKAGE | gunzip > $TDP_BIN_FILE
 fi
 
