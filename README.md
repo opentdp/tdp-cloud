@@ -2,13 +2,15 @@
 
 [![TDP Cloud Builder](https://github.com/tdp-resource/tdp-cloud/actions/workflows/release.yml/badge.svg)](https://github.com/tdp-resource/tdp-cloud/actions/workflows/release.yml)
 
-可以跨平台部署的云资源管理面板，支持同时绑定多个云账号，目前已实现管理下列云资源：
+可以跨平台部署的云资源管理面板，支持同时绑定多个云账号：
 
  - CloudFlare：DNS
 
  - 腾讯云：DNSPod、CVM、Lighthouse
 
  - 腾讯云国际版：CVM、Lighthouse
+
+ - 阿里云：*Under development*
 
  - 独立主机：TDP Worker
 
