@@ -11,10 +11,11 @@ import (
 
 func (pod *RecvPod) Exec(rs *SocketData) error {
 
-	var err error
-	var ret string
-
-	var data *command.ExecPayload
+	var (
+		err  error
+		ret  string
+		data *command.ExecPayload
+	)
 
 	if mapstructure.Decode(rs.Payload, &data) == nil {
 		log.Println("Exec:wait", data.Name)

@@ -18,7 +18,7 @@ func Connect(dsn string) {
 
 	var err error
 
-	var config = &gorm.Config{
+	config := &gorm.Config{
 		Logger: logger.Default.LogMode(logger.Error),
 		NamingStrategy: schema.NamingStrategy{
 			SingularTable: true,

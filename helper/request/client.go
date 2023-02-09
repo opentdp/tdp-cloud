@@ -16,11 +16,12 @@ type Client struct {
 
 func (c *Client) Request() ([]byte, error) {
 
-	var body io.Reader
-
-	var err error
-	var req *http.Request
-	var resp *http.Response
+	var (
+		err  error
+		body io.Reader
+		req  *http.Request
+		resp *http.Response
+	)
 
 	if c.Data != "" {
 		body = strings.NewReader(c.Data)

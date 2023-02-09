@@ -12,7 +12,7 @@ type IOPod struct {
 
 func NewIOPod(w http.ResponseWriter, r *http.Request) (*IOPod, error) {
 
-	var upgrader = websocket.Upgrader{
+	upgrader := websocket.Upgrader{
 		ReadBufferSize:  1024,
 		WriteBufferSize: 1024 * 1024 * 10,
 		CheckOrigin: func(r *http.Request) bool {
