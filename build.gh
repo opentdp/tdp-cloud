@@ -17,11 +17,11 @@ cd $WKDIR
 echo ">> Download source code"
 
 if [ ! -d tdp-cloud ]; then
-    git clone https://github.com/tdp-resource/tdp-cloud.git
+    git clone https://github.com/open-tdp/tdp-cloud.git
 fi
 
 if [ ! -d tdp-cloud-ui ]; then
-    git clone https://github.com/tdp-resource/tdp-cloud-ui.git
+    git clone https://github.com/open-tdp/tdp-cloud-ui.git
 fi
 
 chmod +x $WKDIR/*/build.sh

@@ -1,6 +1,6 @@
 # 土豆片控制面板
 
-[![TDP Cloud Builder](https://github.com/tdp-resource/tdp-cloud/actions/workflows/release.yml/badge.svg)](https://github.com/tdp-resource/tdp-cloud/actions/workflows/release.yml)
+[![TDP Cloud Builder](https://github.com/open-tdp/tdp-cloud/actions/workflows/release.yml/badge.svg)](https://github.com/open-tdp/tdp-cloud/actions/workflows/release.yml)
 
 可以跨平台部署的云资源管理面板，支持同时绑定多个云账号：
 
@@ -18,7 +18,7 @@
 
 - 在线体验开发版功能，请进入 [演示站点](https://apps.rehiy.com/tdp-cloud/preview)
 
-- 功能支持和开发进度，请参阅 [Issues #1](https://github.com/tdp-resource/tdp-cloud/issues/1)
+- 功能支持和开发进度，请参阅 [Issues #1](https://github.com/open-tdp/tdp-cloud/issues/1)
 
 ## 开发说明
 
