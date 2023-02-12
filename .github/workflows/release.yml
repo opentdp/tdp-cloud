@@ -23,6 +23,20 @@ jobs:
         with:
           node-version: 16
 
+      - name: Setup QEMU
+        uses: docker/setup-qemu-action@v2
+
+      - name: Setup Docker Buildx
+        uses: docker/setup-buildx-action@v2
+
+      - name: Login to Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      ###
+
       - name: Run release script
         run: sh build.gh
 
@@ -35,3 +49,28 @@ jobs:
           prerelease: false
           files: |
             ./build/*
+
+      ###
+
+      - name: Copy tdp-cloud-linux-amd64.gz
+        run: cp ./build/tdp-cloud-linux-amd64.gz ./docker/tdp-cloud.gz
+
+      - name: Build and Push - amd64
+        uses: docker/build-push-action@v4
+        with:
+          context: ./docker
+          push: true
+          tags: rehiy/tdp-cloud:latest
+
+      ###
+
+      - name: Copy tdp-cloud-linux-arm64.gz
+        run: cp ./build/tdp-cloud-linux-arm64.gz ./docker/tdp-cloud.gz
+
+      - name: Build and Push - arm64
+        uses: docker/build-push-action@v4
+        with:
+          context: ./docker
+          push: true
+          platforms: linux/arm64
+          tags: rehiy/tdp-cloud:latest
