@@ -15,6 +15,7 @@ func Router(api *gin.RouterGroup) {
 	{
 		rg.GET("/script", list)
 		rg.POST("/script", create)
+		rg.GET("/script/:id", detail)
 		rg.PATCH("/script/:id", update)
 		rg.DELETE("/script/:id", delete)
 	}

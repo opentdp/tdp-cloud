@@ -21,6 +21,21 @@ func list(c *gin.Context) {
 
 }
 
+// 获取脚本
+
+func detail(c *gin.Context) {
+
+	userId := c.GetUint("UserId")
+	id := cast.ToUint(c.Param("id"))
+
+	if res, err := script.Fetch(id, userId); err == nil {
+		c.Set("Payload", res)
+	} else {
+		c.Set("Error", err)
+	}
+
+}
+
 // 添加脚本
 
 func create(c *gin.Context) {
