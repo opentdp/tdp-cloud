@@ -48,31 +48,19 @@ jobs:
 
       ###
 
-      - name: Copy tdp-cloud-linux-amd64.gz
-        run: cp ./build/tdp-cloud-linux-amd64.gz ./docker/tdp-cloud.gz
-
-      - name: Docker build and push for amd64
-        uses: docker/build-push-action@v4
-        with:
-          context: ./docker
-          push: true
-          tags: rehiy/tdp-cloud:latest
-
-      ###
-
       - name: Setup qemu
         uses: docker/setup-qemu-action@v2
 
       - name: Setup docker buildx
         uses: docker/setup-buildx-action@v2
 
-      - name: Copy tdp-cloud-linux-arm64.gz
-        run: cp ./build/tdp-cloud-linux-arm64.gz ./docker/tdp-cloud.gz
+      - name: Copy tdp-cloud-linux-*.gz
+        run: cp ./build/tdp-cloud-linux-*.gz ./docker/
 
-      - name: Docker build and push arm64
+      - name: Docker build and push
         uses: docker/build-push-action@v4
         with:
           context: ./docker
           push: true
-          platforms: linux/arm64
-          tags: rehiy/tdp-cloud:arm64
+          platforms: linux/amd64,linux/arm64
+          tags: rehiy/tdp-cloud:latest

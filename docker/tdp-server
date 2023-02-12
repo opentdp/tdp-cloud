@@ -1,0 +1,16 @@
+#!/bin/sh
+#
+
+mkdir -p /etc/tdp-cloud
+mkdir -p /var/lib/tdp-cloud
+mkdir -p /var/log/tdp-cloud
+
+yml=/etc/tdp-cloud/config.yml
+
+[ -f $yml ] || cat <<EOF >$yml
+server:
+    dsn: /var/lib/tdp-cloud/server.db
+    listen: 7800
+EOF
+
+exec tdp-cloud server -c $yml

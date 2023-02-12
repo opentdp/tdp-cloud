@@ -1,0 +1,17 @@
+#!/bin/sh
+#
+
+OS_ARCH=""
+case $(uname -m) in
+    i386)    OS_ARCH="386" ;;
+    i686)    OS_ARCH="386" ;;
+    x86_64)  OS_ARCH="amd64" ;;
+    aarch64) OS_ARCH="arm64" ;;
+esac
+
+gunzip /ifs/tdp-cloud-linux-$OS_ARCH.gz -c >/usr/local/bin/tdp-cloud
+cp -a /ifs/tdp-server /usr/local/bin/
+
+chmod +x /usr/local/bin/*
+
+rm -rf /ifs

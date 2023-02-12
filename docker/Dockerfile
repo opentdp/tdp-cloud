@@ -1,15 +1,17 @@
+FROM alpine AS builder
+
+ADD . /ifs
+RUN sh /ifs/deploy
+
+########
+
 FROM alpine
 
 LABEL version="v0.6.1" \
     maintainer="wang@rehiy.com"
 
-ADD tdp-cloud.gz /usr/local/bin/tdp-cloud
+COPY --from=builder /usr/local/bin/tdp-* /usr/local/bin/
 
-RUN chmod +x /usr/local/bin/tdp-cloud \
-    && mkdir -p /var/lib/tdp-cloud \
-    && mkdir -p /var/log/tdp-cloud \
-    && mkdir -p /etc/tdp-cloud
-
-ENTRYPOINT ["tdp-cloud", "server", "-c", "/etc/tdp-cloud/config.yml"]
+ENTRYPOINT ["tdp-server"]
 
 EXPOSE 7800
