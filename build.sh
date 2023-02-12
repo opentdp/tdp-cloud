@@ -22,9 +22,3 @@ build linux arm64
 
 build windows amd64 .exe
 build windows arm64 .exe
-
-####################################################################
-
-if type upx >/dev/null 2>&1; then
-    upx `find build/ -type f`
-fi
