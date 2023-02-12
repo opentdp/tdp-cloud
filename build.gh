@@ -4,7 +4,7 @@
 if [ -n "$GITHUB_WORKSPACE" ]; then
     WKDIR=`dirname $GITHUB_WORKSPACE`
 else
-    WKDIR=`dirname $0`/tdp-build
+    WKDIR=$(dirname `dirname $0`)
 fi
 
 # Create workspace
