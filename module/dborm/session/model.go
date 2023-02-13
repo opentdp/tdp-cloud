@@ -35,14 +35,17 @@ func Fetch(token string) (*dborm.Session, error) {
 		return nil, errors.New("会话不存在")
 	}
 
+	// 当前时间戳
+	now := time.Now().Unix()
+
 	// 会话超过30分钟，删除令牌
-	if time.Now().Unix()-item.UpdatedAt > 1800 {
+	if now-item.UpdatedAt > 1800 {
 		dborm.Db.Delete(&item)
 		return nil, errors.New("会话已过期")
 	}
 
 	// 会话超过1分钟，自动续期
-	if time.Now().Unix()-item.UpdatedAt > 60 {
+	if now-item.UpdatedAt > 60 {
 		dborm.Db.Save(&item)
 	}
 

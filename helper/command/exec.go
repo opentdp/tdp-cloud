@@ -39,7 +39,7 @@ func Exec(data *ExecPayload) (string, error) {
 		arg = []string{}
 		cmd = tmp
 	default:
-		return "", errors.New("不支持此类脚本")
+		err = errors.New("不支持此类脚本")
 	}
 
 	if err != nil {

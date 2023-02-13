@@ -43,7 +43,7 @@ func Server(addr string, engine http.Handler) {
 	log.Println("Server closing...")
 
 	// 创建一个剩余5秒超时的上下文
-	ctx, cancel := context.WithTimeout(context.Background(), time.Second*5)
+	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 	defer cancel()
 
 	// 优雅地关闭服务器而不中断任何活动连接

@@ -42,7 +42,7 @@ func NewSSHClientWithPassword(option *SSHClientOption) (*ssh.Client, error) {
 	config := &ssh.ClientConfig{
 		User:            option.User,
 		Auth:            []ssh.AuthMethod{auth},
-		Timeout:         time.Second * 5,
+		Timeout:         5 * time.Second,
 		HostKeyCallback: ssh.InsecureIgnoreHostKey(),
 	}
 
@@ -63,7 +63,7 @@ func NewSSHClientWithPrivateKey(option *SSHClientOption) (*ssh.Client, error) {
 	config := &ssh.ClientConfig{
 		User:            option.User,
 		Auth:            []ssh.AuthMethod{auth},
-		Timeout:         time.Second * 5,
+		Timeout:         5 * time.Second,
 		HostKeyCallback: ssh.InsecureIgnoreHostKey(),
 	}
 
