@@ -10,7 +10,7 @@ yml=/etc/tdp-cloud/config.yml
 [ -f $yml ] || cat <<EOF >$yml
 server:
     dsn: /var/lib/tdp-cloud/server.db
-    listen: 7800
+    listen: :7800
 EOF
 
 exec tdp-cloud server -c $yml
