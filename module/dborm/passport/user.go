@@ -85,9 +85,3 @@ func UpdatePassword(data *UpdatePasswordParam) error {
 	})
 
 }
-
-// 统计信息
-
-// func Summary(userId uint) {
-// dborm.Machine.
-// }
