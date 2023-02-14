@@ -5,9 +5,20 @@ import (
 	"github.com/spf13/cast"
 
 	"tdp-cloud/helper/command"
+	"tdp-cloud/helper/psutil"
 	"tdp-cloud/module/dborm/user"
 	"tdp-cloud/module/workhub"
 )
+
+// 主机信息
+
+func host(c *gin.Context) {
+
+	hostInfo := psutil.GetSystemInfo()
+
+	c.Set("Payload", gin.H{"HostInfo": hostInfo})
+
+}
 
 // 节点列表
 
@@ -15,7 +26,7 @@ func list(c *gin.Context) {
 
 	userId := c.GetUint("UserId")
 
-	lst := workhub.NodesOfUser(userId)
+	lst := workhub.WorkerOfUser(userId)
 
 	c.Set("Payload", gin.H{"Datasets": lst})
 
