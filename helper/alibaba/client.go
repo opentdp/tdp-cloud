@@ -74,6 +74,10 @@ func getSDKError(e error) error {
 		return e
 	}
 
+	if se.Message == nil {
+		return e
+	}
+
 	re, _ := regexp.Compile(`^code: \d+, (.+) request id.+$`)
 	msg := re.ReplaceAllString(*se.Message, "$1")
 
