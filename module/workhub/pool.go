@@ -7,7 +7,7 @@ import (
 	"tdp-cloud/helper/socket"
 )
 
-var nodePool = map[string]*Worker{}
+var workerPool = map[string]*Worker{}
 
 func Register(c *gin.Context) error {
 
@@ -33,8 +33,8 @@ func Register(c *gin.Context) error {
 
 	// 注册主机
 
-	nodePool[worker.WorkerId] = worker
-	defer delete(nodePool, worker.WorkerId)
+	workerPool[worker.WorkerId] = worker
+	defer delete(workerPool, worker.WorkerId)
 
 	if err = bindMachine(worker); err != nil {
 		return err
@@ -46,11 +46,11 @@ func Register(c *gin.Context) error {
 
 }
 
-func NodesOfUser(userId uint) []*Worker {
+func WorkerOfUser(userId uint) []*Worker {
 
 	items := []*Worker{}
 
-	for _, v := range nodePool {
+	for _, v := range workerPool {
 		if userId == v.UserId {
 			items = append(items, v)
 		}
@@ -62,8 +62,8 @@ func NodesOfUser(userId uint) []*Worker {
 
 func NewSender(workerId string) *SendPod {
 
-	if node, ok := nodePool[workerId]; ok {
-		return &SendPod{node}
+	if woker, ok := workerPool[workerId]; ok {
+		return &SendPod{woker}
 	}
 
 	return nil

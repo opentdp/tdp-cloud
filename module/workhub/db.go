@@ -8,16 +8,16 @@ import (
 
 // 绑定主机
 
-func bindMachine(node *Worker) error {
+func bindMachine(woker *Worker) error {
 
-	if node.MachineId == 0 {
+	if woker.MachineId == 0 {
 		return nil
 	}
 
 	item := &machine.UpdateParam{
-		Id:         node.MachineId,
-		WorkerId:   node.WorkerId,
-		WorkerMeta: node.WorkerMeta,
+		Id:         woker.MachineId,
+		WorkerId:   woker.WorkerId,
+		WorkerMeta: woker.WorkerMeta,
 	}
 
 	return machine.Update(item)
