@@ -122,6 +122,7 @@ func Count(data *FetchAllParam) (int64, error) {
 	var count int64
 
 	result := dborm.Db.
+		Model(&dborm.Config{}).
 		Where(&dborm.Config{
 			Module: data.Module,
 		}).

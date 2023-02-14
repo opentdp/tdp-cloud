@@ -162,6 +162,7 @@ func Count(data *FetchAllParam) (int64, error) {
 	var count int64
 
 	result := dborm.Db.
+		Model(&dborm.Machine{}).
 		Where(&dborm.Machine{
 			UserId:   data.UserId,
 			VendorId: data.VendorId,

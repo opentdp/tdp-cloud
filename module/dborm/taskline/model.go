@@ -142,6 +142,7 @@ func Count(data *FetchAllParam) (int64, error) {
 	var count int64
 
 	result := dborm.Db.
+		Model(&dborm.Taskline{}).
 		Where(&dborm.Taskline{
 			UserId:   data.UserId,
 			WorkerId: data.WorkerId,
