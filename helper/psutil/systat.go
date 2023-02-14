@@ -13,22 +13,24 @@ import (
 func Summary() *SummaryStat {
 
 	hi, _ := host.Info()
-	cc, _ := cpu.Counts(true)
+	cl, _ := cpu.Counts(true)
+	cc, _ := cpu.Counts(false)
 	cp, _ := cpu.Percent(time.Second, false)
 	mv, _ := mem.VirtualMemory()
 
 	return &SummaryStat{
-		HostId:      hi.HostID,
-		HostName:    hi.Hostname,
-		Uptime:      hi.Uptime,
-		OS:          hi.OS,
-		Platform:    hi.Platform,
-		KernelArch:  hi.KernelArch,
-		CpuCore:     cc,
-		CpuPercent:  cp,
-		MemoryTotal: mv.Total,
-		MemoryUsed:  mv.Used,
-		IpAddress:   getIpAddress(false),
+		HostId:       hi.HostID,
+		HostName:     hi.Hostname,
+		Uptime:       hi.Uptime,
+		OS:           hi.OS,
+		Platform:     hi.Platform,
+		KernelArch:   hi.KernelArch,
+		CpuCore:      cc,
+		CpuCoreLogic: cl,
+		CpuPercent:   cp,
+		MemoryTotal:  mv.Total,
+		MemoryUsed:   mv.Used,
+		IpAddress:    getIpAddress(false),
 	}
 
 }

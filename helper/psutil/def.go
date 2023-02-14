@@ -5,17 +5,18 @@ import (
 )
 
 type SummaryStat struct {
-	HostId      string
-	HostName    string
-	Uptime      uint64
-	OS          string
-	Platform    string
-	KernelArch  string
-	CpuCore     int
-	CpuPercent  []float64
-	MemoryTotal uint64
-	MemoryUsed  uint64
-	IpAddress   string
+	HostId       string
+	HostName     string
+	Uptime       uint64
+	OS           string
+	Platform     string
+	KernelArch   string
+	CpuCore      int
+	CpuCoreLogic int
+	CpuPercent   []float64
+	MemoryTotal  uint64
+	MemoryUsed   uint64
+	IpAddress    string
 }
 
 type DetailStat struct {
