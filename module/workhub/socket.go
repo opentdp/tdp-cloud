@@ -19,7 +19,7 @@ type Worker struct {
 	UserId     uint
 	MachineId  uint
 	WorkerId   string
-	WorkerMeta *psutil.SystemInfo
+	WorkerMeta *psutil.SummaryStat
 }
 
 type RecvPod struct {

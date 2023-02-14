@@ -1,7 +1,6 @@
 package psutil
 
 import (
-	"encoding/json"
 	"time"
 
 	"github.com/shirou/gopsutil/v3/cpu"
@@ -11,73 +10,83 @@ import (
 	"github.com/shirou/gopsutil/v3/net"
 )
 
-type SystemInfo struct {
-	HostId       string
-	HostName     string
-	Uptime       uint64
-	OS           string
-	CpuCore      int
-	CpuPercent   float64
-	MemoryTotal  uint64
-	MemoryUsed   uint64
-	DiskTotal    uint64
-	DiskUsed     uint64
-	IpAddress    string
-	NetBytesRecv uint64
-	NetBytesSent uint64
-}
+func Summary() *SummaryStat {
 
-func (p *SystemInfo) From(s string) {
-
-	json.Unmarshal([]byte(s), p)
-
-}
-
-func (p *SystemInfo) String() string {
-
-	jsonbyte, _ := json.Marshal(p)
-	return string(jsonbyte)
-
-}
-
-func GetSystemInfo() *SystemInfo {
-
+	hi, _ := host.Info()
 	cc, _ := cpu.Counts(true)
 	cp, _ := cpu.Percent(time.Second, false)
 	mv, _ := mem.VirtualMemory()
-	dp, _ := disk.Partitions(false)
-	no, _ := net.IOCounters(true)
-	hi, _ := host.Info()
 
-	diskTotal := uint64(0)
-	diskUsed := uint64(0)
-	for _, dpi := range dp {
-		du, _ := disk.Usage(dpi.Mountpoint)
-		diskTotal += du.Total
-		diskUsed += du.Used
+	return &SummaryStat{
+		HostId:      hi.HostID,
+		HostName:    hi.Hostname,
+		Uptime:      hi.Uptime,
+		OS:          hi.OS,
+		Platform:    hi.Platform,
+		KernelArch:  hi.KernelArch,
+		CpuCore:     cc,
+		CpuPercent:  cp,
+		MemoryTotal: mv.Total,
+		MemoryUsed:  mv.Used,
+		IpAddress:   getIpAddress(false),
 	}
 
+}
+
+func Detail() *DetailStat {
+
+	ci, _ := cpu.Info()
+	ni, _ := net.IOCounters(true)
+	dp, _ := disk.Partitions(false)
+	sw, _ := mem.SwapMemory()
+
+	cpuModel := []string{}
+	for _, info := range ci {
+		cpuModel = append(cpuModel, info.ModelName)
+	}
+
+	netInterface := []NetInterface{}
 	netBytesRecv := uint64(0)
 	netBytesSent := uint64(0)
-	for _, nio := range no {
+	for _, nio := range ni {
+		if nio.BytesRecv > 0 || nio.BytesSent > 0 {
+			netInterface = append(netInterface, NetInterface{
+				nio.Name,
+				nio.BytesRecv, nio.BytesSent,
+				nio.Dropin, nio.Dropout,
+			})
+		}
 		netBytesRecv += nio.BytesRecv
 		netBytesSent += nio.BytesSent
 	}
 
-	return &SystemInfo{
-		HostId:       hi.HostID,
-		HostName:     hi.Hostname,
-		Uptime:       hi.Uptime,
-		OS:           hi.OS,
-		CpuCore:      cc,
-		CpuPercent:   cp[0],
-		MemoryTotal:  mv.Total,
-		MemoryUsed:   mv.Used,
-		DiskTotal:    diskTotal,
-		DiskUsed:     diskUsed,
-		IpAddress:    getIpAddress(false),
-		NetBytesRecv: netBytesRecv,
-		NetBytesSent: netBytesSent,
+	diskPartition := []DiskPartition{}
+	diskTotal := uint64(0)
+	diskUsed := uint64(0)
+	for _, dpi := range dp {
+		du, _ := disk.Usage(dpi.Mountpoint)
+		if du.Total > 0 || du.Used > 0 {
+			diskPartition = append(diskPartition, DiskPartition{
+				dpi.Device,
+				dpi.Mountpoint, dpi.Fstype,
+				du.Total, du.Used,
+			})
+		}
+		diskTotal += du.Total
+		diskUsed += du.Used
+	}
+
+	return &DetailStat{
+		Summary(),
+		cpuModel,
+		netInterface,
+		netBytesRecv,
+		netBytesSent,
+		diskPartition,
+		diskTotal,
+		diskUsed,
+		sw.Total,
+		sw.Used,
 	}
 
 }

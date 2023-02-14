@@ -14,7 +14,7 @@ import (
 
 func host(c *gin.Context) {
 
-	hostInfo := psutil.GetSystemInfo()
+	hostInfo := psutil.Detail()
 
 	c.Set("Payload", gin.H{"HostInfo": hostInfo})
 

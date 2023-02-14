@@ -11,10 +11,10 @@ func (pod *SendPod) Ping() (uint, error) {
 	rq := &SocketData{
 		Method:  "Ping",
 		TaskId:  0,
-		Payload: psutil.GetSystemInfo(),
+		Payload: psutil.Summary(),
 	}
 
-	log.Println("Ping:send", "SystemInfo")
+	log.Println("Ping:send", "SummaryStat")
 
 	return rq.TaskId, pod.Write(rq)
 

@@ -27,7 +27,7 @@ type SendPod struct {
 
 func Daemon(ws string) error {
 
-	info := psutil.GetSystemInfo()
+	info := psutil.Summary()
 	workerId := strutil.Md5(info.HostId)
 
 	header := http.Header{}

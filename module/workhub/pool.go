@@ -26,7 +26,7 @@ func Register(c *gin.Context) error {
 		c.GetUint("UserId"),
 		c.GetUint("MachineId"),
 		c.GetHeader("TDP-Worker-Id"),
-		&psutil.SystemInfo{},
+		&psutil.SummaryStat{},
 	}
 
 	worker.WorkerMeta.From(c.GetHeader("TDP-Worker-Meta"))
