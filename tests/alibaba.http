@@ -15,7 +15,20 @@ Origin: {{$dotenv TDP_ORIGIN}}
     }
 }
 
-### 获取可用区资源
+### SWAS / 获取区域
+
+POST {{$dotenv TDP_API_BASE}}/alibaba/5
+Authorization: {{$dotenv TDP_AUTHORIZATION}}
+Origin: {{$dotenv TDP_ORIGIN}}
+
+{
+    "Service": "swas",
+    "Version": "2020-06-01",
+    "RegionId": "cn-hangzhou",
+    "Action": "ListRegions"
+}
+
+### ECS / 获取可用区资源
 
 POST {{$dotenv TDP_API_BASE}}/alibaba/5
 Authorization: {{$dotenv TDP_AUTHORIZATION}}
@@ -32,7 +45,7 @@ Origin: {{$dotenv TDP_ORIGIN}}
     }
 }
 
-### 获取可用区实例
+### ECS / 获取可用区实例
 
 POST {{$dotenv TDP_API_BASE}}/alibaba/5
 Authorization: {{$dotenv TDP_AUTHORIZATION}}
