@@ -133,7 +133,8 @@ func Count(data *FetchAllParam) (int64, error) {
 
 	result := dborm.Db.
 		Where(&dborm.Vendor{
-			UserId: data.UserId,
+			UserId:   data.UserId,
+			Provider: data.Provider,
 		}).
 		Count(&count)
 

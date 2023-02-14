@@ -131,7 +131,8 @@ func Count(data *FetchAllParam) (int64, error) {
 
 	result := dborm.Db.
 		Where(&dborm.Keypair{
-			UserId: data.UserId,
+			UserId:  data.UserId,
+			KeyType: data.KeyType,
 		}).
 		Count(&count)
 
