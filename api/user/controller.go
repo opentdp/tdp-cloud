@@ -3,7 +3,6 @@ package user
 import (
 	"github.com/gin-gonic/gin"
 
-	"tdp-cloud/module/dborm/config"
 	"tdp-cloud/module/dborm/user"
 )
 
@@ -11,7 +10,9 @@ import (
 
 func list(c *gin.Context) {
 
-	if lst, err := user.FetchAll(); err == nil {
+	rq := &user.FetchAllParam{}
+
+	if lst, err := user.FetchAll(rq); err == nil {
 		c.Set("Payload", gin.H{"Datasets": lst})
 	} else {
 		c.Set("Error", err)
@@ -76,13 +77,15 @@ func update(c *gin.Context) {
 
 }
 
-// 删除配置
+// 删除用户
 
 func delete(c *gin.Context) {
 
-	name := c.Param("name")
+	rq := &user.DeleteParam{
+		Username: c.Param("name"),
+	}
 
-	if err := config.Delete(name); err == nil {
+	if err := user.Delete(rq); err == nil {
 		c.Set("Message", "删除成功")
 	} else {
 		c.Set("Error", err)

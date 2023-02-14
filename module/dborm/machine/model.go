@@ -4,7 +4,7 @@ import (
 	"tdp-cloud/module/dborm"
 )
 
-// 添加主机
+// 创建主机
 
 type CreateParam struct {
 	UserId      uint
@@ -22,22 +22,22 @@ type CreateParam struct {
 	Status      uint
 }
 
-func Create(post *CreateParam) (uint, error) {
+func Create(data *CreateParam) (uint, error) {
 
 	item := &dborm.Machine{
-		UserId:      post.UserId,
-		VendorId:    post.VendorId,
-		HostName:    post.HostName,
-		IpAddress:   post.IpAddress,
-		OSType:      post.OSType,
-		Region:      post.Region,
-		Model:       post.Model,
-		CloudId:     post.CloudId,
-		CloudMeta:   post.CloudMeta,
-		WorkerId:    post.WorkerId,
-		WorkerMeta:  post.WorkerMeta,
-		Description: post.Description,
-		Status:      post.Status,
+		UserId:      data.UserId,
+		VendorId:    data.VendorId,
+		HostName:    data.HostName,
+		IpAddress:   data.IpAddress,
+		OSType:      data.OSType,
+		Region:      data.Region,
+		Model:       data.Model,
+		CloudId:     data.CloudId,
+		CloudMeta:   data.CloudMeta,
+		WorkerId:    data.WorkerId,
+		WorkerMeta:  data.WorkerMeta,
+		Description: data.Description,
+		Status:      data.Status,
 	}
 
 	result := dborm.Db.Create(item)
@@ -65,61 +65,108 @@ type UpdateParam struct {
 	Status      uint
 }
 
-func Update(post *UpdateParam) error {
+func Update(data *UpdateParam) error {
 
 	result := dborm.Db.
-		Where(&dborm.Machine{Id: post.Id, UserId: post.UserId}).
+		Where(&dborm.Machine{
+			Id:     data.Id,
+			UserId: data.UserId,
+		}).
 		Updates(dborm.Machine{
-			VendorId:    post.VendorId,
-			HostName:    post.HostName,
-			IpAddress:   post.IpAddress,
-			OSType:      post.OSType,
-			Region:      post.Region,
-			Model:       post.Model,
-			CloudId:     post.CloudId,
-			CloudMeta:   post.CloudMeta,
-			WorkerId:    post.WorkerId,
-			WorkerMeta:  post.WorkerMeta,
-			Description: post.Description,
-			Status:      post.Status,
+			VendorId:    data.VendorId,
+			HostName:    data.HostName,
+			IpAddress:   data.IpAddress,
+			OSType:      data.OSType,
+			Region:      data.Region,
+			Model:       data.Model,
+			CloudId:     data.CloudId,
+			CloudMeta:   data.CloudMeta,
+			WorkerId:    data.WorkerId,
+			WorkerMeta:  data.WorkerMeta,
+			Description: data.Description,
+			Status:      data.Status,
 		})
 
 	return result.Error
 
 }
 
-// 获取主机列表
+// 删除主机
 
-func FetchAll(userId uint) ([]*dborm.Machine, error) {
+type DeleteParam struct {
+	Id     uint
+	UserId uint
+}
 
-	var items []*dborm.Machine
+func Delete(data *DeleteParam) error {
 
-	result := dborm.Db.Where(&dborm.Machine{UserId: userId}).Find(&items)
+	result := dborm.Db.
+		Where(&dborm.Machine{
+			Id:     data.Id,
+			UserId: data.UserId,
+		}).
+		Delete(&dborm.Machine{})
 
-	return items, result.Error
+	return result.Error
 
 }
 
 // 获取主机
 
-func Fetch(id, userId uint) (*dborm.Machine, error) {
+type FetchParam struct {
+	Id     uint
+	UserId uint
+}
+
+func Fetch(data *FetchParam) (*dborm.Machine, error) {
 
 	var item *dborm.Machine
 
-	result := dborm.Db.Where(&dborm.Machine{Id: id, UserId: userId}).First(&item)
+	result := dborm.Db.
+		Where(&dborm.Machine{
+			Id:     data.Id,
+			UserId: data.UserId,
+		}).
+		First(&item)
 
 	return item, result.Error
 
 }
 
-// 删除主机
+// 获取主机列表
 
-func Delete(id, userId uint) error {
+type FetchAllParam struct {
+	UserId   uint
+	VendorId uint
+}
 
-	var item *dborm.Machine
+func FetchAll(data *FetchAllParam) ([]*dborm.Machine, error) {
 
-	result := dborm.Db.Where(&dborm.Machine{Id: id, UserId: userId}).Delete(&item)
+	var items []*dborm.Machine
 
-	return result.Error
+	result := dborm.Db.
+		Where(&dborm.Machine{
+			UserId:   data.UserId,
+			VendorId: data.VendorId,
+		}).
+		Find(&items)
+
+	return items, result.Error
+
+}
+
+// 获取主机总数
+
+func Count(data *FetchAllParam) (int64, error) {
+
+	var count int64
+
+	result := dborm.Db.
+		Where(&dborm.Machine{
+			UserId: data.UserId,
+		}).
+		Count(&count)
+
+	return count, result.Error
 
 }

@@ -4,7 +4,7 @@ import (
 	"tdp-cloud/module/dborm"
 )
 
-// 添加脚本
+// 创建脚本
 
 type CreateParam struct {
 	UserId        uint
@@ -17,17 +17,17 @@ type CreateParam struct {
 	Timeout       uint `binding:"required"`
 }
 
-func Create(post *CreateParam) (uint, error) {
+func Create(data *CreateParam) (uint, error) {
 
 	item := &dborm.Script{
-		UserId:        post.UserId,
-		Name:          post.Name,
-		CommandType:   post.CommandType,
-		Username:      post.Username,
-		WorkDirectory: post.WorkDirectory,
-		Content:       post.Content,
-		Description:   post.Description,
-		Timeout:       post.Timeout,
+		UserId:        data.UserId,
+		Name:          data.Name,
+		CommandType:   data.CommandType,
+		Username:      data.Username,
+		WorkDirectory: data.WorkDirectory,
+		Content:       data.Content,
+		Description:   data.Description,
+		Timeout:       data.Timeout,
 	}
 
 	result := dborm.Db.Create(item)
@@ -50,56 +50,104 @@ type UpdateParam struct {
 	Timeout       uint `binding:"required"`
 }
 
-func Update(post *UpdateParam) error {
+func Update(data *UpdateParam) error {
 
 	result := dborm.Db.
-		Where(&dborm.Script{Id: post.Id, UserId: post.UserId}).
+		Where(&dborm.Script{
+			Id:     data.Id,
+			UserId: data.UserId,
+		}).
 		Updates(dborm.Script{
-			Name:          post.Name,
-			CommandType:   post.CommandType,
-			Username:      post.Username,
-			WorkDirectory: post.WorkDirectory,
-			Content:       post.Content,
-			Description:   post.Description,
-			Timeout:       post.Timeout,
+			Name:          data.Name,
+			CommandType:   data.CommandType,
+			Username:      data.Username,
+			WorkDirectory: data.WorkDirectory,
+			Content:       data.Content,
+			Description:   data.Description,
+			Timeout:       data.Timeout,
 		})
 
 	return result.Error
 
 }
 
-// 获取脚本列表
+// 删除脚本
 
-func FetchAll(userId uint) ([]*dborm.Script, error) {
+type DeleteParam struct {
+	Id     uint
+	UserId uint
+}
 
-	var items []*dborm.Script
+func Delete(data *DeleteParam) error {
 
-	result := dborm.Db.Where(&dborm.Script{UserId: userId}).Find(&items)
+	result := dborm.Db.
+		Where(&dborm.Script{
+			Id:     data.Id,
+			UserId: data.UserId,
+		}).
+		Delete(&dborm.Script{})
 
-	return items, result.Error
+	return result.Error
 
 }
 
 // 获取脚本
 
-func Fetch(id, userId uint) (*dborm.Script, error) {
+type FetchParam struct {
+	Id     uint
+	UserId uint
+}
+
+func Fetch(data *FetchParam) (*dborm.Script, error) {
 
 	var item *dborm.Script
 
-	result := dborm.Db.Where(&dborm.Script{Id: id, UserId: userId}).Find(&item)
+	result := dborm.Db.
+		Where(&dborm.Script{
+			Id:     data.Id,
+			UserId: data.UserId,
+		}).
+		First(&item)
 
 	return item, result.Error
 
 }
 
-// 删除脚本
+// 获取脚本列表
 
-func Delete(id, userId uint) error {
+type FetchAllParam struct {
+	UserId      uint
+	CommandType string
+}
 
-	var item *dborm.Script
+func FetchAll(data *FetchAllParam) ([]*dborm.Script, error) {
 
-	result := dborm.Db.Where(&dborm.Script{Id: id, UserId: userId}).Delete(&item)
+	var items []*dborm.Script
 
-	return result.Error
+	result := dborm.Db.
+		Where(&dborm.Script{
+			UserId:      data.UserId,
+			CommandType: data.CommandType,
+		}).
+		Find(&items)
+
+	return items, result.Error
+
+}
+
+// 获取脚本总数
+
+func Count(data *FetchAllParam) (int64, error) {
+
+	var count int64
+
+	result := dborm.Db.
+		Where(&dborm.Script{
+			UserId:      data.UserId,
+			CommandType: data.CommandType,
+		}).
+		Count(&count)
+
+	return count, result.Error
 
 }

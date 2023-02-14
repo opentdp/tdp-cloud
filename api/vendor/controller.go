@@ -11,9 +11,12 @@ import (
 
 func list(c *gin.Context) {
 
-	userId := c.GetUint("UserId")
+	rq := &vendor.FetchAllParam{
+		UserId:   c.GetUint("UserId"),
+		Provider: c.Query("provider"),
+	}
 
-	if lst, err := vendor.FetchAll(userId); err == nil {
+	if lst, err := vendor.FetchAll(rq); err == nil {
 		c.Set("Payload", gin.H{"Datasets": lst})
 	} else {
 		c.Set("Error", err)
@@ -25,10 +28,12 @@ func list(c *gin.Context) {
 
 func detail(c *gin.Context) {
 
-	userId := c.GetUint("UserId")
-	id := cast.ToUint(c.Param("id"))
+	rq := &vendor.FetchParam{
+		Id:     cast.ToUint(c.Param("id")),
+		UserId: c.GetUint("UserId"),
+	}
 
-	if res, err := vendor.Fetch(id, userId); err == nil {
+	if res, err := vendor.Fetch(rq); err == nil {
 		c.Set("Payload", res)
 	} else {
 		c.Set("Error", err)
@@ -83,10 +88,12 @@ func update(c *gin.Context) {
 
 func delete(c *gin.Context) {
 
-	userId := c.GetUint("UserId")
-	id := cast.ToUint(c.Param("id"))
+	rq := &vendor.DeleteParam{
+		Id:     cast.ToUint(c.Param("id")),
+		UserId: c.GetUint("UserId"),
+	}
 
-	if err := vendor.Delete(id, userId); err == nil {
+	if err := vendor.Delete(rq); err == nil {
 		c.Set("Message", "删除成功")
 	} else {
 		c.Set("Error", err)

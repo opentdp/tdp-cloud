@@ -11,9 +11,11 @@ import (
 
 func list(c *gin.Context) {
 
-	userId := c.GetUint("UserId")
+	rq := &domain.FetchAllParam{
+		UserId: c.GetUint("UserId"),
+	}
 
-	if lst, err := domain.FetchAll(userId); err == nil {
+	if lst, err := domain.FetchAll(rq); err == nil {
 		c.Set("Payload", gin.H{"Datasets": lst})
 	} else {
 		c.Set("Error", err)
@@ -25,10 +27,12 @@ func list(c *gin.Context) {
 
 func detail(c *gin.Context) {
 
-	userId := c.GetUint("UserId")
-	id := cast.ToUint(c.Param("id"))
+	rq := &domain.FetchParam{
+		Id:     cast.ToUint(c.Param("id")),
+		UserId: c.GetUint("UserId"),
+	}
 
-	if res, err := domain.Fetch(id, userId); err == nil {
+	if res, err := domain.Fetch(rq); err == nil {
 		c.Set("Payload", res)
 	} else {
 		c.Set("Error", err)
@@ -83,10 +87,12 @@ func update(c *gin.Context) {
 
 func delete(c *gin.Context) {
 
-	userId := c.GetUint("UserId")
-	id := cast.ToUint(c.Param("id"))
+	rq := &domain.DeleteParam{
+		Id:     cast.ToUint(c.Param("id")),
+		UserId: c.GetUint("UserId"),
+	}
 
-	if err := domain.Delete(id, userId); err == nil {
+	if err := domain.Delete(rq); err == nil {
 		c.Set("Message", "删除成功")
 	} else {
 		c.Set("Error", err)

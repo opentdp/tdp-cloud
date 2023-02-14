@@ -2,7 +2,7 @@
 
 ### 获取厂商
 
-GET {{$dotenv TDP_API_BASE}}/vendor
+GET {{$dotenv TDP_API_BASE}}/vendor?provider=cloudflare
 Authorization: {{$dotenv TDP_AUTHORIZATION}}
 Origin: {{$dotenv TDP_ORIGIN}}
 

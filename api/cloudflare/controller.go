@@ -10,10 +10,10 @@ import (
 
 func apiProxy(c *gin.Context) {
 
-	userId := c.GetUint("UserId")
-	vendorId := cast.ToUint(c.Param("id"))
-
-	vendor, err := vendor.Fetch(vendorId, userId)
+	vendor, err := vendor.Fetch(&vendor.FetchParam{
+		Id:     cast.ToUint(c.Param("id")),
+		UserId: c.GetUint("UserId"),
+	})
 
 	if err != nil || vendor.Id == 0 {
 		c.Set("Error", "厂商不存在")

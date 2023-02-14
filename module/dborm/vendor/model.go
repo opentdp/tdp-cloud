@@ -4,7 +4,7 @@ import (
 	"tdp-cloud/module/dborm"
 )
 
-// 添加厂商
+// 创建厂商
 
 type CreateParam struct {
 	UserId      uint
@@ -14,14 +14,14 @@ type CreateParam struct {
 	Description string `binding:"required"`
 }
 
-func Create(post *CreateParam) (uint, error) {
+func Create(data *CreateParam) (uint, error) {
 
 	item := &dborm.Vendor{
-		UserId:      post.UserId,
-		SecretId:    post.SecretId,
-		SecretKey:   post.SecretKey,
-		Provider:    post.Provider,
-		Description: post.Description,
+		UserId:      data.UserId,
+		SecretId:    data.SecretId,
+		SecretKey:   data.SecretKey,
+		Provider:    data.Provider,
+		Description: data.Description,
 	}
 
 	result := dborm.Db.Create(item)
@@ -41,53 +41,102 @@ type UpdateParam struct {
 	Description string `binding:"required"`
 }
 
-func Update(post *UpdateParam) error {
+func Update(data *UpdateParam) error {
 
 	result := dborm.Db.
-		Where(&dborm.Vendor{Id: post.Id, UserId: post.UserId}).
+		Where(&dborm.Vendor{
+			Id:     data.Id,
+			UserId: data.UserId,
+		}).
 		Updates(dborm.Vendor{
-			SecretId:    post.SecretId,
-			SecretKey:   post.SecretKey,
-			Provider:    post.Provider,
-			Description: post.Description,
+			SecretId:    data.SecretId,
+			SecretKey:   data.SecretKey,
+			Provider:    data.Provider,
+			Description: data.Description,
 		})
 
 	return result.Error
 
 }
 
-// 获取厂商列表
+// 删除厂商
 
-func FetchAll(userId uint) ([]*dborm.Vendor, error) {
+type DeleteParam struct {
+	Id     uint
+	UserId uint
+}
 
-	var items []*dborm.Vendor
+func Delete(data *DeleteParam) error {
 
-	result := dborm.Db.Where(&dborm.Vendor{UserId: userId}).Find(&items)
+	var item *dborm.Vendor
 
-	return items, result.Error
+	result := dborm.Db.
+		Where(&dborm.Vendor{
+			Id:     data.Id,
+			UserId: data.UserId,
+		}).
+		Delete(&item)
+
+	return result.Error
 
 }
 
 // 获取厂商
 
-func Fetch(id, userId uint) (*dborm.Vendor, error) {
+type FetchParam struct {
+	Id     uint
+	UserId uint
+}
+
+func Fetch(data *FetchParam) (*dborm.Vendor, error) {
 
 	var item *dborm.Vendor
 
-	result := dborm.Db.Where(&dborm.Vendor{Id: id, UserId: userId}).First(&item)
+	result := dborm.Db.
+		Where(&dborm.Vendor{
+			Id:     data.Id,
+			UserId: data.UserId,
+		}).
+		First(&item)
 
 	return item, result.Error
 
 }
 
-// 删除厂商
+// 获取厂商列表
 
-func Delete(id, userId uint) error {
+type FetchAllParam struct {
+	UserId   uint
+	Provider string
+}
 
-	var item *dborm.Vendor
+func FetchAll(data *FetchAllParam) ([]*dborm.Vendor, error) {
 
-	result := dborm.Db.Where(&dborm.Vendor{Id: id, UserId: userId}).Delete(&item)
+	var items []*dborm.Vendor
 
-	return result.Error
+	result := dborm.Db.
+		Where(&dborm.Vendor{
+			UserId:   data.UserId,
+			Provider: data.Provider,
+		}).
+		Find(&items)
+
+	return items, result.Error
+
+}
+
+// 获取厂商总数
+
+func Count(data *FetchAllParam) (int64, error) {
+
+	var count int64
+
+	result := dborm.Db.
+		Where(&dborm.Vendor{
+			UserId: data.UserId,
+		}).
+		Count(&count)
+
+	return count, result.Error
 
 }

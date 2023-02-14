@@ -4,7 +4,7 @@ import (
 	"tdp-cloud/module/dborm"
 )
 
-// 添加域名
+// 创建域名
 
 type CreateParam struct {
 	UserId      uint
@@ -18,18 +18,18 @@ type CreateParam struct {
 	Status      uint
 }
 
-func Create(post *CreateParam) (uint, error) {
+func Create(data *CreateParam) (uint, error) {
 
 	item := &dborm.Domain{
-		UserId:      post.UserId,
-		VendorId:    post.VendorId,
-		Name:        post.Name,
-		NSList:      post.NSList,
-		Model:       post.Model,
-		CloudId:     post.CloudId,
-		CloudMeta:   post.CloudMeta,
-		Description: post.Description,
-		Status:      post.Status,
+		UserId:      data.UserId,
+		VendorId:    data.VendorId,
+		Name:        data.Name,
+		NSList:      data.NSList,
+		Model:       data.Model,
+		CloudId:     data.CloudId,
+		CloudMeta:   data.CloudMeta,
+		Description: data.Description,
+		Status:      data.Status,
 	}
 
 	result := dborm.Db.Create(item)
@@ -53,57 +53,104 @@ type UpdateParam struct {
 	Status      uint
 }
 
-func Update(post *UpdateParam) error {
+func Update(data *UpdateParam) error {
 
 	result := dborm.Db.
-		Where(&dborm.Domain{Id: post.Id, UserId: post.UserId}).
+		Where(&dborm.Domain{
+			Id:     data.Id,
+			UserId: data.UserId,
+		}).
 		Updates(dborm.Domain{
-			VendorId:    post.VendorId,
-			Name:        post.Name,
-			NSList:      post.NSList,
-			Model:       post.Model,
-			CloudId:     post.CloudId,
-			CloudMeta:   post.CloudMeta,
-			Description: post.Description,
-			Status:      post.Status,
+			VendorId:    data.VendorId,
+			Name:        data.Name,
+			NSList:      data.NSList,
+			Model:       data.Model,
+			CloudId:     data.CloudId,
+			CloudMeta:   data.CloudMeta,
+			Description: data.Description,
+			Status:      data.Status,
 		})
 
 	return result.Error
 
 }
 
-// 获取域名列表
+// 删除域名
 
-func FetchAll(userId uint) ([]*dborm.Domain, error) {
+type DeleteParam struct {
+	Id     uint
+	UserId uint
+}
 
-	var items []*dborm.Domain
+func Delete(data *DeleteParam) error {
 
-	result := dborm.Db.Where(&dborm.Domain{UserId: userId}).Find(&items)
+	result := dborm.Db.
+		Where(&dborm.Domain{
+			Id:     data.Id,
+			UserId: data.UserId,
+		}).
+		Delete(&dborm.Domain{})
 
-	return items, result.Error
+	return result.Error
 
 }
 
 // 获取域名
 
-func Fetch(id, userId uint) (*dborm.Domain, error) {
+type FetchParam struct {
+	Id     uint
+	UserId uint
+}
+
+func Fetch(data *FetchParam) (*dborm.Domain, error) {
 
 	var item *dborm.Domain
 
-	result := dborm.Db.Where(&dborm.Domain{Id: id, UserId: userId}).First(&item)
+	result := dborm.Db.
+		Where(&dborm.Domain{
+			Id:     data.Id,
+			UserId: data.UserId,
+		}).
+		First(&item)
 
 	return item, result.Error
 
 }
 
-// 删除域名
+// 获取域名列表
 
-func Delete(id, userId uint) error {
+type FetchAllParam struct {
+	UserId   uint
+	VendorId uint
+}
 
-	var item *dborm.Domain
+func FetchAll(data *FetchAllParam) ([]*dborm.Domain, error) {
 
-	result := dborm.Db.Where(&dborm.Domain{Id: id, UserId: userId}).Delete(&item)
+	var items []*dborm.Domain
 
-	return result.Error
+	result := dborm.Db.
+		Where(&dborm.Domain{
+			UserId:   data.UserId,
+			VendorId: data.VendorId,
+		}).
+		Find(&items)
+
+	return items, result.Error
+
+}
+
+// 获取域名总数
+
+func Count(data *FetchAllParam) (int64, error) {
+
+	var count int64
+
+	result := dborm.Db.
+		Where(&dborm.Domain{
+			UserId: data.UserId,
+		}).
+		Count(&count)
+
+	return count, result.Error
 
 }

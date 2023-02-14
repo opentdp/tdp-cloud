@@ -11,9 +11,9 @@ func AuthGuard() gin.HandlerFunc {
 
 	return func(c *gin.Context) {
 
-		token := c.GetHeader("Authorization")
-
-		sess, err := session.Fetch(token)
+		sess, err := session.Fetch(&session.FetchParam{
+			Token: c.GetHeader("Authorization"),
+		})
 
 		if err != nil || sess.UserId == 0 {
 			c.Set("Error", "会话已失效")

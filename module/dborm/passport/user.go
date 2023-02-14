@@ -21,22 +21,27 @@ type LoginResult struct {
 	Token       string
 }
 
-func Login(post *LoginParam) (*LoginResult, error) {
+func Login(data *LoginParam) (*LoginResult, error) {
 
-	item, _ := user.Fetch(&user.FetchParam{Username: post.Username})
+	item, _ := user.Fetch(&user.FetchParam{
+		Username: data.Username,
+	})
 
 	// 验证账号
 
 	if item.Id == 0 {
 		return nil, errors.New("账号错误")
 	}
-	if !user.CheckPassword(item.Password, post.Password) {
+	if !user.CheckPassword(item.Password, data.Password) {
 		return nil, errors.New("密码错误")
 	}
 
 	// 创建令牌
 
-	token, _ := session.Create(item.Id)
+	token, _ := session.Create(&session.CreateParam{
+		UserId:    item.Id,
+		UserAgent: "",
+	})
 
 	// 返回结果
 
@@ -59,24 +64,30 @@ type UpdatePasswordParam struct {
 	NewPassword string `binding:"required"`
 }
 
-func UpdatePassword(post *UpdatePasswordParam) error {
+func UpdatePassword(data *UpdatePasswordParam) error {
 
-	item, _ := user.Fetch(&user.FetchParam{Id: post.Id})
+	item, _ := user.Fetch(&user.FetchParam{Id: data.Id})
 
 	// 验证账号
 
 	if item.Id == 0 {
 		return errors.New("账号错误")
 	}
-	if !user.CheckPassword(item.Password, post.OldPassword) {
+	if !user.CheckPassword(item.Password, data.OldPassword) {
 		return errors.New("密码错误")
 	}
 
 	// 更新密码
 
 	return user.Update(&user.UpdateParam{
-		Id:       post.Id,
-		Password: post.NewPassword,
+		Id:       data.Id,
+		Password: data.NewPassword,
 	})
 
 }
+
+// 统计信息
+
+// func Summary(userId uint) {
+// dborm.Machine.
+// }

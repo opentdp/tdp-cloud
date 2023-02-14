@@ -4,16 +4,18 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/spf13/cast"
 
-	taskline "tdp-cloud/module/dborm/taskline"
+	"tdp-cloud/module/dborm/taskline"
 )
 
 // 记录列表
 
 func list(c *gin.Context) {
 
-	userId := c.GetUint("UserId")
+	rq := &taskline.FetchAllParam{
+		UserId: c.GetUint("UserId"),
+	}
 
-	if lst, err := taskline.FetchAll(userId); err == nil {
+	if lst, err := taskline.FetchAll(rq); err == nil {
 		c.Set("Payload", gin.H{"Datasets": lst})
 	} else {
 		c.Set("Error", err)
@@ -25,10 +27,12 @@ func list(c *gin.Context) {
 
 func detail(c *gin.Context) {
 
-	userId := c.GetUint("UserId")
-	id := cast.ToUint(c.Param("id"))
+	rq := &taskline.FetchParam{
+		Id:     cast.ToUint(c.Param("id")),
+		UserId: c.GetUint("UserId"),
+	}
 
-	if res, err := taskline.Fetch(id, userId); err == nil {
+	if res, err := taskline.Fetch(rq); err == nil {
 		c.Set("Payload", res)
 	} else {
 		c.Set("Error", err)
@@ -83,10 +87,12 @@ func update(c *gin.Context) {
 
 func delete(c *gin.Context) {
 
-	userId := c.GetUint("UserId")
-	id := cast.ToUint(c.Param("id"))
+	rq := &taskline.DeleteParam{
+		Id:     cast.ToUint(c.Param("id")),
+		UserId: c.GetUint("UserId"),
+	}
 
-	if err := taskline.Delete(id, userId); err == nil {
+	if err := taskline.Delete(rq); err == nil {
 		c.Set("Message", "删除成功")
 	} else {
 		c.Set("Error", err)

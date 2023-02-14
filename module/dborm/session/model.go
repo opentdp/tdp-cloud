@@ -8,13 +8,19 @@ import (
 	"tdp-cloud/module/dborm"
 )
 
-// 添加令牌
+// 创建会话
 
-func Create(userId uint) (string, error) {
+type CreateParam struct {
+	UserId    uint
+	UserAgent string
+}
+
+func Create(data *CreateParam) (string, error) {
 
 	item := &dborm.Session{
-		UserId: userId,
-		Token:  strutil.Rand(32),
+		UserId:    data.UserId,
+		UserAgent: data.UserAgent,
+		Token:     strutil.Rand(32),
 	}
 
 	result := dborm.Db.Create(item)
@@ -23,32 +29,121 @@ func Create(userId uint) (string, error) {
 
 }
 
-// 获取令牌
+// 更新会话
 
-func Fetch(token string) (*dborm.Session, error) {
+type UpdateParam struct {
+	Id        uint `binding:"required"`
+	UserId    uint
+	UserAgent string
+}
+
+func Update(data *UpdateParam) error {
+
+	result := dborm.Db.
+		Where(&dborm.Session{
+			Id:     data.Id,
+			UserId: data.UserId,
+		}).
+		Updates(dborm.Session{
+			UserAgent: data.UserAgent,
+		})
+
+	return result.Error
+
+}
+
+// 删除会话
+
+type DeleteParam struct {
+	Id     uint
+	UserId uint
+}
+
+func Delete(data *DeleteParam) error {
+
+	result := dborm.Db.
+		Where(&dborm.Session{
+			Id:     data.Id,
+			UserId: data.UserId,
+		}).
+		Delete(&dborm.Session{})
+
+	return result.Error
+
+}
+
+// 获取会话
+
+type FetchParam struct {
+	Id    uint
+	Token string
+}
+
+func Fetch(data *FetchParam) (*dborm.Session, error) {
 
 	var item *dborm.Session
 
-	dborm.Db.Where(&dborm.Session{Token: token}).First(&item)
+	dborm.Db.
+		Where(&dborm.Session{
+			Id:    data.Id,
+			Token: data.Token,
+		}).
+		First(&item)
 
 	if item.Id == 0 {
 		return nil, errors.New("会话不存在")
 	}
 
-	// 当前时间戳
-	now := time.Now().Unix()
+	// 会话停留时长
+	stay := time.Now().Unix() - item.UpdatedAt
 
-	// 会话超过30分钟，删除令牌
-	if now-item.UpdatedAt > 1800 {
+	// 停留超过60分钟，删除会话
+	if stay > 3600 {
 		dborm.Db.Delete(&item)
 		return nil, errors.New("会话已过期")
 	}
 
-	// 会话超过1分钟，自动续期
-	if now-item.UpdatedAt > 60 {
+	// 停留超过5分钟，自动续期
+	if stay > 300 {
 		dborm.Db.Save(&item)
 	}
 
 	return item, nil
+
+}
+
+// 获取会话列表
+
+type FetchAllParam struct {
+	UserId uint
+}
+
+func FetchAll(data *FetchAllParam) ([]*dborm.Session, error) {
+
+	var items []*dborm.Session
+
+	result := dborm.Db.
+		Where(&dborm.Session{
+			UserId: data.UserId,
+		}).
+		Find(&items)
+
+	return items, result.Error
+
+}
+
+// 获取会话总数
+
+func Count(data *FetchAllParam) (int64, error) {
+
+	var count int64
+
+	result := dborm.Db.
+		Where(&dborm.Session{
+			UserId: data.UserId,
+		}).
+		Count(&count)
+
+	return count, result.Error
 
 }

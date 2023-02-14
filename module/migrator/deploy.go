@@ -29,7 +29,9 @@ func addMigration(k, v string) error {
 
 func isMigrated(k string) bool {
 
-	if item, err := config.Fetch(k); err == nil {
+	q := &config.FetchParam{Name: k}
+
+	if item, err := config.Fetch(q); err == nil {
 		return item.Id > 0
 	}
 

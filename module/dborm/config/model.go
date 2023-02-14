@@ -4,7 +4,7 @@ import (
 	"tdp-cloud/module/dborm"
 )
 
-// 添加配置
+// 创建配置
 
 type CreateParam struct {
 	Name        string `binding:"required"`
@@ -13,13 +13,13 @@ type CreateParam struct {
 	Description string
 }
 
-func Create(post *CreateParam) (uint, error) {
+func Create(data *CreateParam) (uint, error) {
 
 	item := &dborm.Config{
-		Name:        post.Name,
-		Value:       post.Value,
-		Module:      post.Module,
-		Description: post.Description,
+		Name:        data.Name,
+		Value:       data.Value,
+		Module:      data.Module,
+		Description: data.Description,
 	}
 
 	result := dborm.Db.Create(item)
@@ -37,52 +37,96 @@ type UpdateParam struct {
 	Description string
 }
 
-func Update(post *UpdateParam) error {
+func Update(data *UpdateParam) error {
 
 	result := dborm.Db.
-		Where(&dborm.Config{Name: post.Name}).
+		Where(&dborm.Config{
+			Name: data.Name,
+		}).
 		Updates(dborm.Config{
-			Value:       post.Value,
-			Module:      post.Module,
-			Description: post.Description,
+			Value:       data.Value,
+			Module:      data.Module,
+			Description: data.Description,
 		})
 
 	return result.Error
 
 }
 
-// 获取配置列表
+// 删除配置
 
-func FetchAll() ([]*dborm.Config, error) {
+type DeleteParam struct {
+	Id   uint
+	Name string
+}
 
-	var items []*dborm.Config
+func Delete(data *DeleteParam) error {
 
-	result := dborm.Db.Find(&items)
+	result := dborm.Db.
+		Where(&dborm.Config{
+			Id:   data.Id,
+			Name: data.Name,
+		}).
+		Delete(&dborm.Config{})
 
-	return items, result.Error
+	return result.Error
 
 }
 
 // 获取配置
 
-func Fetch(name string) (*dborm.Config, error) {
+type FetchParam struct {
+	Id   uint
+	Name string
+}
+
+func Fetch(data *FetchParam) (*dborm.Config, error) {
 
 	var item *dborm.Config
 
-	result := dborm.Db.Where(&dborm.Config{Name: name}).First(&item)
+	result := dborm.Db.
+		Where(&dborm.Config{
+			Id:   data.Id,
+			Name: data.Name,
+		}).
+		First(&item)
 
 	return item, result.Error
 
 }
 
-// 删除配置
+// 获取配置列表
 
-func Delete(name string) error {
+type FetchAllParam struct {
+	Module string
+}
 
-	var item *dborm.Config
+func FetchAll(data *FetchAllParam) ([]*dborm.Config, error) {
 
-	result := dborm.Db.Where(&dborm.Config{Name: name}).Delete(&item)
+	var items []*dborm.Config
 
-	return result.Error
+	result := dborm.Db.
+		Where(&dborm.Config{
+			Module: data.Module,
+		}).
+		Find(&items)
+
+	return items, result.Error
+
+}
+
+// 获取配置总数
+
+func Count(data *FetchAllParam) (int64, error) {
+
+	var count int64
+
+	result := dborm.Db.
+		Where(&dborm.Config{
+			Module: data.Module,
+		}).
+		Count(&count)
+
+	return count, result.Error
 
 }

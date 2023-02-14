@@ -10,7 +10,11 @@ import (
 
 func list(c *gin.Context) {
 
-	if lst, err := config.FetchAll(); err == nil {
+	rq := &config.FetchAllParam{
+		Module: c.Param("module"),
+	}
+
+	if lst, err := config.FetchAll(rq); err == nil {
 		c.Set("Payload", gin.H{"Datasets": lst})
 	} else {
 		c.Set("Error", err)
@@ -22,9 +26,11 @@ func list(c *gin.Context) {
 
 func detail(c *gin.Context) {
 
-	name := c.Param("name")
+	rq := &config.FetchParam{
+		Name: c.Param("name"),
+	}
 
-	if res, err := config.Fetch(name); err == nil {
+	if res, err := config.Fetch(rq); err == nil {
 		c.Set("Payload", res)
 	} else {
 		c.Set("Error", err)
@@ -75,9 +81,11 @@ func update(c *gin.Context) {
 
 func delete(c *gin.Context) {
 
-	name := c.Param("name")
+	rq := &config.DeleteParam{
+		Name: c.Param("name"),
+	}
 
-	if err := config.Delete(name); err == nil {
+	if err := config.Delete(rq); err == nil {
 		c.Set("Message", "删除成功")
 	} else {
 		c.Set("Error", err)

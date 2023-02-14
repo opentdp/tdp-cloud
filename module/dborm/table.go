@@ -14,7 +14,7 @@ type Config struct {
 
 // 计划任务
 
-type Cron struct {
+type Cronjob struct {
 	Id         uint `gorm:"primaryKey"`
 	UserId     uint `gorm:"index"`
 	Name       string
@@ -90,6 +90,7 @@ type Session struct {
 	Id        uint   `gorm:"primaryKey"`
 	UserId    uint   `gorm:"index"`
 	Token     string `gorm:"uniqueIndex"`
+	UserAgent string
 	CreatedAt int64
 	UpdatedAt int64
 }

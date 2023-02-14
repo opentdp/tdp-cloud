@@ -4,7 +4,7 @@ import (
 	"tdp-cloud/module/dborm"
 )
 
-// 添加任务
+// 创建任务
 
 type CreateParam struct {
 	UserId   uint
@@ -16,16 +16,16 @@ type CreateParam struct {
 	Response any
 }
 
-func Create(post *CreateParam) (uint, error) {
+func Create(data *CreateParam) (uint, error) {
 
 	item := &dborm.Taskline{
-		UserId:   post.UserId,
-		Subject:  post.Subject,
-		HostName: post.HostName,
-		WorkerId: post.WorkerId,
-		Status:   post.Status,
-		Request:  post.Request,
-		Response: post.Response,
+		UserId:   data.UserId,
+		Subject:  data.Subject,
+		HostName: data.HostName,
+		WorkerId: data.WorkerId,
+		Status:   data.Status,
+		Request:  data.Request,
+		Response: data.Response,
 	}
 
 	result := dborm.Db.Create(item)
@@ -47,58 +47,106 @@ type UpdateParam struct {
 	Response any
 }
 
-func Update(post *UpdateParam) error {
+func Update(data *UpdateParam) error {
 
 	result := dborm.Db.
-		Where(&dborm.Taskline{Id: post.Id, UserId: post.UserId}).
+		Where(&dborm.Taskline{
+			Id:     data.Id,
+			UserId: data.UserId,
+		}).
 		Updates(dborm.Taskline{
-			Subject:  post.Subject,
-			HostName: post.HostName,
-			WorkerId: post.WorkerId,
-			Status:   post.Status,
-			Request:  post.Request,
-			Response: post.Response,
+			Subject:  data.Subject,
+			HostName: data.HostName,
+			WorkerId: data.WorkerId,
+			Status:   data.Status,
+			Request:  data.Request,
+			Response: data.Response,
 		})
 
 	return result.Error
 
 }
 
+// 删除任务
+
+type DeleteParam struct {
+	Id     uint
+	UserId uint
+}
+
+func Delete(data *DeleteParam) error {
+
+	var item *dborm.Taskline
+
+	result := dborm.Db.
+		Where(&dborm.Taskline{
+			Id:     data.Id,
+			UserId: data.UserId,
+		}).
+		Delete(&item)
+
+	return result.Error
+
+}
+
+// 获取任务
+
+type FetchParam struct {
+	Id     uint
+	UserId uint
+}
+
+func Fetch(data *FetchParam) (*dborm.Taskline, error) {
+
+	var item *dborm.Taskline
+
+	result := dborm.Db.
+		Where(&dborm.Taskline{
+			Id:     data.Id,
+			UserId: data.UserId,
+		}).
+		First(&item)
+
+	return item, result.Error
+
+}
+
 // 获取任务列表
 
-func FetchAll(userId uint) ([]*dborm.Taskline, error) {
+type FetchAllParam struct {
+	UserId   uint
+	WorkerId string
+}
+
+func FetchAll(data *FetchAllParam) ([]*dborm.Taskline, error) {
 
 	var items []*dborm.Taskline
 
 	result := dborm.Db.
-		Where(&dborm.Taskline{UserId: userId}).
-		Limit(50).Order("id DESC").
+		Where(&dborm.Taskline{
+			UserId:   data.UserId,
+			WorkerId: data.WorkerId,
+		}).
+		Order("id DESC").
+		Limit(50).
 		Find(&items)
 
 	return items, result.Error
 
 }
 
-// 获取任务
+// 获取任务总数
 
-func Fetch(id, userId uint) (*dborm.Taskline, error) {
+func Count(data *FetchAllParam) (int64, error) {
 
-	var item *dborm.Taskline
+	var count int64
 
-	result := dborm.Db.Where(&dborm.Taskline{Id: id, UserId: userId}).First(&item)
+	result := dborm.Db.
+		Where(&dborm.Taskline{
+			UserId: data.UserId,
+		}).
+		Count(&count)
 
-	return item, result.Error
-
-}
-
-// 删除任务
-
-func Delete(id, userId uint) error {
-
-	var item *dborm.Taskline
-
-	result := dborm.Db.Where(&dborm.Taskline{Id: id, UserId: userId}).Delete(&item)
-
-	return result.Error
+	return count, result.Error
 
 }

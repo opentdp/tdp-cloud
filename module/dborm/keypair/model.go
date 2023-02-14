@@ -4,7 +4,7 @@ import (
 	"tdp-cloud/module/dborm"
 )
 
-// 添加密钥
+// 创建密钥
 
 type CreateParam struct {
 	UserId      uint
@@ -14,14 +14,14 @@ type CreateParam struct {
 	Description string `binding:"required"`
 }
 
-func Create(post *CreateParam) (uint, error) {
+func Create(data *CreateParam) (uint, error) {
 
 	item := &dborm.Keypair{
-		UserId:      post.UserId,
-		PublicKey:   post.PublicKey,
-		PrivateKey:  post.PrivateKey,
-		KeyType:     post.KeyType,
-		Description: post.Description,
+		UserId:      data.UserId,
+		PublicKey:   data.PublicKey,
+		PrivateKey:  data.PrivateKey,
+		KeyType:     data.KeyType,
+		Description: data.Description,
 	}
 
 	result := dborm.Db.Create(item)
@@ -41,53 +41,100 @@ type UpdateParam struct {
 	Description string
 }
 
-func Update(post *UpdateParam) error {
+func Update(data *UpdateParam) error {
 
 	result := dborm.Db.
-		Where(&dborm.Keypair{Id: post.Id, UserId: post.UserId}).
+		Where(&dborm.Keypair{
+			Id:     data.Id,
+			UserId: data.UserId,
+		}).
 		Updates(dborm.Keypair{
-			PublicKey:   post.PublicKey,
-			PrivateKey:  post.PrivateKey,
-			KeyType:     post.KeyType,
-			Description: post.Description,
+			PublicKey:   data.PublicKey,
+			PrivateKey:  data.PrivateKey,
+			KeyType:     data.KeyType,
+			Description: data.Description,
 		})
 
 	return result.Error
 
 }
 
-// 获取密钥列表
+// 删除密钥
 
-func FetchAll(userId uint) ([]*dborm.Keypair, error) {
+type DeleteParam struct {
+	Id     uint
+	UserId uint
+}
 
-	var items []*dborm.Keypair
+func Delete(data *DeleteParam) error {
 
-	result := dborm.Db.Where(&dborm.Keypair{UserId: userId}).Find(&items)
+	result := dborm.Db.
+		Where(&dborm.Keypair{
+			Id:     data.Id,
+			UserId: data.UserId,
+		}).
+		Delete(&dborm.Keypair{})
 
-	return items, result.Error
+	return result.Error
 
 }
 
 // 获取密钥
 
-func Fetch(id, userId uint) (*dborm.Keypair, error) {
+type FetchParam struct {
+	Id     uint
+	UserId uint
+}
+
+func Fetch(data *FetchParam) (*dborm.Keypair, error) {
 
 	var item *dborm.Keypair
 
-	result := dborm.Db.Where(&dborm.Keypair{Id: id, UserId: userId}).First(&item)
+	result := dborm.Db.
+		Where(&dborm.Keypair{
+			Id:     data.Id,
+			UserId: data.UserId,
+		}).
+		First(&item)
 
 	return item, result.Error
 
 }
 
-// 删除密钥
+// 获取密钥列表
 
-func Delete(id, userId uint) error {
+type FetchAllParam struct {
+	UserId  uint
+	KeyType string
+}
 
-	var item *dborm.Keypair
+func FetchAll(data *FetchAllParam) ([]*dborm.Keypair, error) {
 
-	result := dborm.Db.Where(&dborm.Keypair{Id: id, UserId: userId}).Delete(&item)
+	var items []*dborm.Keypair
 
-	return result.Error
+	result := dborm.Db.
+		Where(&dborm.Keypair{
+			UserId:  data.UserId,
+			KeyType: data.KeyType,
+		}).
+		Find(&items)
+
+	return items, result.Error
+
+}
+
+// 获取密钥总数
+
+func Count(data *FetchAllParam) (int64, error) {
+
+	var count int64
+
+	result := dborm.Db.
+		Where(&dborm.Keypair{
+			UserId: data.UserId,
+		}).
+		Count(&count)
+
+	return count, result.Error
 
 }

@@ -6,7 +6,7 @@ import (
 	"tdp-cloud/module/dborm"
 )
 
-// 添加用户
+// 创建用户
 
 type CreateParam struct {
 	Username string `binding:"required"`
@@ -14,16 +14,16 @@ type CreateParam struct {
 	Level    uint
 }
 
-func Create(post *CreateParam) (uint, error) {
+func Create(data *CreateParam) (uint, error) {
 
-	if post.Password != "" {
-		post.Password = HashPassword(post.Password)
+	if data.Password != "" {
+		data.Password = HashPassword(data.Password)
 	}
 
 	item := &dborm.User{
 		AppId:    uuid.NewString(),
-		Username: post.Username,
-		Password: post.Password,
+		Username: data.Username,
+		Password: data.Password,
 	}
 
 	result := dborm.Db.Create(item)
@@ -41,32 +41,44 @@ type UpdateParam struct {
 	Level       uint
 }
 
-func Update(post *UpdateParam) error {
+func Update(data *UpdateParam) error {
 
-	if post.Password != "" {
-		post.Password = HashPassword(post.Password)
+	if data.Password != "" {
+		data.Password = HashPassword(data.Password)
 	}
 
 	result := dborm.Db.
-		Where(&dborm.User{Id: post.Id}).
+		Where(&dborm.User{
+			Id: data.Id,
+		}).
 		Updates(dborm.User{
-			Description: post.Description,
-			Password:    post.Password,
+			Password:    data.Password,
+			Description: data.Description,
 		})
 
 	return result.Error
 
 }
 
-// 获取用户列表
+// 删除用户
 
-func FetchAll() ([]*dborm.User, error) {
+type DeleteParam struct {
+	Id       uint
+	Username string
+}
 
-	var items []*dborm.User
+func Delete(data *DeleteParam) error {
 
-	result := dborm.Db.Find(&items)
+	var item *dborm.Taskline
 
-	return items, result.Error
+	result := dborm.Db.
+		Where(&dborm.User{
+			Id:       data.Id,
+			Username: data.Username,
+		}).
+		Delete(&item)
+
+	return result.Error
 
 }
 
@@ -78,18 +90,54 @@ type FetchParam struct {
 	Username string
 }
 
-func Fetch(post *FetchParam) (*dborm.User, error) {
+func Fetch(data *FetchParam) (*dborm.User, error) {
 
 	var item *dborm.User
 
 	result := dborm.Db.
 		Where(&dborm.User{
-			Id:       post.Id,
-			AppId:    post.AppId,
-			Username: post.Username,
+			Id:       data.Id,
+			AppId:    data.AppId,
+			Username: data.Username,
 		}).
 		First(&item)
 
 	return item, result.Error
+
+}
+
+// 获取用户列表
+
+type FetchAllParam struct {
+	Level uint
+}
+
+func FetchAll(data *FetchAllParam) ([]*dborm.User, error) {
+
+	var items []*dborm.User
+
+	result := dborm.Db.
+		Where(&dborm.User{
+			Level: data.Level,
+		}).
+		Find(&items)
+
+	return items, result.Error
+
+}
+
+// 获取用户总数
+
+func Count(data *FetchAllParam) (int64, error) {
+
+	var count int64
+
+	result := dborm.Db.
+		Where(&dborm.User{
+			Level: data.Level,
+		}).
+		Count(&count)
+
+	return count, result.Error
 
 }

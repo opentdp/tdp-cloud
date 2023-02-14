@@ -8,6 +8,7 @@ func v100000() error {
 
 	return dborm.Db.AutoMigrate(
 		&dborm.Config{},
+		&dborm.Cronjob{},
 		&dborm.Domain{},
 		&dborm.Keypair{},
 		&dborm.Machine{},
