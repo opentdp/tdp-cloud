@@ -1,10 +1,8 @@
 package command
 
 import (
-	"bufio"
 	"context"
 	"errors"
-	"io"
 	"io/ioutil"
 	"os/exec"
 	"runtime"
@@ -33,52 +31,20 @@ func newScript(code string, ext string) (string, error) {
 
 }
 
-func execScript(name string, arg []string, timeout uint) (string, error) {
+func execScript(bin string, arg []string, data *ExecPayload) (string, error) {
 
-	var ret string
-
-	// 设置上下文
-
-	ctx, cancel := context.WithTimeout(context.Background(), time.Millisecond*time.Duration(timeout))
-
-	cmd := exec.CommandContext(ctx, name, arg...)
+	ctx, cancel := context.WithTimeout(context.Background(), time.Duration(data.Timeout)*time.Millisecond)
 
 	defer cancel()
 
-	// 持续读取输出
+	cmd := exec.CommandContext(ctx, bin, arg...)
 
-	stdout, err := cmd.StdoutPipe()
-
-	if err != nil {
-		return "", err
+	if data.WorkDirectory != "" {
+		cmd.Dir = data.WorkDirectory
 	}
 
-	defer stdout.Close()
+	ret, err := cmd.CombinedOutput()
 
-	go func() {
-		reader := bufio.NewReader(stdout)
-
-		for {
-			str, err := reader.ReadString('\n')
-			if err != nil || err == io.EOF {
-				break
-			}
-			ret += str
-		}
-	}()
-
-	// 开始执行命令
-
-	if err := cmd.Start(); err != nil {
-		return ret, err
-	}
-
-	// 等待命令结束
-
-	if err := cmd.Wait(); err != nil {
-		return ret, err
-	}
-
-	return ret, err
+	return string(ret), err
 
 }
