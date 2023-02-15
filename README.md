@@ -14,6 +14,10 @@
 
 - 独立主机：TDP Worker
 
+## 使用指引
+
+内容较多，请参考文档 <https://apps.rehiy.com/tdp-cloud/docs>
+
 ## 功能预览
 
 - 在线体验开发版功能，请进入 [演示站点](https://apps.rehiy.com/tdp-cloud/preview)
@@ -52,10 +56,6 @@
 go env -w GO111MODULE=on
 go env -w GOPROXY=https://goproxy.cn,direct
 ```
-
-## 使用说明
-
-<https://apps.rehiy.com/tdp-cloud/docs>
 
 ## 其他
 
