@@ -8,10 +8,14 @@ import (
 	"tdp-cloud/helper/psutil"
 	"tdp-cloud/helper/socket"
 	"tdp-cloud/helper/strutil"
-	"tdp-cloud/module/workhub"
 )
 
-type SocketData = workhub.SocketData
+type SocketData struct {
+	Method  string
+	TaskId  uint
+	Success bool
+	Payload any
+}
 
 type RecvPod struct {
 	*socket.JsonPod
@@ -79,6 +83,8 @@ func Receiver(pod *socket.JsonPod) error {
 		switch rs.Method {
 		case "Exec":
 			recv.Exec(rs)
+		case "Stat":
+			recv.Stat(rs)
 		case "Ping:resp":
 			resp.Ping(rs)
 		default:

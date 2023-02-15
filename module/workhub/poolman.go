@@ -36,7 +36,7 @@ func Register(c *gin.Context) error {
 	workerPool[worker.WorkerId] = worker
 	defer delete(workerPool, worker.WorkerId)
 
-	if err = bindMachine(worker); err != nil {
+	if err = updateMachine(worker); err != nil {
 		return err
 	}
 
@@ -62,8 +62,8 @@ func WorkerOfUser(userId uint) []*Worker {
 
 func NewSender(workerId string) *SendPod {
 
-	if woker, ok := workerPool[workerId]; ok {
-		return &SendPod{woker}
+	if worker, ok := workerPool[workerId]; ok {
+		return &SendPod{worker}
 	}
 
 	return nil

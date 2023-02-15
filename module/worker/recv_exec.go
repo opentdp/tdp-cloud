@@ -40,8 +40,9 @@ func (pod *RecvPod) Exec(rs *SocketData) error {
 		},
 	}
 
-	if err = pod.Write(rq); err != nil {
+	if err := pod.Write(rq); err != nil {
 		log.Println("Exec:resp", err)
+		return err
 	}
 
 	return err

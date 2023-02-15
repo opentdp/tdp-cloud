@@ -6,18 +6,18 @@ import (
 	"tdp-cloud/module/dborm/taskline"
 )
 
-// 绑定主机
+// 更新主机
 
-func bindMachine(woker *Worker) error {
+func updateMachine(worker *Worker) error {
 
-	if woker.MachineId == 0 {
+	if worker.MachineId == 0 {
 		return nil
 	}
 
 	item := &machine.UpdateParam{
-		Id:         woker.MachineId,
-		WorkerId:   woker.WorkerId,
-		WorkerMeta: woker.WorkerMeta,
+		Id:         worker.MachineId,
+		WorkerId:   worker.WorkerId,
+		WorkerMeta: worker.WorkerMeta,
 	}
 
 	return machine.Update(item)

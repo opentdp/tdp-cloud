@@ -34,21 +34,21 @@ type SendPod struct {
 	*Worker
 }
 
-func Daemon(woker *Worker) error {
+func Daemon(worker *Worker) error {
 
-	return Receiver(woker)
+	return Receiver(worker)
 
 }
 
-func Receiver(woker *Worker) error {
+func Receiver(worker *Worker) error {
 
-	recv := &RecvPod{woker}
-	resp := &RespPod{woker}
+	recv := &RecvPod{worker}
+	resp := &RespPod{worker}
 
 	for {
 		var rq *SocketData
 
-		if err := woker.Read(&rq); err != nil {
+		if err := worker.Read(&rq); err != nil {
 			log.Println("Read:error", err)
 			return err
 		}
@@ -56,6 +56,8 @@ func Receiver(woker *Worker) error {
 		switch rq.Method {
 		case "Exec:resp":
 			resp.Exec(rq)
+		case "Stat:resp":
+			resp.Stat(rq)
 		case "Ping":
 			recv.Ping(rq)
 		default:
