@@ -4,17 +4,17 @@
 
 可以跨平台部署的云资源管理面板，支持同时绑定多个云账号：
 
- - CloudFlare：DNS
+- CloudFlare：DNS
 
- - 腾讯云：DNSPod、CVM、Lighthouse
+- 腾讯云：DNSPod、CVM、Lighthouse
 
- - 腾讯云国际版：CVM、Lighthouse
+- 腾讯云国际版：CVM、Lighthouse
 
- - 阿里云：*Under development*
+- 阿里云：ECS、SWAS
 
- - 独立主机：TDP Worker
+- 独立主机：TDP Worker
 
-##  功能预览
+## 功能预览
 
 - 在线体验开发版功能，请进入 [演示站点](https://apps.rehiy.com/tdp-cloud/preview)
 
@@ -55,7 +55,7 @@ go env -w GOPROXY=https://goproxy.cn,direct
 
 ## 使用说明
 
-https://apps.rehiy.com/tdp-cloud/docs
+<https://apps.rehiy.com/tdp-cloud/docs>
 
 ## 其他
 

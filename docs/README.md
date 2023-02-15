@@ -6,4 +6,6 @@
 
 - [绑定腾讯云](绑定腾讯云.md)
 
+- [绑定阿里云](绑定阿里云.md)
+
 - [绑定Cloudflare](绑定Cloudflare.md)
