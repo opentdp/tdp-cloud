@@ -16,7 +16,7 @@ func host(c *gin.Context) {
 
 	hostInfo := psutil.Detail()
 
-	c.Set("Payload", gin.H{"HostInfo": hostInfo})
+	c.Set("Payload", gin.H{"Stat": hostInfo})
 
 }
 
