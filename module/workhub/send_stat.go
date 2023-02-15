@@ -1,14 +1,14 @@
 package workhub
 
 import (
-	"log"
+	"time"
 )
 
 func (pod *SendPod) Stat() (uint, error) {
 
 	rq := &SocketData{
 		Method: "Stat",
-		TaskId: 0,
+		TaskId: uint(time.Now().Unix()),
 	}
 
 	return rq.TaskId, pod.Write(rq)
@@ -17,6 +17,6 @@ func (pod *SendPod) Stat() (uint, error) {
 
 func (pod *RespPod) Stat(rq *SocketData) {
 
-	log.Println(rq)
+	workerResp[rq.TaskId] = rq.Payload
 
 }

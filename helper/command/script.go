@@ -33,7 +33,7 @@ func newScript(code string, ext string) (string, error) {
 
 func execScript(bin string, arg []string, data *ExecPayload) (string, error) {
 
-	ctx, cancel := context.WithTimeout(context.Background(), time.Duration(data.Timeout)*time.Millisecond)
+	ctx, cancel := context.WithTimeout(context.Background(), time.Duration(data.Timeout)*time.Second)
 
 	defer cancel()
 

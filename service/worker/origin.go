@@ -43,7 +43,7 @@ func (p *origin) run() {
 func (p *origin) timer() {
 
 	log.Println("连接已断开，将在5秒后重试")
-	time.Sleep(time.Second * 5)
+	time.Sleep(5 * time.Second)
 	p.run()
 
 }

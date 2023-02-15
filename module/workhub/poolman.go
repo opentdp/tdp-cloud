@@ -1,12 +1,15 @@
 package workhub
 
 import (
+	"time"
+
 	"github.com/gin-gonic/gin"
 
 	"tdp-cloud/helper/psutil"
 	"tdp-cloud/helper/socket"
 )
 
+var workerResp = map[uint]any{}
 var workerPool = map[string]*Worker{}
 
 func Register(c *gin.Context) error {
@@ -67,5 +70,19 @@ func NewSender(workerId string) *SendPod {
 	}
 
 	return nil
+
+}
+
+func WaitResponse(id uint, wait int) any {
+
+	for i := 0; i < wait; i++ {
+		if res, ok := workerResp[id]; ok {
+			delete(workerResp, id)
+			return res
+		}
+		time.Sleep(300 * time.Millisecond)
+	}
+
+	return ""
 
 }

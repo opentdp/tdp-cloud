@@ -32,30 +32,47 @@ func list(c *gin.Context) {
 
 }
 
-// 执行脚本
+// 获取状态
 
-type execParam struct {
-	WorkerId string
-	Payload  command.ExecPayload
-}
+func stat(c *gin.Context) {
 
-func exec(c *gin.Context) {
-
-	var rq *execParam
-
-	if err := c.ShouldBind(&rq); err != nil {
-		c.Set("Error", err)
-		return
-	}
-
-	send := workhub.NewSender(rq.WorkerId)
+	workerId := c.Param("id")
+	send := workhub.NewSender(workerId)
 
 	if send == nil {
 		c.Set("Error", "客户端已断开连接")
 		return
 	}
 
-	if id, err := send.Exec(&rq.Payload); err == nil {
+	if id, err := send.Stat(); err == nil {
+		res := workhub.WaitResponse(id, 30)
+		c.Set("Payload", res)
+	} else {
+		c.Set("Error", err)
+	}
+
+}
+
+// 执行脚本
+
+func exec(c *gin.Context) {
+
+	workerId := c.Param("id")
+	send := workhub.NewSender(workerId)
+
+	if send == nil {
+		c.Set("Error", "客户端已断开连接")
+		return
+	}
+
+	var rq *command.ExecPayload
+
+	if err := c.ShouldBind(&rq); err != nil {
+		c.Set("Error", err)
+		return
+	}
+
+	if id, err := send.Exec(rq); err == nil {
 		c.Set("Message", "命令下发完成")
 		c.Set("Payload", gin.H{"Id": id})
 	} else {

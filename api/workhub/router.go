@@ -15,7 +15,8 @@ func Router(api *gin.RouterGroup) {
 	{
 		rg.GET("/workhub", host)
 		rg.GET("/workhub/list", list)
-		rg.POST("/workhub/exec", exec)
+		rg.GET("/workhub/stat/:id", stat)
+		rg.POST("/workhub/exec/:id", exec)
 	}
 
 }
