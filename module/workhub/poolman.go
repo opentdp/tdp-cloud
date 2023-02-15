@@ -63,9 +63,9 @@ func WorkerOfUser(userId uint) []*Worker {
 
 }
 
-func NewSender(workerId string) *SendPod {
+func NewSender(id string) *SendPod {
 
-	if worker, ok := workerPool[workerId]; ok {
+	if worker, ok := workerPool[id]; ok {
 		return &SendPod{worker}
 	}
 

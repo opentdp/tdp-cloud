@@ -1,10 +1,13 @@
 package workhub
 
 import (
+	"log"
 	"time"
 )
 
 func (pod *SendPod) Stat() (uint, error) {
+
+	log.Println("Stat:send To", pod.WorkerMeta.HostName)
 
 	rq := &SocketData{
 		Method: "Stat",
@@ -16,6 +19,8 @@ func (pod *SendPod) Stat() (uint, error) {
 }
 
 func (pod *RespPod) Stat(rq *SocketData) {
+
+	log.Println("Stat:resp By", pod.WorkerMeta.HostName)
 
 	workerResp[rq.TaskId] = rq.Payload
 

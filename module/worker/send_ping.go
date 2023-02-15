@@ -9,13 +9,13 @@ import (
 
 func (pod *SendPod) Ping() (uint, error) {
 
+	log.Println("Ping:send", "SummaryStat")
+
 	rq := &SocketData{
 		Method:  "Ping",
 		TaskId:  0,
 		Payload: psutil.Summary(),
 	}
-
-	log.Println("Ping:send", "SummaryStat")
 
 	return rq.TaskId, pod.Write(rq)
 
@@ -33,7 +33,7 @@ func PingLoop(pod *SendPod) error {
 
 	for {
 		if _, err := pod.Ping(); err != nil {
-			log.Println("Ping:error", err)
+			log.Println("Ping:fail", err)
 			return err
 		}
 		time.Sleep(25 * time.Second)

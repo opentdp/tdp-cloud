@@ -17,15 +17,16 @@ func (pod *RecvPod) Exec(rs *SocketData) error {
 		data *command.ExecPayload
 	)
 
+	log.Println("Exec:recv", rs.Payload)
+
 	if mapstructure.Decode(rs.Payload, &data) == nil {
-		log.Println("Exec:wait", data.Name)
 		ret, err = command.Exec(data)
 	} else {
 		err = errors.New("无法解析请求参数")
 	}
 
 	if err != nil {
-		log.Println("Exec:error", err)
+		log.Println("Exec:fail", err)
 	} else {
 		log.Println("Exec:done", data.Name)
 	}
@@ -40,11 +41,5 @@ func (pod *RecvPod) Exec(rs *SocketData) error {
 		},
 	}
 
-	if err := pod.Write(rq); err != nil {
-		log.Println("Exec:resp", err)
-		return err
-	}
-
-	return err
-
+	return pod.Write(rq)
 }

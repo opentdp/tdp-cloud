@@ -8,17 +8,14 @@ import (
 
 func (pod *RecvPod) Stat(rs *SocketData) error {
 
+	log.Println("Stat:recv Id", rs.TaskId)
+
 	rq := &SocketData{
 		Method:  "Stat:resp",
 		TaskId:  rs.TaskId,
 		Payload: psutil.Detail(),
 	}
 
-	if err := pod.Write(rq); err != nil {
-		log.Println("Exec:resp", err)
-		return err
-	}
-
-	return nil
+	return pod.Write(rq)
 
 }
