@@ -19,6 +19,7 @@ func Summary() *SummaryStat {
 	mv, _ := mem.VirtualMemory()
 
 	return &SummaryStat{
+		CreateAt:     time.Now().Unix(),
 		HostId:       hi.HostID,
 		HostName:     hi.Hostname,
 		Uptime:       hi.Uptime,

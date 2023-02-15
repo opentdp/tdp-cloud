@@ -5,6 +5,7 @@ import (
 )
 
 type SummaryStat struct {
+	CreateAt     int64
 	HostId       string
 	HostName     string
 	Uptime       uint64
