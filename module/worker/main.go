@@ -3,7 +3,6 @@ package worker
 import (
 	"log"
 	"net/http"
-	"time"
 
 	"tdp-cloud/helper/psutil"
 	"tdp-cloud/helper/socket"
@@ -47,23 +46,9 @@ func Daemon(ws string) error {
 
 	defer pod.Close()
 
-	go Sender(pod)
+	go PingLoop(&SendPod{pod})
+
 	return Receiver(pod)
-
-}
-
-func Sender(pod *socket.JsonPod) error {
-
-	send := &SendPod{pod}
-
-	for {
-		if _, err := send.Ping(); err != nil {
-			log.Println("Send:error", err)
-			return err
-		}
-
-		time.Sleep(time.Second * 15)
-	}
 
 }
 
