@@ -20,8 +20,12 @@ func Md5(s string) string {
 
 func Gb18030ToUtf8(s string) string {
 
-	ret, _ := simplifiedchinese.GB18030.NewDecoder().String(s)
-	return string(ret)
+	ret, err := simplifiedchinese.GB18030.NewDecoder().String(s)
+
+	if err == nil {
+		return string(ret)
+	}
+	return s
 
 }
 
