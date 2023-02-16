@@ -8,7 +8,7 @@
 
 - 腾讯云：DNSPod、CVM、Lighthouse
 
-- 腾讯云国际版：CVM、Lighthouse
+- 腾讯云国际版：DNSPod、CVM、Lighthouse
 
 - 阿里云：ECS、SWAS
 
