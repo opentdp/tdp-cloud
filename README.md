@@ -4,15 +4,13 @@
 
 可以跨平台部署的云资源管理面板，支持同时绑定多个云账号：
 
-- CloudFlare：DNS
+- 腾讯云（含国际版）：DNSPod、CVM、Lighthouse
 
-- 腾讯云：DNSPod、CVM、Lighthouse
+- 阿里云（含国际版）：AliDNS (*doing*)、ECS、SWAS
 
-- 腾讯云国际版：DNSPod、CVM、Lighthouse
+- CloudFlare：DNS、Custom Hostnames
 
-- 阿里云：ECS、SWAS
-
-- 独立主机：TDP Worker
+- TDP Worker：独立服务器、Linux设备、Android手机等
 
 ## 使用指引
 
