@@ -14,7 +14,7 @@ type origin struct{}
 
 func (p *origin) Start(s service.Service) error {
 
-	log.Println("service start")
+	log.Println("Worker service start")
 
 	go p.run()
 	return nil
@@ -23,7 +23,7 @@ func (p *origin) Start(s service.Service) error {
 
 func (p *origin) Stop(s service.Service) error {
 
-	log.Println("service stop")
+	log.Println("Worker service stop")
 	return nil
 
 }
