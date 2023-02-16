@@ -31,7 +31,7 @@ func initViper() {
 
 	if args.ConfigFile == "" {
 		if os.Getenv("TDP_DEBUG") != "" {
-			log.Println("Config file will be ignored")
+			log.Println("Configuration file ignored")
 		}
 		return
 	}

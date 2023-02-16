@@ -2,7 +2,6 @@ package httpd
 
 import (
 	"context"
-	"errors"
 	"log"
 	"net/http"
 	"os"
@@ -20,14 +19,12 @@ func Server(addr string, engine http.Handler) {
 		WriteTimeout: 30 * time.Second,
 	}
 
-	log.Println("Web server listen on", addr)
-
 	// 以协程方式启用监听，防止阻塞后续的中断信号处理
 	go func() {
-		if err := server.ListenAndServe(); err != nil {
-			if errors.Is(err, http.ErrServerClosed) {
-				log.Println(err)
-			}
+		if err := server.ListenAndServe(); err == nil {
+			log.Println("Web server listen on", addr)
+		} else {
+			log.Fatalln(err)
 		}
 	}()
 
