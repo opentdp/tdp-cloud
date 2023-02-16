@@ -19,6 +19,8 @@ var rcmd = &cobra.Command{
 
 func init() {
 
+	log.SetPrefix("[TDP] ")
+
 	cobra.OnInitialize(initViper)
 
 	rcmd.PersistentFlags().StringVarP(&args.ConfigFile, "config", "c", "", "配置文件路径")
