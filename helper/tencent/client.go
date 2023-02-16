@@ -38,10 +38,8 @@ func newClient(rp *Params) (*th.CommonResponse, error) {
 
 	cpf := tp.NewClientProfile()
 
-	// 调试模式
-	if os.Getenv("TDP_DEBUG") != "" {
-		cpf.Debug = true
-	}
+	// 调试开关
+	cpf.Debug = os.Getenv("TDP_DEBUG") != ""
 
 	// 接口根域名
 	if rp.RootDomain == "" {

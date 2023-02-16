@@ -24,6 +24,7 @@ func (p *origin) Start(s service.Service) error {
 func (p *origin) Stop(s service.Service) error {
 
 	log.Println("Worker service stop")
+
 	return nil
 
 }

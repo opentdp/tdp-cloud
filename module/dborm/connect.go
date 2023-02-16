@@ -18,15 +18,16 @@ func Connect(dsn string) {
 
 	var err error
 
+	var logLevel = logger.Info
+	if os.Getenv("TDP_DEBUG") == "" {
+		logLevel = logger.Error
+	}
+
 	config := &gorm.Config{
-		Logger: logger.Default.LogMode(logger.Error),
+		Logger: logger.Default.LogMode(logLevel),
 		NamingStrategy: schema.NamingStrategy{
 			SingularTable: true,
 		},
-	}
-
-	if os.Getenv("TDP_DEBUG") != "" {
-		config.Logger = logger.Default.LogMode(logger.Info)
 	}
 
 	if strings.Contains(dsn, "@tcp") {
