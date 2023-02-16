@@ -10,7 +10,7 @@
 
 - CloudFlare：DNS、Custom Hostnames
 
-- TDP Worker：独立服务器、Linux设备、Android手机等
+- TDP Worker：Android、Linux、Macos、Windows
 
 ## 使用指引
 
