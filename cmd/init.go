@@ -30,7 +30,9 @@ func initViper() {
 	viper.AutomaticEnv()
 
 	if args.ConfigFile == "" {
-		log.Println("Config file will be ignored")
+		if os.Getenv("TDP_DEBUG") != "" {
+			log.Println("Config file will be ignored")
+		}
 		return
 	}
 
