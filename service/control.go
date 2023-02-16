@@ -28,7 +28,7 @@ func Control(name, act string) {
 	case "worker":
 		svc = worker.Service(cliArgs())
 	default:
-		log.Fatalln("未知服务")
+		log.Fatalln("Unknown service:", name)
 	}
 
 	// 执行服务动作
