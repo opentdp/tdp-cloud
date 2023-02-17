@@ -12,26 +12,26 @@ import (
 	"tdp-cloud/module/migrator"
 )
 
-type origin struct{}
+type program struct{}
 
-func (p *origin) Start(s service.Service) error {
+func (p *program) Start(s service.Service) error {
 
-	log.Println("Server service start")
+	log.Println("TDP Server start")
 
 	go p.run()
 	return nil
 
 }
 
-func (p *origin) Stop(s service.Service) error {
+func (p *program) Stop(s service.Service) error {
 
-	log.Println("Server service stop")
+	log.Println("TDP Server stop")
 
 	return nil
 
 }
 
-func (p *origin) run() {
+func (p *program) run() {
 
 	// 获取参数
 	dsn := viper.GetString("server.dsn")

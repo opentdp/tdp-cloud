@@ -19,11 +19,16 @@ var rcmd = &cobra.Command{
 
 func init() {
 
-	log.SetPrefix("[TDP] ")
-
-	cobra.OnInitialize(initViper)
+	cobra.OnInitialize(initHook) // 初始化后触发钩子
 
 	rcmd.PersistentFlags().StringVarP(&args.ConfigFile, "config", "c", "", "配置文件路径")
+
+}
+
+func initHook() {
+
+	initViper()
+	initLogger()
 
 }
 
@@ -33,7 +38,7 @@ func initViper() {
 
 	if args.ConfigFile == "" {
 		if os.Getenv("TDP_DEBUG") != "" {
-			log.Println("Configuration file ignored")
+			log.Println("Configuration file ignored.")
 		}
 		return
 	}
@@ -43,6 +48,22 @@ func initViper() {
 
 	if err := viper.ReadInConfig(); err != nil {
 		os.Exit(1)
+	}
+
+}
+
+func initLogger() {
+
+	log.SetPrefix("[TDP] ")
+
+	if logPath := viper.GetString("logger.directory"); logPath != "" {
+		logFile, err := os.OpenFile(logPath+"/output.log", os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
+		if err != nil {
+			log.Println("Failed to", err)
+			log.Println("Fallback to using standard output.")
+		} else {
+			log.SetOutput(logFile)
+		}
 	}
 
 }

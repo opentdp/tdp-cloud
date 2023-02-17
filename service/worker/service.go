@@ -4,6 +4,7 @@ import (
 	"log"
 
 	"github.com/kardianos/service"
+	"github.com/spf13/viper"
 )
 
 func Service(args []string) service.Service {
@@ -11,14 +12,16 @@ func Service(args []string) service.Service {
 	config := &service.Config{
 		Name:        "tdp-worker",
 		DisplayName: "TDP Cloud Worker",
-		Description: "TDP Cloud Control Panel",
+		Description: "TDP Control Panel Worker",
+		Option:      service.KeyValue{},
 		Arguments:   args,
-		Option: service.KeyValue{
-			"LogDirectory": "/var/log/tdp-cloud",
-		},
 	}
 
-	svc, err := service.New(&origin{}, config)
+	if logPath := viper.GetString("logger.directory"); logPath != "" {
+		config.Option["LogDirectory"] = logPath
+	}
+
+	svc, err := service.New(&program{}, config)
 
 	if err != nil {
 		log.Fatalln("Init service error:", err)

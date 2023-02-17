@@ -46,6 +46,8 @@ cat <<EOF >/etc/tdp-cloud/config.yml
 server:
     dsn: $TDP_SERVER_DSN
     listen: $TDP_SERVER_LISTEN
+logger:
+    directory: /var/log/tdp-cloud
 EOF
 
 $TDP_EXEC server -s install -c /etc/tdp-cloud/config.yml
@@ -53,7 +55,7 @@ $TDP_EXEC server -s start
 
 # --- create uninstall script ---
 
-cat <<EOF >$TDP_EXEC-uninstall
+cat <<EOF >$TDP_EXEC-server-uninstall
 #!/bin/sh
 $TDP_EXEC server -s stop
 $TDP_EXEC server -s uninstall
@@ -62,4 +64,4 @@ rm -rf /etc/tdp-cloud*
 rm -rf $TDP_EXEC*
 EOF
 
-chmod +x $TDP_EXEC-uninstall
+chmod +x $TDP_EXEC-server-uninstall

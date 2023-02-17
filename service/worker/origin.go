@@ -10,26 +10,26 @@ import (
 	"tdp-cloud/module/worker"
 )
 
-type origin struct{}
+type program struct{}
 
-func (p *origin) Start(s service.Service) error {
+func (p *program) Start(s service.Service) error {
 
-	log.Println("Worker service start")
+	log.Println("TDP Worker start")
 
 	go p.run()
 	return nil
 
 }
 
-func (p *origin) Stop(s service.Service) error {
+func (p *program) Stop(s service.Service) error {
 
-	log.Println("Worker service stop")
+	log.Println("TDP Worker stop")
 
 	return nil
 
 }
 
-func (p *origin) run() {
+func (p *program) run() {
 
 	defer p.timer()
 
@@ -41,9 +41,10 @@ func (p *origin) run() {
 
 }
 
-func (p *origin) timer() {
+func (p *program) timer() {
 
-	log.Println("Connection disconnected, retry in 5 seconds")
+	log.Println("Connection disconnected, retry in 5 seconds.")
+
 	time.Sleep(5 * time.Second)
 	p.run()
 

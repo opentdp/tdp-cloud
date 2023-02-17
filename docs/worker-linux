@@ -42,6 +42,8 @@ mkdir -p /var/log/tdp-cloud
 cat <<EOF >/etc/tdp-cloud/config.yml
 worker:
     remote: $TDP_REMOTE_URL
+logger:
+    directory: /var/log/tdp-cloud
 EOF
 
 $TDP_EXEC worker -s install -c /etc/tdp-cloud/config.yml
@@ -49,7 +51,7 @@ $TDP_EXEC worker -s start
 
 # --- create uninstall script ---
 
-cat <<EOF >$TDP_EXEC-uninstall
+cat <<EOF >$TDP_EXEC-worker-uninstall
 #!/bin/sh
 $TDP_EXEC worker -s stop
 $TDP_EXEC worker -s uninstall
@@ -58,4 +60,4 @@ rm -rf /etc/tdp-cloud*
 rm -rf $TDP_EXEC*
 EOF
 
-chmod +x $TDP_EXEC-uninstall
+chmod +x $TDP_EXEC-worker-uninstall
