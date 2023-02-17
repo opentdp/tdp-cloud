@@ -18,7 +18,7 @@ func Connect(dsn string) {
 
 	var err error
 
-	var logLevel = logger.Info
+	var logLevel = logger.Silent
 	if os.Getenv("TDP_DEBUG") == "" {
 		logLevel = logger.Error
 	}
