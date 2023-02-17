@@ -1,6 +1,7 @@
 package cmd
 
 import (
+	"io"
 	"log"
 	"os"
 
@@ -47,7 +48,7 @@ func initViper() {
 	viper.SafeWriteConfigAs(args.ConfigFile)
 
 	if err := viper.ReadInConfig(); err != nil {
-		os.Exit(1)
+		log.Fatalln(err)
 	}
 
 }
@@ -57,12 +58,12 @@ func initLogger() {
 	log.SetPrefix("[TDP] ")
 
 	if logPath := viper.GetString("logger.directory"); logPath != "" {
-		logFile, err := os.OpenFile(logPath+"/output.log", os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
-		if err != nil {
-			log.Println("Failed to", err)
-			log.Println("Fallback to using standard output.")
+		file := logPath + "/output.log"
+		flag := os.O_APPEND | os.O_CREATE | os.O_WRONLY
+		if logFile, err := os.OpenFile(file, flag, 0644); err == nil {
+			log.SetOutput(io.MultiWriter(os.Stdout, logFile))
 		} else {
-			log.SetOutput(logFile)
+			log.Println("Failed to", err)
 		}
 	}
 
