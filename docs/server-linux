@@ -10,58 +10,100 @@ if [ -z "$TDP_EXEC" ]; then
     TDP_EXEC=/usr/local/bin/tdp-cloud
 fi
 
-if [ -z "$TDP_SERVER_LISTEN" ]; then
-    TDP_SERVER_LISTEN=":7800"
-fi
-
-if [ -z "$TDP_SERVER_DSN" ]; then
-    TDP_SERVER_DSN="/var/lib/tdp-cloud/server.db"
-fi
-
 if [ -z "$TDP_PACKAGE" ]; then
     TDP_PACKAGE=http://tdp.icu/build/tdp-cloud-linux-amd64.gz
 fi
 
 # --- download binary ---
 
-if type curl >/dev/null 2>&1; then
-    curl -sfL $TDP_PACKAGE | gunzip > $TDP_EXEC
-elif type wget >/dev/null 2>&1; then
-    wget -qO- $TDP_PACKAGE | gunzip > $TDP_EXEC
+download() {
+
+    echo "[TDP] Download ..."
+
+    if type curl >/dev/null 2>&1; then
+        curl -sfL $TDP_PACKAGE | gunzip > $TDP_EXEC
+    elif type wget >/dev/null 2>&1; then
+        wget -qO- $TDP_PACKAGE | gunzip > $TDP_EXEC
+    fi
+
+    if [ ! -e $TDP_EXEC ]; then
+        echo "[TDP] Can't download ${TDP_PACKAGE}"
+        exit 1
+    fi
+
+    chmod +x $TDP_EXEC
+
+}
+
+# --- install service ---
+
+install() {
+
+    echo "[TDP] Install ..."
+
+    mkdir -p /etc/tdp-cloud
+    mkdir -p /var/lib/tdp-cloud
+    mkdir -p /var/log/tdp-cloud
+
+    config=/etc/tdp-cloud/server.yml
+
+    echo "server:" >$config
+    echo "  dsn: /var/lib/tdp-cloud/server.db" >>$config
+    echo "  listen: :7800" >>$config
+    echo "logger:" >>$config
+    echo "  directory: /var/log/tdp-cloud" >>$config
+
+    $TDP_EXEC server -s install -c $config
+    if [ $? -ne 0 ]; then
+        echo "[TDP] Install failed"
+        exit 1
+    fi
+
+    echo "[TDP] Install completed"
+
+}
+
+# --- uninstall service ---
+
+uninstall() {
+
+    echo "[TDP] Uninstall ..."
+
+    rm -rf /var/*/tdp-cloud
+    rm -rf /etc/tdp-cloud
+    rm -rf $TDP_EXEC
+
+    echo "[TDP] Uninstall completed"
+
+}
+
+# --- start service ---
+
+start () {
+
+    echo "[TDP] Start ..."
+
+    $TDP_EXEC server -s start
+    $TDP_EXEC server -s status
+
+}
+
+stop () {
+
+    echo "[TDP] Stop ..."
+
+    $TDP_EXEC server -s stop
+    $TDP_EXEC server -s uninstall
+
+}
+
+# --- run ---
+
+if [ -x $TDP_EXEC ]; then
+    stop
+    uninstall
+else
+    download
+    install
+    start
 fi
-
-if [ ! -e $TDP_EXEC ]; then
-    echo "[ERROR] Can't download ${TDP_PACKAGE}"
-    exit 1
-fi
-
-# --- create service ---
-
-chmod +x $TDP_EXEC
-mkdir -p /etc/tdp-cloud
-mkdir -p /var/lib/tdp-cloud
-mkdir -p /var/log/tdp-cloud
-
-cat <<EOF >/etc/tdp-cloud/config.yml
-server:
-    dsn: $TDP_SERVER_DSN
-    listen: $TDP_SERVER_LISTEN
-logger:
-    directory: /var/log/tdp-cloud
-EOF
-
-$TDP_EXEC server -s install -c /etc/tdp-cloud/config.yml
-$TDP_EXEC server -s start
-
-# --- create uninstall script ---
-
-cat <<EOF >$TDP_EXEC-server-uninstall
-#!/bin/sh
-$TDP_EXEC server -s stop
-$TDP_EXEC server -s uninstall
-rm -rf /var/*/tdp-cloud*
-rm -rf /etc/tdp-cloud*
-rm -rf $TDP_EXEC*
-EOF
-
-chmod +x $TDP_EXEC-server-uninstall
