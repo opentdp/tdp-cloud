@@ -1,4 +1,4 @@
-package acme
+package certmagic
 
 import (
 	"context"
@@ -9,7 +9,7 @@ import (
 	"github.com/libdns/cloudflare"
 )
 
-type CertParam struct {
+type Params struct {
 	Email     string
 	Domain    []string
 	Provider  string
@@ -18,7 +18,7 @@ type CertParam struct {
 	StorePath string
 }
 
-func Manage(rp *CertParam) error {
+func Manage(rp *Params) error {
 
 	magic := newMagic(rp)
 
@@ -30,7 +30,7 @@ func Manage(rp *CertParam) error {
 
 }
 
-func newMagic(rp *CertParam) *certmagic.Config {
+func newMagic(rp *Params) *certmagic.Config {
 
 	config := certmagic.Config{
 		Storage: &certmagic.FileStorage{Path: rp.StorePath},
@@ -47,7 +47,7 @@ func newMagic(rp *CertParam) *certmagic.Config {
 
 }
 
-func newIssuer(rp *CertParam) *certmagic.ACMEIssuer {
+func newIssuer(rp *Params) *certmagic.ACMEIssuer {
 
 	issuer := &certmagic.ACMEIssuer{
 		Email:  rp.Email,
