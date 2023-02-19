@@ -46,12 +46,12 @@ require (
 // 数据库 ORM
 
 require (
-	// ORM 核心
-	gorm.io/gorm v1.24.5
-	// MySQL 驱动
-	gorm.io/driver/mysql v1.4.7
 	// SQLite 驱动
 	github.com/glebarez/sqlite v1.7.0
+	// MySQL 驱动
+	gorm.io/driver/mysql v1.4.7
+	// ORM 核心
+	gorm.io/gorm v1.24.5
 )
 
 // 证书管理器
