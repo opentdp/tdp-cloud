@@ -2,7 +2,6 @@ package acme
 
 import (
 	"context"
-	"log"
 	"os"
 
 	"github.com/caddyserver/certmagic"
@@ -11,18 +10,17 @@ import (
 )
 
 type CertParam struct {
-	Username    string
-	StoragePath string
-	Email       string
-	Domain      []string
-	Provider    string
-	SecretId    string
-	SecretKey   string
+	Email     string
+	Domain    []string
+	Provider  string
+	SecretId  string
+	SecretKey string
+	StorePath string
 }
 
-func MagicManage(rp *CertParam) error {
+func Manage(rp *CertParam) error {
 
-	magic := newConfig(rp)
+	magic := newMagic(rp)
 
 	magic.Issuers = []certmagic.Issuer{
 		certmagic.NewACMEIssuer(magic, *newIssuer(rp)),
@@ -32,19 +30,11 @@ func MagicManage(rp *CertParam) error {
 
 }
 
-func newConfig(rp *CertParam) *certmagic.Config {
+func newMagic(rp *CertParam) *certmagic.Config {
 
 	config := certmagic.Config{
-		Storage: &certmagic.FileStorage{
-			Path: rp.StoragePath + "/" + rp.Username,
-		},
-		KeySource: certmagic.StandardKeyGenerator{
-			KeyType: certmagic.RSA2048,
-		},
-		OnEvent: func(_ context.Context, event string, data map[string]any) error {
-			log.Printf("Event: %s with data: %v\n", event, data)
-			return nil
-		},
+		Storage: &certmagic.FileStorage{Path: rp.StorePath},
+		OnEvent: magicEvent,
 	}
 
 	cache := certmagic.NewCache(certmagic.CacheOptions{
