@@ -7,6 +7,8 @@ import (
 	"github.com/caddyserver/certmagic"
 	"github.com/libdns/alidns"
 	"github.com/libdns/cloudflare"
+
+	"tdp-cloud/helper/certmagic/tencent"
 )
 
 type Params struct {
@@ -75,7 +77,12 @@ func newIssuer(rp *Params) *certmagic.ACMEIssuer {
 			},
 		}
 	case "tencent":
-		issuer.DNS01Solver = &certmagic.DNS01Solver{}
+		issuer.DNS01Solver = &certmagic.DNS01Solver{
+			DNSProvider: &tencent.Provider{
+				SecretId:  rp.SecretId,
+				SecretKey: rp.SecretKey,
+			},
+		}
 	}
 
 	return issuer

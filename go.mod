@@ -31,6 +31,17 @@ require (
 	golang.org/x/text v0.7.0
 )
 
+// 数据库 ORM
+
+require (
+	// SQLite 驱动
+	github.com/glebarez/sqlite v1.7.0
+	// MySQL 驱动
+	gorm.io/driver/mysql v1.4.7
+	// ORM 核心
+	gorm.io/gorm v1.24.5
+)
+
 // 云厂商 SDK
 
 require (
@@ -43,23 +54,15 @@ require (
 	github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/common v1.0.597
 )
 
-// 数据库 ORM
+// 域名和证书
 
 require (
-	// SQLite 驱动
-	github.com/glebarez/sqlite v1.7.0
-	// MySQL 驱动
-	gorm.io/driver/mysql v1.4.7
-	// ORM 核心
-	gorm.io/gorm v1.24.5
-)
-
-// 证书管理器
-
-require (
+	// 证书管理
 	github.com/caddyserver/certmagic v0.17.2
+	// DNS 厂商适配
 	github.com/libdns/alidns v1.0.2
 	github.com/libdns/cloudflare v0.1.0
+	github.com/libdns/libdns v0.2.1
 )
 
 // 间接依赖
@@ -88,7 +91,6 @@ require (
 	github.com/json-iterator/go v1.1.12 // indirect
 	github.com/klauspost/cpuid/v2 v2.2.3 // indirect
 	github.com/leodido/go-urn v1.2.1 // indirect
-	github.com/libdns/libdns v0.2.1 // indirect
 	github.com/lufia/plan9stats v0.0.0-20230110061619-bbe2e5e100de // indirect
 	github.com/magiconair/properties v1.8.7 // indirect
 	github.com/mattn/go-isatty v0.0.17 // indirect
