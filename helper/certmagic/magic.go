@@ -8,7 +8,7 @@ import (
 	"github.com/libdns/alidns"
 	"github.com/libdns/cloudflare"
 
-	"tdp-cloud/helper/certmagic/tencent"
+	tencent "github.com/rehiy/libdns-tencentcloud"
 )
 
 type Params struct {

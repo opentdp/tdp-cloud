@@ -51,7 +51,7 @@ require (
 	github.com/alibabacloud-go/tea v1.1.20
 	github.com/alibabacloud-go/tea-utils/v2 v2.0.1
 	// 腾讯云 SDK
-	github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/common v1.0.597
+	github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/common v1.0.598
 )
 
 // 域名和证书
@@ -62,7 +62,7 @@ require (
 	// DNS 厂商适配
 	github.com/libdns/alidns v1.0.2
 	github.com/libdns/cloudflare v0.1.0
-	github.com/libdns/libdns v0.2.1
+	github.com/rehiy/libdns-tencentcloud v0.1.0
 )
 
 // 间接依赖
@@ -91,6 +91,7 @@ require (
 	github.com/json-iterator/go v1.1.12 // indirect
 	github.com/klauspost/cpuid/v2 v2.2.3 // indirect
 	github.com/leodido/go-urn v1.2.1 // indirect
+	github.com/libdns/libdns v0.2.1 // indirect
 	github.com/lufia/plan9stats v0.0.0-20230110061619-bbe2e5e100de // indirect
 	github.com/magiconair/properties v1.8.7 // indirect
 	github.com/mattn/go-isatty v0.0.17 // indirect
