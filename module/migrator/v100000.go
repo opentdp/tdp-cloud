@@ -7,14 +7,15 @@ import (
 func v100000() error {
 
 	return dborm.Db.AutoMigrate(
+		&dborm.Certbot{},
 		&dborm.Config{},
 		&dborm.Cronjob{},
 		&dborm.Domain{},
 		&dborm.Keypair{},
 		&dborm.Machine{},
+		&dborm.Script{},
 		&dborm.Session{},
 		&dborm.Taskline{},
-		&dborm.Script{},
 		&dborm.User{},
 		&dborm.Vendor{},
 	)

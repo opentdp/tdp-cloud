@@ -1,6 +1,18 @@
 package dborm
 
-// 配置
+// 域名证书
+
+type Certbot struct {
+	Id        uint `gorm:"primaryKey"`
+	UserId    uint `gorm:"index"`
+	VendorId  uint
+	Email     string
+	Domain    string
+	CreatedAt int64
+	UpdatedAt int64
+}
+
+// 系统配置
 
 type Config struct {
 	Id          uint   `gorm:"primaryKey"`
@@ -84,17 +96,6 @@ type Machine struct {
 	UpdatedAt   int64
 }
 
-// 用户会话
-
-type Session struct {
-	Id        uint   `gorm:"primaryKey"`
-	UserId    uint   `gorm:"index"`
-	Token     string `gorm:"uniqueIndex"`
-	UserAgent string
-	CreatedAt int64
-	UpdatedAt int64
-}
-
 // 命令脚本
 
 type Script struct {
@@ -109,6 +110,17 @@ type Script struct {
 	Timeout       uint
 	CreatedAt     int64
 	UpdatedAt     int64
+}
+
+// 用户会话
+
+type Session struct {
+	Id        uint   `gorm:"primaryKey"`
+	UserId    uint   `gorm:"index"`
+	Token     string `gorm:"uniqueIndex"`
+	UserAgent string
+	CreatedAt int64
+	UpdatedAt int64
 }
 
 // 任务记录
@@ -150,6 +162,7 @@ type Vendor struct {
 	SecretKey   string `json:"-"`
 	Provider    string
 	Description string
+	Certbots    []Certbot
 	Domains     []Domain
 	Machines    []Machine
 	CreatedAt   int64
