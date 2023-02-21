@@ -6,7 +6,5 @@ import (
 
 var Efs *embed.FS
 
-var ConfigFile string
-
 var Version = "0.8.0"
 var BuildVersion = "202302"

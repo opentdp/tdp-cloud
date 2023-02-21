@@ -7,7 +7,7 @@ server.db*
 __debug_*
 tests/.env
 font/*
-temp/*
+tmp/*
 /*.bat
 /*.yml
 

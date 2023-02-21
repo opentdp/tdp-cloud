@@ -11,7 +11,9 @@ import (
 	"tdp-cloud/cmd/args"
 )
 
-var rcmd = &cobra.Command{
+var vipFile string
+
+var rootCmd = &cobra.Command{
 	Use:     "tdp-cloud",
 	Short:   "TDP Cloud",
 	Long:    args.ReadmeText,
@@ -20,16 +22,17 @@ var rcmd = &cobra.Command{
 
 func init() {
 
-	cobra.OnInitialize(initHook) // 初始化后触发钩子
+	log.SetPrefix("[TDP] ") // 优先执行
 
-	rcmd.PersistentFlags().StringVarP(&args.ConfigFile, "config", "c", "", "配置文件路径")
+	cobra.OnInitialize(initViper, initDataset, initLogger) // 延迟执行
 
-}
+	rootCmd.PersistentFlags().StringVarP(&vipFile, "config", "c", "", "配置文件路径")
+	rootCmd.PersistentFlags().StringP("datadir", "", "data", "数据存储目录")
+	rootCmd.PersistentFlags().StringP("logdir", "", "log", "日志存储目录")
 
-func initHook() {
-
-	initViper()
-	initLogger()
+	viper.BindPFlag("dataset.dir", rootCmd.PersistentFlags().Lookup("datadir"))
+	viper.BindPFlag("logger.dir", rootCmd.PersistentFlags().Lookup("logdir"))
+	viper.SetDefault("logger.output", false)
 
 }
 
@@ -37,15 +40,15 @@ func initViper() {
 
 	viper.AutomaticEnv()
 
-	if args.ConfigFile == "" {
+	if vipFile == "" {
 		if os.Getenv("TDP_DEBUG") != "" {
 			log.Println("Configuration file ignored.")
 		}
 		return
 	}
 
-	viper.SetConfigFile(args.ConfigFile)
-	viper.SafeWriteConfigAs(args.ConfigFile)
+	viper.SetConfigFile(vipFile)
+	viper.SafeWriteConfigAs(vipFile)
 
 	if err := viper.ReadInConfig(); err != nil {
 		log.Fatalln(err)
@@ -53,18 +56,39 @@ func initViper() {
 
 }
 
+func initDataset() {
+
+	datadir := viper.GetString("dataset.dir")
+
+	if datadir != "" {
+		os.MkdirAll(datadir, 0755)
+	} else {
+		viper.Set("dataset.dir", ".")
+	}
+
+}
+
 func initLogger() {
 
-	log.SetPrefix("[TDP] ")
+	logdir := viper.GetString("logger.dir")
 
-	if logPath := viper.GetString("logger.directory"); logPath != "" {
-		file := logPath + "/output.log"
-		flag := os.O_APPEND | os.O_CREATE | os.O_WRONLY
-		if logFile, err := os.OpenFile(file, flag, 0644); err == nil {
-			log.SetOutput(io.MultiWriter(os.Stdout, logFile))
-		} else {
-			log.Println("Failed to", err)
-		}
+	if logdir != "" {
+		os.MkdirAll(logdir, 0755)
+	} else {
+		viper.Set("logger.dir", ".")
+	}
+
+	if !viper.GetBool("logger.output") {
+		return
+	}
+
+	file := logdir + "/output.log"
+	flag := os.O_APPEND | os.O_CREATE | os.O_WRONLY
+
+	if logfile, err := os.OpenFile(file, flag, 0644); err == nil {
+		log.SetOutput(io.MultiWriter(os.Stdout, logfile))
+	} else {
+		log.Println("Failed to", err)
 	}
 
 }

@@ -13,12 +13,11 @@ func Service(args []string) service.Service {
 		Name:        "tdp-server",
 		DisplayName: "TDP Cloud Server",
 		Description: "TDP Control Panel Server",
-		Option:      service.KeyValue{},
-		Arguments:   args,
-	}
-
-	if logPath := viper.GetString("logger.directory"); logPath != "" {
-		config.Option["LogDirectory"] = logPath
+		Option: service.KeyValue{
+			"LogDirectory": viper.GetString("logger.dir"),
+			"LogOutput":    viper.GetBool("logger.output"),
+		},
+		Arguments: args,
 	}
 
 	svc, err := service.New(&program{}, config)
