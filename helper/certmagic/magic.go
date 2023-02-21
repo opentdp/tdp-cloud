@@ -20,7 +20,7 @@ type Params struct {
 	StorePath string
 }
 
-func Manage(rp *Params) error {
+func Async(rp *Params) error {
 
 	magic := newMagic(rp)
 
@@ -28,7 +28,7 @@ func Manage(rp *Params) error {
 		certmagic.NewACMEIssuer(magic, *newIssuer(rp)),
 	}
 
-	return magic.ManageSync(context.TODO(), rp.Domain)
+	return magic.ManageAsync(context.TODO(), rp.Domain)
 
 }
 
