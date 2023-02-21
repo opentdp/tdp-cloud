@@ -4,6 +4,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/spf13/cast"
 
+	"tdp-cloud/module/certbot"
 	"tdp-cloud/module/dborm/certjob"
 )
 
@@ -54,6 +55,7 @@ func create(c *gin.Context) {
 	rq.UserId = c.GetUint("UserId")
 
 	if id, err := certjob.Create(rq); err == nil {
+		certbot.NewById(id)
 		c.Set("Message", "添加成功")
 		c.Set("Payload", gin.H{"Id": id})
 	} else {
@@ -76,6 +78,7 @@ func update(c *gin.Context) {
 	rq.UserId = c.GetUint("UserId")
 
 	if err := certjob.Update(rq); err == nil {
+		certbot.RedoById(rq.Id)
 		c.Set("Message", "修改成功")
 	} else {
 		c.Set("Error", err)
@@ -93,6 +96,7 @@ func delete(c *gin.Context) {
 	}
 
 	if err := certjob.Delete(rq); err == nil {
+		certbot.UndoById(rq.Id)
 		c.Set("Message", "删除成功")
 	} else {
 		c.Set("Error", err)

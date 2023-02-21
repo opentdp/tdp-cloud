@@ -2,40 +2,44 @@ package certmagic
 
 import (
 	"context"
+	"strings"
 
 	"github.com/caddyserver/certmagic"
-	"github.com/libdns/alidns"
-	"github.com/libdns/cloudflare"
 	"github.com/spf13/viper"
-
-	tencent "github.com/rehiy/libdns-tencentcloud"
 )
 
-type Params struct {
-	Email     string
-	Domain    []string
-	Provider  string
-	SecretId  string
-	SecretKey string
-	StorePath string
-}
+var magic *certmagic.Config
 
-func Async(rp *Params) error {
+func Manage(rp *Params) error {
 
-	magic := newMagic(rp)
-
-	magic.Issuers = []certmagic.Issuer{
-		certmagic.NewACMEIssuer(magic, *newIssuer(rp)),
+	if magic == nil {
+		magic = CreateMagic()
 	}
 
-	return magic.ManageAsync(context.TODO(), rp.Domain)
+	issuer := certmagic.NewACMEIssuer(magic, *newIssuer(rp))
+	magic.Issuers = append(magic.Issuers, issuer)
+
+	domains := strings.Split(rp.Domain, ",")
+	return magic.ManageAsync(context.TODO(), domains)
 
 }
 
-func newMagic(rp *Params) *certmagic.Config {
+func Unmanage(domain string) {
+
+	domains := strings.Split(domain, ",")
+
+	if magic != nil {
+		magic.Unmanage(domains)
+	}
+
+}
+
+func CreateMagic() *certmagic.Config {
 
 	config := certmagic.Config{
-		Storage: &certmagic.FileStorage{Path: rp.StorePath},
+		Storage: &certmagic.FileStorage{
+			Path: viper.GetString("dataset.dir") + "/certmagic",
+		},
 		OnEvent: magicEvent,
 	}
 
@@ -46,45 +50,5 @@ func newMagic(rp *Params) *certmagic.Config {
 	})
 
 	return certmagic.New(cache, config)
-
-}
-
-func newIssuer(rp *Params) *certmagic.ACMEIssuer {
-
-	issuer := &certmagic.ACMEIssuer{
-		Email:  rp.Email,
-		Agreed: true,
-	}
-
-	if viper.GetBool("debug") {
-		issuer.CA = certmagic.LetsEncryptStagingCA
-	} else {
-		issuer.CA = certmagic.ZeroSSLProductionCA
-	}
-
-	switch rp.Provider {
-	case "alibaba":
-		issuer.DNS01Solver = &certmagic.DNS01Solver{
-			DNSProvider: &alidns.Provider{
-				AccKeyID:     rp.SecretId,
-				AccKeySecret: rp.SecretKey,
-			},
-		}
-	case "cloudflare":
-		issuer.DNS01Solver = &certmagic.DNS01Solver{
-			DNSProvider: &cloudflare.Provider{
-				APIToken: rp.SecretKey,
-			},
-		}
-	case "tencent":
-		issuer.DNS01Solver = &certmagic.DNS01Solver{
-			DNSProvider: &tencent.Provider{
-				SecretId:  rp.SecretId,
-				SecretKey: rp.SecretKey,
-			},
-		}
-	}
-
-	return issuer
 
 }

@@ -11,6 +11,7 @@ type CreateParam struct {
 	VendorId uint   `binding:"required"`
 	Email    string `binding:"required"`
 	Domain   string `binding:"required"`
+	CaType   string `binding:"required"`
 }
 
 func Create(data *CreateParam) (uint, error) {
@@ -20,6 +21,7 @@ func Create(data *CreateParam) (uint, error) {
 		VendorId: data.VendorId,
 		Email:    data.Email,
 		Domain:   data.Domain,
+		CaType:   data.CaType,
 	}
 
 	result := dborm.Db.Create(item)
@@ -36,6 +38,7 @@ type UpdateParam struct {
 	VendorId uint
 	Email    string
 	Domain   string
+	CaType   string
 }
 
 func Update(data *UpdateParam) error {
@@ -49,6 +52,7 @@ func Update(data *UpdateParam) error {
 			VendorId: data.VendorId,
 			Email:    data.Email,
 			Domain:   data.Domain,
+			CaType:   data.CaType,
 		})
 
 	return result.Error

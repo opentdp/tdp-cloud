@@ -2,10 +2,6 @@ package certbot
 
 import (
 	"log"
-	"strings"
-
-	"github.com/spf13/cast"
-	"github.com/spf13/viper"
 
 	"tdp-cloud/helper/certmagic"
 	"tdp-cloud/module/dborm"
@@ -22,12 +18,43 @@ func Daemon() {
 	}
 
 	for _, job := range jobs {
-		NewTask(job)
+		NewByJob(job)
 	}
 
 }
 
-func NewTask(job *dborm.Certjob) error {
+func NewById(id uint) {
+
+	job, err := certjob.Fetch(&certjob.FetchParam{Id: id})
+
+	if err == nil && job.Id > 0 {
+		NewByJob(job)
+	}
+
+}
+
+func UndoById(id uint) {
+
+	job, err := certjob.Fetch(&certjob.FetchParam{Id: id})
+
+	if err == nil && job.Id > 0 {
+		certmagic.Unmanage(job.Domain)
+	}
+
+}
+
+func RedoById(id uint) {
+
+	job, err := certjob.Fetch(&certjob.FetchParam{Id: id})
+
+	if err == nil && job.Id > 0 {
+		certmagic.Unmanage(job.Domain)
+		NewByJob(job)
+	}
+
+}
+
+func NewByJob(job *dborm.Certjob) error {
 
 	vendor, err := vendor.Fetch(&vendor.FetchParam{
 		Id: job.VendorId, UserId: job.UserId,
@@ -38,15 +65,13 @@ func NewTask(job *dborm.Certjob) error {
 		return err
 	}
 
-	dir := viper.GetString("dataset.dir") + "/certbot-" + cast.ToString(job.UserId)
-
-	return certmagic.Async(&certmagic.Params{
-		Domain:    strings.Split(job.Domain, ","),
+	return certmagic.Manage(&certmagic.Params{
 		Email:     job.Email,
+		Domain:    job.Domain,
+		CaType:    job.CaType,
 		Provider:  vendor.Provider,
 		SecretId:  vendor.SecretId,
 		SecretKey: vendor.SecretKey,
-		StorePath: dir,
 	})
 
 }

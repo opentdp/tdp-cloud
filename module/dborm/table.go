@@ -8,6 +8,7 @@ type Certjob struct {
 	VendorId  uint
 	Email     string
 	Domain    string
+	CaType    string
 	CreatedAt int64
 	UpdatedAt int64
 }
