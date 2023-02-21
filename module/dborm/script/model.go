@@ -39,15 +39,15 @@ func Create(data *CreateParam) (uint, error) {
 // 更新脚本
 
 type UpdateParam struct {
-	Id            uint `binding:"required"`
+	Id            uint
 	UserId        uint
-	Name          string `binding:"required"`
-	CommandType   string `binding:"required"`
-	Username      string `binding:"required"`
-	WorkDirectory string `binding:"required"`
-	Content       string `binding:"required"`
+	Name          string
+	CommandType   string
+	Username      string
+	WorkDirectory string
+	Content       string
 	Description   string
-	Timeout       uint `binding:"required"`
+	Timeout       uint
 }
 
 func Update(data *UpdateParam) error {

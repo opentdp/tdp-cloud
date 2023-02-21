@@ -31,8 +31,9 @@ func Create(data *CreateParam) (uint, error) {
 // 更新配置
 
 type UpdateParam struct {
-	Name        string `binding:"required"`
-	Value       string `binding:"required"`
+	Id          uint
+	Name        string
+	Value       string
 	Module      string
 	Description string
 }
@@ -41,9 +42,10 @@ func Update(data *UpdateParam) error {
 
 	result := dborm.Db.
 		Where(&dborm.Config{
-			Name: data.Name,
+			Id: data.Id,
 		}).
 		Updates(dborm.Config{
+			Name:        data.Name,
 			Value:       data.Value,
 			Module:      data.Module,
 			Description: data.Description,

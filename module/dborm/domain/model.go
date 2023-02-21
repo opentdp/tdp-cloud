@@ -41,7 +41,7 @@ func Create(data *CreateParam) (uint, error) {
 // 更新域名
 
 type UpdateParam struct {
-	Id          uint `binding:"required"`
+	Id          uint
 	UserId      uint
 	VendorId    uint
 	Name        string

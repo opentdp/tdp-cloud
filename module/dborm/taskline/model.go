@@ -37,12 +37,12 @@ func Create(data *CreateParam) (uint, error) {
 // 更新任务
 
 type UpdateParam struct {
-	Id       uint `binding:"required"`
+	Id       uint
 	UserId   uint
 	Subject  string
 	HostName string
 	WorkerId string
-	Status   string `binding:"required"`
+	Status   string
 	Request  any
 	Response any
 }

@@ -2,6 +2,7 @@ package config
 
 import (
 	"github.com/gin-gonic/gin"
+	"github.com/spf13/cast"
 
 	"tdp-cloud/module/dborm/config"
 )
@@ -25,6 +26,20 @@ func list(c *gin.Context) {
 // 获取配置
 
 func detail(c *gin.Context) {
+
+	rq := &config.FetchParam{
+		Id: cast.ToUint(c.Param("id")),
+	}
+
+	if res, err := config.Fetch(rq); err == nil {
+		c.Set("Payload", res)
+	} else {
+		c.Set("Error", err)
+	}
+
+}
+
+func detail_name(c *gin.Context) {
 
 	rq := &config.FetchParam{
 		Name: c.Param("name"),
@@ -69,6 +84,8 @@ func update(c *gin.Context) {
 		return
 	}
 
+	rq.Id = cast.ToUint(c.Param("id"))
+
 	if err := config.Update(rq); err == nil {
 		c.Set("Message", "修改成功")
 	} else {
@@ -82,7 +99,7 @@ func update(c *gin.Context) {
 func delete(c *gin.Context) {
 
 	rq := &config.DeleteParam{
-		Name: c.Param("name"),
+		Id: cast.ToUint(c.Param("id")),
 	}
 
 	if err := config.Delete(rq); err == nil {

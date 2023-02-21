@@ -32,7 +32,7 @@ func Create(data *CreateParam) (string, error) {
 // 更新会话
 
 type UpdateParam struct {
-	Id        uint `binding:"required"`
+	Id        uint
 	UserId    uint
 	UserAgent string
 }

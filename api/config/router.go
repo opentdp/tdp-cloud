@@ -15,9 +15,11 @@ func Router(api *gin.RouterGroup) {
 	{
 		rg.GET("/config", list)
 		rg.POST("/config", create)
-		rg.GET("/config/:name", detail)
-		rg.PATCH("/config/:name", update)
-		rg.DELETE("/config/:name", delete)
+		rg.GET("/config/:id", detail)
+		rg.PATCH("/config/:id", update)
+		rg.DELETE("/config/:id", delete)
+
+		rg.GET("/config/name/:name", detail_name)
 	}
 
 }

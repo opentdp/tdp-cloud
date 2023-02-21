@@ -33,10 +33,10 @@ func Create(data *CreateParam) (uint, error) {
 // 更新密钥
 
 type UpdateParam struct {
-	Id          uint `binding:"required"`
+	Id          uint
 	UserId      uint
-	PublicKey   string `binding:"required"`
-	PrivateKey  string `binding:"required"`
+	PublicKey   string
+	PrivateKey  string
 	KeyType     string
 	Description string
 }

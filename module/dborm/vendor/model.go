@@ -33,12 +33,12 @@ func Create(data *CreateParam) (uint, error) {
 // 更新厂商
 
 type UpdateParam struct {
-	Id          uint `binding:"required"`
+	Id          uint
 	UserId      uint
-	SecretId    string `binding:"required"`
-	SecretKey   string `binding:"required"`
-	Provider    string `binding:"required"`
-	Description string `binding:"required"`
+	SecretId    string
+	SecretKey   string
+	Provider    string
+	Description string
 }
 
 func Update(data *UpdateParam) error {

@@ -73,6 +73,7 @@ func update(c *gin.Context) {
 		return
 	}
 
+	rq.Id = cast.ToUint(c.Param("id"))
 	rq.UserId = c.GetUint("UserId")
 
 	if err := machine.Update(rq); err == nil {

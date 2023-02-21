@@ -33,7 +33,7 @@ func Create(data *CreateParam) (uint, error) {
 // 更新计划
 
 type UpdateParam struct {
-	Id       uint `binding:"required"`
+	Id       uint
 	UserId   uint
 	VendorId uint
 	Email    string
