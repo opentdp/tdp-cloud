@@ -3,7 +3,7 @@ package api
 import (
 	"github.com/gin-gonic/gin"
 
-	"tdp-cloud/api/certbot"
+	"tdp-cloud/api/certjob"
 	"tdp-cloud/api/config"
 	"tdp-cloud/api/domain"
 	"tdp-cloud/api/keypair"
@@ -32,7 +32,7 @@ func Router(engine *gin.Engine) {
 	api.Use(midware.OutputHandle())
 
 	{
-		certbot.Router(api)
+		certjob.Router(api)
 		config.Router(api)
 		domain.Router(api)
 		keypair.Router(api)

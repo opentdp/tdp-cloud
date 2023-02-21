@@ -1,21 +1,21 @@
-package certbot
+package certjob
 
 import (
 	"github.com/gin-gonic/gin"
 	"github.com/spf13/cast"
 
-	"tdp-cloud/module/dborm/certbot"
+	"tdp-cloud/module/dborm/certjob"
 )
 
 // 计划列表
 
 func list(c *gin.Context) {
 
-	rq := &certbot.FetchAllParam{
+	rq := &certjob.FetchAllParam{
 		UserId: c.GetUint("UserId"),
 	}
 
-	if lst, err := certbot.FetchAll(rq); err == nil {
+	if lst, err := certjob.FetchAll(rq); err == nil {
 		c.Set("Payload", gin.H{"Datasets": lst})
 	} else {
 		c.Set("Error", err)
@@ -27,12 +27,12 @@ func list(c *gin.Context) {
 
 func detail(c *gin.Context) {
 
-	rq := &certbot.FetchParam{
+	rq := &certjob.FetchParam{
 		Id:     cast.ToUint(c.Param("id")),
 		UserId: c.GetUint("UserId"),
 	}
 
-	if res, err := certbot.Fetch(rq); err == nil {
+	if res, err := certjob.Fetch(rq); err == nil {
 		c.Set("Payload", res)
 	} else {
 		c.Set("Error", err)
@@ -44,7 +44,7 @@ func detail(c *gin.Context) {
 
 func create(c *gin.Context) {
 
-	var rq *certbot.CreateParam
+	var rq *certjob.CreateParam
 
 	if err := c.ShouldBind(&rq); err != nil {
 		c.Set("Error", err)
@@ -53,7 +53,7 @@ func create(c *gin.Context) {
 
 	rq.UserId = c.GetUint("UserId")
 
-	if id, err := certbot.Create(rq); err == nil {
+	if id, err := certjob.Create(rq); err == nil {
 		c.Set("Message", "添加成功")
 		c.Set("Payload", gin.H{"Id": id})
 	} else {
@@ -66,7 +66,7 @@ func create(c *gin.Context) {
 
 func update(c *gin.Context) {
 
-	var rq *certbot.UpdateParam
+	var rq *certjob.UpdateParam
 
 	if err := c.ShouldBind(&rq); err != nil {
 		c.Set("Error", err)
@@ -75,7 +75,7 @@ func update(c *gin.Context) {
 
 	rq.UserId = c.GetUint("UserId")
 
-	if err := certbot.Update(rq); err == nil {
+	if err := certjob.Update(rq); err == nil {
 		c.Set("Message", "修改成功")
 	} else {
 		c.Set("Error", err)
@@ -87,12 +87,12 @@ func update(c *gin.Context) {
 
 func delete(c *gin.Context) {
 
-	rq := &certbot.DeleteParam{
+	rq := &certjob.DeleteParam{
 		Id:     cast.ToUint(c.Param("id")),
 		UserId: c.GetUint("UserId"),
 	}
 
-	if err := certbot.Delete(rq); err == nil {
+	if err := certjob.Delete(rq); err == nil {
 		c.Set("Message", "删除成功")
 	} else {
 		c.Set("Error", err)

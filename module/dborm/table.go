@@ -2,7 +2,7 @@ package dborm
 
 // 域名证书
 
-type Certbot struct {
+type Certjob struct {
 	Id        uint `gorm:"primaryKey"`
 	UserId    uint `gorm:"index"`
 	VendorId  uint
@@ -162,7 +162,7 @@ type Vendor struct {
 	SecretKey   string `json:"-"`
 	Provider    string
 	Description string
-	Certbots    []Certbot
+	Certjobs    []Certjob
 	Domains     []Domain
 	Machines    []Machine
 	CreatedAt   int64

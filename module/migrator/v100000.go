@@ -7,7 +7,7 @@ import (
 func v100000() error {
 
 	return dborm.Db.AutoMigrate(
-		&dborm.Certbot{},
+		&dborm.Certjob{},
 		&dborm.Config{},
 		&dborm.Cronjob{},
 		&dborm.Domain{},
