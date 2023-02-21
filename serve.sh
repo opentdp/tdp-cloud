@@ -9,4 +9,4 @@ export GO111MODULE=on
 ####################################################################
 
 go mod tidy
-go run main.go server -c tmp/server.yml
+go run main.go server -c var/server.yml

@@ -11,4 +11,4 @@ SET GO111MODULE=on
 CD /d %~dp0
 
 go mod tidy
-go run main.go server -c tmp/server.yml
+go run main.go server -c var/server.yml

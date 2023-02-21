@@ -6,8 +6,8 @@ server.db*
 # local env files
 __debug_*
 tests/.env
-font/*
-tmp/*
+front/*
+var/*
 /*.bat
 /*.yml
 
