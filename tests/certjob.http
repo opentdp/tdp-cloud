@@ -16,7 +16,8 @@ Content-Type: application/json
 {
     "VendorId": 1,
     "Email": "test@tdp.icu",
-    "Domain": "tdp.icu"
+    "Domain": "tdp.icu",
+    "CaType": "zerossl"
 }
 
 ### 修改计划
@@ -30,7 +31,8 @@ Content-Type: application/json
     "Id": 1,
     "VendorId": 1,
     "Email": "test@tdp.icu",
-    "Domain": "tdp.icu"
+    "Domain": "tdp.icu",
+    "CaType": "zerossl"
 }
 
 ### 删除计划
