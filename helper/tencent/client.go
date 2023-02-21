@@ -3,11 +3,11 @@ package tencent
 import (
 	"encoding/json"
 	"errors"
-	"os"
 	"regexp"
 	"strings"
 
 	"github.com/mitchellh/mapstructure"
+	"github.com/spf13/viper"
 
 	tc "github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/common"
 	te "github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/common/errors"
@@ -39,7 +39,7 @@ func newClient(rp *Params) (*th.CommonResponse, error) {
 	cpf := tp.NewClientProfile()
 
 	// 调试开关
-	cpf.Debug = os.Getenv("TDP_DEBUG") != ""
+	cpf.Debug = viper.GetBool("debug")
 
 	// 接口根域名
 	if rp.RootDomain == "" {

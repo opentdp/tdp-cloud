@@ -2,10 +2,10 @@ package dborm
 
 import (
 	"log"
-	"os"
 	"strings"
 
 	"github.com/glebarez/sqlite"
+	"github.com/spf13/viper"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 	"gorm.io/gorm/logger"
@@ -17,10 +17,10 @@ var Db *gorm.DB
 func Connect(dsn string) {
 
 	var err error
-
 	var logLevel = logger.Silent
-	if os.Getenv("TDP_DEBUG") == "" {
-		logLevel = logger.Error
+
+	if viper.GetBool("debug") {
+		logLevel = logger.Info
 	}
 
 	config := &gorm.Config{

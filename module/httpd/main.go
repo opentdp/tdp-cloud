@@ -4,16 +4,18 @@ import (
 	"embed"
 	"io/fs"
 	"net/http"
-	"os"
 
 	"github.com/gin-gonic/gin"
+	"github.com/spf13/viper"
 
 	"tdp-cloud/api"
 )
 
 func Start(addr string, efs *embed.FS) {
 
-	if os.Getenv("TDP_DEBUG") == "" {
+	if viper.GetBool("debug") {
+		gin.SetMode(gin.DebugMode)
+	} else {
 		gin.SetMode(gin.ReleaseMode)
 	}
 

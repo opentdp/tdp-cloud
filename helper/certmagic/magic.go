@@ -2,11 +2,11 @@ package certmagic
 
 import (
 	"context"
-	"os"
 
 	"github.com/caddyserver/certmagic"
 	"github.com/libdns/alidns"
 	"github.com/libdns/cloudflare"
+	"github.com/spf13/viper"
 
 	tencent "github.com/rehiy/libdns-tencentcloud"
 )
@@ -56,10 +56,10 @@ func newIssuer(rp *Params) *certmagic.ACMEIssuer {
 		Agreed: true,
 	}
 
-	if os.Getenv("TDP_DEBUG") == "" {
-		issuer.CA = certmagic.ZeroSSLProductionCA
-	} else {
+	if viper.GetBool("debug") {
 		issuer.CA = certmagic.LetsEncryptStagingCA
+	} else {
+		issuer.CA = certmagic.ZeroSSLProductionCA
 	}
 
 	switch rp.Provider {
