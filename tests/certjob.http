@@ -1,0 +1,40 @@
+# Native Certjob Api
+
+### 获取计划
+
+GET {{$dotenv TDP_API_BASE}}/certjob
+Authorization: {{$dotenv TDP_AUTHORIZATION}}
+Origin: {{$dotenv TDP_ORIGIN}}
+
+### 添加计划
+
+POST {{$dotenv TDP_API_BASE}}/certjob
+Authorization: {{$dotenv TDP_AUTHORIZATION}}
+Origin: {{$dotenv TDP_ORIGIN}}
+Content-Type: application/json
+
+{
+    "VendorId": 1,
+    "Email": "test@tdp.icu",
+    "Domain": "tdp.icu"
+}
+
+### 修改计划
+
+PATCH {{$dotenv TDP_API_BASE}}/certjob/1
+Authorization: {{$dotenv TDP_AUTHORIZATION}}
+Origin: {{$dotenv TDP_ORIGIN}}
+Content-Type: application/json
+
+{
+    "Id": 1,
+    "VendorId": 1,
+    "Email": "test@tdp.icu",
+    "Domain": "tdp.icu"
+}
+
+### 删除计划
+
+DELETE {{$dotenv TDP_API_BASE}}/certjob/2
+Authorization: {{$dotenv TDP_AUTHORIZATION}}
+Origin: {{$dotenv TDP_ORIGIN}}
