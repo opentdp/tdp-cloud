@@ -8,6 +8,9 @@ import (
 	"tdp-cloud/module/dborm"
 	"tdp-cloud/module/dborm/certbot"
 	"tdp-cloud/module/dborm/vendor"
+
+	"github.com/spf13/cast"
+	"github.com/spf13/viper"
 )
 
 func Daemon() {
@@ -35,13 +38,15 @@ func NewTask(bot *dborm.Certbot) error {
 		return err
 	}
 
+	dir := viper.GetString("dataset.dir") + "/cert-" + cast.ToString(bot.UserId)
+
 	return certmagic.Async(&certmagic.Params{
 		Domain:    strings.Split(bot.Domain, ","),
 		Email:     bot.Email,
 		Provider:  vendor.Provider,
 		SecretId:  vendor.SecretId,
 		SecretKey: vendor.SecretKey,
-		StorePath: "./data/certs/" + bot.Email,
+		StorePath: dir,
 	})
 
 }
