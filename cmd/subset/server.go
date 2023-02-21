@@ -11,7 +11,7 @@ var serverAct string
 
 var serverCmd = &cobra.Command{
 	Use:   "server",
-	Short: "启动服务端",
+	Short: "服务端管理",
 	Run: func(cmd *cobra.Command, args []string) {
 		service.Control("server", serverAct)
 	},
@@ -19,7 +19,7 @@ var serverCmd = &cobra.Command{
 
 func WithServer() *cobra.Command {
 
-	serverCmd.Flags().BoolP("help", "p", false, "查看帮助")
+	serverCmd.Flags().BoolP("help", "h", false, "查看帮助")
 	serverCmd.Flags().MarkHidden("help")
 
 	serverCmd.Flags().StringVarP(&serverAct, "service", "s", "", "管理系统服务")

@@ -11,7 +11,7 @@ var workerAct string
 
 var workerCmd = &cobra.Command{
 	Use:   "worker",
-	Short: "注册子节点",
+	Short: "子节点管理",
 	Run: func(cmd *cobra.Command, args []string) {
 		service.Control("worker", workerAct)
 	},
@@ -19,7 +19,7 @@ var workerCmd = &cobra.Command{
 
 func WithWorker() *cobra.Command {
 
-	workerCmd.Flags().BoolP("help", "p", false, "查看帮助")
+	workerCmd.Flags().BoolP("help", "h", false, "查看帮助")
 	workerCmd.Flags().MarkHidden("help")
 
 	workerCmd.Flags().StringVarP(&workerAct, "service", "s", "", "管理系统服务")

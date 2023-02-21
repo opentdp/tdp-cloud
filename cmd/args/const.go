@@ -8,5 +8,5 @@ var Efs *embed.FS
 
 var ConfigFile string
 
-var Version = "0.5.1"
-var BuildVersion = "202301"
+var Version = "0.8.0"
+var BuildVersion = "202302"
