@@ -8,6 +8,7 @@ import (
 	"github.com/spf13/viper"
 
 	"tdp-cloud/cmd/args"
+	"tdp-cloud/module/certbot"
 	"tdp-cloud/module/dborm"
 	"tdp-cloud/module/httpd"
 	"tdp-cloud/module/migrator"
@@ -47,6 +48,9 @@ func (p *program) run() {
 
 	// 实施自动迁移
 	migrator.Deploy()
+
+	// 启动证书服务
+	certbot.Daemon()
 
 	// 启动HTTP服务
 	httpd.Start(listen, args.Efs)

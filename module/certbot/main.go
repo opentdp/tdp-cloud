@@ -1,4 +1,4 @@
-package certjob
+package certbot
 
 import (
 	"log"
@@ -38,7 +38,7 @@ func NewTask(job *dborm.Certjob) error {
 		return err
 	}
 
-	dir := viper.GetString("dataset.dir") + "/cert-" + cast.ToString(job.UserId)
+	dir := viper.GetString("dataset.dir") + "/certbot-" + cast.ToString(job.UserId)
 
 	return certmagic.Async(&certmagic.Params{
 		Domain:    strings.Split(job.Domain, ","),
