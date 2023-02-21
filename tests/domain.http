@@ -1,0 +1,13 @@
+# Native Domain Api
+
+### 获取域名
+
+GET {{$dotenv TDP_API_BASE}}/domain
+Authorization: {{$dotenv TDP_AUTHORIZATION}}
+Origin: {{$dotenv TDP_ORIGIN}}
+
+### 删除域名
+
+DELETE {{$dotenv TDP_API_BASE}}/domain/2
+Authorization: {{$dotenv TDP_AUTHORIZATION}}
+Origin: {{$dotenv TDP_ORIGIN}}

@@ -1,0 +1,13 @@
+# Native Machine Api
+
+### 获取主机
+
+GET {{$dotenv TDP_API_BASE}}/machine
+Authorization: {{$dotenv TDP_AUTHORIZATION}}
+Origin: {{$dotenv TDP_ORIGIN}}
+
+### 删除主机
+
+DELETE {{$dotenv TDP_API_BASE}}/machine/2
+Authorization: {{$dotenv TDP_AUTHORIZATION}}
+Origin: {{$dotenv TDP_ORIGIN}}
