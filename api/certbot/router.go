@@ -13,11 +13,11 @@ func Router(api *gin.RouterGroup) {
 	rg.Use(midware.AuthGuard())
 
 	{
-		rg.GET("/crontab", list)
-		rg.POST("/crontab", create)
-		rg.GET("/crontab/:id", detail)
-		rg.PATCH("/crontab/:id", update)
-		rg.DELETE("/crontab/:id", delete)
+		rg.GET("/certbot", list)
+		rg.POST("/certbot", create)
+		rg.GET("/certbot/:id", detail)
+		rg.PATCH("/certbot/:id", update)
+		rg.DELETE("/certbot/:id", delete)
 	}
 
 }
