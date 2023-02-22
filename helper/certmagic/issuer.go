@@ -34,7 +34,7 @@ func newIssuer(rp *Params) *certmagic.ACMEIssuer {
 	}
 
 	if viper.GetBool("debug") {
-		issuer.CA = issuer.TestCA
+		issuer.CA = issuer.TestCA //调试模式强制重写
 	}
 
 	switch rp.Provider {
