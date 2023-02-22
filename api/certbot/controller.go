@@ -111,8 +111,9 @@ func delete(c *gin.Context) {
 		return
 	}
 
+	certbot.UndoById(rq.Id)
+
 	if err := certjob.Delete(rq); err == nil {
-		certbot.UndoById(rq.Id)
 		c.Set("Message", "删除成功")
 	} else {
 		c.Set("Error", err)

@@ -111,8 +111,9 @@ func delete(c *gin.Context) {
 		return
 	}
 
+	crontab.UndoById(rq.Id)
+
 	if err := cronjob.Delete(rq); err == nil {
-		crontab.UndoById(rq.Id)
 		c.Set("Message", "删除成功")
 	} else {
 		c.Set("Error", err)
