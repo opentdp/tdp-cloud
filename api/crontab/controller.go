@@ -1,22 +1,22 @@
-package certjob
+package crontab
 
 import (
 	"github.com/gin-gonic/gin"
 	"github.com/spf13/cast"
 
-	"tdp-cloud/module/certbot"
-	"tdp-cloud/module/dborm/certjob"
+	"tdp-cloud/module/crontab"
+	"tdp-cloud/module/dborm/cronjob"
 )
 
 // 计划列表
 
 func list(c *gin.Context) {
 
-	rq := &certjob.FetchAllParam{
+	rq := &cronjob.FetchAllParam{
 		UserId: c.GetUint("UserId"),
 	}
 
-	if lst, err := certjob.FetchAll(rq); err == nil {
+	if lst, err := cronjob.FetchAll(rq); err == nil {
 		c.Set("Payload", gin.H{"Datasets": lst})
 	} else {
 		c.Set("Error", err)
@@ -28,7 +28,7 @@ func list(c *gin.Context) {
 
 func detail(c *gin.Context) {
 
-	rq := &certjob.FetchParam{
+	rq := &cronjob.FetchParam{
 		Id:     cast.ToUint(c.Param("id")),
 		UserId: c.GetUint("UserId"),
 	}
@@ -38,7 +38,7 @@ func detail(c *gin.Context) {
 		return
 	}
 
-	if res, err := certjob.Fetch(rq); err == nil {
+	if res, err := cronjob.Fetch(rq); err == nil {
 		c.Set("Payload", res)
 	} else {
 		c.Set("Error", err)
@@ -50,7 +50,7 @@ func detail(c *gin.Context) {
 
 func create(c *gin.Context) {
 
-	var rq *certjob.CreateParam
+	var rq *cronjob.CreateParam
 
 	if err := c.ShouldBind(&rq); err != nil {
 		c.Set("Error", err)
@@ -59,8 +59,8 @@ func create(c *gin.Context) {
 
 	rq.UserId = c.GetUint("UserId")
 
-	if id, err := certjob.Create(rq); err == nil {
-		certbot.NewById(id)
+	if id, err := cronjob.Create(rq); err == nil {
+		crontab.NewById(id)
 		c.Set("Message", "添加成功")
 		c.Set("Payload", gin.H{"Id": id})
 	} else {
@@ -73,7 +73,7 @@ func create(c *gin.Context) {
 
 func update(c *gin.Context) {
 
-	var rq *certjob.UpdateParam
+	var rq *cronjob.UpdateParam
 
 	if err := c.ShouldBind(&rq); err != nil {
 		c.Set("Error", err)
@@ -88,8 +88,8 @@ func update(c *gin.Context) {
 		return
 	}
 
-	if err := certjob.Update(rq); err == nil {
-		certbot.RedoById(rq.Id)
+	if err := cronjob.Update(rq); err == nil {
+		crontab.RedoById(rq.Id)
 		c.Set("Message", "修改成功")
 	} else {
 		c.Set("Error", err)
@@ -101,7 +101,7 @@ func update(c *gin.Context) {
 
 func delete(c *gin.Context) {
 
-	rq := &certjob.DeleteParam{
+	rq := &cronjob.DeleteParam{
 		Id:     cast.ToUint(c.Param("id")),
 		UserId: c.GetUint("UserId"),
 	}
@@ -111,8 +111,8 @@ func delete(c *gin.Context) {
 		return
 	}
 
-	if err := certjob.Delete(rq); err == nil {
-		certbot.UndoById(rq.Id)
+	if err := cronjob.Delete(rq); err == nil {
+		crontab.UndoById(rq.Id)
 		c.Set("Message", "删除成功")
 	} else {
 		c.Set("Error", err)
