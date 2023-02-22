@@ -31,6 +31,11 @@ func detail(c *gin.Context) {
 		Id: cast.ToUint(c.Param("id")),
 	}
 
+	if rq.Id == 0 {
+		c.Set("Error", "参数错误")
+		return
+	}
+
 	if res, err := config.Fetch(rq); err == nil {
 		c.Set("Payload", res)
 	} else {
@@ -86,6 +91,11 @@ func update(c *gin.Context) {
 
 	rq.Id = cast.ToUint(c.Param("id"))
 
+	if rq.Id == 0 {
+		c.Set("Error", "参数错误")
+		return
+	}
+
 	if err := config.Update(rq); err == nil {
 		c.Set("Message", "修改成功")
 	} else {
@@ -100,6 +110,11 @@ func delete(c *gin.Context) {
 
 	rq := &config.DeleteParam{
 		Id: cast.ToUint(c.Param("id")),
+	}
+
+	if rq.Id == 0 {
+		c.Set("Error", "参数错误")
+		return
 	}
 
 	if err := config.Delete(rq); err == nil {

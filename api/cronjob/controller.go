@@ -33,6 +33,11 @@ func detail(c *gin.Context) {
 		UserId: c.GetUint("UserId"),
 	}
 
+	if rq.Id == 0 {
+		c.Set("Error", "参数错误")
+		return
+	}
+
 	if res, err := cronjob.Fetch(rq); err == nil {
 		c.Set("Payload", res)
 	} else {
@@ -78,6 +83,11 @@ func update(c *gin.Context) {
 	rq.Id = cast.ToUint(c.Param("id"))
 	rq.UserId = c.GetUint("UserId")
 
+	if rq.Id == 0 {
+		c.Set("Error", "参数错误")
+		return
+	}
+
 	if err := cronjob.Update(rq); err == nil {
 		crontab.RedoById(rq.Id)
 		c.Set("Message", "修改成功")
@@ -94,6 +104,11 @@ func delete(c *gin.Context) {
 	rq := &cronjob.DeleteParam{
 		Id:     cast.ToUint(c.Param("id")),
 		UserId: c.GetUint("UserId"),
+	}
+
+	if rq.Id == 0 {
+		c.Set("Error", "参数错误")
+		return
 	}
 
 	if err := cronjob.Delete(rq); err == nil {
