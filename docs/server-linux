@@ -4,6 +4,33 @@
 set -e
 set -o noglob
 
+# --- system check ---
+
+case "$(uname -s)" in
+  Darwin)
+    TDP_PLATFORM=darwin
+    ;;
+  Linux)
+    TDP_PLATFORM=linux
+    ;;
+  *)
+    echo "Unknown, unsupported platform" >&2
+    exit 2
+esac
+
+case "$(uname -m)" in
+  x86_64*|i?86_64*|amd64*)
+    TDP_ARCHITECTURE=amd64
+    ;;
+  aarch64*|arm64*)
+    TDP_ARCHITECTURE=arm64
+    ;;
+  *)
+    echo "Unknown, unsupported architecture" >&2
+    exit 3
+    ;;
+esac
+
 # --- global env ---
 
 if [ -z "$TDP_EXEC" ]; then
@@ -11,12 +38,14 @@ if [ -z "$TDP_EXEC" ]; then
 fi
 
 if [ -z "$TDP_PACKAGE" ]; then
-    TDP_PACKAGE=http://tdp.icu/build/tdp-cloud-linux-amd64.gz
+    TDP_PACKAGE=http://tdp.icu/build/tdp-cloud-${TDP_PLATFORM}-${TDP_ARCHITECTURE}.gz
 fi
 
-# --- download binary ---
+# --- set download binary ---
 
 download() {
+
+    rm -rf $TDP_EXEC
 
     echo "[TDP] Download ..."
 
