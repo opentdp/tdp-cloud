@@ -7,11 +7,11 @@ set -o noglob
 # --- system check ---
 
 case "$(uname -s)" in
-  Darwin)
-    TDP_PLATFORM=darwin
-    ;;
   Linux)
     TDP_PLATFORM=linux
+    ;;
+  Darwin)
+    TDP_PLATFORM=darwin
     ;;
   *)
     echo "Unknown, unsupported platform" >&2
