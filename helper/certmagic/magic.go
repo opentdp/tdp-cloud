@@ -19,7 +19,7 @@ type Certificate struct {
 	Names       []string
 	OCSPStaple  []byte
 	Certificate [][]byte
-	PrivateKey  any
+	PrivateKey  []byte
 }
 
 func Manage(rq *Params) error {
@@ -91,11 +91,13 @@ func CertData(domain string) (*Certificate, error) {
 		return cert, err
 	}
 
+	pk, err := certmagic.PEMEncodePrivateKey(crt.Certificate.PrivateKey)
+
 	cert.Names = crt.Names
 	cert.OCSPStaple = crt.Certificate.OCSPStaple
-	cert.PrivateKey = crt.Certificate.PrivateKey
 	cert.Certificate = crt.Certificate.Certificate
+	cert.PrivateKey = pk
 
-	return cert, nil
+	return cert, err
 
 }
