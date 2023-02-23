@@ -21,9 +21,10 @@ type Params struct {
 func newIssuer(rp *Params) *certmagic.ACMEIssuer {
 
 	issuer := &certmagic.ACMEIssuer{
-		TestCA: certmagic.LetsEncryptStagingCA,
-		Email:  rp.Email,
-		Agreed: true,
+		Agreed:                  true,
+		DisableHTTPChallenge:    true,
+		DisableTLSALPNChallenge: true,
+		Email:                   rp.Email,
 	}
 
 	switch rp.CaType {
@@ -33,8 +34,8 @@ func newIssuer(rp *Params) *certmagic.ACMEIssuer {
 		issuer.CA = certmagic.LetsEncryptProductionCA
 	}
 
-	if viper.GetBool("debug") {
-		issuer.CA = issuer.TestCA //调试模式强制重写
+	if viper.GetBool("debug") { //调试模式强制重写
+		issuer.CA = certmagic.LetsEncryptStagingCA
 	}
 
 	switch rp.Provider {

@@ -2,6 +2,7 @@ package certmagic
 
 import (
 	"context"
+	"errors"
 	"strings"
 
 	"github.com/caddyserver/certmagic"
@@ -29,7 +30,7 @@ func Manage(rp *Params) error {
 	dMagic[rp.Domain] = magic
 
 	domains := strings.Split(rp.Domain, ",")
-	return magic.ManageAsync(context.TODO(), domains)
+	return magic.ManageAsync(context.Background(), domains)
 
 }
 
@@ -42,6 +43,16 @@ func Unmanage(domain string) {
 		delete(sMagic, domain)
 		magic.Unmanage(domains)
 	}
+
+}
+
+func Certificate(domain string) (certmagic.Certificate, error) {
+
+	if magic, ok := dMagic[domain]; ok {
+		return magic.CacheManagedCertificate(context.Background(), domain)
+	}
+
+	return certmagic.Certificate{}, errors.New("域名不存在")
 
 }
 
