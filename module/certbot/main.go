@@ -23,34 +23,9 @@ func Daemon() {
 
 }
 
-func NewById(id uint) {
+func CertData(domain string) (*certmagic.Certificate, error) {
 
-	job, err := certjob.Fetch(&certjob.FetchParam{Id: id})
-
-	if err == nil && job.Id > 0 {
-		NewByJob(job)
-	}
-
-}
-
-func UndoById(id uint) {
-
-	job, err := certjob.Fetch(&certjob.FetchParam{Id: id})
-
-	if err == nil && job.Id > 0 {
-		certmagic.Unmanage(job.Domain)
-	}
-
-}
-
-func RedoById(id uint) {
-
-	job, err := certjob.Fetch(&certjob.FetchParam{Id: id})
-
-	if err == nil && job.Id > 0 {
-		certmagic.Unmanage(job.Domain)
-		NewByJob(job)
-	}
+	return certmagic.CertData(domain)
 
 }
 

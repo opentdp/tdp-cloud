@@ -14,6 +14,13 @@ var (
 	dMagic = map[string]*certmagic.Config{}
 )
 
+type Certificate struct {
+	Names       []string
+	OCSPStaple  []byte
+	Certificate [][]byte
+	PrivateKey  any
+}
+
 func Manage(rq *Params) error {
 
 	magic, ok := sMagic[rq.SecretKey]
@@ -23,7 +30,7 @@ func Manage(rq *Params) error {
 		sMagic[rq.SecretKey] = magic
 		// 创建发行人信息
 		magic.Issuers = []certmagic.Issuer{
-			certmagic.NewACMEIssuer(magic, *newIssuer(rp)),
+			certmagic.NewACMEIssuer(magic, *newIssuer(rq)),
 		}
 	}
 
@@ -46,16 +53,6 @@ func Unmanage(domain string) {
 
 }
 
-func Certificate(domain string) (certmagic.Certificate, error) {
-
-	if magic, ok := dMagic[domain]; ok {
-		return magic.CacheManagedCertificate(context.Background(), domain)
-	}
-
-	return certmagic.Certificate{}, errors.New("域名不存在")
-
-}
-
 func CreateMagic() *certmagic.Config {
 
 	config := certmagic.Config{
@@ -72,5 +69,30 @@ func CreateMagic() *certmagic.Config {
 	})
 
 	return certmagic.New(cache, config)
+
+}
+
+func CertData(domain string) (*Certificate, error) {
+
+	cert := &Certificate{}
+
+	magic, ok := dMagic[domain]
+
+	if !ok {
+		return cert, errors.New("域名不存在")
+	}
+
+	crt, err := magic.CacheManagedCertificate(context.Background(), domain)
+
+	if err != nil {
+		return cert, err
+	}
+
+	cert.Names = crt.Names
+	cert.OCSPStaple = crt.Certificate.OCSPStaple
+	cert.PrivateKey = crt.Certificate.PrivateKey
+	cert.Certificate = crt.Certificate.Certificate
+
+	return cert, nil
 
 }

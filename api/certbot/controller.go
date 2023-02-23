@@ -39,7 +39,8 @@ func detail(c *gin.Context) {
 	}
 
 	if res, err := certjob.Fetch(rq); err == nil {
-		c.Set("Payload", res)
+		crt, _ := certbot.CertData(res.Domain)
+		c.Set("Payload", crt)
 	} else {
 		c.Set("Error", err)
 	}
@@ -60,9 +61,9 @@ func create(c *gin.Context) {
 	rq.UserId = c.GetUint("UserId")
 
 	if id, err := certjob.Create(rq); err == nil {
-		certbot.NewById(id)
 		c.Set("Message", "添加成功")
 		c.Set("Payload", gin.H{"Id": id})
+		certbot.NewById(rq.UserId, id)
 	} else {
 		c.Set("Error", err)
 	}
@@ -89,8 +90,8 @@ func update(c *gin.Context) {
 	}
 
 	if err := certjob.Update(rq); err == nil {
-		certbot.RedoById(rq.Id)
 		c.Set("Message", "修改成功")
+		certbot.RedoById(rq.UserId, rq.Id)
 	} else {
 		c.Set("Error", err)
 	}
@@ -111,7 +112,7 @@ func delete(c *gin.Context) {
 		return
 	}
 
-	certbot.UndoById(rq.Id)
+	certbot.UndoById(rq.UserId, rq.Id)
 
 	if err := certjob.Delete(rq); err == nil {
 		c.Set("Message", "删除成功")
