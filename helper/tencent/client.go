@@ -15,9 +15,9 @@ import (
 	tp "github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/common/profile"
 )
 
-func Request(rp *Params) (any, error) {
+func Request(rq *Params) (any, error) {
 
-	resp, err := newClient(rp)
+	resp, err := newClient(rq)
 
 	if err != nil {
 		return nil, getSDKError(err)
@@ -34,7 +34,7 @@ func Request(rp *Params) (any, error) {
 
 }
 
-func newClient(rp *Params) (*th.CommonResponse, error) {
+func newClient(rq *Params) (*th.CommonResponse, error) {
 
 	cpf := tp.NewClientProfile()
 
@@ -42,8 +42,8 @@ func newClient(rp *Params) (*th.CommonResponse, error) {
 	cpf.Debug = viper.GetBool("debug")
 
 	// 接口根域名
-	if rp.RootDomain == "" {
-		rp.RootDomain = "tencentcloudapi.com"
+	if rq.RootDomain == "" {
+		rq.RootDomain = "tencentcloudapi.com"
 	}
 
 	// 网络错误重试
@@ -54,25 +54,25 @@ func newClient(rp *Params) (*th.CommonResponse, error) {
 
 	// 启用地域容灾
 	cpf.DisableRegionBreaker = false
-	cpf.BackupEndpoint = "ap-hongkong." + rp.RootDomain
+	cpf.BackupEndpoint = "ap-hongkong." + rq.RootDomain
 
 	// 按地域设置接口
-	if rp.Endpoint != "" {
-		cpf.HttpProfile.Endpoint = rp.Service + "." + rp.Endpoint + "." + rp.RootDomain
-	} else if rp.Region != "" {
-		cpf.HttpProfile.Endpoint = rp.Service + "." + rp.Region + "." + rp.RootDomain
+	if rq.Endpoint != "" {
+		cpf.HttpProfile.Endpoint = rq.Service + "." + rq.Endpoint + "." + rq.RootDomain
+	} else if rq.Region != "" {
+		cpf.HttpProfile.Endpoint = rq.Service + "." + rq.Region + "." + rq.RootDomain
 	} else {
-		cpf.HttpProfile.RootDomain = rp.RootDomain
+		cpf.HttpProfile.RootDomain = rq.RootDomain
 	}
 
 	// 初始化客户端
-	cred := tc.NewCredential(rp.SecretId, rp.SecretKey)
-	client := tc.NewCommonClient(cred, rp.Region, cpf)
+	cred := tc.NewCredential(rq.SecretId, rq.SecretKey)
+	client := tc.NewCommonClient(cred, rq.Region, cpf)
 
 	// 构造请求信息
-	request := th.NewCommonRequest(rp.Service, rp.Version, rp.Action)
-	if rp.Payload != nil {
-		request.SetActionParameters(rp.Payload)
+	request := th.NewCommonRequest(rq.Service, rq.Version, rq.Action)
+	if rq.Payload != nil {
+		request.SetActionParameters(rq.Payload)
 	}
 
 	// 发起请求

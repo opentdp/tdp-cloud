@@ -12,15 +12,15 @@ import (
 	at "github.com/alibabacloud-go/tea/tea"
 )
 
-func Request(rp *Params) (any, error) {
+func Request(rq *Params) (any, error) {
 
-	if ep, err := solveEndpoint(rp); ep != "" {
-		rp.Endpoint = ep
+	if ep, err := solveEndpoint(rq); ep != "" {
+		rq.Endpoint = ep
 	} else {
 		return nil, err
 	}
 
-	resp, err := newClient(rp)
+	resp, err := newClient(rq)
 
 	if err != nil {
 		return nil, getSDKError(err)
@@ -30,18 +30,18 @@ func Request(rp *Params) (any, error) {
 
 }
 
-func newClient(rp *Params) (map[string]any, error) {
+func newClient(rq *Params) (map[string]any, error) {
 
 	config := &ac.Config{
-		AccessKeyId:     &rp.SecretId,
-		AccessKeySecret: &rp.SecretKey,
-		RegionId:        &rp.RegionId,
-		Endpoint:        &rp.Endpoint,
+		AccessKeyId:     &rq.SecretId,
+		AccessKeySecret: &rq.SecretKey,
+		RegionId:        &rq.RegionId,
+		Endpoint:        &rq.Endpoint,
 	}
 
 	params := &ac.Params{
-		Action:      at.String(rp.Action),
-		Version:     at.String(rp.Version),
+		Action:      at.String(rq.Action),
+		Version:     at.String(rq.Version),
 		Protocol:    at.String("HTTPS"),
 		Pathname:    at.String("/"),
 		Method:      at.String("POST"),
@@ -52,8 +52,8 @@ func newClient(rp *Params) (map[string]any, error) {
 	}
 
 	request := &ac.OpenApiRequest{
-		Query: au.Query(rp.Query),
-		Body:  rp.Payload,
+		Query: au.Query(rq.Query),
+		Body:  rq.Payload,
 	}
 
 	runtime := &as.RuntimeOptions{}

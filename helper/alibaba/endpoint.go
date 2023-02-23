@@ -9,15 +9,15 @@ import (
 
 var endpointData = map[string]string{}
 
-func solveEndpoint(rp *Params) (string, error) {
+func solveEndpoint(rq *Params) (string, error) {
 
-	if rp.RegionId == "" {
-		return rp.Service + ".aliyuncs.com", nil
+	if rq.RegionId == "" {
+		return rq.Service + ".aliyuncs.com", nil
 	}
 
 	// 从缓存返回
 
-	key := rp.RegionId + rp.Service
+	key := rq.RegionId + rq.Service
 
 	if endpointData[key] != "" {
 		return endpointData[key], nil
@@ -25,7 +25,7 @@ func solveEndpoint(rp *Params) (string, error) {
 
 	// 从服务器获取
 
-	if ep, err := requestEndpoint(rp); err == nil {
+	if ep, err := requestEndpoint(rq); err == nil {
 		endpointData[key] = ep.Endpoint
 	} else {
 		return "", err
@@ -41,20 +41,20 @@ func solveEndpoint(rp *Params) (string, error) {
 
 }
 
-func requestEndpoint(rp *Params) (*EndpointItem, error) {
+func requestEndpoint(rq *Params) (*EndpointItem, error) {
 
 	item := &EndpointItem{}
 
 	// 从接口请求数据
 
 	resp, err := newClient(&Params{
-		SecretId:  rp.SecretId,
-		SecretKey: rp.SecretKey,
+		SecretId:  rq.SecretId,
+		SecretKey: rq.SecretKey,
 		Version:   "2015-06-12",
 		Action:    "DescribeEndpoints",
 		Query: map[string]string{
-			"Id":          rp.RegionId,
-			"ServiceCode": strings.ToLower(rp.Service),
+			"Id":          rq.RegionId,
+			"ServiceCode": strings.ToLower(rq.Service),
 			"Type":        "openAPI",
 		},
 		Endpoint: "location-readonly.aliyuncs.com",

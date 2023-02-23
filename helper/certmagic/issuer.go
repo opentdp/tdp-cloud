@@ -18,16 +18,16 @@ type Params struct {
 	SecretKey string
 }
 
-func newIssuer(rp *Params) *certmagic.ACMEIssuer {
+func newIssuer(rq *Params) *certmagic.ACMEIssuer {
 
 	issuer := &certmagic.ACMEIssuer{
 		Agreed:                  true,
 		DisableHTTPChallenge:    true,
 		DisableTLSALPNChallenge: true,
-		Email:                   rp.Email,
+		Email:                   rq.Email,
 	}
 
-	switch rp.CaType {
+	switch rq.CaType {
 	case "zerossl":
 		issuer.CA = certmagic.ZeroSSLProductionCA
 	default:
@@ -38,25 +38,25 @@ func newIssuer(rp *Params) *certmagic.ACMEIssuer {
 		issuer.CA = certmagic.LetsEncryptStagingCA
 	}
 
-	switch rp.Provider {
+	switch rq.Provider {
 	case "alibaba":
 		issuer.DNS01Solver = &certmagic.DNS01Solver{
 			DNSProvider: &alidns.Provider{
-				AccKeyID:     rp.SecretId,
-				AccKeySecret: rp.SecretKey,
+				AccKeyID:     rq.SecretId,
+				AccKeySecret: rq.SecretKey,
 			},
 		}
 	case "cloudflare":
 		issuer.DNS01Solver = &certmagic.DNS01Solver{
 			DNSProvider: &cloudflare.Provider{
-				APIToken: rp.SecretKey,
+				APIToken: rq.SecretKey,
 			},
 		}
 	case "tencent":
 		issuer.DNS01Solver = &certmagic.DNS01Solver{
 			DNSProvider: &tencent.Provider{
-				SecretId:  rp.SecretId,
-				SecretKey: rp.SecretKey,
+				SecretId:  rq.SecretId,
+				SecretKey: rq.SecretKey,
 			},
 		}
 	}

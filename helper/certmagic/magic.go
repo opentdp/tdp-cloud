@@ -14,22 +14,22 @@ var (
 	dMagic = map[string]*certmagic.Config{}
 )
 
-func Manage(rp *Params) error {
+func Manage(rq *Params) error {
 
-	magic, ok := sMagic[rp.SecretKey]
+	magic, ok := sMagic[rq.SecretKey]
 
 	if !ok {
 		magic = CreateMagic()
-		sMagic[rp.SecretKey] = magic
+		sMagic[rq.SecretKey] = magic
 		// 创建发行人信息
 		magic.Issuers = []certmagic.Issuer{
 			certmagic.NewACMEIssuer(magic, *newIssuer(rp)),
 		}
 	}
 
-	dMagic[rp.Domain] = magic
+	dMagic[rq.Domain] = magic
 
-	domains := strings.Split(rp.Domain, ",")
+	domains := strings.Split(rq.Domain, ",")
 	return magic.ManageAsync(context.Background(), domains)
 
 }
