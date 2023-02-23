@@ -8,16 +8,25 @@ import (
 	"github.com/spf13/viper"
 )
 
-var magic *certmagic.Config
+var (
+	sMagic = map[string]*certmagic.Config{}
+	dMagic = map[string]*certmagic.Config{}
+)
 
 func Manage(rp *Params) error {
 
-	if magic == nil {
+	magic, ok := sMagic[rp.SecretKey]
+
+	if !ok {
 		magic = CreateMagic()
+		sMagic[rp.SecretKey] = magic
+		// 创建发行人信息
+		magic.Issuers = []certmagic.Issuer{
+			certmagic.NewACMEIssuer(magic, *newIssuer(rp)),
+		}
 	}
 
-	issuer := certmagic.NewACMEIssuer(magic, *newIssuer(rp))
-	magic.Issuers = append(magic.Issuers, issuer)
+	dMagic[rp.Domain] = magic
 
 	domains := strings.Split(rp.Domain, ",")
 	return magic.ManageAsync(context.TODO(), domains)
@@ -26,9 +35,10 @@ func Manage(rp *Params) error {
 
 func Unmanage(domain string) {
 
+	magic, ok := dMagic[domain]
 	domains := strings.Split(domain, ",")
 
-	if magic != nil {
+	if ok {
 		magic.Unmanage(domains)
 	}
 
