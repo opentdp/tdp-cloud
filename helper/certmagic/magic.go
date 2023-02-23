@@ -39,6 +39,7 @@ func Unmanage(domain string) {
 	domains := strings.Split(domain, ",")
 
 	if ok {
+		delete(sMagic, domain)
 		magic.Unmanage(domains)
 	}
 
