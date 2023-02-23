@@ -4,6 +4,7 @@ import (
 	"context"
 	"errors"
 	"strings"
+	"tdp-cloud/helper/strutil"
 
 	"github.com/caddyserver/certmagic"
 	"github.com/spf13/viper"
@@ -23,15 +24,17 @@ type Certificate struct {
 
 func Manage(rq *Params) error {
 
-	magic, ok := sMagic[rq.SecretKey]
+	skey := strutil.Md5(rq.Email + rq.SecretKey + rq.CaType)
+
+	magic, ok := sMagic[skey]
 
 	if !ok {
 		magic = CreateMagic()
-		sMagic[rq.SecretKey] = magic
-		// 创建发行人信息
 		magic.Issuers = []certmagic.Issuer{
 			certmagic.NewACMEIssuer(magic, *newIssuer(rq)),
 		}
+		// 写入缓存
+		sMagic[skey] = magic
 	}
 
 	dMagic[rq.Domain] = magic
@@ -47,8 +50,8 @@ func Unmanage(domain string) {
 	domains := strings.Split(domain, ",")
 
 	if ok {
-		delete(sMagic, domain)
 		magic.Unmanage(domains)
+		delete(dMagic, domain)
 	}
 
 }
