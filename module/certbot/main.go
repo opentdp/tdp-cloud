@@ -1,9 +1,8 @@
 package certbot
 
 import (
-	"log"
-
 	"tdp-cloud/helper/certmagic"
+	"tdp-cloud/helper/logman"
 	"tdp-cloud/module/dborm"
 	"tdp-cloud/module/dborm/certjob"
 	"tdp-cloud/module/dborm/vendor"
@@ -36,7 +35,7 @@ func NewByJob(job *dborm.Certjob) error {
 	})
 
 	if err != nil || vendor.Id == 0 {
-		log.Println("Certjob Ignore Domain:", job.Domain)
+		logman.Info("Certjob Ignore Domain:", job.Domain)
 		return err
 	}
 

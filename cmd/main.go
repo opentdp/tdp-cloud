@@ -8,11 +8,11 @@ import (
 
 func Execute() {
 
-	rootCmd.AddCommand(
+	rcmd.AddCommand(
 		subset.WithServer(), subset.WithWorker(),
 	)
 
-	if err := rootCmd.Execute(); err != nil {
+	if err := rcmd.Execute(); err != nil {
 		os.Exit(1)
 	}
 

@@ -1,15 +1,15 @@
 package worker
 
 import (
-	"log"
 	"time"
 
+	"tdp-cloud/helper/logman"
 	"tdp-cloud/helper/psutil"
 )
 
 func (pod *SendPod) Ping() (uint, error) {
 
-	log.Println("Ping:send", "SummaryStat")
+	logman.Info("Ping:send", "SummaryStat")
 
 	rq := &SocketData{
 		Method:  "Ping",
@@ -23,7 +23,7 @@ func (pod *SendPod) Ping() (uint, error) {
 
 func (pod *RespPod) Ping(rs *SocketData) {
 
-	log.Println("Ping:resp", rs.Payload)
+	logman.Info("Ping:resp", rs.Payload)
 
 }
 
@@ -33,7 +33,7 @@ func PingLoop(pod *SendPod) error {
 
 	for {
 		if _, err := pod.Ping(); err != nil {
-			log.Println("Ping:fail", err)
+			logman.Info("Ping:fail", err)
 			return err
 		}
 		time.Sleep(25 * time.Second)

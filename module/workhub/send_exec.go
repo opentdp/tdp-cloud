@@ -1,13 +1,13 @@
 package workhub
 
 import (
-	"log"
 	"tdp-cloud/helper/command"
+	"tdp-cloud/helper/logman"
 )
 
 func (pod *SendPod) Exec(data *command.ExecPayload) (uint, error) {
 
-	log.Println("Exec:send To", pod.WorkerMeta.HostName)
+	logman.Info("Exec:send To", pod.WorkerMeta.HostName)
 
 	taskId := createHistory(pod, data)
 
@@ -23,7 +23,7 @@ func (pod *SendPod) Exec(data *command.ExecPayload) (uint, error) {
 
 func (pod *RespPod) Exec(rq *SocketData) {
 
-	log.Println("Exec:resp By", pod.WorkerMeta.HostName)
+	logman.Info("Exec:resp By", pod.WorkerMeta.HostName)
 
 	updateHistory(pod, rq)
 

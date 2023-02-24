@@ -1,11 +1,11 @@
 package service
 
 import (
-	"log"
 	"os"
 
 	"github.com/kardianos/service"
 
+	"tdp-cloud/helper/logman"
 	"tdp-cloud/service/server"
 	"tdp-cloud/service/worker"
 )
@@ -28,7 +28,7 @@ func Control(name, act string) {
 	case "worker":
 		svc = worker.Service(cliArgs())
 	default:
-		log.Fatalln("Unknown service:", name)
+		logman.Fatal("Unknown service:", name)
 	}
 
 	// 执行服务动作
@@ -36,17 +36,17 @@ func Control(name, act string) {
 	switch act {
 	case "": // 直接运行
 		if err := svc.Run(); err != nil {
-			log.Fatalln(err)
+			logman.Fatal(err)
 		}
 	case "status": // 查看状态
 		if sta, err := svc.Status(); err == nil {
-			log.Println(svc.String(), "Status:", statusMap[sta])
+			logman.Info(svc.String(), "Status:", statusMap[sta])
 		} else {
-			log.Fatalln(err)
+			logman.Fatal(err)
 		}
 	default: // 其他动作
 		if err := service.Control(svc, act); err != nil {
-			log.Fatalln(err)
+			logman.Fatal(err)
 		}
 	}
 

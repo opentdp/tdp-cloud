@@ -9,6 +9,7 @@ import (
 	"github.com/spf13/viper"
 
 	"tdp-cloud/api"
+	"tdp-cloud/module/midware"
 )
 
 func Start(addr string, efs *embed.FS) {
@@ -26,7 +27,9 @@ func Start(addr string, efs *embed.FS) {
 func Engine(efs *embed.FS) *gin.Engine {
 
 	// 初始化
-	engine := gin.Default()
+	engine := gin.New()
+	engine.Use(midware.Logger())
+	engine.Use(midware.Recovery(true))
 
 	// 接口路由
 	api.Router(engine)

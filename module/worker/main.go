@@ -1,9 +1,9 @@
 package worker
 
 import (
-	"log"
 	"net/http"
 
+	"tdp-cloud/helper/logman"
 	"tdp-cloud/helper/psutil"
 	"tdp-cloud/helper/socket"
 	"tdp-cloud/helper/strutil"
@@ -37,7 +37,7 @@ func Daemon(ws string) error {
 	header.Add("TDP-Worker-Id", workerId)
 	header.Add("TDP-Worker-Meta", info.String())
 
-	log.Println("Connecting", ws, header)
+	logman.Info("Connecting", ws, header)
 	pod, err := socket.NewJsonPodClient(ws, header)
 
 	if err != nil {
@@ -61,7 +61,7 @@ func Receiver(pod *socket.JsonPod) error {
 		var rs *SocketData
 
 		if err := pod.Read(&rs); err != nil {
-			log.Println("Read:error", err)
+			logman.Info("Read:error", err)
 			return err
 		}
 
@@ -73,7 +73,7 @@ func Receiver(pod *socket.JsonPod) error {
 		case "Ping:resp":
 			resp.Ping(rs)
 		default:
-			log.Println("Task:unknown", rs)
+			logman.Info("Task:unknown", rs)
 		}
 	}
 

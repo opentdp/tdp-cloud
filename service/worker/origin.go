@@ -1,12 +1,12 @@
 package worker
 
 import (
-	"log"
 	"time"
 
 	"github.com/kardianos/service"
 	"github.com/spf13/viper"
 
+	"tdp-cloud/helper/logman"
 	"tdp-cloud/module/worker"
 )
 
@@ -14,7 +14,7 @@ type program struct{}
 
 func (p *program) Start(s service.Service) error {
 
-	log.Println("TDP Worker start")
+	logman.Info("TDP Worker start")
 
 	go p.run()
 	return nil
@@ -23,7 +23,7 @@ func (p *program) Start(s service.Service) error {
 
 func (p *program) Stop(s service.Service) error {
 
-	log.Println("TDP Worker stop")
+	logman.Info("TDP Worker stop")
 
 	return nil
 
@@ -36,14 +36,14 @@ func (p *program) run() {
 	remote := viper.GetString("worker.remote")
 
 	if err := worker.Daemon(remote); err != nil {
-		log.Println(err)
+		logman.Info(err)
 	}
 
 }
 
 func (p *program) timer() {
 
-	log.Println("Connection disconnected, retry in 5 seconds.")
+	logman.Info("Connection disconnected, retry in 5 seconds.")
 
 	time.Sleep(5 * time.Second)
 	p.run()

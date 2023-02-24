@@ -2,9 +2,10 @@ package request
 
 import (
 	"io"
-	"log"
 	"net/http"
 	"strings"
+
+	"tdp-cloud/helper/logman"
 )
 
 type Client struct {
@@ -38,7 +39,7 @@ func (c *Client) Request() ([]byte, error) {
 	}
 
 	// 发起请求
-	log.Println("HttpClient", c.Method, c.Url)
+	logman.Info("HttpClient", c.Method, c.Url)
 	if resp, err = http.DefaultClient.Do(req); err != nil {
 		return nil, err
 	}

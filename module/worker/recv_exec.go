@@ -2,11 +2,11 @@ package worker
 
 import (
 	"errors"
-	"log"
 
 	"github.com/mitchellh/mapstructure"
 
 	"tdp-cloud/helper/command"
+	"tdp-cloud/helper/logman"
 )
 
 func (pod *RecvPod) Exec(rs *SocketData) error {
@@ -17,7 +17,7 @@ func (pod *RecvPod) Exec(rs *SocketData) error {
 		data *command.ExecPayload
 	)
 
-	log.Println("Exec:recv", rs.Payload)
+	logman.Info("Exec:recv", rs.Payload)
 
 	if mapstructure.Decode(rs.Payload, &data) == nil {
 		ret, err = command.Exec(data)
@@ -26,9 +26,9 @@ func (pod *RecvPod) Exec(rs *SocketData) error {
 	}
 
 	if err != nil {
-		log.Println("Exec:fail", err)
+		logman.Info("Exec:fail", err)
 	} else {
-		log.Println("Exec:done", data.Name)
+		logman.Info("Exec:done", data.Name)
 	}
 
 	rq := &SocketData{

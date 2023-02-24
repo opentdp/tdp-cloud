@@ -2,12 +2,13 @@ package httpd
 
 import (
 	"context"
-	"log"
 	"net/http"
 	"os"
 	"os/signal"
 	"syscall"
 	"time"
+
+	"tdp-cloud/helper/logman"
 )
 
 func Server(addr string, engine http.Handler) {
@@ -22,9 +23,9 @@ func Server(addr string, engine http.Handler) {
 	// 以协程方式启用监听，防止阻塞后续的中断信号处理
 	go func() {
 		if err := server.ListenAndServe(); err == nil {
-			log.Println("Web server listen on", addr)
+			logman.Info("Web server listen on", addr)
 		} else {
-			log.Fatalln(err)
+			logman.Fatal(err)
 		}
 	}()
 
@@ -37,7 +38,7 @@ func Server(addr string, engine http.Handler) {
 	// 等待信号，如果没有则保持阻塞
 	<-quit
 
-	log.Println("Server closing...")
+	logman.Info("Server closing...")
 
 	// 创建一个剩余5秒超时的上下文
 	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
@@ -45,9 +46,9 @@ func Server(addr string, engine http.Handler) {
 
 	// 优雅地关闭服务器而不中断任何活动连接
 	if err := server.Shutdown(ctx); err != nil {
-		log.Fatalln("Server forced to shutdown:", err)
+		logman.Fatal("Server forced to shutdown:", err)
 	}
 
-	log.Println("Server exiting...")
+	logman.Info("Server exiting...")
 
 }

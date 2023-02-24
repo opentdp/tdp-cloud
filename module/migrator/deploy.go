@@ -1,15 +1,14 @@
 package migrator
 
 import (
-	"log"
-
+	"tdp-cloud/helper/logman"
 	"tdp-cloud/module/dborm/config"
 )
 
 func Deploy() {
 
 	if err := doMigrate(); err != nil {
-		log.Fatalln("Migrate database error:", err)
+		logman.Fatal("Migrate database error:", err)
 	}
 
 }

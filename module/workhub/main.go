@@ -1,8 +1,7 @@
 package workhub
 
 import (
-	"log"
-
+	"tdp-cloud/helper/logman"
 	"tdp-cloud/helper/psutil"
 	"tdp-cloud/helper/socket"
 )
@@ -49,7 +48,7 @@ func Receiver(worker *Worker) error {
 		var rq *SocketData
 
 		if err := worker.Read(&rq); err != nil {
-			log.Println("Read:error", err)
+			logman.Info("Read:error", err)
 			return err
 		}
 
@@ -61,7 +60,7 @@ func Receiver(worker *Worker) error {
 		case "Ping":
 			recv.Ping(rq)
 		default:
-			log.Println("Task:unknown", rq)
+			logman.Info("Task:unknown", rq)
 		}
 	}
 

@@ -1,10 +1,10 @@
 package server
 
 import (
-	"log"
-
 	"github.com/kardianos/service"
 	"github.com/spf13/viper"
+
+	"tdp-cloud/helper/logman"
 )
 
 func Service(args []string) service.Service {
@@ -15,7 +15,7 @@ func Service(args []string) service.Service {
 		Description: "TDP Control Panel Server",
 		Option: service.KeyValue{
 			"LogDirectory": viper.GetString("logger.dir"),
-			"LogOutput":    viper.GetBool("logger.output"),
+			"LogOutput":    viper.GetBool("logger.tofile"),
 		},
 		Arguments: args,
 	}
@@ -23,7 +23,7 @@ func Service(args []string) service.Service {
 	svc, err := service.New(&program{}, config)
 
 	if err != nil {
-		log.Fatalln("Init service error:", err)
+		logman.Fatal("Init service error:", err)
 	}
 
 	return svc

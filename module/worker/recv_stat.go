@@ -1,14 +1,13 @@
 package worker
 
 import (
-	"log"
-
+	"tdp-cloud/helper/logman"
 	"tdp-cloud/helper/psutil"
 )
 
 func (pod *RecvPod) Stat(rs *SocketData) error {
 
-	log.Println("Stat:recv Id", rs.TaskId)
+	logman.Info("Stat:recv Id", rs.TaskId)
 
 	rq := &SocketData{
 		Method:  "Stat:resp",

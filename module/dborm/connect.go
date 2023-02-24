@@ -1,15 +1,14 @@
 package dborm
 
 import (
-	"log"
 	"strings"
 
 	"github.com/glebarez/sqlite"
-	"github.com/spf13/viper"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
-	"gorm.io/gorm/logger"
 	"gorm.io/gorm/schema"
+
+	"tdp-cloud/helper/logman"
 )
 
 var Db *gorm.DB
@@ -17,14 +16,9 @@ var Db *gorm.DB
 func Connect(dsn string) {
 
 	var err error
-	var logLevel = logger.Silent
-
-	if viper.GetBool("debug") {
-		logLevel = logger.Info
-	}
 
 	config := &gorm.Config{
-		Logger: logger.Default.LogMode(logLevel),
+		Logger: NewLogger(),
 		NamingStrategy: schema.NamingStrategy{
 			SingularTable: true,
 		},
@@ -43,7 +37,7 @@ func Connect(dsn string) {
 	}
 
 	if err != nil {
-		log.Fatalln("Connect to databse error:", err)
+		logman.Fatal("Connect to databse error:", err)
 	}
 
 }

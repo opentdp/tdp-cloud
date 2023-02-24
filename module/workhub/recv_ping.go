@@ -1,14 +1,14 @@
 package workhub
 
 import (
-	"log"
-
 	"github.com/mitchellh/mapstructure"
+
+	"tdp-cloud/helper/logman"
 )
 
 func (pod *RecvPod) Ping(rq *SocketData) error {
 
-	log.Println("Ping:recv By", pod.WorkerMeta.HostName)
+	logman.Info("Ping:recv By", pod.WorkerMeta.HostName)
 
 	mapstructure.Decode(rq.Payload, &pod.WorkerMeta)
 

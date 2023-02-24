@@ -9,15 +9,6 @@ import (
 	tencent "github.com/rehiy/libdns-tencentcloud"
 )
 
-type Params struct {
-	Email     string
-	Domain    string
-	CaType    string
-	Provider  string
-	SecretId  string
-	SecretKey string
-}
-
 func newIssuer(rq *Params) *certmagic.ACMEIssuer {
 
 	issuer := &certmagic.ACMEIssuer{

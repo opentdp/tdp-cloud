@@ -4,23 +4,18 @@ import (
 	"context"
 	"errors"
 	"strings"
-	"tdp-cloud/helper/strutil"
 
 	"github.com/caddyserver/certmagic"
 	"github.com/spf13/viper"
+
+	"tdp-cloud/helper/logman"
+	"tdp-cloud/helper/strutil"
 )
 
 var (
 	sMagic = map[string]*certmagic.Config{}
 	dMagic = map[string]*certmagic.Config{}
 )
-
-type Certificate struct {
-	Names       []string
-	OCSPStaple  []byte
-	Certificate [][]byte
-	PrivateKey  []byte
-}
 
 func Manage(rq *Params) error {
 
@@ -62,6 +57,7 @@ func CreateMagic() *certmagic.Config {
 		Storage: &certmagic.FileStorage{
 			Path: viper.GetString("dataset.dir") + "/certmagic",
 		},
+		Logger:  logman.Global.Named("certmagic"),
 		OnEvent: magicEvent,
 	}
 
