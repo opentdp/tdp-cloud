@@ -38,9 +38,8 @@ func detail(c *gin.Context) {
 		return
 	}
 
-	if res, err := certjob.Fetch(rq); err == nil {
-		crt, _ := certbot.CertData(res.Domain)
-		c.Set("Payload", crt)
+	if res, err := certbot.CertById(rq.UserId, rq.Id); err == nil {
+		c.Set("Payload", res)
 	} else {
 		c.Set("Error", err)
 	}
