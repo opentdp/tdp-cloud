@@ -7,6 +7,8 @@ import (
 	"tdp-cloud/helper/logman"
 )
 
+var svclog service.Logger
+
 func Service(args []string) service.Service {
 
 	config := &service.Config{
@@ -21,7 +23,11 @@ func Service(args []string) service.Service {
 	}
 
 	svc, err := service.New(&program{}, config)
+	if err != nil {
+		logman.Fatal("Init service error:", err)
+	}
 
+	svclog, err = svc.Logger(nil)
 	if err != nil {
 		logman.Fatal("Init service error:", err)
 	}

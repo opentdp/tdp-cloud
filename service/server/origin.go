@@ -7,7 +7,6 @@ import (
 	"github.com/spf13/viper"
 
 	"tdp-cloud/cmd/args"
-	"tdp-cloud/helper/logman"
 	"tdp-cloud/module/certbot"
 	"tdp-cloud/module/dborm"
 	"tdp-cloud/module/httpd"
@@ -18,7 +17,7 @@ type program struct{}
 
 func (p *program) Start(s service.Service) error {
 
-	logman.Info("TDP Server start")
+	svclog.Info("TDP Server start")
 
 	go p.run()
 	return nil
@@ -27,7 +26,7 @@ func (p *program) Start(s service.Service) error {
 
 func (p *program) Stop(s service.Service) error {
 
-	logman.Info("TDP Server stop")
+	svclog.Info("TDP Server stop")
 
 	return nil
 
