@@ -20,9 +20,7 @@ func init() {
 	// 延迟执行
 
 	cobra.OnInitialize(
-		initd.Viper,
-		initd.Dataset,
-		initd.Logman,
+		initd.Viper, initd.Dataset, initd.Logman,
 	)
 
 	// 全局参数

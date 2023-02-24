@@ -1,49 +1,55 @@
 package logman
 
+import (
+	"go.uber.org/zap"
+)
+
+var origin *zap.SugaredLogger
+
 func Debug(args ...any) {
-	Stdout.Debug(args...)
+	origin.Debug(args...)
 }
 
 func Debugf(tpl string, args ...any) {
-	Stdout.Debugf(tpl, args...)
+	origin.Debugf(tpl, args...)
 }
 
 func Info(args ...any) {
-	Stdout.Info(args...)
+	origin.Info(args...)
 }
 
 func Infof(tpl string, args ...any) {
-	Stdout.Infof(tpl, args...)
+	origin.Infof(tpl, args...)
 }
 
 func Warn(args ...any) {
-	Stdout.Warn(args...)
+	origin.Warn(args...)
 }
 
 func Warnf(tpl string, args ...any) {
-	Stdout.Warnf(tpl, args...)
+	origin.Warnf(tpl, args...)
 }
 
 func Error(args ...any) {
-	Stdout.Error(args...)
+	origin.Error(args...)
 }
 
 func Errorf(tpl string, args ...any) {
-	Stdout.Errorf(tpl, args...)
+	origin.Errorf(tpl, args...)
 }
 
 func Panic(args ...any) {
-	Stdout.Panic(args...)
+	origin.Panic(args...)
 }
 
 func Panicf(tpl string, args ...any) {
-	Stdout.Panicf(tpl, args...)
+	origin.Panicf(tpl, args...)
 }
 
 func Fatal(args ...any) {
-	Stdout.Fatal(args...)
+	origin.Fatal(args...)
 }
 
 func Fatalf(tpl string, args ...any) {
-	Stdout.Fatalf(tpl, args...)
+	origin.Fatalf(tpl, args...)
 }

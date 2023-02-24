@@ -11,11 +11,11 @@ import (
 )
 
 var Global *zap.Logger
-var Stdout *zap.SugaredLogger
 
 func New() {
 
-	level, err := zapcore.ParseLevel(viper.GetString("logger.level"))
+	lvl := viper.GetString("logger.level")
+	level, err := zapcore.ParseLevel(lvl)
 
 	if err != nil {
 		level = zap.WarnLevel
@@ -28,7 +28,8 @@ func New() {
 	Global = zap.New(core)
 	defer Global.Sync()
 
-	Stdout = Global.Named("std").Sugar()
+	// 创建通用日志接口
+	origin = Global.Named("origin").Sugar()
 
 }
 
