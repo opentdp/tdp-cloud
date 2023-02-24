@@ -81,10 +81,15 @@ install() {
 
     config=/etc/tdp-cloud/worker.yml
 
-    echo "worker:" >$config
-    echo "  remote: $TDP_REMOTE_URL" >>$config
-    echo "logger:" >>$config
-    echo "  directory: /var/log/tdp-cloud" >>$config
+    cat <<EOF >$config
+dataset:
+    dir: /var/lib/tdp-cloud
+logger:
+    dir: /var/log/tdp-cloud
+    level: info
+worker:
+  remote: $TDP_REMOTE_URL
+EOF
 
     $TDP_EXEC worker -s install -c $config
     if [ $? -ne 0 ]; then

@@ -76,11 +76,16 @@ install() {
 
     config=/etc/tdp-cloud/server.yml
 
-    echo "server:" >$config
-    echo "  dsn: /var/lib/tdp-cloud/server.db" >>$config
-    echo "  listen: :7800" >>$config
-    echo "logger:" >>$config
-    echo "  directory: /var/log/tdp-cloud" >>$config
+    cat <<EOF >$config
+dataset:
+    dir: /var/lib/tdp-cloud
+logger:
+    dir: /var/log/tdp-cloud
+    level: info
+server:
+    dsn: server.db
+    listen: :7800
+EOF
 
     $TDP_EXEC server -s install -c $config
     if [ $? -ne 0 ]; then

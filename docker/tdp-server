@@ -5,11 +5,16 @@ mkdir -p /etc/tdp-cloud
 mkdir -p /var/lib/tdp-cloud
 mkdir -p /var/log/tdp-cloud
 
-yml=/etc/tdp-cloud/config.yml
+yml=/etc/tdp-cloud/server.yml
 
 [ -f $yml ] || cat <<EOF >$yml
+dataset:
+    dir: /var/lib/tdp-cloud
+logger:
+    dir: /var/log/tdp-cloud
+    level: info
 server:
-    dsn: /var/lib/tdp-cloud/server.db
+    dsn: server.db
     listen: :7800
 EOF
 
