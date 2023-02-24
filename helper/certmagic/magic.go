@@ -65,6 +65,7 @@ func CreateMagic() *certmagic.Config {
 		GetConfigForCert: func(cert certmagic.Certificate) (*certmagic.Config, error) {
 			return &config, nil
 		},
+		Logger: config.Logger,
 	})
 
 	return certmagic.New(cache, config)
