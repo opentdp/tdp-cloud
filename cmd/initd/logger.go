@@ -10,9 +10,10 @@ import (
 
 func init() {
 
+	viper.SetDefault("logger.dir", ".")
 	viper.SetDefault("logger.level", "info")
-	viper.SetDefault("logger.tofile", false)
 	viper.SetDefault("logger.stdout", true)
+	viper.SetDefault("logger.tofile", false)
 
 }
 
@@ -20,10 +21,8 @@ func Logger() {
 
 	logdir := viper.GetString("logger.dir")
 
-	if logdir != "" {
+	if logdir != "" && logdir != "." {
 		os.MkdirAll(logdir, 0755)
-	} else {
-		viper.Set("logger.dir", ".")
 	}
 
 	logman.New()
