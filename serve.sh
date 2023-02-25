@@ -8,5 +8,7 @@ export GO111MODULE=on
 
 ####################################################################
 
+[ -d var ] || mkdir -p var
+
 go mod tidy
 go run main.go server -c var/server.yml
