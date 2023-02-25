@@ -66,7 +66,7 @@ require (
 	// DNS 厂商适配
 	github.com/libdns/alidns v1.0.2
 	github.com/libdns/cloudflare v0.1.0
-	github.com/rehiy/libdns-tencentcloud v0.1.0
+	github.com/libdns/tencentcloud v1.0.0
 )
 
 // 间接依赖

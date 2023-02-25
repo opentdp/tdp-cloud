@@ -4,9 +4,8 @@ import (
 	"github.com/caddyserver/certmagic"
 	"github.com/libdns/alidns"
 	"github.com/libdns/cloudflare"
+	"github.com/libdns/tencentcloud"
 	"github.com/spf13/viper"
-
-	tencent "github.com/rehiy/libdns-tencentcloud"
 )
 
 func newIssuer(rq *Params) *certmagic.ACMEIssuer {
@@ -45,7 +44,7 @@ func newIssuer(rq *Params) *certmagic.ACMEIssuer {
 		}
 	case "tencent":
 		issuer.DNS01Solver = &certmagic.DNS01Solver{
-			DNSProvider: &tencent.Provider{
+			DNSProvider: &tencentcloud.Provider{
 				SecretId:  rq.SecretId,
 				SecretKey: rq.SecretKey,
 			},
