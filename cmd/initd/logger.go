@@ -8,7 +8,15 @@ import (
 	"tdp-cloud/helper/logman"
 )
 
-func Logman() {
+func init() {
+
+	viper.SetDefault("logger.level", "info")
+	viper.SetDefault("logger.tofile", false)
+	viper.SetDefault("logger.stdout", true)
+
+}
+
+func Logger() {
 
 	logdir := viper.GetString("logger.dir")
 

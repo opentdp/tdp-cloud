@@ -15,12 +15,6 @@ func Viper() {
 	viper.SetEnvPrefix("TDP")
 	viper.AutomaticEnv()
 
-	// 默认参数
-
-	viper.SetDefault("logger.level", "info")
-	viper.SetDefault("logger.tofile", false)
-	viper.SetDefault("logger.stdout", true)
-
 	// 忽略配置
 
 	if args.ConfigFile == "" {
