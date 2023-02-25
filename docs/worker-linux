@@ -76,9 +76,6 @@ install() {
     echo "[TDP] Install ..."
 
     mkdir -p /etc/tdp-cloud
-    mkdir -p /var/lib/tdp-cloud
-    mkdir -p /var/log/tdp-cloud
-
     config=/etc/tdp-cloud/worker.yml
 
     cat <<EOF >$config
