@@ -17,14 +17,16 @@ func newIssuer(rq *Params) *certmagic.ACMEIssuer {
 		Email:                   rq.Email,
 	}
 
+	if viper.GetBool("debug") {
+		rq.CaType = "debug" //调试模式强制重写
+	}
+
 	switch rq.CaType {
 	case "zerossl":
 		issuer.CA = certmagic.ZeroSSLProductionCA
-	default:
+	case "letsencrypt":
 		issuer.CA = certmagic.LetsEncryptProductionCA
-	}
-
-	if viper.GetBool("debug") { //调试模式强制重写
+	default:
 		issuer.CA = certmagic.LetsEncryptStagingCA
 	}
 
