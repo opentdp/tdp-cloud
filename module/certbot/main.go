@@ -22,12 +22,6 @@ func Daemon() {
 
 }
 
-func CertData(domain string) (*certmagic.Certificate, error) {
-
-	return certmagic.CertData(domain)
-
-}
-
 func NewByJob(job *dborm.Certjob) error {
 
 	vendor, err := vendor.Fetch(&vendor.FetchParam{

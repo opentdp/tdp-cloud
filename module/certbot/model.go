@@ -47,7 +47,7 @@ func CertById(userId, id uint) (*certinfo, error) {
 	job, err := certjob.Fetch(&certjob.FetchParam{Id: id, UserId: userId})
 
 	if err == nil && job.Id > 0 {
-		cert, err := certmagic.CertData(job.Domain)
+		cert, err := certmagic.CertDetail(job.Domain)
 		if err != nil {
 			return nil, err
 		}

@@ -11,7 +11,8 @@ type Params struct {
 
 type Certificate struct {
 	Names       []string
-	OCSPStaple  []byte
+	NotAfter    int64
+	NotBefore   int64
 	Certificate [][]byte
 	PrivateKey  []byte
 }

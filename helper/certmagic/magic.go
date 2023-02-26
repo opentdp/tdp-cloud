@@ -72,7 +72,7 @@ func CreateMagic() *certmagic.Config {
 
 }
 
-func CertData(domain string) (*Certificate, error) {
+func CertDetail(domain string) (*Certificate, error) {
 
 	cert := &Certificate{}
 
@@ -91,7 +91,8 @@ func CertData(domain string) (*Certificate, error) {
 	pk, err := certmagic.PEMEncodePrivateKey(crt.Certificate.PrivateKey)
 
 	cert.Names = crt.Names
-	cert.OCSPStaple = crt.Certificate.OCSPStaple
+	cert.NotAfter = crt.Leaf.NotAfter.Unix()
+	cert.NotBefore = crt.Leaf.NotBefore.Unix()
 	cert.Certificate = crt.Certificate.Certificate
 	cert.PrivateKey = pk
 
