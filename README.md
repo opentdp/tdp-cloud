@@ -2,15 +2,25 @@
 
 [![TDP Cloud Builder](https://github.com/open-tdp/tdp-cloud/actions/workflows/release.yml/badge.svg)](https://github.com/open-tdp/tdp-cloud/actions/workflows/release.yml)
 
-可以跨平台部署的云资源管理面板，支持同时绑定多个云账号：
+可以跨平台部署的云资源管理面板
 
-- 腾讯云（含国际版）：DNSPod、CVM、Lighthouse
+- 支持管理多个云账号资源
 
-- 阿里云（含国际版）：AliDNS (*doing*)、ECS、SWAS
+  - **腾讯云**（含国际版）：DNSPod、CVM、Lighthouse
+  - **阿里云**（含国际版）：AliDNS (*doing*)、ECS、SWAS
+  - **CloudFlare**：DNS、Custom Hostnames
 
-- CloudFlare：DNS、Custom Hostnames
+- 支持添加子节点 (`TDP Worker`)
 
-- TDP Worker：Android、Linux、Macos、Windows
+  - **Linux**：完整功能
+  - **Macos**：部分功能
+  - **Windows**：部分功能
+  - **Android**：有限支持
+
+- 支持自动签发基于`ACME`协议的SSL证书
+
+  - **Let's Encrypt**：泛域名、单域名，90天
+  - **ZeroSSL**：泛域名、单域名，90天
 
 ## 使用指引
 
