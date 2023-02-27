@@ -31,10 +31,13 @@ type SendPod struct {
 func Daemon(ws string) error {
 
 	info := psutil.Summary()
+	cloudId := psutil.CloudInstanceId()
+
 	workerId := strutil.Md5(info.HostId)
 
 	header := http.Header{}
 	header.Add("TDP-Worker-Id", workerId)
+	header.Add("TDP-Worker-Cid", cloudId)
 	header.Add("TDP-Worker-Meta", info.String())
 
 	logman.Info("Connecting", ws, header)

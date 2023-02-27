@@ -31,7 +31,7 @@ func Summary() *SummaryStat {
 		CpuPercent:   cp,
 		MemoryTotal:  mv.Total,
 		MemoryUsed:   mv.Used,
-		IpAddress:    getIpAddress(false),
+		IpAddress:    PublicIpAddress(false),
 	}
 
 }
