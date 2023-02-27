@@ -45,7 +45,7 @@ if [ -z "$TDP_PACKAGE" ]; then
     TDP_PACKAGE=http://tdp.icu/build/tdp-cloud-${TDP_PLATFORM}-${TDP_ARCHITECTURE}.gz
 fi
 
-if [ -z "$TDP_REMOTE_URL" ]; then
+if [ "$TDP_SERVICE" = "install" ] && [ -z "$TDP_REMOTE_URL" ]; then
     echo "[ERROR] Missing environment variable \$TDP_REMOTE_URL"
     exit 1
 fi
