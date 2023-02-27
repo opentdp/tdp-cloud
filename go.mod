@@ -67,6 +67,7 @@ require (
 	github.com/libdns/alidns v1.0.2
 	github.com/libdns/cloudflare v0.1.0
 	github.com/libdns/tencentcloud v1.0.0
+	github.com/mholt/acmez v1.1.0
 )
 
 // 间接依赖
@@ -101,7 +102,6 @@ require (
 	github.com/lufia/plan9stats v0.0.0-20230110061619-bbe2e5e100de // indirect
 	github.com/magiconair/properties v1.8.7 // indirect
 	github.com/mattn/go-isatty v0.0.17 // indirect
-	github.com/mholt/acmez v1.1.0 // indirect
 	github.com/miekg/dns v1.1.50 // indirect
 	github.com/modern-go/concurrent v0.0.0-20180306012644-bacd9c7ef1dd // indirect
 	github.com/modern-go/reflect2 v1.0.2 // indirect
