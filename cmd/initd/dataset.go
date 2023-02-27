@@ -8,7 +8,7 @@ import (
 
 func init() {
 
-	viper.SetDefault("logger.dir", ".")
+	viper.SetDefault("datadir.dir", ".")
 
 }
 
