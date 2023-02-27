@@ -40,6 +40,8 @@ func NewByJob(job *dborm.Certjob) error {
 		Provider:  vendor.Provider,
 		SecretId:  vendor.SecretId,
 		SecretKey: vendor.SecretKey,
+		EabKeyId:  job.EabKeyId,
+		EabMacKey: job.EabMacKey,
 	})
 
 }

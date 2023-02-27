@@ -7,6 +7,8 @@ type Params struct {
 	Provider  string
 	SecretId  string
 	SecretKey string
+	EabKeyId  string
+	EabMacKey string
 }
 
 type Certificate struct {

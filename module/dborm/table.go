@@ -9,6 +9,8 @@ type Certjob struct {
 	Email     string
 	Domain    string
 	CaType    string
+	EabKeyId  string
+	EabMacKey string
 	CreatedAt int64
 	UpdatedAt int64
 }

@@ -7,21 +7,25 @@ import (
 // 创建计划
 
 type CreateParam struct {
-	UserId   uint
-	VendorId uint   `binding:"required"`
-	Email    string `binding:"required"`
-	Domain   string `binding:"required"`
-	CaType   string `binding:"required"`
+	UserId    uint
+	VendorId  uint   `binding:"required"`
+	Email     string `binding:"required"`
+	Domain    string `binding:"required"`
+	CaType    string `binding:"required"`
+	EabKeyId  string
+	EabMacKey string
 }
 
 func Create(data *CreateParam) (uint, error) {
 
 	item := &dborm.Certjob{
-		UserId:   data.UserId,
-		VendorId: data.VendorId,
-		Email:    data.Email,
-		Domain:   data.Domain,
-		CaType:   data.CaType,
+		UserId:    data.UserId,
+		VendorId:  data.VendorId,
+		Email:     data.Email,
+		Domain:    data.Domain,
+		CaType:    data.CaType,
+		EabKeyId:  data.EabKeyId,
+		EabMacKey: data.EabMacKey,
 	}
 
 	result := dborm.Db.Create(item)
@@ -33,12 +37,14 @@ func Create(data *CreateParam) (uint, error) {
 // 更新计划
 
 type UpdateParam struct {
-	Id       uint
-	UserId   uint
-	VendorId uint
-	Email    string
-	Domain   string
-	CaType   string
+	Id        uint
+	UserId    uint
+	VendorId  uint
+	Email     string
+	Domain    string
+	CaType    string
+	EabKeyId  string
+	EabMacKey string
 }
 
 func Update(data *UpdateParam) error {
@@ -49,10 +55,12 @@ func Update(data *UpdateParam) error {
 			UserId: data.UserId,
 		}).
 		Updates(dborm.Certjob{
-			VendorId: data.VendorId,
-			Email:    data.Email,
-			Domain:   data.Domain,
-			CaType:   data.CaType,
+			VendorId:  data.VendorId,
+			Email:     data.Email,
+			Domain:    data.Domain,
+			CaType:    data.CaType,
+			EabKeyId:  data.EabKeyId,
+			EabMacKey: data.EabMacKey,
 		})
 
 	return result.Error
