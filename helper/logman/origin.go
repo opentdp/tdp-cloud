@@ -7,7 +7,7 @@ import (
 var origin *zap.SugaredLogger
 
 func Debug(args ...any) {
-	origin.Debug(args...)
+	origin.Debugln(args...)
 }
 
 func Debugf(tpl string, args ...any) {
@@ -15,7 +15,7 @@ func Debugf(tpl string, args ...any) {
 }
 
 func Info(args ...any) {
-	origin.Info(args...)
+	origin.Infoln(args...)
 }
 
 func Infof(tpl string, args ...any) {
@@ -23,7 +23,7 @@ func Infof(tpl string, args ...any) {
 }
 
 func Warn(args ...any) {
-	origin.Warn(args...)
+	origin.Warnln(args...)
 }
 
 func Warnf(tpl string, args ...any) {
@@ -31,7 +31,7 @@ func Warnf(tpl string, args ...any) {
 }
 
 func Error(args ...any) {
-	origin.Error(args...)
+	origin.Errorln(args...)
 }
 
 func Errorf(tpl string, args ...any) {
@@ -39,7 +39,7 @@ func Errorf(tpl string, args ...any) {
 }
 
 func Panic(args ...any) {
-	origin.Panic(args...)
+	origin.Panicln(args...)
 }
 
 func Panicf(tpl string, args ...any) {
@@ -47,7 +47,7 @@ func Panicf(tpl string, args ...any) {
 }
 
 func Fatal(args ...any) {
-	origin.Fatal(args...)
+	origin.Fatalln(args...)
 }
 
 func Fatalf(tpl string, args ...any) {
