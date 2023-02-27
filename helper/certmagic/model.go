@@ -17,4 +17,5 @@ type Certificate struct {
 	NotBefore   int64
 	Certificate [][]byte
 	PrivateKey  []byte
+	Issuer      map[string]any
 }

@@ -96,6 +96,12 @@ func CertDetail(domain string) (*Certificate, error) {
 	cert.Certificate = crt.Certificate.Certificate
 	cert.PrivateKey = pk
 
+	cert.Issuer = map[string]any{
+		"CommonName":   crt.Leaf.Issuer.CommonName,
+		"Organization": crt.Leaf.Issuer.Organization[0],
+		"Country":      crt.Leaf.Issuer.Country[0],
+	}
+
 	return cert, err
 
 }
