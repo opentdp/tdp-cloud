@@ -10,12 +10,22 @@ import (
 
 func updateMachine(worker *Worker) error {
 
+	// 尝试查找 MachineId
+	if worker.MachineId == 0 && worker.CloudId != "" {
+		rq := &machine.FetchParam{CloudId: worker.CloudId}
+		if item, err := machine.Fetch(rq); err == nil && item.Id > 0 {
+			worker.MachineId = item.Id
+		}
+	}
+
+	// 忽略更新没有注册的主机
 	if worker.MachineId == 0 {
 		return nil
 	}
 
 	item := &machine.UpdateParam{
 		Id:         worker.MachineId,
+		CloudId:    worker.CloudId,
 		WorkerId:   worker.WorkerId,
 		WorkerMeta: worker.WorkerMeta,
 	}

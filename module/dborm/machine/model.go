@@ -114,8 +114,10 @@ func Delete(data *DeleteParam) error {
 // 获取主机
 
 type FetchParam struct {
-	Id     uint
-	UserId uint
+	Id       uint
+	UserId   uint
+	CloudId  string
+	WorkerId string
 }
 
 func Fetch(data *FetchParam) (*dborm.Machine, error) {
@@ -124,8 +126,10 @@ func Fetch(data *FetchParam) (*dborm.Machine, error) {
 
 	result := dborm.Db.
 		Where(&dborm.Machine{
-			Id:     data.Id,
-			UserId: data.UserId,
+			Id:       data.Id,
+			UserId:   data.UserId,
+			CloudId:  data.CloudId,
+			WorkerId: data.WorkerId,
 		}).
 		First(&item)
 

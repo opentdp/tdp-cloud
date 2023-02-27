@@ -17,6 +17,7 @@ type Worker struct {
 	*socket.JsonPod
 	UserId     uint
 	MachineId  uint
+	CloudId    string
 	WorkerId   string
 	WorkerMeta *psutil.SummaryStat
 }

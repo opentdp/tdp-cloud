@@ -28,6 +28,7 @@ func Register(c *gin.Context) error {
 		pod,
 		c.GetUint("UserId"),
 		c.GetUint("MachineId"),
+		c.GetHeader("TDP-Cloud-id"),
 		c.GetHeader("TDP-Worker-Id"),
 		&psutil.SummaryStat{},
 	}
