@@ -89,6 +89,7 @@ server:
 EOF
 
     $TDP_BINARY server -s install -c $config
+
     if [ $? -ne 0 ]; then
         echo "[TDP] Install failed"
         exit 1
@@ -103,6 +104,8 @@ EOF
 uninstall() {
 
     echo "[TDP] Uninstall ..."
+
+    $TDP_BINARY server -s uninstall
 
     rm -rf /var/*/tdp-cloud
     rm -rf /etc/tdp-cloud
@@ -128,7 +131,7 @@ stop () {
     echo "[TDP] Stop ..."
 
     $TDP_BINARY server -s stop
-    $TDP_BINARY server -s uninstall
+    $TDP_BINARY server -s status
 
 }
 
@@ -150,3 +153,5 @@ case "$TDP_SERVICE" in
     uninstall
     ;;
 esac
+
+TDP_SERVICE=
