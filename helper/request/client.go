@@ -4,6 +4,7 @@ import (
 	"io"
 	"net/http"
 	"strings"
+	"time"
 
 	"tdp-cloud/helper/logman"
 )
@@ -13,6 +14,7 @@ type Client struct {
 	Url     string
 	Data    string
 	Headers map[string]string
+	Timeout time.Duration
 }
 
 func (c *Client) Request() ([]byte, error) {
@@ -38,9 +40,11 @@ func (c *Client) Request() ([]byte, error) {
 		req.Header.Set(k, v)
 	}
 
-	// 发起请求
 	logman.Info("HttpClient", c.Method, c.Url)
-	if resp, err = http.DefaultClient.Do(req); err != nil {
+
+	// 发起请求
+	client := http.Client{Timeout: c.Timeout}
+	if resp, err = client.Do(req); err != nil {
 		return nil, err
 	}
 
