@@ -19,11 +19,11 @@
 
 - 支持自动签发基于`ACME`协议的SSL证书
 
-  - **Let's Encrypt**：泛域名90天、单域名90天
-  - **Bubpass**：泛域名90天、单域名180天
-  - **Googel Public**：泛域名90天、单域名90天
-  - **SSL.com**：泛域名90天、单域名90天
-  - **ZeroSSL**：泛域名90天、单域名90天
+  - **Let's Encrypt**
+  - **Bubpass**
+  - **Googel Public**
+  - **SSL.com**
+  - **ZeroSSL**
 
 - 支持 `WebSSH` 终端及密钥对管理
 
