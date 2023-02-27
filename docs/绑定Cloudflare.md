@@ -3,7 +3,7 @@
 1、进入 **Cloudflare** [个人资料 - API 令牌](https://dash.cloudflare.com/profile/api-tokens) 页面，创建一个令牌 `TDPCloudAccess`，权限如下：
 
 ```text
-User.User Details, Zone.Zone Settings, Zone.Zone, Zone.DNS
+User.User Details, Zone.Zone Settings, Zone.Zone, Zone.SSL and Certificates, Zone.DNS
 ```
 
 3、进入 **TDP Cloud** 后台，`资产管理 - Cloudflare`，添加获取到的 `API Token`
