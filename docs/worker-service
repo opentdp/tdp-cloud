@@ -31,36 +31,45 @@ case "$(uname -m)" in
     ;;
 esac
 
-# --- global env ---
+# --- set global env ---
 
-if [ -z "$TDP_EXEC" ]; then
-    TDP_EXEC=/usr/local/bin/tdp-cloud
+if [ -z "$TDP_SERVICE" ]; then
+    TDP_SERVICE=install
+fi
+
+if [ -z "$TDP_BINARY" ]; then
+    TDP_BINARY=/usr/local/bin/tdp-cloud
 fi
 
 if [ -z "$TDP_PACKAGE" ]; then
     TDP_PACKAGE=http://tdp.icu/build/tdp-cloud-${TDP_PLATFORM}-${TDP_ARCHITECTURE}.gz
 fi
 
-# --- set download binary ---
+if [ -z "$TDP_REMOTE_URL" ]; then
+    echo "[ERROR] Missing environment variable \$TDP_REMOTE_URL"
+    exit 1
+fi
+
+# --- download binary ---
 
 download() {
 
-    rm -rf $TDP_EXEC
+    rm -rf $TDP_BINARY
 
     echo "[TDP] Download ..."
 
     if type curl >/dev/null 2>&1; then
-        curl -sfL $TDP_PACKAGE | gunzip > $TDP_EXEC
+        curl -sfL $TDP_PACKAGE | gunzip > $TDP_BINARY
     elif type wget >/dev/null 2>&1; then
-        wget -qO- $TDP_PACKAGE | gunzip > $TDP_EXEC
+        wget -qO- $TDP_PACKAGE | gunzip > $TDP_BINARY
     fi
 
-    if [ ! -e $TDP_EXEC ]; then
+    if [ ! -e $TDP_BINARY ]; then
         echo "[TDP] Can't download ${TDP_PACKAGE}"
         exit 1
     fi
 
-    chmod +x $TDP_EXEC
+    chmod +x $TDP_BINARY
 
 }
 
@@ -71,7 +80,7 @@ install() {
     echo "[TDP] Install ..."
 
     mkdir -p /etc/tdp-cloud
-    config=/etc/tdp-cloud/server.yml
+    config=/etc/tdp-cloud/worker.yml
 
     cat <<EOF >$config
 dataset:
@@ -79,12 +88,11 @@ dataset:
 logger:
     dir: /var/log/tdp-cloud
     level: info
-server:
-    dsn: server.db
-    listen: :7800
+worker:
+  remote: $TDP_REMOTE_URL
 EOF
 
-    $TDP_EXEC server -s install -c $config
+    $TDP_BINARY worker -s install -c $config
     if [ $? -ne 0 ]; then
         echo "[TDP] Install failed"
         exit 1
@@ -102,7 +110,7 @@ uninstall() {
 
     rm -rf /var/*/tdp-cloud
     rm -rf /etc/tdp-cloud
-    rm -rf $TDP_EXEC
+    rm -rf $TDP_BINARY
 
     echo "[TDP] Uninstall completed"
 
@@ -114,8 +122,8 @@ start () {
 
     echo "[TDP] Start ..."
 
-    $TDP_EXEC server -s start
-    $TDP_EXEC server -s status
+    $TDP_BINARY worker -s start
+    $TDP_BINARY worker -s status
 
 }
 
@@ -123,18 +131,26 @@ stop () {
 
     echo "[TDP] Stop ..."
 
-    $TDP_EXEC server -s stop
-    $TDP_EXEC server -s uninstall
+    $TDP_BINARY worker -s stop
+    $TDP_BINARY worker -s uninstall
 
 }
 
 # --- run ---
 
-if [ -x $TDP_EXEC ]; then
-    stop
-    uninstall
-else
+case "$TDP_SERVICE" in
+  install)
     download
     install
     start
-fi
+    ;;
+  update)
+    stop
+    download
+    start
+    ;;
+  uninstall)
+    stop
+    uninstall
+    ;;
+esac
