@@ -31,9 +31,9 @@
 
 ## 功能预览
 
-- 在线体验开发版功能，请进入 [演示站点](https://apps.rehiy.com/tdp-cloud/preview)
-
 - 功能支持和开发进度，请参阅 [Issues #1](https://github.com/open-tdp/tdp-cloud/issues/1)
+
+- 在线体验开发版功能，请进入 [演示站点](https://apps.rehiy.com/tdp-cloud/preview)，自行注册账号后登录
 
 ## 开发说明
 
