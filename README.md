@@ -25,6 +25,8 @@
   - **SSL.com**：泛域名90天、单域名90天
   - **ZeroSSL**：泛域名90天、单域名90天
 
+- 支持 `WebSSH` 终端及密钥对管理
+
 ## 使用指引
 
 内容较多，请参考文档 <https://apps.rehiy.com/tdp-cloud/docs>
