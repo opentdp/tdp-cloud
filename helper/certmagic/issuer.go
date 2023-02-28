@@ -7,6 +7,8 @@ import (
 	"github.com/libdns/tencentcloud"
 	"github.com/mholt/acmez/acme"
 	"github.com/spf13/viper"
+
+	"tdp-cloud/helper/logman"
 )
 
 func newIssuer(rq *Params) *certmagic.ACMEIssuer {
@@ -16,6 +18,7 @@ func newIssuer(rq *Params) *certmagic.ACMEIssuer {
 		DisableHTTPChallenge:    true,
 		DisableTLSALPNChallenge: true,
 		Email:                   rq.Email,
+		Logger:                  logman.Named("cert.issuer"),
 	}
 
 	if viper.GetBool("debug") {

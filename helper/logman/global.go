@@ -10,7 +10,7 @@ import (
 	"gopkg.in/natefinch/lumberjack.v2"
 )
 
-var Global *zap.Logger
+var global *zap.Logger
 
 func New() {
 
@@ -21,15 +21,20 @@ func New() {
 		level = zap.WarnLevel
 	}
 
-	encoder := getEncoder()
-	writeSyncer := getWriter()
-	core := zapcore.NewCore(encoder, writeSyncer, level)
+	core := zapcore.NewCore(getEncoder(), getWriter(), level)
 
-	Global = zap.New(core)
-	defer Global.Sync()
+	// 创建全局接口
+	global = zap.New(core)
+	defer global.Sync()
 
-	// 创建通用日志接口
-	origin = Global.Named("origin").Sugar()
+	// 创建通用接口
+	origin = Named("origin").Sugar()
+
+}
+
+func Named(n string) *zap.Logger {
+
+	return global.Named(n)
 
 }
 
@@ -51,20 +56,20 @@ func getWriter() zapcore.WriteSyncer {
 
 	if tofile && stdout {
 		return zapcore.NewMultiWriteSyncer(
-			zapcore.AddSync(getFileLogger()),
+			zapcore.AddSync(fileWriter()),
 			zapcore.AddSync(os.Stdout),
 		)
 	}
 
 	if tofile && !stdout {
-		return zapcore.AddSync(getFileLogger())
+		return zapcore.AddSync(fileWriter())
 	}
 
 	return zapcore.AddSync(os.Stdout)
 
 }
 
-func getFileLogger() *lumberjack.Logger {
+func fileWriter() *lumberjack.Logger {
 
 	logFile := viper.GetString("logger.dir") + "/output.log"
 

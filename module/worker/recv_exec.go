@@ -26,7 +26,7 @@ func (pod *RecvPod) Exec(rs *SocketData) error {
 	}
 
 	if err != nil {
-		logman.Info("Exec:fail", err)
+		logman.Error("Exec:fail", err)
 	} else {
 		logman.Info("Exec:done", data.Name)
 	}

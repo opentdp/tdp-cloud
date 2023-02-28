@@ -39,7 +39,7 @@ func Daemon(ws string) error {
 	header.Add("TDP-Worker-Id", workerId)
 	header.Add("TDP-Worker-Meta", info.String())
 
-	logman.Info("Connecting", ws, header)
+	logman.Warn("Connecting", ws, header)
 	pod, err := socket.NewJsonPodClient(ws, header)
 
 	if err != nil {
@@ -63,7 +63,7 @@ func Receiver(pod *socket.JsonPod) error {
 		var rs *SocketData
 
 		if err := pod.Read(&rs); err != nil {
-			logman.Info("Read:error", err)
+			logman.Error("Read:error", err)
 			return err
 		}
 
@@ -75,7 +75,7 @@ func Receiver(pod *socket.JsonPod) error {
 		case "Ping:resp":
 			resp.Ping(rs)
 		default:
-			logman.Info("Task:unknown", rs)
+			logman.Warn("Task:unknown", rs)
 		}
 	}
 

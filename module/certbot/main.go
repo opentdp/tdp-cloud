@@ -29,7 +29,7 @@ func NewByJob(job *dborm.Certjob) error {
 	})
 
 	if err != nil || vendor.Id == 0 {
-		logman.Info("Certjob Ignore Domain:", job.Domain)
+		logman.Error("Certjob Ignore Domain:", job.Domain)
 		return err
 	}
 

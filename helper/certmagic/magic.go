@@ -57,7 +57,7 @@ func CreateMagic() *certmagic.Config {
 		Storage: &certmagic.FileStorage{
 			Path: viper.GetString("dataset.dir") + "/certmagic",
 		},
-		Logger:  logman.Global.Named("certmagic"),
+		Logger:  logman.Named("cert.magic"),
 		OnEvent: magicEvent,
 	}
 
@@ -65,7 +65,7 @@ func CreateMagic() *certmagic.Config {
 		GetConfigForCert: func(cert certmagic.Certificate) (*certmagic.Config, error) {
 			return &config, nil
 		},
-		Logger: config.Logger,
+		Logger: logman.Named("cert.cache"),
 	})
 
 	return certmagic.New(cache, config)

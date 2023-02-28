@@ -49,7 +49,7 @@ func Receiver(worker *Worker) error {
 		var rq *SocketData
 
 		if err := worker.Read(&rq); err != nil {
-			logman.Info("Read:error", err)
+			logman.Error("Read:error", err)
 			return err
 		}
 
@@ -61,7 +61,7 @@ func Receiver(worker *Worker) error {
 		case "Ping":
 			recv.Ping(rq)
 		default:
-			logman.Info("Task:unknown", rq)
+			logman.Warn("Task:unknown", rq)
 		}
 	}
 

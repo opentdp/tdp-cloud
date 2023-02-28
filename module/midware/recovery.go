@@ -18,7 +18,7 @@ import (
 
 func Recovery(stack bool) gin.HandlerFunc {
 
-	logger := logman.Global.Named("gin")
+	logger := logman.Named("gin.recovery")
 
 	return func(c *gin.Context) {
 		defer func() {

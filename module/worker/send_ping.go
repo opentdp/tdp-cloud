@@ -33,7 +33,7 @@ func PingLoop(pod *SendPod) error {
 
 	for {
 		if _, err := pod.Ping(); err != nil {
-			logman.Info("Ping:fail", err)
+			logman.Error("Ping:fail", err)
 			return err
 		}
 		time.Sleep(25 * time.Second)

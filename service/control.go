@@ -40,7 +40,7 @@ func Control(name, act string) {
 		}
 	case "status": // 查看状态
 		if sta, err := svc.Status(); err == nil {
-			logman.Info(svc.String(), "Status:", statusMap[sta])
+			logman.Warn(svc.String(), "Status:", statusMap[sta])
 		} else {
 			logman.Fatal(err)
 		}

@@ -6,9 +6,11 @@ import (
 	"tdp-cloud/helper/logman"
 )
 
+var evtlog = logman.Named("cert.event").Sugar()
+
 func magicEvent(ctx context.Context, evt string, data map[string]any) error {
 
-	logman.Infof("Certmagic Event: %s with data: %v\n", evt, data)
+	evtlog.Infof("Certmagic Event: %s with data: %v\n", evt, data)
 	return nil
 
 }

@@ -13,7 +13,7 @@ import (
 
 func Logger() gin.HandlerFunc {
 
-	logger := logman.Global.Named("gin")
+	logger := logman.Named("gin.access")
 
 	return func(c *gin.Context) {
 		start := time.Now()
