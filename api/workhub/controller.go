@@ -16,6 +16,10 @@ func host(c *gin.Context) {
 
 	hostInfo := psutil.Detail()
 
+	if c.GetUint("UserLevel") != 1 {
+		hostInfo.IpAddress = "*"
+	}
+
 	c.Set("Payload", gin.H{"Stat": hostInfo})
 
 }
