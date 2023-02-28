@@ -78,8 +78,8 @@ func getSDKError(e error) error {
 		return e
 	}
 
-	re, _ := regexp.Compile(`^code: \d+, (.+) request id.+$`)
-	msg := re.ReplaceAllString(*se.Message, "$1")
+	exp := regexp.MustCompile(`^code: \d+, (.+) request id.+$`)
+	msg := exp.ReplaceAllString(*se.Message, "$1")
 
 	return errors.New(msg)
 
