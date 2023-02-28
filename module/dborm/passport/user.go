@@ -10,8 +10,10 @@ import (
 // 登录账号
 
 type LoginParam struct {
-	Username string `binding:"required"`
-	Password string `binding:"required"`
+	Username  string `binding:"required"`
+	Password  string `binding:"required"`
+	IpAddress string
+	UserAgent string
 }
 
 type LoginResult struct {
@@ -39,7 +41,9 @@ func Login(data *LoginParam) (*LoginResult, error) {
 
 	token, _ := session.Create(&session.CreateParam{
 		UserId:    item.Id,
-		UserAgent: "",
+		UserLevel: item.Level,
+		IpAddress: data.IpAddress,
+		UserAgent: data.UserAgent,
 	})
 
 	// 返回结果

@@ -118,9 +118,11 @@ type Script struct {
 // 用户会话
 
 type Session struct {
-	Id        uint   `gorm:"primaryKey"`
-	UserId    uint   `gorm:"index"`
+	Id        uint `gorm:"primaryKey"`
+	UserId    uint `gorm:"index"`
+	UserLevel uint
 	Token     string `gorm:"uniqueIndex"`
+	IpAddress string
 	UserAgent string
 	CreatedAt int64
 	UpdatedAt int64

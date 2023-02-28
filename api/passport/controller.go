@@ -40,6 +40,9 @@ func login(c *gin.Context) {
 		return
 	}
 
+	rq.IpAddress = c.ClientIP()
+	rq.UserAgent = c.Request.UserAgent()
+
 	if res, err := passport.Login(rq); err == nil {
 		c.Set("Message", "登录成功")
 		c.Set("Payload", res)

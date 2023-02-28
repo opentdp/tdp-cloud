@@ -12,6 +12,8 @@ import (
 
 type CreateParam struct {
 	UserId    uint
+	UserLevel uint
+	IpAddress string
 	UserAgent string
 }
 
@@ -19,8 +21,10 @@ func Create(data *CreateParam) (string, error) {
 
 	item := &dborm.Session{
 		UserId:    data.UserId,
-		UserAgent: data.UserAgent,
+		UserLevel: data.UserLevel,
 		Token:     strutil.Rand(32),
+		IpAddress: data.IpAddress,
+		UserAgent: data.UserAgent,
 	}
 
 	result := dborm.Db.Create(item)
@@ -34,6 +38,8 @@ func Create(data *CreateParam) (string, error) {
 type UpdateParam struct {
 	Id        uint
 	UserId    uint
+	UserLevel uint
+	IpAddress string
 	UserAgent string
 }
 
@@ -45,6 +51,8 @@ func Update(data *UpdateParam) error {
 			UserId: data.UserId,
 		}).
 		Updates(dborm.Session{
+			UserLevel: data.UserLevel,
+			IpAddress: data.IpAddress,
 			UserAgent: data.UserAgent,
 		})
 
