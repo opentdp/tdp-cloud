@@ -1,6 +1,8 @@
 package passport
 
 import (
+	"regexp"
+
 	"github.com/gin-gonic/gin"
 
 	"tdp-cloud/module/dborm/passport"
@@ -18,8 +20,14 @@ func register(c *gin.Context) {
 		return
 	}
 
-	if len(rq.Username) < 4 || len(rq.Password) < 6 {
-		c.Set("Error", "账号或密码长度不足")
+	if m, n := len(rq.Username), len(rq.Password); m < 4 || n < 6 || m+n > 128 {
+		c.Set("Error", "用户名或密码长度不符合要求")
+		return
+	}
+
+	exp := regexp.MustCompile("^[0-9a-zA-Z\u3040-\u309F\u30A0-\u30FF\u4E00-\u9FA5\uF900-\uFA2D]+$")
+	if !exp.MatchString(rq.Username) {
+		c.Set("Error", "用户名禁止使用特殊字符")
 		return
 	}
 
