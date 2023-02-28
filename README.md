@@ -6,8 +6,8 @@
 
 - 支持管理多个云账号资源
 
-  - **腾讯云**（含国际版）：DNSPod、CVM、Lighthouse
-  - **阿里云**（含国际版）：AliDNS (*doing*)、ECS、SWAS
+  - **腾讯云**（*含国际版*）：DNSPod、CVM、Lighthouse
+  - **阿里云**（*含国际版*）：AliDNS (*doing*)、ECS、SWAS
   - **CloudFlare**：DNS、Custom Hostnames
 
 - 支持添加子节点 (`TDP Worker`)
@@ -17,7 +17,7 @@
   - **Windows**：部分功能
   - **Android**：有限支持
 
-- 支持自动签发基于`ACME`协议的SSL证书
+- 支持自动签发`SSL证书`，CA对比参见[使用指引](#使用指引)
 
   - **Let's Encrypt**
   - **Bubpass**
@@ -25,7 +25,7 @@
   - **SSL.com**
   - **ZeroSSL**
 
-- 支持 `WebSSH` 终端及密钥对管理
+- 支持 `WebSSH` 终端及`密钥对`管理
 
 ## 使用指引
 
