@@ -18,6 +18,11 @@ func register(c *gin.Context) {
 		return
 	}
 
+	if len(rq.Username) < 4 || len(rq.Password) < 6 {
+		c.Set("Error", "账号或密码长度不足")
+		return
+	}
+
 	rq.Level = 0 //防止逃逸
 
 	if id, err := user.Create(rq); err == nil {
