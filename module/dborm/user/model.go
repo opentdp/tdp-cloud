@@ -11,6 +11,7 @@ import (
 type CreateParam struct {
 	Username string `binding:"required"`
 	Password string `binding:"required"`
+	Email    string `binding:"required"`
 	Level    uint
 }
 
@@ -24,6 +25,7 @@ func Create(data *CreateParam) (uint, error) {
 		AppId:    uuid.NewString(),
 		Username: data.Username,
 		Password: data.Password,
+		Email:    data.Email,
 	}
 
 	result := dborm.Db.Create(item)
@@ -37,6 +39,7 @@ func Create(data *CreateParam) (uint, error) {
 type UpdateParam struct {
 	Id          uint
 	Password    string
+	Email       string
 	Description string
 	Level       uint
 }
@@ -54,6 +57,7 @@ func Update(data *UpdateParam) error {
 		Updates(dborm.User{
 			Password:    data.Password,
 			Description: data.Description,
+			Email:       data.Email,
 		})
 
 	return result.Error
@@ -88,6 +92,7 @@ type FetchParam struct {
 	Id       uint
 	AppId    string
 	Username string
+	Email    string
 }
 
 func Fetch(data *FetchParam) (*dborm.User, error) {
@@ -99,6 +104,7 @@ func Fetch(data *FetchParam) (*dborm.User, error) {
 			Id:       data.Id,
 			AppId:    data.AppId,
 			Username: data.Username,
+			Email:    data.Email,
 		}).
 		First(&item)
 

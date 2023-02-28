@@ -8,7 +8,8 @@ Content-Type: application/json
 
 {
     "Username":"{{$dotenv TDP_USERNAME}}",
-    "Password": "{{$dotenv TDP_PASSWORD}}"
+    "Password": "{{$dotenv TDP_PASSWORD}}",
+    "Email": "admin@tdp.icu"
 }
 
 ### 登录账号
@@ -30,6 +31,7 @@ Origin: {{$dotenv TDP_ORIGIN}}
 Content-Type: application/json
 
 {
+    "Email": "admin2@tdp.icu",
     "Description": "不可能！我的代码怎么可能会有Bug！"
 }
 

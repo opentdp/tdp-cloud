@@ -89,9 +89,9 @@ type Machine struct {
 	OSType      string
 	Region      string
 	Model       string
-	CloudId     string `gorm:"uniqueIndex"`
+	CloudId     string `gorm:"uniqueIndex,default:null"`
 	CloudMeta   any    `gorm:"serializer:json"`
-	WorkerId    string `gorm:"uniqueIndex"`
+	WorkerId    string `gorm:"uniqueIndex,default:null"`
 	WorkerMeta  any    `gorm:"serializer:json"`
 	Description string
 	Status      uint
@@ -149,7 +149,8 @@ type User struct {
 	Username    string `gorm:"uniqueIndex"`
 	Password    string `json:"-"`
 	Level       uint   `gorm:"default:5"`
-	Description string `gorm:"default:什么也没有"`
+	Email       string `gorm:"uniqueIndex,default:null"`
+	Description string `gorm:"default:挥一挥手"`
 	Sessions    []Session
 	Vendors     []Vendor
 	CreatedAt   int64
