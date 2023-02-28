@@ -15,10 +15,9 @@ type LoginParam struct {
 }
 
 type LoginResult struct {
-	AppId       string
-	Username    string
-	Description string
-	Token       string
+	Username string
+	AppId    string
+	Token    string
 }
 
 func Login(data *LoginParam) (*LoginResult, error) {
@@ -46,10 +45,9 @@ func Login(data *LoginParam) (*LoginResult, error) {
 	// 返回结果
 
 	res := &LoginResult{
-		AppId:       item.AppId,
-		Username:    item.Username,
-		Description: item.Description,
-		Token:       token,
+		Username: item.Username,
+		AppId:    item.AppId,
+		Token:    token,
 	}
 
 	return res, nil
