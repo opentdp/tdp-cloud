@@ -145,9 +145,9 @@ type Taskline struct {
 
 type User struct {
 	Id          uint   `gorm:"primaryKey"`
-	AppId       string `gorm:"uniqueIndex"`
 	Username    string `gorm:"uniqueIndex"`
 	Password    string `json:"-"`
+	AppId       string `gorm:"uniqueIndex"`
 	Level       uint   `gorm:"default:5"`
 	Email       string `gorm:"uniqueIndex,default:null"`
 	Description string `gorm:"default:挥一挥手"`

@@ -11,20 +11,22 @@ import (
 type CreateParam struct {
 	Username string `binding:"required"`
 	Password string `binding:"required"`
-	Email    string `binding:"required"`
 	Level    uint
+	Email    string `binding:"required"`
 }
 
 func Create(data *CreateParam) (uint, error) {
 
-	if data.Password != "" {
-		data.Password = HashPassword(data.Password)
+	err := CheckUser(data.Username, data.Password, data.Email)
+	if err != nil {
+		return 0, err
 	}
 
 	item := &dborm.User{
-		AppId:    uuid.NewString(),
 		Username: data.Username,
-		Password: data.Password,
+		Password: HashPassword(data.Password),
+		AppId:    uuid.NewString(),
+		Level:    data.Level,
 		Email:    data.Email,
 	}
 
@@ -39,12 +41,17 @@ func Create(data *CreateParam) (uint, error) {
 type UpdateParam struct {
 	Id          uint
 	Password    string
+	Level       uint
 	Email       string
 	Description string
-	Level       uint
 }
 
 func Update(data *UpdateParam) error {
+
+	err := CheckUser("", data.Password, data.Email)
+	if err != nil {
+		return err
+	}
 
 	if data.Password != "" {
 		data.Password = HashPassword(data.Password)
@@ -56,8 +63,9 @@ func Update(data *UpdateParam) error {
 		}).
 		Updates(dborm.User{
 			Password:    data.Password,
-			Description: data.Description,
+			Level:       data.Level,
 			Email:       data.Email,
+			Description: data.Description,
 		})
 
 	return result.Error

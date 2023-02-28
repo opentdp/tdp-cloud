@@ -23,6 +23,7 @@ func v100001AddUser() error {
 	_, err := user.Create(&user.CreateParam{
 		Username: "admin",
 		Password: "123456",
+		Email:    "admin@tdp.icu",
 		Level:    1,
 	})
 
