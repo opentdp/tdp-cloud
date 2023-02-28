@@ -25,17 +25,18 @@ func New() {
 
 	// 创建全局接口
 	global = zap.New(core)
-	defer global.Sync()
 
 	// 创建通用接口
 	origin = Named("origin").Sugar()
 
 }
 
+func Sync() error {
+	return global.Sync()
+}
+
 func Named(n string) *zap.Logger {
-
 	return global.Named(n)
-
 }
 
 func getEncoder() zapcore.Encoder {
