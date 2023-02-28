@@ -13,4 +13,18 @@ Origin: {{$dotenv TDP_ORIGIN}}
     "Payload": {}
 }
 
-###
+### 获取实例信息
+
+POST {{$dotenv TDP_API_BASE}}/tencent/1
+Authorization: {{$dotenv TDP_AUTHORIZATION}}
+Origin: {{$dotenv TDP_ORIGIN}}
+
+{
+    "Service": "cvm",
+    "Version": "2017-03-12",
+    "Action": "DescribeInstances",
+    "Region": "ap-shanghai",
+    "Payload": {
+        "Limit": 100
+    }
+}
