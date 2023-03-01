@@ -17,11 +17,6 @@ type CreateParam struct {
 
 func Create(data *CreateParam) (uint, error) {
 
-	err := CheckUser(data.Username, data.Password, data.Email)
-	if err != nil {
-		return 0, err
-	}
-
 	item := &dborm.User{
 		Username: data.Username,
 		Password: HashPassword(data.Password),
@@ -47,11 +42,6 @@ type UpdateParam struct {
 }
 
 func Update(data *UpdateParam) error {
-
-	err := CheckUser("", data.Password, data.Email)
-	if err != nil {
-		return err
-	}
 
 	if data.Password != "" {
 		data.Password = HashPassword(data.Password)
