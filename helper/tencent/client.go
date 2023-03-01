@@ -54,7 +54,7 @@ func newClient(rq *Params) (*th.CommonResponse, error) {
 	// 按地域设置接口
 	if rq.Endpoint != "" {
 		cpf.HttpProfile.Endpoint = rq.Endpoint // 完整域名
-	} else if rq.Region != "" && strings.HasSuffix(rq.Region, "-ec") {
+	} else if rq.Region != "" && !strings.HasSuffix(rq.Region, "-ec") {
 		cpf.HttpProfile.Endpoint = rq.Service + "." + rq.Region + "." + th.RootDomain
 	}
 
