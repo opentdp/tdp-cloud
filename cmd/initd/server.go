@@ -6,6 +6,6 @@ import (
 
 func init() {
 
-	viper.SetDefault("server.register", true)
+	viper.SetDefault("server.register", false)
 
 }
