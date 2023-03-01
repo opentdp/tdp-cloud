@@ -41,11 +41,6 @@ func newClient(rq *Params) (*th.CommonResponse, error) {
 	// 调试开关
 	cpf.Debug = viper.GetBool("debug")
 
-	// 接口根域名
-	if rq.RootDomain == "" {
-		rq.RootDomain = "tencentcloudapi.com"
-	}
-
 	// 网络错误重试
 	cpf.NetworkFailureMaxRetries = 2
 
@@ -54,15 +49,13 @@ func newClient(rq *Params) (*th.CommonResponse, error) {
 
 	// 启用地域容灾
 	cpf.DisableRegionBreaker = false
-	cpf.BackupEndpoint = "ap-hongkong." + rq.RootDomain
+	cpf.BackupEndpoint = "ap-hongkong." + th.RootDomain
 
 	// 按地域设置接口
 	if rq.Endpoint != "" {
-		cpf.HttpProfile.Endpoint = rq.Service + "." + rq.Endpoint + "." + rq.RootDomain
-	} else if rq.Region != "" {
-		cpf.HttpProfile.Endpoint = rq.Service + "." + rq.Region + "." + rq.RootDomain
-	} else {
-		cpf.HttpProfile.RootDomain = rq.RootDomain
+		cpf.HttpProfile.Endpoint = rq.Endpoint // 完整域名
+	} else if rq.Region != "" && strings.HasSuffix(rq.Region, "-ec") {
+		cpf.HttpProfile.Endpoint = rq.Service + "." + rq.Region + "." + th.RootDomain
 	}
 
 	// 初始化客户端
