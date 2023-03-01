@@ -10,6 +10,14 @@ func Router(api *gin.RouterGroup) {
 
 	rg := api.Group("/")
 
+	// 匿名接口
+
+	{
+		rg.GET("/config/ui", ui_option)
+	}
+
+	// 需授权接口
+
 	rg.Use(midware.AuthGuard())
 
 	{

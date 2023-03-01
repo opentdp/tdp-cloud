@@ -3,6 +3,7 @@ package config
 import (
 	"github.com/gin-gonic/gin"
 	"github.com/spf13/cast"
+	"github.com/spf13/viper"
 
 	"tdp-cloud/module/dborm/config"
 )
@@ -122,5 +123,17 @@ func delete(c *gin.Context) {
 	} else {
 		c.Set("Error", err)
 	}
+
+}
+
+// 获取前端配置
+
+func ui_option(c *gin.Context) {
+
+	option := gin.H{
+		"register": viper.GetBool("server.register"),
+	}
+
+	c.Set("Payload", option)
 
 }
