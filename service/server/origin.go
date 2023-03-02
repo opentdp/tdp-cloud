@@ -1,8 +1,6 @@
 package server
 
 import (
-	"strings"
-
 	"github.com/kardianos/service"
 	"github.com/spf13/viper"
 
@@ -35,15 +33,10 @@ func (p *program) Stop(s service.Service) error {
 func (p *program) run() {
 
 	// 获取参数
-	dsn := viper.GetString("server.dsn")
 	listen := viper.GetString("server.listen")
 
-	if !strings.HasPrefix(dsn, "/") {
-		dsn = viper.GetString("dataset.dir") + "/" + dsn
-	}
-
 	// 连接数据库
-	dborm.Connect(dsn)
+	dborm.Connect()
 
 	// 实施自动迁移
 	migrator.Deploy()
