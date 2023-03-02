@@ -9,20 +9,26 @@ import (
 // 创建用户
 
 type CreateParam struct {
-	Username string `binding:"required"`
-	Password string `binding:"required"`
-	Level    uint
-	Email    string `binding:"required"`
+	Username    string `binding:"required"`
+	Password    string `binding:"required"`
+	Level       uint
+	Email       string `binding:"required"`
+	Description string
 }
 
 func Create(data *CreateParam) (uint, error) {
 
+	if data.Password != "" {
+		data.Password = HashPassword(data.Password)
+	}
+
 	item := &dborm.User{
-		Username: data.Username,
-		Password: HashPassword(data.Password),
-		AppId:    uuid.NewString(),
-		Level:    data.Level,
-		Email:    data.Email,
+		Username:    data.Username,
+		Password:    data.Password,
+		AppId:       uuid.NewString(),
+		Level:       data.Level,
+		Email:       data.Email,
+		Description: data.Description,
 	}
 
 	result := dborm.Db.Create(item)
@@ -35,6 +41,7 @@ func Create(data *CreateParam) (uint, error) {
 
 type UpdateParam struct {
 	Id          uint
+	Username    string
 	Password    string
 	Level       uint
 	Email       string
@@ -52,6 +59,7 @@ func Update(data *UpdateParam) error {
 			Id: data.Id,
 		}).
 		Updates(dborm.User{
+			Username:    data.Username,
 			Password:    data.Password,
 			Level:       data.Level,
 			Email:       data.Email,
