@@ -60,13 +60,16 @@ func Login(data *LoginParam) (*LoginResult, error) {
 
 // 修改密码
 
-type UpdatePasswordParam struct {
+type UpdateInfoParam struct {
 	Id          uint
+	Username    string `binding:"required"`
+	Password    string
+	Email       string `binding:"required"`
+	Description string
 	OldPassword string `binding:"required"`
-	NewPassword string `binding:"required"`
 }
 
-func UpdatePassword(data *UpdatePasswordParam) error {
+func UpdateInfo(data *UpdateInfoParam) error {
 
 	item, _ := user.Fetch(&user.FetchParam{Id: data.Id})
 
@@ -78,12 +81,18 @@ func UpdatePassword(data *UpdatePasswordParam) error {
 	if !user.CheckPassword(item.Password, data.OldPassword) {
 		return errors.New("密码错误")
 	}
+	if err := user.CheckUser(data.Username, data.Password, data.Email); err != nil {
+		return err
+	}
 
-	// 更新密码
+	// 更新信息
 
 	return user.Update(&user.UpdateParam{
-		Id:       data.Id,
-		Password: data.NewPassword,
+		Id:          data.Id,
+		Username:    data.Username,
+		Password:    data.Password,
+		Email:       data.Email,
+		Description: data.Description,
 	})
 
 }

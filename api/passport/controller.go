@@ -85,36 +85,7 @@ func detail(c *gin.Context) {
 
 func updateInfo(c *gin.Context) {
 
-	var rq *user.UpdateParam
-
-	if err := c.ShouldBind(&rq); err != nil {
-		c.Set("Error", err)
-		return
-	}
-
-	rq.Level = 0     //防止逃逸
-	rq.Password = "" //禁止修改
-	rq.Id = c.GetUint("UserId")
-
-	// 校验用户信息
-	if err := user.CheckUser("", "", rq.Email); err != nil {
-		c.Set("Error", err)
-		return
-	}
-
-	if err := user.Update(rq); err == nil {
-		c.Set("Message", "修改成功")
-	} else {
-		c.Set("Error", err)
-	}
-
-}
-
-// 修改密码
-
-func updatePassword(c *gin.Context) {
-
-	var rq *passport.UpdatePasswordParam
+	var rq *passport.UpdateInfoParam
 
 	if err := c.ShouldBind(&rq); err != nil {
 		c.Set("Error", err)
@@ -123,14 +94,7 @@ func updatePassword(c *gin.Context) {
 
 	rq.Id = c.GetUint("UserId")
 
-	// 校验用户信息
-	me, _ := user.Fetch(&user.FetchParam{Id: rq.Id})
-	if err := user.CheckUser(me.Username, rq.NewPassword, ""); err != nil {
-		c.Set("Error", err)
-		return
-	}
-
-	if err := passport.UpdatePassword(rq); err == nil {
+	if err := passport.UpdateInfo(rq); err == nil {
 		c.Set("Message", "修改成功")
 	} else {
 		c.Set("Error", err)
