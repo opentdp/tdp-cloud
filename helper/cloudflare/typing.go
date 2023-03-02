@@ -4,8 +4,6 @@ import (
 	"encoding/json"
 )
 
-const endpoint = "https://api.cloudflare.com/client/v4"
-
 type Params struct {
 	Token   string `note:"Api Token"`
 	Method  string `binding:"required"`
