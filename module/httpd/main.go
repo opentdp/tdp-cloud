@@ -1,7 +1,6 @@
 package httpd
 
 import (
-	"embed"
 	"io/fs"
 	"net/http"
 
@@ -9,10 +8,11 @@ import (
 	"github.com/spf13/viper"
 
 	"tdp-cloud/api"
+	"tdp-cloud/cmd/args"
 	"tdp-cloud/module/midware"
 )
 
-func Start(addr string, efs *embed.FS) {
+func Start() {
 
 	if viper.GetBool("debug") {
 		gin.SetMode(gin.DebugMode)
@@ -20,11 +20,12 @@ func Start(addr string, efs *embed.FS) {
 		gin.SetMode(gin.ReleaseMode)
 	}
 
-	Server(addr, Engine(efs))
+	addr := viper.GetString("server.listen")
+	Server(addr, Engine())
 
 }
 
-func Engine(efs *embed.FS) *gin.Engine {
+func Engine() *gin.Engine {
 
 	// 初始化
 	engine := gin.New()
@@ -35,7 +36,7 @@ func Engine(efs *embed.FS) *gin.Engine {
 	api.Router(engine)
 
 	// 静态文件路由
-	fs, _ := fs.Sub(efs, "front")
+	fs, _ := fs.Sub(args.Efs, "front")
 	engine.StaticFS("/ui", http.FS(fs))
 
 	// 默认首页路由

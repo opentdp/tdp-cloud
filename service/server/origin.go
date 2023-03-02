@@ -2,9 +2,7 @@ package server
 
 import (
 	"github.com/kardianos/service"
-	"github.com/spf13/viper"
 
-	"tdp-cloud/cmd/args"
 	"tdp-cloud/module/certbot"
 	"tdp-cloud/module/dborm"
 	"tdp-cloud/module/httpd"
@@ -32,9 +30,6 @@ func (p *program) Stop(s service.Service) error {
 
 func (p *program) run() {
 
-	// 获取参数
-	listen := viper.GetString("server.listen")
-
 	// 连接数据库
 	dborm.Connect()
 
@@ -45,6 +40,6 @@ func (p *program) run() {
 	certbot.Daemon()
 
 	// 启动HTTP服务
-	httpd.Start(listen, args.Efs)
+	httpd.Start()
 
 }
