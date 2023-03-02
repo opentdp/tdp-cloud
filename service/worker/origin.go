@@ -4,7 +4,6 @@ import (
 	"time"
 
 	"github.com/kardianos/service"
-	"github.com/spf13/viper"
 
 	"tdp-cloud/module/worker"
 )
@@ -32,9 +31,7 @@ func (p *program) run() {
 
 	defer p.timer()
 
-	remote := viper.GetString("worker.remote")
-
-	if err := worker.Daemon(remote); err != nil {
+	if err := worker.Daemon(); err != nil {
 		svclog.Error(err)
 	}
 

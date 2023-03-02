@@ -4,18 +4,18 @@ import (
 	"os"
 	"time"
 
-	"github.com/spf13/viper"
 	"go.uber.org/zap"
 	"go.uber.org/zap/zapcore"
 	"gopkg.in/natefinch/lumberjack.v2"
+
+	"tdp-cloud/cmd/args"
 )
 
 var global *zap.Logger
 
 func New() {
 
-	lvl := viper.GetString("logger.level")
-	level, err := zapcore.ParseLevel(lvl)
+	level, err := zapcore.ParseLevel(args.Logger.Level)
 
 	if err != nil {
 		level = zap.WarnLevel
@@ -52,8 +52,8 @@ func getEncoder() zapcore.Encoder {
 
 func getWriter() zapcore.WriteSyncer {
 
-	tofile := viper.GetBool("logger.tofile")
-	stdout := viper.GetBool("logger.stdout")
+	tofile := args.Logger.ToFile
+	stdout := args.Logger.Stdout
 
 	if tofile && stdout {
 		return zapcore.NewMultiWriteSyncer(
@@ -72,7 +72,7 @@ func getWriter() zapcore.WriteSyncer {
 
 func fileWriter() *lumberjack.Logger {
 
-	logFile := viper.GetString("logger.dir") + "/output.log"
+	logFile := args.Logger.Dir + "/output.log"
 
 	return &lumberjack.Logger{
 		Filename:   logFile, // 日志文件位置

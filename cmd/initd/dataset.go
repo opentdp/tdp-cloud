@@ -3,18 +3,12 @@ package initd
 import (
 	"os"
 
-	"github.com/spf13/viper"
+	"tdp-cloud/cmd/args"
 )
-
-func init() {
-
-	viper.SetDefault("dataset.dir", ".")
-
-}
 
 func Dataset() {
 
-	datadir := viper.GetString("dataset.dir")
+	datadir := args.Dataset.Dir
 
 	if datadir != "" && datadir != "." {
 		os.MkdirAll(datadir, 0755)

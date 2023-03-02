@@ -6,8 +6,8 @@ import (
 	"strings"
 
 	"github.com/caddyserver/certmagic"
-	"github.com/spf13/viper"
 
+	"tdp-cloud/cmd/args"
 	"tdp-cloud/helper/logman"
 	"tdp-cloud/helper/strutil"
 )
@@ -55,7 +55,7 @@ func CreateMagic() *certmagic.Config {
 
 	config := certmagic.Config{
 		Storage: &certmagic.FileStorage{
-			Path: viper.GetString("dataset.dir") + "/certmagic",
+			Path: args.Dataset.Dir + "/certmagic",
 		},
 		Logger:  logman.Named("cert.magic"),
 		OnEvent: magicEvent,

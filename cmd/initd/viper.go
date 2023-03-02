@@ -2,13 +2,16 @@ package initd
 
 import (
 	"log"
+	"tdp-cloud/cmd/args"
 
 	"github.com/spf13/viper"
-
-	"tdp-cloud/cmd/args"
 )
 
+var ViperFile = ""
+
 func Viper() {
+
+	defer args.Sync()
 
 	// 环境变量
 
@@ -17,14 +20,14 @@ func Viper() {
 
 	// 忽略配置
 
-	if args.ConfigFile == "" {
+	if ViperFile == "" {
 		return
 	}
 
 	// 写入配置
 
-	viper.SetConfigFile(args.ConfigFile)
-	viper.SafeWriteConfigAs(args.ConfigFile)
+	viper.SetConfigFile(ViperFile)
+	viper.SafeWriteConfigAs(ViperFile)
 
 	// 读取配置
 

@@ -6,8 +6,8 @@ import (
 	"github.com/libdns/cloudflare"
 	"github.com/libdns/tencentcloud"
 	"github.com/mholt/acmez/acme"
-	"github.com/spf13/viper"
 
+	"tdp-cloud/cmd/args"
 	"tdp-cloud/helper/logman"
 )
 
@@ -21,7 +21,7 @@ func newIssuer(rq *Params) *certmagic.ACMEIssuer {
 		Logger:                  logman.Named("cert.issuer"),
 	}
 
-	if viper.GetBool("debug") {
+	if args.Debug {
 		rq.CaType = "debug" //调试模式强制重写
 	}
 

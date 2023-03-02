@@ -2,8 +2,8 @@ package passport
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/spf13/viper"
 
+	"tdp-cloud/cmd/args"
 	"tdp-cloud/module/dborm/passport"
 	"tdp-cloud/module/dborm/user"
 )
@@ -20,7 +20,7 @@ func register(c *gin.Context) {
 	}
 
 	// 是否禁止注册
-	if !viper.GetBool("server.register") {
+	if !args.Server.Register {
 		c.Set("Error", "抱歉，已关闭注册功能")
 		return
 	}

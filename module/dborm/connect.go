@@ -4,11 +4,11 @@ import (
 	"strings"
 
 	"github.com/glebarez/sqlite"
-	"github.com/spf13/viper"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 	"gorm.io/gorm/schema"
 
+	"tdp-cloud/cmd/args"
 	"tdp-cloud/helper/logman"
 )
 
@@ -33,7 +33,7 @@ func Connect() {
 
 func dialector() gorm.Dialector {
 
-	switch viper.GetString("database.type") {
+	switch args.Database.Type {
 	case "sqlite":
 		return dsn_sqlite()
 	case "mysql":
@@ -46,9 +46,9 @@ func dialector() gorm.Dialector {
 
 func dsn_sqlite() gorm.Dialector {
 
-	dir := viper.GetString("dataset.dir")
-	name := viper.GetString("database.name")
-	pragma := viper.GetString("database.param")
+	dir := args.Dataset.Dir
+	name := args.Database.Name
+	pragma := args.Database.Pragma
 
 	dsn := dir + "/" + name + pragma
 
@@ -62,11 +62,11 @@ func dsn_sqlite() gorm.Dialector {
 
 func dsn_mysql() gorm.Dialector {
 
-	host := viper.GetString("database.host")
-	user := viper.GetString("database.user")
-	passwd := viper.GetString("database.passwd")
-	name := viper.GetString("database.name")
-	pragma := viper.GetString("database.param")
+	host := args.Database.Host
+	user := args.Database.User
+	passwd := args.Database.Passwd
+	name := args.Database.Name
+	pragma := args.Database.Pragma
 
 	dsn := user + ":" + passwd + "@tcp(" + host + ")/" + name + pragma
 
@@ -80,7 +80,7 @@ func dsn_mysql() gorm.Dialector {
 
 func dsn_cli() gorm.Dialector {
 
-	dsn := viper.GetString("server.dsn")
+	dsn := args.Server.DSN
 
 	// mysql
 
@@ -94,7 +94,7 @@ func dsn_cli() gorm.Dialector {
 	// sqlite
 
 	if !strings.HasPrefix(dsn, "/") {
-		dsn = viper.GetString("dataset.dir") + "/" + dsn
+		dsn = args.Dataset.Dir + "/" + dsn
 	}
 	if !strings.Contains(dsn, "?") {
 		dsn += "?_pragma=busy_timeout=5000&_pragma=journa_mode(WAL)"

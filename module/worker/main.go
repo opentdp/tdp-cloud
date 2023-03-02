@@ -3,6 +3,7 @@ package worker
 import (
 	"net/http"
 
+	"tdp-cloud/cmd/args"
 	"tdp-cloud/helper/logman"
 	"tdp-cloud/helper/psutil"
 	"tdp-cloud/helper/socket"
@@ -28,7 +29,9 @@ type SendPod struct {
 	*socket.JsonPod
 }
 
-func Daemon(ws string) error {
+func Daemon() error {
+
+	ws := args.Worker.Remote
 
 	info := psutil.Summary()
 	cloudId := psutil.CloudInstanceId()

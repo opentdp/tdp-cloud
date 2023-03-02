@@ -27,7 +27,7 @@ func init() {
 
 	// 全局参数
 
-	rcmd.PersistentFlags().StringVarP(&args.ConfigFile, "config", "c", "", "配置文件路径")
+	rcmd.PersistentFlags().StringVarP(&initd.ViperFile, "config", "c", "", "配置文件路径")
 
 }
 

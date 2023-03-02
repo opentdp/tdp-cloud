@@ -7,12 +7,13 @@ import (
 	"strings"
 
 	"github.com/mitchellh/mapstructure"
-	"github.com/spf13/viper"
 
 	tc "github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/common"
 	te "github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/common/errors"
 	th "github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/common/http"
 	tp "github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/common/profile"
+
+	"tdp-cloud/cmd/args"
 )
 
 func Request(rq *Params) (any, error) {
@@ -39,7 +40,7 @@ func newClient(rq *Params) (*th.CommonResponse, error) {
 	cpf := tp.NewClientProfile()
 
 	// 调试开关
-	cpf.Debug = viper.GetBool("debug")
+	cpf.Debug = args.Debug
 
 	// 网络错误重试
 	cpf.NetworkFailureMaxRetries = 2

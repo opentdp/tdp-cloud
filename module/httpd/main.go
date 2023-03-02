@@ -5,7 +5,6 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
-	"github.com/spf13/viper"
 
 	"tdp-cloud/api"
 	"tdp-cloud/cmd/args"
@@ -14,14 +13,13 @@ import (
 
 func Start() {
 
-	if viper.GetBool("debug") {
+	if args.Debug {
 		gin.SetMode(gin.DebugMode)
 	} else {
 		gin.SetMode(gin.ReleaseMode)
 	}
 
-	addr := viper.GetString("server.listen")
-	Server(addr, Engine())
+	Server(args.Server.Listen, Engine())
 
 }
 
