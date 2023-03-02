@@ -26,7 +26,7 @@ func Sync() {
 	Database.User = viper.GetString("database.user")
 	Database.Passwd = viper.GetString("database.passwd")
 	Database.Name = viper.GetString("database.name")
-	Database.Pragma = viper.GetString("database.pragma")
+	Database.Option = viper.GetString("database.option")
 
 	Logger.Dir = viper.GetString("logger.dir")
 	Logger.Level = viper.GetString("logger.level")

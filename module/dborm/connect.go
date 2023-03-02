@@ -48,9 +48,9 @@ func dsn_sqlite() gorm.Dialector {
 
 	dir := args.Dataset.Dir
 	name := args.Database.Name
-	pragma := args.Database.Pragma
+	option := args.Database.Option
 
-	dsn := dir + "/" + name + pragma
+	dsn := dir + "/" + name + option
 
 	if !strings.Contains(dsn, "?") {
 		dsn += "?_pragma=busy_timeout=5000&_pragma=journa_mode(WAL)"
@@ -66,12 +66,12 @@ func dsn_mysql() gorm.Dialector {
 	user := args.Database.User
 	passwd := args.Database.Passwd
 	name := args.Database.Name
-	pragma := args.Database.Pragma
+	option := args.Database.Option
 
-	dsn := user + ":" + passwd + "@tcp(" + host + ")/" + name + pragma
+	dsn := user + ":" + passwd + "@tcp(" + host + ")/" + name + option
 
 	if !strings.Contains(dsn, "?") {
-		pragma = "?charset=utf8mb4&parseTime=True&loc=Local"
+		dsn += "?charset=utf8mb4&parseTime=True&loc=Local"
 	}
 
 	return mysql.Open(dsn)

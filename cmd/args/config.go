@@ -12,7 +12,7 @@ var Database struct {
 	User   string
 	Passwd string
 	Name   string
-	Pragma string
+	Option string
 }
 
 var Logger struct {
