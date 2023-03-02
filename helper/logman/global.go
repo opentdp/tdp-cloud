@@ -52,18 +52,14 @@ func getEncoder() zapcore.Encoder {
 
 func getWriter() zapcore.WriteSyncer {
 
-	tofile := args.Logger.ToFile
-	stdout := args.Logger.Stdout
-
-	if tofile && stdout {
-		return zapcore.NewMultiWriteSyncer(
-			zapcore.AddSync(fileWriter()),
-			zapcore.AddSync(os.Stdout),
-		)
-	}
-
-	if tofile && !stdout {
-		return zapcore.AddSync(fileWriter())
+	if args.Logger.ToFile {
+		fw := zapcore.AddSync(fileWriter())
+		if args.Logger.Stdout {
+			return zapcore.NewMultiWriteSyncer(
+				zapcore.AddSync(os.Stdout), fw,
+			)
+		}
+		return fw
 	}
 
 	return zapcore.AddSync(os.Stdout)
