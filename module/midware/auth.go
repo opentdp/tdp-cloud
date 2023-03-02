@@ -3,7 +3,7 @@ package midware
 import (
 	"github.com/gin-gonic/gin"
 
-	"tdp-cloud/module/dborm/session"
+	"tdp-cloud/module/model/session"
 )
 
 func AuthGuard() gin.HandlerFunc {

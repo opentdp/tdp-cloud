@@ -3,8 +3,8 @@ package passport
 import (
 	"errors"
 
-	"tdp-cloud/module/dborm/session"
-	"tdp-cloud/module/dborm/user"
+	"tdp-cloud/module/model/session"
+	"tdp-cloud/module/model/user"
 )
 
 // 登录账号

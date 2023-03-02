@@ -3,7 +3,7 @@ package certbot
 import (
 	"tdp-cloud/helper/certmagic"
 	"tdp-cloud/module/dborm"
-	"tdp-cloud/module/dborm/certjob"
+	"tdp-cloud/module/model/certjob"
 )
 
 func NewById(userId, id uint) {

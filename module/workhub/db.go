@@ -2,8 +2,8 @@ package workhub
 
 import (
 	"tdp-cloud/helper/command"
-	"tdp-cloud/module/dborm/machine"
-	"tdp-cloud/module/dborm/taskline"
+	"tdp-cloud/module/model/machine"
+	"tdp-cloud/module/model/taskline"
 )
 
 // 更新主机

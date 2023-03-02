@@ -4,7 +4,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/spf13/cast"
 
-	"tdp-cloud/module/dborm/vendor"
+	"tdp-cloud/module/model/vendor"
 )
 
 // 厂商列表

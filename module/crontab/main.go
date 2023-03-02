@@ -4,7 +4,7 @@ import (
 	cron "github.com/robfig/cron/v3"
 
 	"tdp-cloud/module/dborm"
-	"tdp-cloud/module/dborm/cronjob"
+	"tdp-cloud/module/model/cronjob"
 )
 
 func Daemon() {

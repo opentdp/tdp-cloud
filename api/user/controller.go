@@ -3,7 +3,7 @@ package user
 import (
 	"github.com/gin-gonic/gin"
 
-	"tdp-cloud/module/dborm/user"
+	"tdp-cloud/module/model/user"
 )
 
 // 用户列表

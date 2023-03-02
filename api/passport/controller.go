@@ -4,8 +4,8 @@ import (
 	"github.com/gin-gonic/gin"
 
 	"tdp-cloud/cmd/args"
-	"tdp-cloud/module/dborm/passport"
-	"tdp-cloud/module/dborm/user"
+	"tdp-cloud/module/model/passport"
+	"tdp-cloud/module/model/user"
 )
 
 // 注册用户

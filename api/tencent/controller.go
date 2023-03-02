@@ -8,7 +8,7 @@ import (
 	"github.com/spf13/cast"
 
 	"tdp-cloud/helper/tencent"
-	"tdp-cloud/module/dborm/vendor"
+	"tdp-cloud/module/model/vendor"
 )
 
 func apiProxy(c *gin.Context) {

@@ -5,7 +5,7 @@ import (
 	"github.com/spf13/cast"
 
 	"tdp-cloud/module/certbot"
-	"tdp-cloud/module/dborm/certjob"
+	"tdp-cloud/module/model/certjob"
 )
 
 // 计划列表

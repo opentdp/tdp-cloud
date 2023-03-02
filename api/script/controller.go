@@ -4,7 +4,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/spf13/cast"
 
-	"tdp-cloud/module/dborm/script"
+	"tdp-cloud/module/model/script"
 )
 
 // 脚本列表

@@ -5,7 +5,7 @@ import (
 	"github.com/spf13/cast"
 
 	"tdp-cloud/cmd/args"
-	"tdp-cloud/module/dborm/config"
+	"tdp-cloud/module/model/config"
 )
 
 // 配置列表

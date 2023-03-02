@@ -4,8 +4,8 @@ import (
 	"tdp-cloud/helper/certmagic"
 	"tdp-cloud/helper/logman"
 	"tdp-cloud/module/dborm"
-	"tdp-cloud/module/dborm/certjob"
-	"tdp-cloud/module/dborm/vendor"
+	"tdp-cloud/module/model/certjob"
+	"tdp-cloud/module/model/vendor"
 )
 
 func Daemon() {

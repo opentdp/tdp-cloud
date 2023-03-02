@@ -5,7 +5,7 @@ import (
 	"github.com/spf13/cast"
 
 	"tdp-cloud/module/crontab"
-	"tdp-cloud/module/dborm/cronjob"
+	"tdp-cloud/module/model/cronjob"
 )
 
 // 计划列表

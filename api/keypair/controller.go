@@ -4,7 +4,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/spf13/cast"
 
-	"tdp-cloud/module/dborm/keypair"
+	"tdp-cloud/module/model/keypair"
 )
 
 // 密钥列表

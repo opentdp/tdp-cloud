@@ -1,7 +1,7 @@
 package migrator
 
 import (
-	"tdp-cloud/module/dborm/user"
+	"tdp-cloud/module/model/user"
 )
 
 func v100001() error {

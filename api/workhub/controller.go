@@ -6,7 +6,7 @@ import (
 
 	"tdp-cloud/helper/command"
 	"tdp-cloud/helper/psutil"
-	"tdp-cloud/module/dborm/user"
+	"tdp-cloud/module/model/user"
 	"tdp-cloud/module/workhub"
 )
 

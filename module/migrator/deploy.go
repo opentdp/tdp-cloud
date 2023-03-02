@@ -2,7 +2,7 @@ package migrator
 
 import (
 	"tdp-cloud/helper/logman"
-	"tdp-cloud/module/dborm/config"
+	"tdp-cloud/module/model/config"
 )
 
 func Deploy() {

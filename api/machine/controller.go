@@ -4,7 +4,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/spf13/cast"
 
-	"tdp-cloud/module/dborm/machine"
+	"tdp-cloud/module/model/machine"
 )
 
 // 主机列表

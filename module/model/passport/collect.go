@@ -1,11 +1,11 @@
 package passport
 
 import (
-	"tdp-cloud/module/dborm/domain"
-	"tdp-cloud/module/dborm/keypair"
-	"tdp-cloud/module/dborm/machine"
-	"tdp-cloud/module/dborm/script"
-	"tdp-cloud/module/dborm/vendor"
+	"tdp-cloud/module/model/domain"
+	"tdp-cloud/module/model/keypair"
+	"tdp-cloud/module/model/machine"
+	"tdp-cloud/module/model/script"
+	"tdp-cloud/module/model/vendor"
 )
 
 // 统计信息
