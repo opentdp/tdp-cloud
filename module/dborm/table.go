@@ -7,7 +7,7 @@ type Certjob struct {
 	UserId    uint `gorm:"index"`
 	VendorId  uint
 	Email     string
-	Domain    string
+	Domain    string `gorm:"uniqueIndex"`
 	CaType    string
 	EabKeyId  string
 	EabMacKey string
