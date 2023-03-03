@@ -10,6 +10,12 @@ import (
 
 func Daemon() {
 
+	go RunJobs()
+
+}
+
+func RunJobs() {
+
 	jobs, err := certjob.FetchAll(&certjob.FetchAllParam{})
 
 	if err != nil || len(jobs) == 0 {

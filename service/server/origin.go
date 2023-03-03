@@ -40,6 +40,6 @@ func (p *program) run() {
 	certbot.Daemon()
 
 	// 启动HTTP服务
-	httpd.Start()
+	httpd.Daemon()
 
 }

@@ -11,7 +11,7 @@ import (
 	"tdp-cloud/module/midware"
 )
 
-func Start() {
+func Daemon() {
 
 	if args.Debug {
 		gin.SetMode(gin.DebugMode)
