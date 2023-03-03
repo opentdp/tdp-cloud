@@ -19,6 +19,7 @@ type LoginParam struct {
 type LoginResult struct {
 	Username string
 	AppId    string
+	Email    string
 	Token    string
 }
 
@@ -51,6 +52,7 @@ func Login(data *LoginParam) (*LoginResult, error) {
 	res := &LoginResult{
 		Username: item.Username,
 		AppId:    item.AppId,
+		Email:    item.Email,
 		Token:    token,
 	}
 

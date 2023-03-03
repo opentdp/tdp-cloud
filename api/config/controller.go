@@ -131,7 +131,7 @@ func delete(c *gin.Context) {
 func ui_option(c *gin.Context) {
 
 	option := gin.H{
-		"register": args.Server.Register,
+		"Register": args.Server.Register,
 	}
 
 	c.Set("Payload", option)
