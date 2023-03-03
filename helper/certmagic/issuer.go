@@ -7,22 +7,17 @@ import (
 	"github.com/libdns/tencentcloud"
 	"github.com/mholt/acmez/acme"
 
-	"tdp-cloud/cmd/args"
 	"tdp-cloud/helper/logman"
 )
 
-func newIssuer(rq *Params) *certmagic.ACMEIssuer {
+func newIssuer(rq *Params) certmagic.ACMEIssuer {
 
-	issuer := &certmagic.ACMEIssuer{
+	issuer := certmagic.ACMEIssuer{
 		Agreed:                  true,
 		DisableHTTPChallenge:    true,
 		DisableTLSALPNChallenge: true,
 		Email:                   rq.Email,
 		Logger:                  logman.Named("cert.issuer"),
-	}
-
-	if args.Debug {
-		rq.CaType = "debug" //调试模式强制重写
 	}
 
 	//Ref: https://github.com/acmesh-official/acme.sh/wiki/Server
@@ -50,6 +45,8 @@ func newIssuer(rq *Params) *certmagic.ACMEIssuer {
 			MACKey: rq.EabMacKey,
 		}
 	}
+
+	//Ref: https://github.com/libdns/libdns
 
 	switch rq.Provider {
 	case "alibaba":

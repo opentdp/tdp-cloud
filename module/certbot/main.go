@@ -1,6 +1,7 @@
 package certbot
 
 import (
+	"tdp-cloud/cmd/args"
 	"tdp-cloud/helper/certmagic"
 	"tdp-cloud/helper/logman"
 	"tdp-cloud/module/dborm"
@@ -37,6 +38,10 @@ func NewByJob(job *dborm.Certjob) error {
 	if err != nil || vendor.Id == 0 {
 		logman.Error("Certjob Ignore Domain:", job.Domain)
 		return err
+	}
+
+	if args.Debug {
+		job.CaType = "debug" //调试模式强制重写
 	}
 
 	return certmagic.Manage(&certmagic.Params{
