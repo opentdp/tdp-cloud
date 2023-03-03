@@ -5,12 +5,13 @@ package dborm
 type Certjob struct {
 	Id        uint `gorm:"primaryKey"`
 	UserId    uint `gorm:"index"`
-	VendorId  uint
+	VendorId  uint `gorm:"index"`
 	Email     string
 	Domain    string `gorm:"uniqueIndex"`
 	CaType    string
 	EabKeyId  string
 	EabMacKey string
+	History   string
 	CreatedAt int64
 	UpdatedAt int64
 }
@@ -53,7 +54,7 @@ type Cronjob struct {
 type Domain struct {
 	Id          uint `gorm:"primaryKey"`
 	UserId      uint `gorm:"index"`
-	VendorId    uint
+	VendorId    uint `gorm:"index"`
 	Name        string
 	NSList      string
 	Model       string
@@ -83,7 +84,7 @@ type Keypair struct {
 type Machine struct {
 	Id          uint `gorm:"primaryKey"`
 	UserId      uint `gorm:"index"`
-	VendorId    uint
+	VendorId    uint `gorm:"index"`
 	HostName    string
 	IpAddress   string
 	OSType      string
@@ -146,15 +147,15 @@ type Taskline struct {
 // 用户
 
 type User struct {
-	Id          uint   `gorm:"primaryKey"`
-	Username    string `gorm:"uniqueIndex"`
-	Password    string `json:"-"`
-	AppId       string `gorm:"uniqueIndex"`
-	Level       uint   `gorm:"default:5"`
-	Email       string `gorm:"uniqueIndex,default:null"`
-	Description string `gorm:"default:挥一挥手"`
-	Sessions    []Session
-	Vendors     []Vendor
+	Id          uint      `gorm:"primaryKey"`
+	Username    string    `gorm:"uniqueIndex"`
+	Password    string    `json:"-"`
+	AppId       string    `gorm:"uniqueIndex"`
+	Level       uint      `gorm:"default:5"`
+	Email       string    `gorm:"uniqueIndex,default:null"`
+	Description string    `gorm:"default:挥一挥手"`
+	Sessions    []Session `json:",omitempty"`
+	Vendors     []Vendor  `json:",omitempty"`
 	CreatedAt   int64
 	UpdatedAt   int64
 }
@@ -168,9 +169,9 @@ type Vendor struct {
 	SecretKey   string `json:"-"`
 	Provider    string
 	Description string
-	Certjobs    []Certjob
-	Domains     []Domain
-	Machines    []Machine
+	Certjobs    []Certjob `json:",omitempty"`
+	Domains     []Domain  `json:",omitempty"`
+	Machines    []Machine `json:",omitempty"`
 	CreatedAt   int64
 	UpdatedAt   int64
 }
