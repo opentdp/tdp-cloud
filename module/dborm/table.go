@@ -11,7 +11,7 @@ type Certjob struct {
 	CaType    string
 	EabKeyId  string
 	EabMacKey string
-	History   string
+	History   any `gorm:"serializer:json"`
 	CreatedAt int64
 	UpdatedAt int64
 }

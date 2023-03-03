@@ -45,6 +45,7 @@ type UpdateParam struct {
 	CaType    string
 	EabKeyId  string
 	EabMacKey string
+	History   any
 }
 
 func Update(data *UpdateParam) error {
@@ -53,6 +54,7 @@ func Update(data *UpdateParam) error {
 		Where(&dborm.Certjob{
 			Id:     data.Id,
 			UserId: data.UserId,
+			Domain: data.Domain,
 		}).
 		Updates(dborm.Certjob{
 			VendorId:  data.VendorId,
@@ -61,6 +63,7 @@ func Update(data *UpdateParam) error {
 			CaType:    data.CaType,
 			EabKeyId:  data.EabKeyId,
 			EabMacKey: data.EabMacKey,
+			History:   data.History,
 		})
 
 	return result.Error
@@ -72,6 +75,7 @@ func Update(data *UpdateParam) error {
 type DeleteParam struct {
 	Id     uint
 	UserId uint
+	Domain string
 }
 
 func Delete(data *DeleteParam) error {
@@ -92,6 +96,7 @@ func Delete(data *DeleteParam) error {
 type FetchParam struct {
 	Id     uint
 	UserId uint
+	Domain string
 }
 
 func Fetch(data *FetchParam) (*dborm.Certjob, error) {

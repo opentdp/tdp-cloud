@@ -57,3 +57,14 @@ func CertById(userId, id uint) (*certinfo, error) {
 	return nil, err
 
 }
+
+func SetHistory(evt string, data map[string]any) {
+
+	data["event"] = evt
+
+	certjob.Update(&certjob.UpdateParam{
+		Domain:  data["identifier"].(string),
+		History: data,
+	})
+
+}

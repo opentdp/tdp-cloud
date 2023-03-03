@@ -11,6 +11,8 @@ import (
 
 func Daemon() {
 
+	certmagic.CertEvent = SetHistory
+
 	go RunJobs()
 
 }
