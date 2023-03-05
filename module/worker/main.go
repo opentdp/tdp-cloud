@@ -4,10 +4,10 @@ import (
 	"net/http"
 
 	"tdp-cloud/cmd/args"
+	"tdp-cloud/helper/crypto"
 	"tdp-cloud/helper/logman"
 	"tdp-cloud/helper/psutil"
 	"tdp-cloud/helper/socket"
-	"tdp-cloud/helper/strutil"
 )
 
 type SocketData struct {
@@ -35,7 +35,7 @@ func Daemon() error {
 
 	info := psutil.Summary()
 	cloudId := psutil.CloudInstanceId()
-	workerId := strutil.Md5(info.HostId)
+	workerId := crypto.Md5ToString(info.HostId)
 
 	header := http.Header{}
 	header.Add("TDP-Cloud-Id", cloudId)

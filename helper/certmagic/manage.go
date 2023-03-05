@@ -7,14 +7,14 @@ import (
 
 	"github.com/caddyserver/certmagic"
 
-	"tdp-cloud/helper/strutil"
+	"tdp-cloud/helper/crypto"
 )
 
 var magicPool = map[string]*certmagic.Config{}
 
 func Manage(rq *Params) error {
 
-	skey := strutil.Md5(rq.Email + rq.SecretKey + rq.CaType)
+	skey := crypto.Md5ToString(rq.Email + rq.SecretKey + rq.CaType)
 
 	magic, ok := magicPool[skey]
 

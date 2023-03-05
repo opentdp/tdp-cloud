@@ -1,20 +1,10 @@
 package strutil
 
 import (
-	"crypto/md5"
-	"fmt"
 	"strings"
 
 	"golang.org/x/text/encoding/simplifiedchinese"
 )
-
-// 计算 Md5 值
-
-func Md5(s string) string {
-
-	return fmt.Sprintf("%x", md5.Sum([]byte(s)))
-
-}
 
 // 转换编码 gb18030 -> utf-8
 
