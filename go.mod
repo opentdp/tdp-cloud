@@ -1,6 +1,6 @@
 module tdp-cloud
 
-go 1.18
+go 1.20
 
 require (
 	// DOCKER管理

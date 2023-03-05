@@ -4,14 +4,11 @@ import (
 	"math/rand"
 	"strconv"
 	"strings"
-	"time"
 )
 
 // 随机字符串
 
 func Rand(length uint) string {
-
-	rand.Seed(time.Now().UnixNano())
 
 	rs := make([]string, length)
 
