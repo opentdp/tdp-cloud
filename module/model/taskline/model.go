@@ -116,19 +116,30 @@ func Fetch(data *FetchParam) (*dborm.Taskline, error) {
 type FetchAllParam struct {
 	UserId   uint
 	WorkerId string
+	Page     int
+	Order    string
 }
 
 func FetchAll(data *FetchAllParam) ([]*dborm.Taskline, error) {
 
 	var items []*dborm.Taskline
 
+	offset := 0
+	if data.Page > 1 {
+		offset = (data.Page - 1) * 100
+	}
+
+	if err := dborm.OrderSafe(data.Order); err != nil {
+		return nil, err
+	}
+
 	result := dborm.Db.
 		Where(&dborm.Taskline{
 			UserId:   data.UserId,
 			WorkerId: data.WorkerId,
 		}).
-		Order("id DESC").
-		Limit(50).
+		Order(data.Order).
+		Limit(100).Offset(offset).
 		Find(&items)
 
 	return items, result.Error
