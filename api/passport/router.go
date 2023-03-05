@@ -22,10 +22,9 @@ func Router(api *gin.RouterGroup) {
 	rg.Use(midware.AuthGuard())
 
 	{
-		rg.GET("/info", detail)
-		rg.PATCH("/info", updateInfo)
-
-		rg.GET("/summary", summary)
+		rg.POST("/profile", profile)
+		rg.POST("/profile/update", profile_update)
+		rg.POST("/summary", summary)
 	}
 
 }

@@ -8,15 +8,15 @@ import (
 
 func Router(api *gin.RouterGroup) {
 
-	rg := api.Group("/")
+	rg := api.Group("/workhub")
 
 	rg.Use(midware.AuthGuard())
 
 	{
-		rg.GET("/workhub", host)
-		rg.GET("/workhub/list", list)
-		rg.GET("/workhub/stat/:id", stat)
-		rg.POST("/workhub/exec/:id", exec)
+		rg.POST("/host", host)
+		rg.POST("/list", list)
+		rg.POST("/stat/:id", stat)
+		rg.POST("/exec/:id", exec)
 	}
 
 }

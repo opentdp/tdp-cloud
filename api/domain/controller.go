@@ -2,7 +2,6 @@ package domain
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/spf13/cast"
 
 	"tdp-cloud/module/model/domain"
 )
@@ -11,9 +10,14 @@ import (
 
 func list(c *gin.Context) {
 
-	rq := &domain.FetchAllParam{
-		UserId: c.GetUint("UserId"),
+	var rq *domain.FetchAllParam
+
+	if err := c.ShouldBind(&rq); err != nil {
+		c.Set("Error", err)
+		return
 	}
+
+	rq.UserId = c.GetUint("UserId")
 
 	if lst, err := domain.FetchAll(rq); err == nil {
 		c.Set("Payload", gin.H{"Datasets": lst})
@@ -27,15 +31,19 @@ func list(c *gin.Context) {
 
 func detail(c *gin.Context) {
 
-	rq := &domain.FetchParam{
-		Id:     cast.ToUint(c.Param("id")),
-		UserId: c.GetUint("UserId"),
+	var rq *domain.FetchParam
+
+	if err := c.ShouldBind(&rq); err != nil {
+		c.Set("Error", err)
+		return
 	}
 
 	if rq.Id == 0 {
 		c.Set("Error", "参数错误")
 		return
 	}
+
+	rq.UserId = c.GetUint("UserId")
 
 	if res, err := domain.Fetch(rq); err == nil {
 		c.Set("Payload", res)
@@ -59,8 +67,8 @@ func create(c *gin.Context) {
 	rq.UserId = c.GetUint("UserId")
 
 	if id, err := domain.Create(rq); err == nil {
-		c.Set("Message", "添加成功")
 		c.Set("Payload", gin.H{"Id": id})
+		c.Set("Message", "添加成功")
 	} else {
 		c.Set("Error", err)
 	}
@@ -78,13 +86,12 @@ func update(c *gin.Context) {
 		return
 	}
 
-	rq.Id = cast.ToUint(c.Param("id"))
-	rq.UserId = c.GetUint("UserId")
-
 	if rq.Id == 0 {
 		c.Set("Error", "参数错误")
 		return
 	}
+
+	rq.UserId = c.GetUint("UserId")
 
 	if err := domain.Update(rq); err == nil {
 		c.Set("Message", "修改成功")
@@ -98,15 +105,19 @@ func update(c *gin.Context) {
 
 func delete(c *gin.Context) {
 
-	rq := &domain.DeleteParam{
-		Id:     cast.ToUint(c.Param("id")),
-		UserId: c.GetUint("UserId"),
+	var rq *domain.DeleteParam
+
+	if err := c.ShouldBind(&rq); err != nil {
+		c.Set("Error", err)
+		return
 	}
 
 	if rq.Id == 0 {
 		c.Set("Error", "参数错误")
 		return
 	}
+
+	rq.UserId = c.GetUint("UserId")
 
 	if err := domain.Delete(rq); err == nil {
 		c.Set("Message", "删除成功")

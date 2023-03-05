@@ -8,19 +8,19 @@ import (
 
 func Router(api *gin.RouterGroup) {
 
-	rg := api.Group("/")
+	rg := api.Group("/user")
 
-	// 需授权接口
+	// 管理员接口
 
 	rg.Use(midware.AuthGuard())
 	rg.Use(midware.AdminGuard())
 
 	{
-		rg.GET("/user", list)
-		rg.POST("/user", create)
-		rg.GET("/user/:id", detail)
-		rg.PATCH("/user/:id", update)
-		rg.DELETE("/user/:id", delete)
+		rg.POST("/list", list)
+		rg.POST("/create", create)
+		rg.POST("/detail", detail)
+		rg.POST("/update", update)
+		rg.POST("/delete", delete)
 	}
 
 }

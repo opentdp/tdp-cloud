@@ -2,7 +2,6 @@ package certbot
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/spf13/cast"
 
 	"tdp-cloud/module/certbot"
 	"tdp-cloud/module/model/certjob"
@@ -12,9 +11,14 @@ import (
 
 func list(c *gin.Context) {
 
-	rq := &certjob.FetchAllParam{
-		UserId: c.GetUint("UserId"),
+	var rq *certjob.FetchAllParam
+
+	if err := c.ShouldBind(&rq); err != nil {
+		c.Set("Error", err)
+		return
 	}
+
+	rq.UserId = c.GetUint("UserId")
 
 	if lst, err := certjob.FetchAll(rq); err == nil {
 		c.Set("Payload", gin.H{"Datasets": lst})
@@ -28,15 +32,19 @@ func list(c *gin.Context) {
 
 func detail(c *gin.Context) {
 
-	rq := &certjob.FetchParam{
-		Id:     cast.ToUint(c.Param("id")),
-		UserId: c.GetUint("UserId"),
+	var rq *certjob.FetchParam
+
+	if err := c.ShouldBind(&rq); err != nil {
+		c.Set("Error", err)
+		return
 	}
 
 	if rq.Id == 0 {
 		c.Set("Error", "参数错误")
 		return
 	}
+
+	rq.UserId = c.GetUint("UserId")
 
 	if res, err := certbot.CertById(rq.UserId, rq.Id); err == nil {
 		c.Set("Payload", res)
@@ -60,9 +68,9 @@ func create(c *gin.Context) {
 	rq.UserId = c.GetUint("UserId")
 
 	if id, err := certjob.Create(rq); err == nil {
-		c.Set("Message", "添加成功")
-		c.Set("Payload", gin.H{"Id": id})
 		certbot.NewById(rq.UserId, id)
+		c.Set("Payload", gin.H{"Id": id})
+		c.Set("Message", "添加成功")
 	} else {
 		c.Set("Error", err)
 	}
@@ -80,17 +88,16 @@ func update(c *gin.Context) {
 		return
 	}
 
-	rq.Id = cast.ToUint(c.Param("id"))
-	rq.UserId = c.GetUint("UserId")
-
 	if rq.Id == 0 {
 		c.Set("Error", "参数错误")
 		return
 	}
 
+	rq.UserId = c.GetUint("UserId")
+
 	if err := certjob.Update(rq); err == nil {
-		c.Set("Message", "修改成功")
 		certbot.RedoById(rq.UserId, rq.Id)
+		c.Set("Message", "修改成功")
 	} else {
 		c.Set("Error", err)
 	}
@@ -101,15 +108,19 @@ func update(c *gin.Context) {
 
 func delete(c *gin.Context) {
 
-	rq := &certjob.DeleteParam{
-		Id:     cast.ToUint(c.Param("id")),
-		UserId: c.GetUint("UserId"),
+	var rq *certjob.DeleteParam
+
+	if err := c.ShouldBind(&rq); err != nil {
+		c.Set("Error", err)
+		return
 	}
 
 	if rq.Id == 0 {
 		c.Set("Error", "参数错误")
 		return
 	}
+
+	rq.UserId = c.GetUint("UserId")
 
 	certbot.UndoById(rq.UserId, rq.Id)
 

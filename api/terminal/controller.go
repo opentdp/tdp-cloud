@@ -10,9 +10,9 @@ func ssh(c *gin.Context) {
 
 	// 获取 SSH 参数
 
-	var option *webssh.SSHClientOption
+	var rq *webssh.SSHClientOption
 
-	if err := c.ShouldBindQuery(&option); err != nil {
+	if err := c.ShouldBindQuery(&rq); err != nil {
 		c.Set("Error", err)
 		return
 	}
@@ -22,7 +22,7 @@ func ssh(c *gin.Context) {
 	err := webssh.Connect(&webssh.ConnectParam{
 		Request: c.Request,
 		Writer:  c.Writer,
-		Option:  option,
+		Option:  rq,
 	})
 
 	if err != nil {

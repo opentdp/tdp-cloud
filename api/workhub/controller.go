@@ -29,7 +29,6 @@ func host(c *gin.Context) {
 func list(c *gin.Context) {
 
 	userId := c.GetUint("UserId")
-
 	lst := workhub.WorkerOfUser(userId)
 
 	c.Set("Payload", gin.H{"Datasets": lst})
@@ -77,8 +76,8 @@ func exec(c *gin.Context) {
 	}
 
 	if id, err := send.Exec(rq); err == nil {
-		c.Set("Message", "命令下发完成")
 		c.Set("Payload", gin.H{"Id": id})
+		c.Set("Message", "下发完成")
 	} else {
 		c.Set("Error", err)
 	}

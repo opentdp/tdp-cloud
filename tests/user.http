@@ -2,7 +2,9 @@
 
 ### 用户列表
 
-GET {{$dotenv TDP_API_BASE}}/user
+GET {{$dotenv TDP_API_BASE}}/user/list
 Authorization: {{$dotenv TDP_AUTHORIZATION}}
-Origin: {{$dotenv TDP_ORIGIN}}
 Content-Type: application/json
+Origin: {{$dotenv TDP_ORIGIN}}
+
+{}

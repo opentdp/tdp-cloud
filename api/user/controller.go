@@ -10,7 +10,12 @@ import (
 
 func list(c *gin.Context) {
 
-	rq := &user.FetchAllParam{}
+	var rq *user.FetchAllParam
+
+	if err := c.ShouldBind(&rq); err != nil {
+		c.Set("Error", err)
+		return
+	}
 
 	if lst, err := user.FetchAll(rq); err == nil {
 		c.Set("Payload", gin.H{"Datasets": lst})
@@ -24,8 +29,16 @@ func list(c *gin.Context) {
 
 func detail(c *gin.Context) {
 
-	rq := &user.FetchParam{
-		Id: c.GetUint("UserId"),
+	var rq *user.FetchParam
+
+	if err := c.ShouldBind(&rq); err != nil {
+		c.Set("Error", err)
+		return
+	}
+
+	if rq.Id == 0 {
+		c.Set("Error", "参数错误")
+		return
 	}
 
 	if res, err := user.Fetch(rq); err == nil {
@@ -48,8 +61,8 @@ func create(c *gin.Context) {
 	}
 
 	if id, err := user.Create(rq); err == nil {
-		c.Set("Message", "添加成功")
 		c.Set("Payload", gin.H{"Id": id})
+		c.Set("Message", "添加成功")
 	} else {
 		c.Set("Error", err)
 	}
@@ -67,6 +80,11 @@ func update(c *gin.Context) {
 		return
 	}
 
+	if rq.Id == 0 {
+		c.Set("Error", "参数错误")
+		return
+	}
+
 	rq.Id = c.GetUint("UserId")
 
 	if err := user.Update(rq); err == nil {
@@ -81,8 +99,16 @@ func update(c *gin.Context) {
 
 func delete(c *gin.Context) {
 
-	rq := &user.DeleteParam{
-		Username: c.Param("name"),
+	var rq *user.DeleteParam
+
+	if err := c.ShouldBind(&rq); err != nil {
+		c.Set("Error", err)
+		return
+	}
+
+	if rq.Id == 0 {
+		c.Set("Error", "参数错误")
+		return
 	}
 
 	if err := user.Delete(rq); err == nil {

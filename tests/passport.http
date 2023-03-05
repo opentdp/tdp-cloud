@@ -3,8 +3,8 @@
 ### 注册账号
 
 POST {{$dotenv TDP_API_BASE}}/passport/register
-Origin: {{$dotenv TDP_ORIGIN}}
 Content-Type: application/json
+Origin: {{$dotenv TDP_ORIGIN}}
 
 {
     "Username":"{{$dotenv TDP_USERNAME}}",
@@ -15,8 +15,8 @@ Content-Type: application/json
 ### 登录账号
 
 POST {{$dotenv TDP_API_BASE}}/passport/login
-Origin: {{$dotenv TDP_ORIGIN}}
 Content-Type: application/json
+Origin: {{$dotenv TDP_ORIGIN}}
 
 {
     "Username":"{{$dotenv TDP_USERNAME}}",
@@ -25,24 +25,14 @@ Content-Type: application/json
 
 ### 修改资料
 
-PATCH {{$dotenv TDP_API_BASE}}/passport/info
+POST {{$dotenv TDP_API_BASE}}/passport/profile/update
 Authorization: {{$dotenv TDP_AUTHORIZATION}}
-Origin: {{$dotenv TDP_ORIGIN}}
 Content-Type: application/json
+Origin: {{$dotenv TDP_ORIGIN}}
 
 {
+    "Password": "{{$dotenv TDP_PASSWORD}}",
+    "OldPassword": "{{$dotenv TDP_PASSWORD}}",
     "Email": "admin2@tdp.icu",
     "Description": "不可能！我的代码怎么可能会有Bug！"
-}
-
-### 修改密码
-
-PATCH {{$dotenv TDP_API_BASE}}/passport/password
-Authorization: {{$dotenv TDP_AUTHORIZATION}}
-Origin: {{$dotenv TDP_ORIGIN}}
-Content-Type: application/json
-
-{
-    "OldPassword": "{{$dotenv TDP_PASSWORD}}",
-    "NewPassword": "{{$dotenv TDP_PASSWORD}}"
 }

@@ -8,16 +8,16 @@ import (
 
 func Router(api *gin.RouterGroup) {
 
-	rg := api.Group("/")
+	rg := api.Group("/crontab")
 
 	rg.Use(midware.AuthGuard())
 
 	{
-		rg.GET("/crontab", list)
-		rg.POST("/crontab", create)
-		rg.GET("/crontab/:id", detail)
-		rg.PATCH("/crontab/:id", update)
-		rg.DELETE("/crontab/:id", delete)
+		rg.POST("/list", list)
+		rg.POST("/create", create)
+		rg.POST("/detail", detail)
+		rg.POST("/update", update)
+		rg.POST("/delete", delete)
 	}
 
 }

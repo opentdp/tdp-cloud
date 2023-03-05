@@ -8,16 +8,16 @@ import (
 
 func Router(api *gin.RouterGroup) {
 
-	rg := api.Group("/")
+	rg := api.Group("/vendor")
 
 	rg.Use(midware.AuthGuard())
 
 	{
-		rg.GET("/vendor", list)
-		rg.POST("/vendor", create)
-		rg.GET("/vendor/:id", detail)
-		rg.PATCH("/vendor/:id", update)
-		rg.DELETE("/vendor/:id", delete)
+		rg.POST("/list", list)
+		rg.POST("/create", create)
+		rg.POST("/detail", detail)
+		rg.POST("/update", update)
+		rg.POST("/delete", delete)
 	}
 
 }

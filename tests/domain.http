@@ -2,12 +2,20 @@
 
 ### 获取域名
 
-GET {{$dotenv TDP_API_BASE}}/domain
+POST {{$dotenv TDP_API_BASE}}/domain/list
 Authorization: {{$dotenv TDP_AUTHORIZATION}}
+Content-Type: application/json
 Origin: {{$dotenv TDP_ORIGIN}}
+
+{}
 
 ### 删除域名
 
-DELETE {{$dotenv TDP_API_BASE}}/domain/2
+POST {{$dotenv TDP_API_BASE}}/domain/delete
 Authorization: {{$dotenv TDP_AUTHORIZATION}}
+Content-Type: application/json
 Origin: {{$dotenv TDP_ORIGIN}}
+
+{
+    "Id": 2
+}

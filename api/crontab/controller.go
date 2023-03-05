@@ -2,7 +2,6 @@ package crontab
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/spf13/cast"
 
 	"tdp-cloud/module/crontab"
 	"tdp-cloud/module/model/cronjob"
@@ -12,9 +11,14 @@ import (
 
 func list(c *gin.Context) {
 
-	rq := &cronjob.FetchAllParam{
-		UserId: c.GetUint("UserId"),
+	var rq *cronjob.FetchAllParam
+
+	if err := c.ShouldBind(&rq); err != nil {
+		c.Set("Error", err)
+		return
 	}
+
+	rq.UserId = c.GetUint("UserId")
 
 	if lst, err := cronjob.FetchAll(rq); err == nil {
 		c.Set("Payload", gin.H{"Datasets": lst})
@@ -28,15 +32,19 @@ func list(c *gin.Context) {
 
 func detail(c *gin.Context) {
 
-	rq := &cronjob.FetchParam{
-		Id:     cast.ToUint(c.Param("id")),
-		UserId: c.GetUint("UserId"),
+	var rq *cronjob.FetchParam
+
+	if err := c.ShouldBind(&rq); err != nil {
+		c.Set("Error", err)
+		return
 	}
 
 	if rq.Id == 0 {
 		c.Set("Error", "参数错误")
 		return
 	}
+
+	rq.UserId = c.GetUint("UserId")
 
 	if res, err := cronjob.Fetch(rq); err == nil {
 		c.Set("Payload", res)
@@ -61,8 +69,8 @@ func create(c *gin.Context) {
 
 	if id, err := cronjob.Create(rq); err == nil {
 		crontab.NewById(id)
-		c.Set("Message", "添加成功")
 		c.Set("Payload", gin.H{"Id": id})
+		c.Set("Message", "添加成功")
 	} else {
 		c.Set("Error", err)
 	}
@@ -80,13 +88,12 @@ func update(c *gin.Context) {
 		return
 	}
 
-	rq.Id = cast.ToUint(c.Param("id"))
-	rq.UserId = c.GetUint("UserId")
-
 	if rq.Id == 0 {
 		c.Set("Error", "参数错误")
 		return
 	}
+
+	rq.UserId = c.GetUint("UserId")
 
 	if err := cronjob.Update(rq); err == nil {
 		crontab.RedoById(rq.Id)
@@ -101,9 +108,11 @@ func update(c *gin.Context) {
 
 func delete(c *gin.Context) {
 
-	rq := &cronjob.DeleteParam{
-		Id:     cast.ToUint(c.Param("id")),
-		UserId: c.GetUint("UserId"),
+	var rq *cronjob.DeleteParam
+
+	if err := c.ShouldBind(&rq); err != nil {
+		c.Set("Error", err)
+		return
 	}
 
 	if rq.Id == 0 {
@@ -111,7 +120,9 @@ func delete(c *gin.Context) {
 		return
 	}
 
-	crontab.UndoById(rq.Id)
+	rq.UserId = c.GetUint("UserId")
+
+	crontab.UndoById(rq.Id) //TODO:高危
 
 	if err := cronjob.Delete(rq); err == nil {
 		c.Set("Message", "删除成功")

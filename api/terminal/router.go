@@ -10,8 +10,6 @@ func Socket(wsi *gin.RouterGroup) {
 
 	rg := wsi.Group("/terminal")
 
-	// 需授权接口
-
 	rg.Use(midware.AuthGuard())
 
 	{

@@ -2,12 +2,20 @@
 
 ### 获取主机
 
-GET {{$dotenv TDP_API_BASE}}/machine
+GET {{$dotenv TDP_API_BASE}}/machine/list
 Authorization: {{$dotenv TDP_AUTHORIZATION}}
+Content-Type: application/json
 Origin: {{$dotenv TDP_ORIGIN}}
+
+{}
 
 ### 删除主机
 
-DELETE {{$dotenv TDP_API_BASE}}/machine/2
+POST {{$dotenv TDP_API_BASE}}/machine/delete
 Authorization: {{$dotenv TDP_AUTHORIZATION}}
+Content-Type: application/json
 Origin: {{$dotenv TDP_ORIGIN}}
+
+{
+    "Id": 2
+}

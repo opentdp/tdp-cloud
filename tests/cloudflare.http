@@ -4,6 +4,7 @@
 
 POST {{$dotenv TDP_API_BASE}}/cloudflare/3
 Authorization: {{$dotenv TDP_AUTHORIZATION}}
+Content-Type: application/json
 Origin: {{$dotenv TDP_ORIGIN}}
 
 {
@@ -15,6 +16,7 @@ Origin: {{$dotenv TDP_ORIGIN}}
 
 POST {{$dotenv TDP_API_BASE}}/cloudflare/3
 Authorization: {{$dotenv TDP_AUTHORIZATION}}
+Content-Type: application/json
 Origin: {{$dotenv TDP_ORIGIN}}
 
 {
@@ -26,6 +28,7 @@ Origin: {{$dotenv TDP_ORIGIN}}
 
 POST {{$dotenv TDP_API_BASE}}/cloudflare/3
 Authorization: {{$dotenv TDP_AUTHORIZATION}}
+Content-Type: application/json
 Origin: {{$dotenv TDP_ORIGIN}}
 
 {
@@ -38,6 +41,7 @@ Origin: {{$dotenv TDP_ORIGIN}}
 
 POST {{$dotenv TDP_API_BASE}}/cloudflare/3
 Authorization: {{$dotenv TDP_AUTHORIZATION}}
+Content-Type: application/json
 Origin: {{$dotenv TDP_ORIGIN}}
 
 {

@@ -2,7 +2,6 @@ package config
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/spf13/cast"
 
 	"tdp-cloud/cmd/args"
 	"tdp-cloud/module/model/config"
@@ -12,8 +11,11 @@ import (
 
 func list(c *gin.Context) {
 
-	rq := &config.FetchAllParam{
-		Module: c.Param("module"),
+	var rq *config.FetchAllParam
+
+	if err := c.ShouldBind(&rq); err != nil {
+		c.Set("Error", err)
+		return
 	}
 
 	if lst, err := config.FetchAll(rq); err == nil {
@@ -28,27 +30,16 @@ func list(c *gin.Context) {
 
 func detail(c *gin.Context) {
 
-	rq := &config.FetchParam{
-		Id: cast.ToUint(c.Param("id")),
+	var rq *config.FetchParam
+
+	if err := c.ShouldBind(&rq); err != nil {
+		c.Set("Error", err)
+		return
 	}
 
 	if rq.Id == 0 {
 		c.Set("Error", "参数错误")
 		return
-	}
-
-	if res, err := config.Fetch(rq); err == nil {
-		c.Set("Payload", res)
-	} else {
-		c.Set("Error", err)
-	}
-
-}
-
-func detail_name(c *gin.Context) {
-
-	rq := &config.FetchParam{
-		Name: c.Param("name"),
 	}
 
 	if res, err := config.Fetch(rq); err == nil {
@@ -71,8 +62,8 @@ func create(c *gin.Context) {
 	}
 
 	if id, err := config.Create(rq); err == nil {
-		c.Set("Message", "添加成功")
 		c.Set("Payload", gin.H{"Id": id})
+		c.Set("Message", "添加成功")
 	} else {
 		c.Set("Error", err)
 	}
@@ -89,8 +80,6 @@ func update(c *gin.Context) {
 		c.Set("Error", err)
 		return
 	}
-
-	rq.Id = cast.ToUint(c.Param("id"))
 
 	if rq.Id == 0 {
 		c.Set("Error", "参数错误")
@@ -109,8 +98,11 @@ func update(c *gin.Context) {
 
 func delete(c *gin.Context) {
 
-	rq := &config.DeleteParam{
-		Id: cast.ToUint(c.Param("id")),
+	var rq *config.DeleteParam
+
+	if err := c.ShouldBind(&rq); err != nil {
+		c.Set("Error", err)
+		return
 	}
 
 	if rq.Id == 0 {

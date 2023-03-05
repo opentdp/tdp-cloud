@@ -2,13 +2,18 @@
 
 ### 获取厂商
 
-GET {{$dotenv TDP_API_BASE}}/vendor?provider=cloudflare
+POST {{$dotenv TDP_API_BASE}}/vendor/list
 Authorization: {{$dotenv TDP_AUTHORIZATION}}
+Content-Type: application/json
 Origin: {{$dotenv TDP_ORIGIN}}
+
+{
+    "provider": "cloudflare"
+}
 
 ### 添加厂商
 
-POST {{$dotenv TDP_API_BASE}}/vendor
+POST {{$dotenv TDP_API_BASE}}/vendor/create
 Authorization: {{$dotenv TDP_AUTHORIZATION}}
 Content-Type: application/json
 Origin: {{$dotenv TDP_ORIGIN}}
@@ -22,6 +27,11 @@ Origin: {{$dotenv TDP_ORIGIN}}
 
 ### 删除厂商
 
-DELETE {{$dotenv TDP_API_BASE}}/vendor/2
+POST {{$dotenv TDP_API_BASE}}/vendor/delete
 Authorization: {{$dotenv TDP_AUTHORIZATION}}
+Content-Type: application/json
 Origin: {{$dotenv TDP_ORIGIN}}
+
+{
+    "Id": 2
+}

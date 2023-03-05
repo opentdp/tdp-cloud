@@ -34,8 +34,8 @@ func register(c *gin.Context) {
 	rq.Level = 0 //防止逃逸
 
 	if id, err := user.Create(rq); err == nil {
-		c.Set("Message", "注册成功")
 		c.Set("Payload", gin.H{"Id": id})
+		c.Set("Message", "注册成功")
 	} else {
 		c.Set("Error", err)
 	}
@@ -67,7 +67,7 @@ func login(c *gin.Context) {
 
 // 获取资料
 
-func detail(c *gin.Context) {
+func profile(c *gin.Context) {
 
 	rq := &user.FetchParam{
 		Id: c.GetUint("UserId"),
@@ -83,7 +83,7 @@ func detail(c *gin.Context) {
 
 // 修改资料
 
-func updateInfo(c *gin.Context) {
+func profile_update(c *gin.Context) {
 
 	var rq *passport.UpdateInfoParam
 

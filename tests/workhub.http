@@ -2,12 +2,18 @@
 
 ### 获取列表
 
-GET {{$dotenv TDP_API_BASE}}/workhub/list
+POST {{$dotenv TDP_API_BASE}}/workhub/list
 Authorization: {{$dotenv TDP_AUTHORIZATION}}
+Content-Type: application/json
 Origin: {{$dotenv TDP_ORIGIN}}
+
+{}
 
 ### 获取统计
 
-GET {{$dotenv TDP_API_BASE}}/workhub/stat/5a1b9a006d8634096807042204e60643
+POST {{$dotenv TDP_API_BASE}}/workhub/stat/5a1b9a006d8634096807042204e60643
 Authorization: {{$dotenv TDP_AUTHORIZATION}}
+Content-Type: application/json
 Origin: {{$dotenv TDP_ORIGIN}}
+
+{}
