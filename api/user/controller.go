@@ -18,7 +18,7 @@ func list(c *gin.Context) {
 	}
 
 	if lst, err := user.FetchAll(rq); err == nil {
-		c.Set("Payload", gin.H{"Datasets": lst})
+		c.Set("Payload", gin.H{"Items": lst})
 	} else {
 		c.Set("Error", err)
 	}
@@ -42,7 +42,7 @@ func detail(c *gin.Context) {
 	}
 
 	if res, err := user.Fetch(rq); err == nil {
-		c.Set("Payload", res)
+		c.Set("Payload", gin.H{"Item": res})
 	} else {
 		c.Set("Error", err)
 	}

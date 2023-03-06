@@ -37,24 +37,19 @@ func RedoById(userId, id uint) {
 
 }
 
-type certinfo struct {
-	*dborm.Certjob
-	Cert *certmagic.Certificate
-}
-
-func CertById(userId, id uint) (*certinfo, error) {
+func CertById(userId, id uint) (*dborm.Certjob, *certmagic.Certificate, error) {
 
 	job, err := certjob.Fetch(&certjob.FetchParam{Id: id, UserId: userId})
 
 	if err == nil && job.Id > 0 {
 		cert, err := certmagic.CertDetail(job.Domain)
-		if err != nil {
-			return nil, err
+		if err == nil {
+			return job, cert, nil
 		}
-		return &certinfo{job, cert}, nil
+		return job, nil, err
 	}
 
-	return nil, err
+	return nil, nil, err
 
 }
 

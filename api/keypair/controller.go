@@ -20,7 +20,7 @@ func list(c *gin.Context) {
 	rq.UserId = c.GetUint("UserId")
 
 	if lst, err := keypair.FetchAll(rq); err == nil {
-		c.Set("Payload", gin.H{"Datasets": lst})
+		c.Set("Payload", gin.H{"Items": lst})
 	} else {
 		c.Set("Error", err)
 	}
@@ -46,7 +46,7 @@ func detail(c *gin.Context) {
 	rq.UserId = c.GetUint("UserId")
 
 	if res, err := keypair.Fetch(rq); err == nil {
-		c.Set("Payload", res)
+		c.Set("Payload", gin.H{"Item": res})
 	} else {
 		c.Set("Error", err)
 	}

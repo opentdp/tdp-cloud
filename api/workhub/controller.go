@@ -31,7 +31,7 @@ func list(c *gin.Context) {
 	userId := c.GetUint("UserId")
 	lst := workhub.WorkerOfUser(userId)
 
-	c.Set("Payload", gin.H{"Datasets": lst})
+	c.Set("Payload", gin.H{"Items": lst})
 
 }
 
