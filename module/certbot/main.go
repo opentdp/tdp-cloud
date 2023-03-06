@@ -33,11 +33,11 @@ func RunJobs() {
 
 func NewByJob(job *dborm.Certjob) error {
 
-	vendor, err := vendor.Fetch(&vendor.FetchParam{
+	vd, err := vendor.Fetch(&vendor.FetchParam{
 		Id: job.VendorId, UserId: job.UserId,
 	})
 
-	if err != nil || vendor.Id == 0 {
+	if err != nil || vd.Id == 0 {
 		logman.Error("Certjob Ignore Domain:", job.Domain)
 		return err
 	}
@@ -50,9 +50,9 @@ func NewByJob(job *dborm.Certjob) error {
 		Email:     job.Email,
 		Domain:    job.Domain,
 		CaType:    job.CaType,
-		Provider:  vendor.Provider,
-		SecretId:  vendor.SecretId,
-		SecretKey: vendor.SecretKey,
+		Provider:  vd.Provider,
+		SecretId:  vd.SecretId,
+		SecretKey: vd.SecretKey,
 		EabKeyId:  job.EabKeyId,
 		EabMacKey: job.EabMacKey,
 	})

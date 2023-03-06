@@ -3,6 +3,7 @@ package user
 import (
 	"github.com/google/uuid"
 
+	"tdp-cloud/helper/strutil"
 	"tdp-cloud/module/dborm"
 )
 
@@ -105,6 +106,7 @@ type FetchParam struct {
 	Username string
 	AppId    string
 	Email    string
+	StoreKey string // 存储密钥
 }
 
 func Fetch(data *FetchParam) (*dborm.User, error) {
@@ -119,6 +121,10 @@ func Fetch(data *FetchParam) (*dborm.User, error) {
 			Email:    data.Email,
 		}).
 		First(&item)
+
+	if item.AppKey != "" && data.StoreKey != "" {
+		item.AppKey, _ = strutil.Des3Decrypt(item.AppKey, data.StoreKey)
+	}
 
 	return item, result.Error
 

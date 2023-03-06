@@ -3,7 +3,6 @@ package passport
 import (
 	"errors"
 
-	"tdp-cloud/helper/strutil"
 	"tdp-cloud/module/midware"
 	"tdp-cloud/module/model/user"
 )
@@ -28,6 +27,7 @@ func Login(data *LoginParam) (*LoginResult, error) {
 
 	item, _ := user.Fetch(&user.FetchParam{
 		Username: data.Username,
+		StoreKey: data.Password,
 	})
 
 	// 验证账号
@@ -50,18 +50,10 @@ func Login(data *LoginParam) (*LoginResult, error) {
 		}
 	}
 
-	// 获取密钥
-
-	skey, err := strutil.Des3Decrypt(item.AppKey, data.Password)
-
-	if err != nil {
-		return nil, err
-	}
-
 	// 创建令牌
 
 	token, err := midware.CreateToken(&midware.UserInfo{
-		AppKey:    skey,
+		AppKey:    item.AppKey,
 		UserId:    item.Id,
 		UserLevel: item.Level,
 	})

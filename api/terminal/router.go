@@ -13,7 +13,7 @@ func Socket(wsi *gin.RouterGroup) {
 	rg.Use(midware.AuthGuard())
 
 	{
-		rg.GET("/ssh", ssh)
+		rg.GET("/ssh/:id", ssh)
 	}
 
 }

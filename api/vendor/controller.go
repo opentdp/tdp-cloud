@@ -3,7 +3,6 @@ package vendor
 import (
 	"github.com/gin-gonic/gin"
 
-	"tdp-cloud/helper/strutil"
 	"tdp-cloud/module/model/vendor"
 )
 
@@ -66,14 +65,7 @@ func create(c *gin.Context) {
 	}
 
 	rq.UserId = c.GetUint("UserId")
-
-	//加密存储
-	appkey := c.GetString("appkey")
-	secret, err := strutil.Des3Encrypt(rq.SecretKey, appkey)
-	if err != nil {
-		rq.SecretKey = secret
-		rq.Status = "encode"
-	}
+	rq.StoreKey = c.GetString("appkey")
 
 	if id, err := vendor.Create(rq); err == nil {
 		c.Set("Payload", gin.H{"Id": id})
@@ -101,14 +93,7 @@ func update(c *gin.Context) {
 	}
 
 	rq.UserId = c.GetUint("UserId")
-
-	//加密存储
-	appkey := c.GetString("appkey")
-	secret, err := strutil.Des3Encrypt(rq.SecretKey, appkey)
-	if err != nil {
-		rq.SecretKey = secret
-		rq.Status = "encode"
-	}
+	rq.StoreKey = c.GetString("appkey")
 
 	if err := vendor.Update(rq); err == nil {
 		c.Set("Message", "修改成功")

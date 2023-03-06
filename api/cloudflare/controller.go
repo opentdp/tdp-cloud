@@ -11,8 +11,9 @@ import (
 func apiProxy(c *gin.Context) {
 
 	rq := &vendor.FetchParam{
-		Id:     cast.ToUint(c.Param("id")),
-		UserId: c.GetUint("UserId"),
+		Id:       cast.ToUint(c.Param("id")),
+		UserId:   c.GetUint("UserId"),
+		StoreKey: c.GetString("appkey"),
 	}
 
 	if rq.Id == 0 {
@@ -20,9 +21,9 @@ func apiProxy(c *gin.Context) {
 		return
 	}
 
-	vendor, err := vendor.Fetch(rq)
+	vd, err := vendor.Fetch(rq)
 
-	if err != nil || vendor.Id == 0 {
+	if err != nil || vd.Id == 0 {
 		c.Set("Error", "厂商不存在")
 		return
 	}
@@ -30,7 +31,7 @@ func apiProxy(c *gin.Context) {
 	// 构造参数
 
 	params := &cloudflare.Params{
-		Token: vendor.SecretKey,
+		Token: vd.SecretKey,
 	}
 
 	if err := c.ShouldBindJSON(params); err != nil {

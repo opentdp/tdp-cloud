@@ -1,6 +1,7 @@
 package keypair
 
 import (
+	"tdp-cloud/helper/strutil"
 	"tdp-cloud/module/dborm"
 )
 
@@ -14,9 +15,18 @@ type CreateParam struct {
 	Cipher      string
 	Status      string
 	Description string `binding:"required"`
+	StoreKey    string // 存储密钥
 }
 
 func Create(data *CreateParam) (uint, error) {
+
+	if data.PrivateKey != "" && data.StoreKey != "" {
+		secret, err := strutil.Des3Encrypt(data.PrivateKey, data.StoreKey)
+		if err != nil {
+			data.PrivateKey = secret
+			data.Cipher = "appkey"
+		}
+	}
 
 	item := &dborm.Keypair{
 		UserId:      data.UserId,
@@ -45,9 +55,18 @@ type UpdateParam struct {
 	Cipher      string
 	Status      string
 	Description string
+	StoreKey    string // 存储密钥
 }
 
 func Update(data *UpdateParam) error {
+
+	if data.PrivateKey != "" && data.StoreKey != "" {
+		secret, err := strutil.Des3Encrypt(data.PrivateKey, data.StoreKey)
+		if err != nil {
+			data.PrivateKey = secret
+			data.Cipher = "appkey"
+		}
+	}
 
 	result := dborm.Db.
 		Where(&dborm.Keypair{
@@ -90,8 +109,9 @@ func Delete(data *DeleteParam) error {
 // 获取密钥
 
 type FetchParam struct {
-	Id     uint
-	UserId uint
+	Id       uint
+	UserId   uint
+	StoreKey string // 存储密钥
 }
 
 func Fetch(data *FetchParam) (*dborm.Keypair, error) {
@@ -104,6 +124,10 @@ func Fetch(data *FetchParam) (*dborm.Keypair, error) {
 			UserId: data.UserId,
 		}).
 		First(&item)
+
+	if item.Cipher != "" && data.StoreKey != "" {
+		item.PrivateKey, _ = strutil.Des3Decrypt(item.PrivateKey, data.StoreKey)
+	}
 
 	return item, result.Error
 

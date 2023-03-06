@@ -32,7 +32,7 @@ Origin: {{$dotenv TDP_ORIGIN}}
 
 {
     "Password": "{{$dotenv TDP_PASSWORD}}",
-    "OldPassword": "{{$dotenv TDP_PASSWORD}}",
     "Email": "admin2@tdp.icu",
-    "Description": "不可能！我的代码怎么可能会有Bug！"
+    "Description": "不可能！我的代码怎么可能会有Bug！",
+    "OldPassword": "{{$dotenv TDP_PASSWORD}}"
 }
