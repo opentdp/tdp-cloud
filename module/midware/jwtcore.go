@@ -4,6 +4,7 @@ import (
 	"time"
 
 	"github.com/golang-jwt/jwt/v4"
+	"github.com/spf13/viper"
 )
 
 type UserInfo struct {
@@ -17,9 +18,9 @@ type UserClaims struct {
 	*UserInfo
 }
 
-var signKey = []byte("sdfsdfsdfsdfsdf")
-
 func CreateToken(userInfo *UserInfo) (string, error) {
+
+	jwtkey := viper.GetString("server.jwtkey")
 
 	claims := UserClaims{
 		jwt.RegisteredClaims{
@@ -33,7 +34,7 @@ func CreateToken(userInfo *UserInfo) (string, error) {
 
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
 
-	return token.SignedString(signKey)
+	return token.SignedString([]byte(jwtkey))
 
 }
 
@@ -42,7 +43,8 @@ func ParserToken(signToken string) (*UserClaims, error) {
 	var claims UserClaims
 
 	keyFunc := func(token *jwt.Token) (any, error) {
-		return signKey, nil
+		jwtkey := viper.GetString("server.jwtkey")
+		return []byte(jwtkey), nil
 	}
 
 	token, err := jwt.ParseWithClaims(signToken, &claims, keyFunc)

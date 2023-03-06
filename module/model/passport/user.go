@@ -40,11 +40,15 @@ func Login(data *LoginParam) (*LoginResult, error) {
 
 	// 创建令牌
 
-	token, _ := midware.CreateToken(&midware.UserInfo{
+	token, err := midware.CreateToken(&midware.UserInfo{
 		UserId:    item.Id,
 		UserLevel: item.Level,
 		SecretKey: "",
 	})
+
+	if err != nil {
+		return nil, err
+	}
 
 	// 返回结果
 

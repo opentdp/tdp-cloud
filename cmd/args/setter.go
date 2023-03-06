@@ -2,6 +2,8 @@ package args
 
 import (
 	"github.com/spf13/viper"
+
+	"tdp-cloud/helper/strutil"
 )
 
 func init() {
@@ -12,6 +14,8 @@ func init() {
 	viper.SetDefault("logger.level", "info")
 	viper.SetDefault("logger.stdout", true)
 	viper.SetDefault("logger.tofile", false)
+
+	viper.SetDefault("server.jwtkey", strutil.Rand(32))
 
 }
 
