@@ -61,7 +61,7 @@ type Domain struct {
 	CloudId     string `gorm:"uniqueIndex"`
 	CloudMeta   any    `gorm:"serializer:json"`
 	Description string
-	Status      uint
+	Status      string
 	CreatedAt   int64
 	UpdatedAt   int64
 }
@@ -74,6 +74,7 @@ type Keypair struct {
 	PublicKey   string
 	PrivateKey  string
 	KeyType     string `gorm:"index"`
+	Status      string
 	Description string
 	CreatedAt   int64
 	UpdatedAt   int64
@@ -95,7 +96,7 @@ type Machine struct {
 	WorkerId    string `gorm:"uniqueIndex,default:null"`
 	WorkerMeta  any    `gorm:"serializer:json"`
 	Description string
-	Status      uint
+	Status      string
 	CreatedAt   int64
 	UpdatedAt   int64
 }
@@ -156,6 +157,7 @@ type Vendor struct {
 	SecretKey   string `json:"-"`
 	Provider    string
 	Description string
+	Status      string
 	Certjobs    []Certjob `json:",omitempty"`
 	Domains     []Domain  `json:",omitempty"`
 	Machines    []Machine `json:",omitempty"`

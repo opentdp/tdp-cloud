@@ -15,7 +15,7 @@ type CreateParam struct {
 	CloudId     string
 	CloudMeta   any
 	Description string
-	Status      uint
+	Status      string
 }
 
 func Create(data *CreateParam) (uint, error) {
@@ -50,7 +50,7 @@ type UpdateParam struct {
 	CloudId     string
 	CloudMeta   any
 	Description string
-	Status      uint
+	Status      string
 }
 
 func Update(data *UpdateParam) error {

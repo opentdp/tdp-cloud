@@ -19,7 +19,7 @@ type CreateParam struct {
 	WorkerId    string
 	WorkerMeta  any
 	Description string
-	Status      uint
+	Status      string
 }
 
 func Create(data *CreateParam) (uint, error) {
@@ -62,7 +62,7 @@ type UpdateParam struct {
 	WorkerId    string
 	WorkerMeta  any
 	Description string
-	Status      uint
+	Status      string
 }
 
 func Update(data *UpdateParam) error {
