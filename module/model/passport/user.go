@@ -3,7 +3,7 @@ package passport
 import (
 	"errors"
 
-	"tdp-cloud/module/model/session"
+	"tdp-cloud/module/midware"
 	"tdp-cloud/module/model/user"
 )
 
@@ -40,11 +40,10 @@ func Login(data *LoginParam) (*LoginResult, error) {
 
 	// 创建令牌
 
-	token, _ := session.Create(&session.CreateParam{
+	token, _ := midware.CreateToken(&midware.UserInfo{
 		UserId:    item.Id,
 		UserLevel: item.Level,
-		IpAddress: data.IpAddress,
-		UserAgent: data.UserAgent,
+		SecretKey: "",
 	})
 
 	// 返回结果

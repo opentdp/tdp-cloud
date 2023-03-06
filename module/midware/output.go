@@ -13,7 +13,7 @@ func OutputHandle() gin.HandlerFunc {
 		// 输出错误信息
 
 		if err, exists := c.Get("Error"); exists {
-			c.AbortWithStatusJSON(errCode(c), NewErrorMessage(err))
+			c.AbortWithStatusJSON(exitCode(c, 400), newErrorMessage(err))
 			return
 		}
 
@@ -22,7 +22,7 @@ func OutputHandle() gin.HandlerFunc {
 		msg := c.GetString("Message")
 
 		if res, exists := c.Get("Payload"); msg != "" || exists {
-			c.AbortWithStatusJSON(200, NewPayloadMessage(res, msg))
+			c.AbortWithStatusJSON(exitCode(c, 200), newPayload(res, msg))
 			return
 		}
 
@@ -37,7 +37,7 @@ func OutputHandle() gin.HandlerFunc {
 
 		// 捕获异常返回
 
-		c.AbortWithStatusJSON(500, NewErrorMessage("内部错误"))
+		c.AbortWithStatusJSON(500, newErrorMessage("内部错误"))
 
 	}
 

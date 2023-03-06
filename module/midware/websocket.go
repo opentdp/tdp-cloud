@@ -17,7 +17,7 @@ func SocketHandle() gin.HandlerFunc {
 		// 输出错误信息
 
 		if err, exists := c.Get("Error"); exists && err != nil {
-			c.AbortWithError(errCode(c), NewError(err))
+			c.AbortWithError(exitCode(c, 400), newError(err))
 			return
 		}
 

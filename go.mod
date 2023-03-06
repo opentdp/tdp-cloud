@@ -3,10 +3,12 @@ module tdp-cloud
 go 1.20
 
 require (
-	// DOCKER管理
+	// DOCKER 管理
 	github.com/docker/docker v23.0.1+incompatible
 	// WEB 框架
 	github.com/gin-gonic/gin v1.9.0
+	// JWT 认证支持
+	github.com/golang-jwt/jwt/v4 v4.4.3
 	// 生成 UUID
 	github.com/google/uuid v1.3.0
 	// WebSocket 框架
@@ -29,7 +31,7 @@ require (
 	go.uber.org/zap v1.24.0
 	// 加密扩充库
 	golang.org/x/crypto v0.6.0
-	// 终端和控制台支持包
+	// 终端和控制台支持
 	golang.org/x/term v0.5.0
 	// 文本操作
 	golang.org/x/text v0.7.0

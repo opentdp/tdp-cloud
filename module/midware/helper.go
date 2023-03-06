@@ -8,19 +8,19 @@ import (
 
 // 获取错误代码
 
-func errCode(c *gin.Context) int {
+func exitCode(c *gin.Context, code int) int {
 
-	if code := c.GetInt("ErrorCode"); code > 400 {
+	if code := c.GetInt("ExitCode"); code > 100 {
 		return code
 	}
 
-	return 400
+	return code
 
 }
 
 // 创建错误实例
 
-func NewError(data any) error {
+func newError(data any) error {
 
 	if err, ok := data.(error); ok {
 		return err
@@ -36,7 +36,7 @@ func NewError(data any) error {
 
 // 构造错误信息
 
-func NewErrorMessage(data any) gin.H {
+func newErrorMessage(data any) gin.H {
 
 	if err, ok := data.(error); ok {
 		return gin.H{"Error": gin.H{"Message": err.Error()}}
@@ -52,14 +52,10 @@ func NewErrorMessage(data any) gin.H {
 
 // 构造结构数据
 
-func NewPayloadMessage(data any, msg string) gin.H {
+func newPayload(data any, msg string) gin.H {
 
 	if msg != "" {
 		return gin.H{"Payload": data, "Message": msg}
-	}
-
-	if msg, ok := data.(string); ok {
-		return gin.H{"Message": msg}
 	}
 
 	return gin.H{"Payload": data}
