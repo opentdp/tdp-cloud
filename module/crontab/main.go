@@ -28,7 +28,7 @@ func UndoById(id uint) {
 	job, err := cronjob.Fetch(&cronjob.FetchParam{Id: id})
 
 	if err == nil && job.Id > 0 {
-		//TODO
+		// TODO
 		return
 	}
 
@@ -39,7 +39,7 @@ func RedoById(id uint) {
 	job, err := cronjob.Fetch(&cronjob.FetchParam{Id: id})
 
 	if err == nil && job.Id > 0 {
-		//TODO
+		// TODO
 		return
 	}
 
@@ -47,7 +47,7 @@ func RedoById(id uint) {
 
 func NewByJob(job *dborm.Cronjob) error {
 
-	//TODO
+	// TODO
 	return nil
 
 }

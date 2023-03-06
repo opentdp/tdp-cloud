@@ -20,7 +20,7 @@ func newIssuer(rq *Params) certmagic.ACMEIssuer {
 		Logger:                  logman.Named("cert.issuer"),
 	}
 
-	//Ref: https://github.com/acmesh-official/acme.sh/wiki/Server
+	// Ref: https://github.com/acmesh-official/acme.sh/wiki/Server
 
 	switch rq.CaType {
 	case "letsencrypt":
@@ -46,7 +46,7 @@ func newIssuer(rq *Params) certmagic.ACMEIssuer {
 		}
 	}
 
-	//Ref: https://github.com/libdns/libdns
+	// Ref: https://github.com/libdns/libdns
 
 	switch rq.Provider {
 	case "alibaba":
