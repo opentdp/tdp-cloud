@@ -18,12 +18,12 @@ func PKCS7UnPadding(src []byte) ([]byte, error) {
 
 	length := len(src)
 	if length == 0 {
-		return src, errors.New("unpadding error")
+		return src, errors.New("PKCS7UnPadding: length error")
 	}
 
 	unpadding := int(src[length-1])
 	if length < unpadding {
-		return src, errors.New("unpadding error")
+		return src, errors.New("PKCS7UnPadding: length error")
 	}
 
 	return src[:(length - unpadding)], nil

@@ -31,7 +31,7 @@ func NewSSHClient(option *SSHClientOption) (*ssh.Client, error) {
 		return NewSSHClientWithPrivateKey(option)
 	}
 
-	return nil, errors.New("no Password or PrivateKey")
+	return nil, errors.New("SSHClient: no Password or PrivateKey")
 
 }
 
