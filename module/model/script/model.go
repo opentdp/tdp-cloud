@@ -13,8 +13,8 @@ type CreateParam struct {
 	Username      string `binding:"required"`
 	WorkDirectory string `binding:"required"`
 	Content       string `binding:"required"`
+	Timeout       uint   `binding:"required"`
 	Description   string
-	Timeout       uint `binding:"required"`
 }
 
 func Create(data *CreateParam) (uint, error) {
@@ -26,8 +26,8 @@ func Create(data *CreateParam) (uint, error) {
 		Username:      data.Username,
 		WorkDirectory: data.WorkDirectory,
 		Content:       data.Content,
-		Description:   data.Description,
 		Timeout:       data.Timeout,
+		Description:   data.Description,
 	}
 
 	result := dborm.Db.Create(item)
@@ -46,8 +46,8 @@ type UpdateParam struct {
 	Username      string
 	WorkDirectory string
 	Content       string
-	Description   string
 	Timeout       uint
+	Description   string
 }
 
 func Update(data *UpdateParam) error {
@@ -63,8 +63,8 @@ func Update(data *UpdateParam) error {
 			Username:      data.Username,
 			WorkDirectory: data.WorkDirectory,
 			Content:       data.Content,
-			Description:   data.Description,
 			Timeout:       data.Timeout,
+			Description:   data.Description,
 		})
 
 	return result.Error

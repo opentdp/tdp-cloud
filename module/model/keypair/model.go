@@ -11,6 +11,8 @@ type CreateParam struct {
 	PublicKey   string `binding:"required"`
 	PrivateKey  string `binding:"required"`
 	KeyType     string `binding:"required"`
+	Cipher      string
+	Status      string
 	Description string `binding:"required"`
 }
 
@@ -21,6 +23,8 @@ func Create(data *CreateParam) (uint, error) {
 		PublicKey:   data.PublicKey,
 		PrivateKey:  data.PrivateKey,
 		KeyType:     data.KeyType,
+		Cipher:      data.Cipher,
+		Status:      data.Status,
 		Description: data.Description,
 	}
 
@@ -38,6 +42,8 @@ type UpdateParam struct {
 	PublicKey   string
 	PrivateKey  string
 	KeyType     string
+	Cipher      string
+	Status      string
 	Description string
 }
 
@@ -52,6 +58,8 @@ func Update(data *UpdateParam) error {
 			PublicKey:   data.PublicKey,
 			PrivateKey:  data.PrivateKey,
 			KeyType:     data.KeyType,
+			Cipher:      data.Cipher,
+			Status:      data.Status,
 			Description: data.Description,
 		})
 

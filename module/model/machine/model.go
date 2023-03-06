@@ -18,8 +18,8 @@ type CreateParam struct {
 	CloudMeta   any
 	WorkerId    string
 	WorkerMeta  any
-	Description string
 	Status      string
+	Description string
 }
 
 func Create(data *CreateParam) (uint, error) {
@@ -36,8 +36,8 @@ func Create(data *CreateParam) (uint, error) {
 		CloudMeta:   data.CloudMeta,
 		WorkerId:    data.WorkerId,
 		WorkerMeta:  data.WorkerMeta,
-		Description: data.Description,
 		Status:      data.Status,
+		Description: data.Description,
 	}
 
 	result := dborm.Db.Create(item)
@@ -61,8 +61,8 @@ type UpdateParam struct {
 	CloudMeta   any
 	WorkerId    string
 	WorkerMeta  any
-	Description string
 	Status      string
+	Description string
 }
 
 func Update(data *UpdateParam) error {
@@ -83,8 +83,8 @@ func Update(data *UpdateParam) error {
 			CloudMeta:   data.CloudMeta,
 			WorkerId:    data.WorkerId,
 			WorkerMeta:  data.WorkerMeta,
-			Description: data.Description,
 			Status:      data.Status,
+			Description: data.Description,
 		})
 
 	return result.Error

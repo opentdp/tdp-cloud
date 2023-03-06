@@ -11,6 +11,8 @@ type CreateParam struct {
 	SecretId    string `binding:"required"`
 	SecretKey   string `binding:"required"`
 	Provider    string `binding:"required"`
+	Cipher      string
+	Status      string
 	Description string `binding:"required"`
 }
 
@@ -21,6 +23,8 @@ func Create(data *CreateParam) (uint, error) {
 		SecretId:    data.SecretId,
 		SecretKey:   data.SecretKey,
 		Provider:    data.Provider,
+		Cipher:      data.Cipher,
+		Status:      data.Status,
 		Description: data.Description,
 	}
 
@@ -38,6 +42,8 @@ type UpdateParam struct {
 	SecretId    string
 	SecretKey   string
 	Provider    string
+	Cipher      string
+	Status      string
 	Description string
 }
 
@@ -52,6 +58,8 @@ func Update(data *UpdateParam) error {
 			SecretId:    data.SecretId,
 			SecretKey:   data.SecretKey,
 			Provider:    data.Provider,
+			Cipher:      data.Cipher,
+			Status:      data.Status,
 			Description: data.Description,
 		})
 
