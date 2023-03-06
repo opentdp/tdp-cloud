@@ -8,7 +8,6 @@ import (
 
 	"tdp-cloud/api"
 	"tdp-cloud/cmd/args"
-	"tdp-cloud/module/midware"
 )
 
 func Daemon() {
@@ -27,8 +26,8 @@ func Engine() *gin.Engine {
 
 	// 初始化
 	engine := gin.New()
-	engine.Use(midware.Logger())
-	engine.Use(midware.Recovery(true))
+	engine.Use(Logger())
+	engine.Use(Recovery(true))
 
 	// 接口路由
 	api.Router(engine)
