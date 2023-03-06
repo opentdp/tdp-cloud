@@ -14,7 +14,6 @@ func v100000() error {
 		&dborm.Keypair{},
 		&dborm.Machine{},
 		&dborm.Script{},
-		&dborm.Session{},
 		&dborm.Taskline{},
 		&dborm.User{},
 		&dborm.Vendor{},

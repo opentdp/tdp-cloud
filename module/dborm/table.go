@@ -116,19 +116,6 @@ type Script struct {
 	UpdatedAt     int64
 }
 
-// 用户会话
-
-type Session struct {
-	Id        uint `gorm:"primaryKey"`
-	UserId    uint `gorm:"index"`
-	UserLevel uint
-	Token     string `gorm:"uniqueIndex"`
-	IpAddress string
-	UserAgent string
-	CreatedAt int64
-	UpdatedAt int64
-}
-
 // 任务记录
 
 type Taskline struct {
@@ -147,15 +134,14 @@ type Taskline struct {
 // 用户
 
 type User struct {
-	Id          uint      `gorm:"primaryKey"`
-	Username    string    `gorm:"uniqueIndex"`
-	Password    string    `json:"-"`
-	AppId       string    `gorm:"uniqueIndex"`
-	Level       uint      `gorm:"default:5"`
-	Email       string    `gorm:"uniqueIndex,default:null"`
-	Description string    `gorm:"default:挥一挥手"`
-	Sessions    []Session `json:",omitempty"`
-	Vendors     []Vendor  `json:",omitempty"`
+	Id          uint     `gorm:"primaryKey"`
+	Username    string   `gorm:"uniqueIndex"`
+	Password    string   `json:"-"`
+	AppId       string   `gorm:"uniqueIndex"`
+	Level       uint     `gorm:"default:5"`
+	Email       string   `gorm:"uniqueIndex,default:null"`
+	Description string   `gorm:"default:挥一挥手"`
+	Vendors     []Vendor `json:",omitempty"`
 	CreatedAt   int64
 	UpdatedAt   int64
 }
