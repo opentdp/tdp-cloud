@@ -39,9 +39,9 @@ func AuthGuard() gin.HandlerFunc {
 		}
 
 		// 存储到上下文
+		c.Set("AppKey", claims.AppKey)
 		c.Set("UserId", claims.UserId)
 		c.Set("UserLevel", claims.UserLevel)
-		c.Set("AppKey", claims.AppKey)
 
 	}
 

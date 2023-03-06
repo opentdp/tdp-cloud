@@ -93,6 +93,7 @@ func profile_update(c *gin.Context) {
 	}
 
 	rq.Id = c.GetUint("UserId")
+	rq.AppKey = c.GetString("AppKey")
 
 	if err := passport.UpdateInfo(rq); err == nil {
 		c.Set("Message", "修改成功")

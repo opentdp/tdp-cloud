@@ -8,35 +8,61 @@ import (
 	"golang.org/x/crypto/bcrypt"
 
 	"tdp-cloud/helper/strutil"
+	"tdp-cloud/module/dborm"
 )
 
-// 密码和密钥
+// 新建密码密钥
 
-func NewSecret(s, p string) (string, string, error) {
+func CreateSecret(p, k string) (string, string, error) {
+
+	if k == "" {
+		k = strutil.Rand(32)
+	}
+
+	ak, err := strutil.Des3Encrypt(k, p)
+
+	if err != nil {
+		return "", "", err // 创建密钥失败
+	}
+
+	hash, err := bcrypt.GenerateFromPassword([]byte(p), bcrypt.DefaultCost)
+	return string(hash), ak, err
+
+}
+
+// 修改密码密钥
+
+func UpdateSecret(p, k string) (string, string, error) {
 
 	if p == "" {
 		return "", "", nil // 未设置密码时忽略
 	}
 
-	if s == "" {
+	if k == "" {
 		return "", "", errors.New("密钥不能为空")
 	}
 
-	sk, err := strutil.Des3Encrypt(s, p)
-	if err != nil {
-		return "", "", err // 获取加密后的密钥失败
-	}
-
-	hash, err := bcrypt.GenerateFromPassword([]byte(p), bcrypt.DefaultCost)
-	return sk, string(hash), err
+	return CreateSecret(p, k)
 
 }
 
-// 验证用户密码
+// 验证用户密钥
 
-func CheckPassword(p1, p2 string) bool {
+func CheckSecret(u *dborm.User, p, k string) bool {
 
-	return bcrypt.CompareHashAndPassword([]byte(p1), []byte(p2)) == nil
+	rs := bcrypt.CompareHashAndPassword([]byte(u.Password), []byte(p))
+	if rs != nil {
+		return false
+	}
+
+	if k != "" {
+		ak, err := strutil.Des3Decrypt(u.AppKey, p)
+		if err != nil || ak != k {
+			return false
+		}
+	}
+
+	return true
 
 }
 

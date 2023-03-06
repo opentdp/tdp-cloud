@@ -35,7 +35,7 @@ func Login(data *LoginParam) (*LoginResult, error) {
 	if item.Id == 0 {
 		return nil, errors.New("账号错误")
 	}
-	if !user.CheckPassword(item.Password, data.Password) {
+	if !user.CheckSecret(item, data.Password, "") {
 		return nil, errors.New("密码错误")
 	}
 
@@ -61,9 +61,9 @@ func Login(data *LoginParam) (*LoginResult, error) {
 	// 创建令牌
 
 	token, err := midware.CreateToken(&midware.UserInfo{
+		AppKey:    skey,
 		UserId:    item.Id,
 		UserLevel: item.Level,
-		AppKey:    skey,
 	})
 
 	if err != nil {
@@ -83,14 +83,10 @@ func Login(data *LoginParam) (*LoginResult, error) {
 
 }
 
-// 修改密码
+// 修改资料
 
 type UpdateInfoParam struct {
-	Id          uint
-	Username    string `binding:"required"`
-	Password    string
-	Email       string `binding:"required"`
-	Description string
+	user.UpdateParam
 	OldPassword string `binding:"required"`
 }
 
@@ -103,7 +99,7 @@ func UpdateInfo(data *UpdateInfoParam) error {
 	if item.Id == 0 {
 		return errors.New("账号错误")
 	}
-	if !user.CheckPassword(item.Password, data.OldPassword) {
+	if !user.CheckSecret(item, data.OldPassword, data.AppKey) {
 		return errors.New("密码错误")
 	}
 	if err := user.CheckUserinfo(data.Username, data.Password, data.Email); err != nil {
@@ -112,12 +108,6 @@ func UpdateInfo(data *UpdateInfoParam) error {
 
 	// 更新信息
 
-	return user.Update(&user.UpdateParam{
-		Id:          data.Id,
-		Username:    data.Username,
-		Password:    data.Password,
-		Email:       data.Email,
-		Description: data.Description,
-	})
+	return user.Update(&data.UpdateParam)
 
 }

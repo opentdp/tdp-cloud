@@ -3,7 +3,6 @@ package user
 import (
 	"github.com/google/uuid"
 
-	"tdp-cloud/helper/strutil"
 	"tdp-cloud/module/dborm"
 )
 
@@ -20,11 +19,7 @@ type CreateParam struct {
 
 func Create(data *CreateParam) (uint, error) {
 
-	if len(data.AppKey) != 32 {
-		data.AppKey = strutil.Rand(32) //强制为32位
-	}
-
-	sk, pw, err := NewSecret(data.AppKey, data.Password)
+	pw, ak, err := CreateSecret(data.Password, "")
 	if err != nil {
 		return 0, err
 	}
@@ -34,7 +29,7 @@ func Create(data *CreateParam) (uint, error) {
 		Password:    pw,
 		Level:       data.Level,
 		AppId:       uuid.NewString(),
-		AppKey:      sk,
+		AppKey:      ak,
 		Email:       data.Email,
 		Description: data.Description,
 	}
@@ -59,7 +54,7 @@ type UpdateParam struct {
 
 func Update(data *UpdateParam) error {
 
-	sk, pw, err := NewSecret(data.AppKey, data.Password)
+	pw, ak, err := UpdateSecret(data.Password, data.AppKey)
 	if err != nil {
 		return err
 	}
@@ -73,7 +68,7 @@ func Update(data *UpdateParam) error {
 			Password:    pw,
 			Level:       data.Level,
 			Email:       data.Email,
-			AppKey:      sk,
+			AppKey:      ak,
 			Description: data.Description,
 		})
 

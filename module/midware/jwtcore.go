@@ -8,9 +8,9 @@ import (
 )
 
 type UserInfo struct {
+	AppKey    string
 	UserId    uint
 	UserLevel uint
-	AppKey    string
 }
 
 type UserClaims struct {
