@@ -26,7 +26,7 @@ func register(c *gin.Context) {
 	}
 
 	// 校验用户信息
-	if err := user.CheckUser(rq.Username, rq.Password, rq.Email); err != nil {
+	if err := user.CheckUserinfo(rq.Username, rq.Password, rq.Email); err != nil {
 		c.Set("Error", err)
 		return
 	}

@@ -6,11 +6,43 @@ import (
 	"strings"
 
 	"golang.org/x/crypto/bcrypt"
+
+	"tdp-cloud/helper/strutil"
 )
 
-// 验证用户
+// 密码和密钥
 
-func CheckUser(u, p, e string) error {
+func NewSecret(s, p string) (string, string, error) {
+
+	if p == "" {
+		return "", "", nil // 未设置密码时忽略
+	}
+
+	if s == "" {
+		return "", "", errors.New("密钥不能为空")
+	}
+
+	sk, err := strutil.Des3Encrypt(s, p)
+	if err != nil {
+		return "", "", err // 获取加密后的密钥失败
+	}
+
+	hash, err := bcrypt.GenerateFromPassword([]byte(p), bcrypt.DefaultCost)
+	return sk, string(hash), err
+
+}
+
+// 验证用户密码
+
+func CheckPassword(p1, p2 string) bool {
+
+	return bcrypt.CompareHashAndPassword([]byte(p1), []byte(p2)) == nil
+
+}
+
+// 验证用户信息
+
+func CheckUserinfo(u, p, e string) error {
 
 	ul, pl, el := len(u), len(p), len(e)
 
@@ -50,25 +82,5 @@ func CheckUser(u, p, e string) error {
 	}
 
 	return nil
-
-}
-
-// 生成密码
-
-func HashPassword(p1 string) string {
-
-	hash, _ := bcrypt.GenerateFromPassword([]byte(p1), bcrypt.DefaultCost)
-
-	return string(hash)
-
-}
-
-// 验证密码
-
-func CheckPassword(p1, p2 string) bool {
-
-	err := bcrypt.CompareHashAndPassword([]byte(p1), []byte(p2))
-
-	return err == nil
 
 }

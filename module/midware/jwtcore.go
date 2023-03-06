@@ -10,7 +10,7 @@ import (
 type UserInfo struct {
 	UserId    uint
 	UserLevel uint
-	SecretKey string
+	AppKey    string
 }
 
 type UserClaims struct {

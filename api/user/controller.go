@@ -85,8 +85,6 @@ func update(c *gin.Context) {
 		return
 	}
 
-	rq.Id = c.GetUint("UserId")
-
 	if err := user.Update(rq); err == nil {
 		c.Set("Message", "修改成功")
 	} else {

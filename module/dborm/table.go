@@ -137,8 +137,9 @@ type User struct {
 	Id          uint     `gorm:"primaryKey"`
 	Username    string   `gorm:"uniqueIndex"`
 	Password    string   `json:"-"`
-	AppId       string   `gorm:"uniqueIndex"`
 	Level       uint     `gorm:"default:5"`
+	AppId       string   `gorm:"uniqueIndex"`
+	AppKey      string   `json:"-"`
 	Email       string   `gorm:"uniqueIndex,default:null"`
 	Description string   `gorm:"default:挥一挥手"`
 	Vendors     []Vendor `json:",omitempty"`

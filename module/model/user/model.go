@@ -3,6 +3,7 @@ package user
 import (
 	"github.com/google/uuid"
 
+	"tdp-cloud/helper/strutil"
 	"tdp-cloud/module/dborm"
 )
 
@@ -12,21 +13,28 @@ type CreateParam struct {
 	Username    string `binding:"required"`
 	Password    string `binding:"required"`
 	Level       uint
+	AppKey      string
 	Email       string `binding:"required"`
 	Description string
 }
 
 func Create(data *CreateParam) (uint, error) {
 
-	if data.Password != "" {
-		data.Password = HashPassword(data.Password)
+	if len(data.AppKey) != 32 {
+		data.AppKey = strutil.Rand(32) //强制为32位
+	}
+
+	sk, pw, err := NewSecret(data.AppKey, data.Password)
+	if err != nil {
+		return 0, err
 	}
 
 	item := &dborm.User{
 		Username:    data.Username,
-		Password:    data.Password,
-		AppId:       uuid.NewString(),
+		Password:    pw,
 		Level:       data.Level,
+		AppId:       uuid.NewString(),
+		AppKey:      sk,
 		Email:       data.Email,
 		Description: data.Description,
 	}
@@ -45,13 +53,15 @@ type UpdateParam struct {
 	Password    string
 	Level       uint
 	Email       string
+	AppKey      string
 	Description string
 }
 
 func Update(data *UpdateParam) error {
 
-	if data.Password != "" {
-		data.Password = HashPassword(data.Password)
+	sk, pw, err := NewSecret(data.AppKey, data.Password)
+	if err != nil {
+		return err
 	}
 
 	result := dborm.Db.
@@ -60,9 +70,10 @@ func Update(data *UpdateParam) error {
 		}).
 		Updates(dborm.User{
 			Username:    data.Username,
-			Password:    data.Password,
+			Password:    pw,
 			Level:       data.Level,
 			Email:       data.Email,
+			AppKey:      sk,
 			Description: data.Description,
 		})
 
@@ -96,8 +107,8 @@ func Delete(data *DeleteParam) error {
 
 type FetchParam struct {
 	Id       uint
-	AppId    string
 	Username string
+	AppId    string
 	Email    string
 }
 
@@ -108,8 +119,8 @@ func Fetch(data *FetchParam) (*dborm.User, error) {
 	result := dborm.Db.
 		Where(&dborm.User{
 			Id:       data.Id,
-			AppId:    data.AppId,
 			Username: data.Username,
+			AppId:    data.AppId,
 			Email:    data.Email,
 		}).
 		First(&item)

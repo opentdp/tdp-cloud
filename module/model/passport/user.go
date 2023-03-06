@@ -3,6 +3,7 @@ package passport
 import (
 	"errors"
 
+	"tdp-cloud/helper/strutil"
 	"tdp-cloud/module/midware"
 	"tdp-cloud/module/model/user"
 )
@@ -38,12 +39,31 @@ func Login(data *LoginParam) (*LoginResult, error) {
 		return nil, errors.New("密码错误")
 	}
 
+	// 迁移密钥
+	// TODO: v1.0.0 时删除兼容代码
+
+	if len(item.AppKey) == 0 {
+		if user, err := SecretMigrator(item.Id, data.Password); err != nil {
+			return nil, err
+		} else {
+			item = user
+		}
+	}
+
+	// 获取密钥
+
+	skey, err := strutil.Des3Decrypt(item.AppKey, data.Password)
+
+	if err != nil {
+		return nil, err
+	}
+
 	// 创建令牌
 
 	token, err := midware.CreateToken(&midware.UserInfo{
 		UserId:    item.Id,
 		UserLevel: item.Level,
-		SecretKey: "",
+		AppKey:    skey,
 	})
 
 	if err != nil {
@@ -86,7 +106,7 @@ func UpdateInfo(data *UpdateInfoParam) error {
 	if !user.CheckPassword(item.Password, data.OldPassword) {
 		return errors.New("密码错误")
 	}
-	if err := user.CheckUser(data.Username, data.Password, data.Email); err != nil {
+	if err := user.CheckUserinfo(data.Username, data.Password, data.Email); err != nil {
 		return err
 	}
 
