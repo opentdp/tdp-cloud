@@ -72,7 +72,7 @@ type Keypair struct {
 	Id          uint `gorm:"primaryKey"`
 	UserId      uint `gorm:"index"`
 	PublicKey   string
-	PrivateKey  string
+	PrivateKey  string `json:"-"`
 	KeyType     string `gorm:"index"`
 	Cipher      string
 	Status      string
