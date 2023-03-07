@@ -8,10 +8,6 @@ func SocketHandle() gin.HandlerFunc {
 
 	return func(c *gin.Context) {
 
-		if auth := c.Param("auth"); auth != "" {
-			c.Request.Header.Set("Authorization", auth)
-		}
-
 		c.Next()
 
 		// 输出错误信息
