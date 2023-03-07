@@ -22,7 +22,7 @@ func Create(data *CreateParam) (uint, error) {
 
 	if data.SecretKey != "" && data.StoreKey != "" {
 		secret, err := strutil.Des3Encrypt(data.SecretKey, data.StoreKey)
-		if err != nil {
+		if err == nil {
 			data.SecretKey = secret
 			data.Cipher = "appkey"
 		}
@@ -62,7 +62,7 @@ func Update(data *UpdateParam) error {
 
 	if data.SecretKey != "" && data.StoreKey != "" {
 		secret, err := strutil.Des3Encrypt(data.SecretKey, data.StoreKey)
-		if err != nil {
+		if err == nil {
 			data.SecretKey = secret
 			data.Cipher = "appkey"
 		}

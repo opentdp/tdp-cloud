@@ -16,7 +16,7 @@ func apiProxy(c *gin.Context) {
 	rq := &vendor.FetchParam{
 		Id:       cast.ToUint(c.Param("id")),
 		UserId:   c.GetUint("UserId"),
-		StoreKey: c.GetString("appkey"),
+		StoreKey: c.GetString("AppKey"),
 	}
 
 	if rq.Id == 0 {

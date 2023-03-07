@@ -65,7 +65,7 @@ func create(c *gin.Context) {
 	}
 
 	rq.UserId = c.GetUint("UserId")
-	rq.StoreKey = c.GetString("appkey")
+	rq.StoreKey = c.GetString("AppKey")
 
 	if id, err := keypair.Create(rq); err == nil {
 		c.Set("Payload", gin.H{"Id": id})
@@ -93,7 +93,7 @@ func update(c *gin.Context) {
 	}
 
 	rq.UserId = c.GetUint("UserId")
-	rq.StoreKey = c.GetString("appkey")
+	rq.StoreKey = c.GetString("AppKey")
 
 	if err := keypair.Update(rq); err == nil {
 		c.Set("Message", "修改成功")
