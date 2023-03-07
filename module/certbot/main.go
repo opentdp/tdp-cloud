@@ -46,7 +46,7 @@ func NewByJob(job *dborm.Certjob) error {
 		job.CaType = "debug" //调试模式强制重写
 	}
 
-	return certmagic.Manage(&certmagic.Params{
+	return certmagic.Manage(&certmagic.ReqeustParam{
 		Email:     job.Email,
 		Domain:    job.Domain,
 		CaType:    job.CaType,

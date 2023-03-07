@@ -10,7 +10,7 @@ import (
 	"tdp-cloud/helper/logman"
 )
 
-func newIssuer(rq *Params) certmagic.ACMEIssuer {
+func newIssuer(rq *ReqeustParam) certmagic.ACMEIssuer {
 
 	issuer := certmagic.ACMEIssuer{
 		Agreed:                  true,

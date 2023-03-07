@@ -9,7 +9,7 @@ import (
 
 var endpointData = map[string]string{}
 
-func solveEndpoint(rq *Params) (string, error) {
+func solveEndpoint(rq *ReqeustParam) (string, error) {
 
 	if rq.RegionId == "" {
 		return rq.Service + ".aliyuncs.com", nil
@@ -41,13 +41,13 @@ func solveEndpoint(rq *Params) (string, error) {
 
 }
 
-func requestEndpoint(rq *Params) (*EndpointItem, error) {
+func requestEndpoint(rq *ReqeustParam) (*EndpointItem, error) {
 
 	item := &EndpointItem{}
 
 	// 从接口请求数据
 
-	resp, err := newClient(&Params{
+	resp, err := newClient(&ReqeustParam{
 		SecretId:  rq.SecretId,
 		SecretKey: rq.SecretKey,
 		Version:   "2015-06-12",

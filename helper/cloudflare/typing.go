@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 )
 
-type Params struct {
+type ReqeustParam struct {
 	Token   string `note:"Api Token"`
 	Method  string `binding:"required"`
 	Path    string `binding:"required"`
@@ -12,7 +12,7 @@ type Params struct {
 	Payload json.RawMessage
 }
 
-type Response struct {
+type ResponseData struct {
 	Success    bool
 	Errors     []ResponseInfo
 	Messages   []ResponseInfo

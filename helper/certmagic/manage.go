@@ -12,7 +12,7 @@ import (
 
 var magicPool = map[string]*certmagic.Config{}
 
-func Manage(rq *Params) error {
+func Manage(rq *ReqeustParam) error {
 
 	skey := crypto.Md5ToString(rq.Email + rq.SecretKey + rq.CaType)
 

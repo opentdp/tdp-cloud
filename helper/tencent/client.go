@@ -16,7 +16,7 @@ import (
 	"tdp-cloud/cmd/args"
 )
 
-func Request(rq *Params) (any, error) {
+func Request(rq *ReqeustParam) (any, error) {
 
 	resp, err := newClient(rq)
 
@@ -25,7 +25,7 @@ func Request(rq *Params) (any, error) {
 	}
 
 	body := resp.GetBody()
-	res := &Result{}
+	res := &ResponseData{}
 
 	if err := json.Unmarshal(body, res); err != nil {
 		return nil, err
@@ -35,7 +35,7 @@ func Request(rq *Params) (any, error) {
 
 }
 
-func newClient(rq *Params) (*th.CommonResponse, error) {
+func newClient(rq *ReqeustParam) (*th.CommonResponse, error) {
 
 	cpf := tp.NewClientProfile()
 

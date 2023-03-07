@@ -33,19 +33,19 @@ func apiProxy(c *gin.Context) {
 
 	// 构造参数
 
-	params := &tencent.Params{
+	param := &tencent.ReqeustParam{
 		SecretId:  vd.SecretId,
 		SecretKey: vd.SecretKey,
 	}
 
-	if err = c.ShouldBindJSON(params); err != nil {
+	if err = c.ShouldBindJSON(param); err != nil {
 		c.Set("Error", err)
 		return
 	}
 
 	// 发起请求
 
-	if res, err := tencent.Request(params); err == nil {
+	if res, err := tencent.Request(param); err == nil {
 		c.Set("Payload", res)
 	} else {
 		c.Set("Error", err)

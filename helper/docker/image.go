@@ -11,13 +11,13 @@ import (
 
 // 拉取镜像
 
-type ImagePullParams struct {
+type ImagePullParam struct {
 	ImageName string
 	Username  string
 	Password  string
 }
 
-func (dc *DockerClient) ImagePull(rq *ImagePullParams) (io.ReadCloser, error) {
+func (dc *DockerClient) ImagePull(rq *ImagePullParam) (io.ReadCloser, error) {
 
 	ctx := context.Background()
 	option := types.ImagePullOptions{}

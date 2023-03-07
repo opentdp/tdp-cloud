@@ -7,7 +7,7 @@ import (
 	"tdp-cloud/helper/request"
 )
 
-func Request(rq *Params) (any, error) {
+func Request(rq *ReqeustParam) (any, error) {
 
 	client := request.Client{
 		Method: rq.Method,
@@ -35,7 +35,7 @@ func Request(rq *Params) (any, error) {
 
 func parseBody(body []byte) (any, error) {
 
-	res := &Response{}
+	res := &ResponseData{}
 	err := json.Unmarshal(body, res)
 
 	if err != nil {

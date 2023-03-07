@@ -30,18 +30,18 @@ func apiProxy(c *gin.Context) {
 
 	// 构造参数
 
-	params := &cloudflare.Params{
+	param := &cloudflare.ReqeustParam{
 		Token: vd.SecretKey,
 	}
 
-	if err := c.ShouldBindJSON(params); err != nil {
+	if err := c.ShouldBindJSON(param); err != nil {
 		c.Set("Error", err)
 		return
 	}
 
 	// 发起请求
 
-	res, err := cloudflare.Request(params)
+	res, err := cloudflare.Request(param)
 
 	if err == nil {
 		c.Set("Payload", res)

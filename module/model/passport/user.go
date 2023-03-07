@@ -77,12 +77,12 @@ func Login(data *LoginParam) (*LoginResult, error) {
 
 // 修改资料
 
-type UpdateInfoParam struct {
+type ProfileUpdateParam struct {
 	user.UpdateParam
 	OldPassword string `binding:"required"`
 }
 
-func UpdateInfo(data *UpdateInfoParam) error {
+func ProfileUpdate(data *ProfileUpdateParam) error {
 
 	item, _ := user.Fetch(&user.FetchParam{Id: data.Id})
 

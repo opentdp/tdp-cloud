@@ -85,7 +85,7 @@ func profile(c *gin.Context) {
 
 func profile_update(c *gin.Context) {
 
-	var rq *passport.UpdateInfoParam
+	var rq *passport.ProfileUpdateParam
 
 	if err := c.ShouldBind(&rq); err != nil {
 		c.Set("Error", err)
@@ -95,7 +95,7 @@ func profile_update(c *gin.Context) {
 	rq.Id = c.GetUint("UserId")
 	rq.AppKey = c.GetString("AppKey")
 
-	if err := passport.UpdateInfo(rq); err == nil {
+	if err := passport.ProfileUpdate(rq); err == nil {
 		c.Set("Message", "修改成功")
 	} else {
 		c.Set("Error", err)

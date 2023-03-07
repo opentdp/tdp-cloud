@@ -1,6 +1,6 @@
 package certmagic
 
-type Params struct {
+type ReqeustParam struct {
 	Email     string
 	Domain    string
 	CaType    string

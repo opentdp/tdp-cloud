@@ -1,6 +1,6 @@
 package tencent
 
-type Params struct {
+type ReqeustParam struct {
 	Service   string `note:"产品名称"`
 	Version   string `note:"接口版本"`
 	Action    string `note:"接口名称"`
@@ -11,6 +11,6 @@ type Params struct {
 	SecretKey string `note:"访问密钥 Key"`
 }
 
-type Result struct {
+type ResponseData struct {
 	Response any
 }
