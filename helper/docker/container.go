@@ -8,7 +8,7 @@ import (
 	"github.com/docker/docker/api/types/container"
 	"github.com/docker/docker/api/types/filters"
 	"github.com/docker/docker/api/types/network"
-	v1 "github.com/opencontainers/image-spec/specs-go/v1"
+	specs "github.com/opencontainers/image-spec/specs-go/v1"
 )
 
 // 创建容器
@@ -22,7 +22,7 @@ func (dc *DockerClient) ContainerCreate(name, image string) (string, error) {
 		&container.Config{},
 		&container.HostConfig{},
 		&network.NetworkingConfig{},
-		&v1.Platform{},
+		&specs.Platform{},
 		name,
 	)
 	return resp.ID, err

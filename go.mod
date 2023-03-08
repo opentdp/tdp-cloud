@@ -3,16 +3,8 @@ module tdp-cloud
 go 1.18
 
 require (
-	// DOCKER 管理
-	github.com/docker/docker v23.0.1+incompatible
-	// WEB 框架
-	github.com/gin-gonic/gin v1.9.0
-	// JWT 认证支持
-	github.com/golang-jwt/jwt/v4 v4.4.3
 	// 生成 UUID
 	github.com/google/uuid v1.3.0
-	// WebSocket 框架
-	github.com/gorilla/websocket v1.5.0
 	// 服务管理
 	github.com/kardianos/service v1.2.2
 	// Map 转结构体
@@ -37,6 +29,17 @@ require (
 	golang.org/x/text v0.7.0
 	// 日志切割
 	gopkg.in/natefinch/lumberjack.v2 v2.2.1
+)
+
+// HTTP 服务
+
+require (
+	// WEB 框架
+	github.com/gin-gonic/gin v1.9.0
+	// JWT 认证支持
+	github.com/golang-jwt/jwt/v4 v4.4.3
+	// WebSocket 框架
+	github.com/gorilla/websocket v1.5.0
 )
 
 // 数据库 ORM
@@ -72,6 +75,13 @@ require (
 	github.com/libdns/cloudflare v0.1.0
 	github.com/libdns/tencentcloud v1.0.0
 	github.com/mholt/acmez v1.1.0
+)
+
+// Docker SDK
+
+require (
+	github.com/docker/docker v23.0.1+incompatible
+	github.com/opencontainers/image-spec v1.0.2
 )
 
 // 间接依赖
@@ -117,7 +127,6 @@ require (
 	github.com/modern-go/reflect2 v1.0.2 // indirect
 	github.com/morikuni/aec v1.0.0 // indirect
 	github.com/opencontainers/go-digest v1.0.0 // indirect
-	github.com/opencontainers/image-spec v1.0.2 // indirect
 	github.com/pelletier/go-toml/v2 v2.0.7 // indirect
 	github.com/pkg/errors v0.9.1 // indirect
 	github.com/power-devops/perfstat v0.0.0-20221212215047-62379fc7944b // indirect
