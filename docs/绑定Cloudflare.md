@@ -6,6 +6,6 @@
 User.User Details, Zone.Zone Settings, Zone.Zone, Zone.SSL and Certificates, Zone.DNS
 ```
 
-3、进入 **TDP Cloud** 后台，`资产管理 - Cloudflare`，添加获取到的 `API Token`
+3、进入 **TDP Cloud** 后台，`厂商管理 - Cloudflare`，添加获取到的 `API Token`
 
-4、在 `资产管理 - Cloudflare` 中选择刚添加的账号，点击 `导入` 按钮，选择需要导入资源，完成绑定操作
+4、在 `厂商管理 - Cloudflare` 中选择刚添加的账号，点击 `导入` 按钮，选择需要导入资源，完成绑定操作
