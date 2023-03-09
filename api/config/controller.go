@@ -123,6 +123,7 @@ func delete(c *gin.Context) {
 func ui_option(c *gin.Context) {
 
 	option := gin.H{
+		"Version":  args.Version,
 		"Register": args.Server.Register,
 	}
 
