@@ -13,17 +13,24 @@ import (
 
 // 创建容器
 
-func (dc *DockerClient) ContainerCreate(name, image string) (string, error) {
+type ContainerCreateParams struct {
+	Name  string
+	Image string
+}
+
+func (dc *DockerClient) ContainerCreate(rq *ContainerCreateParams) (string, error) {
 
 	ctx := context.Background()
 
 	resp, err := dc.Client.ContainerCreate(
 		ctx,
-		&container.Config{},
+		&container.Config{
+			Image: rq.Image,
+		},
 		&container.HostConfig{},
 		&network.NetworkingConfig{},
 		&specs.Platform{},
-		name,
+		rq.Name,
 	)
 	return resp.ID, err
 
