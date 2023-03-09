@@ -84,6 +84,10 @@ go env -w GO111MODULE=on
 go env -w GOPROXY=https://goproxy.cn,direct
 ```
 
+## 微信交流群
+
+![](./docs/weixin-qr.jpg)
+
 ## 其他
 
 License [GPL-3.0](https://www.gnu.org/licenses/gpl-3.0.txt)
