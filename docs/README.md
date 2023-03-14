@@ -10,4 +10,6 @@
 
 - [绑定Cloudflare](绑定Cloudflare.md)
 
+- [反向代理设置](反向代理设置.md)
+
 - [常用CA对比](常用CA对比.md)
