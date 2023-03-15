@@ -10,13 +10,23 @@ func Router(api *gin.RouterGroup) {
 
 	rg := api.Group("/workhub")
 
+	// 需授权接口
+
 	rg.Use(midware.AuthGuard())
 
 	{
-		rg.POST("/host", host)
 		rg.POST("/list", list)
 		rg.POST("/stat/:id", stat)
 		rg.POST("/exec/:id", exec)
+	}
+
+	// 管理员接口
+
+	rg.Use(midware.AdminGuard())
+
+	{
+		rg.POST("/host", host)
+		rg.POST("/host/ip", hostIp)
 	}
 
 }

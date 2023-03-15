@@ -1,10 +1,28 @@
 package psutil
 
 import (
+	"net"
 	"strings"
 
 	"tdp-cloud/helper/request"
 )
+
+// 内网 IP
+
+func PrivateIpAddress() string {
+
+	res := []string{}
+	addrs, _ := net.InterfaceAddrs()
+
+	for _, ip := range addrs {
+		if ipnet, ok := ip.(*net.IPNet); ok && ipnet.IP.IsPrivate() {
+			res = append(res, ipnet.IP.String())
+		}
+	}
+
+	return strings.Join(res, ", ")
+
+}
 
 // 公网 IP
 

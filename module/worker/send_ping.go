@@ -11,10 +11,13 @@ func (pod *SendPod) Ping() (uint, error) {
 
 	logman.Info("Ping:send", "SummaryStat")
 
+	info := psutil.Summary()
+	info.IpAddress = psutil.PublicIpAddress(false)
+
 	rq := &SocketData{
 		Method:  "Ping",
 		TaskId:  0,
-		Payload: psutil.Summary(),
+		Payload: info,
 	}
 
 	return rq.TaskId, pod.Write(rq)

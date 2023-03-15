@@ -1,6 +1,7 @@
 package psutil
 
 import (
+	"strings"
 	"time"
 
 	"github.com/shirou/gopsutil/v3/cpu"
@@ -31,7 +32,7 @@ func Summary() *SummaryStat {
 		CpuPercent:   cp,
 		MemoryTotal:  mv.Total,
 		MemoryUsed:   mv.Used,
-		IpAddress:    PublicIpAddress(false),
+		IpAddress:    PrivateIpAddress(),
 	}
 
 }
@@ -64,6 +65,7 @@ func Detail() *DetailStat {
 	}
 
 	diskPartition := []DiskPartition{}
+	diskTotaled := ","
 	diskTotal := uint64(0)
 	diskUsed := uint64(0)
 	for _, dpi := range dp {
@@ -75,8 +77,11 @@ func Detail() *DetailStat {
 				du.Total, du.Used,
 			})
 		}
-		diskTotal += du.Total
-		diskUsed += du.Used
+		if !strings.Contains(diskTotaled, dpi.Device) {
+			diskTotaled += dpi.Device + ","
+			diskTotal += du.Total
+			diskUsed += du.Used
+		}
 	}
 
 	return &DetailStat{

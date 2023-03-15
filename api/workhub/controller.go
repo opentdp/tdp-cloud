@@ -14,13 +14,19 @@ import (
 
 func host(c *gin.Context) {
 
-	hostInfo := psutil.Detail()
+	info := psutil.Detail()
 
-	if c.GetUint("UserLevel") != 1 {
-		hostInfo.IpAddress = "*"
-	}
+	c.Set("Payload", gin.H{"Stat": info})
 
-	c.Set("Payload", gin.H{"Stat": hostInfo})
+}
+
+// 主机IP
+
+func hostIp(c *gin.Context) {
+
+	ip := psutil.PublicIpAddress(false)
+
+	c.Set("Payload", gin.H{"Ip": ip})
 
 }
 

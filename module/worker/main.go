@@ -34,6 +34,8 @@ func Daemon() error {
 	ws := args.Worker.Remote
 
 	info := psutil.Summary()
+	info.IpAddress = psutil.PublicIpAddress(true)
+
 	cloudId := psutil.CloudInstanceId()
 	workerId := crypto.Md5ToString(info.HostId)
 
