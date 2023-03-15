@@ -3,7 +3,8 @@ package args
 var Debug bool
 
 var Dataset struct {
-	Dir string
+	Dir    string
+	Secret string
 }
 
 var Database struct {

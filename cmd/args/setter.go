@@ -9,6 +9,7 @@ import (
 func init() {
 
 	viper.SetDefault("dataset.dir", ".")
+	viper.SetDefault("dataset.secret", strutil.Rand(32))
 
 	viper.SetDefault("logger.dir", ".")
 	viper.SetDefault("logger.level", "info")
@@ -24,6 +25,7 @@ func Sync() {
 	Debug = viper.GetBool("debug")
 
 	Dataset.Dir = viper.GetString("dataset.dir")
+	Dataset.Secret = viper.GetString("dataset.secret")
 
 	Database.Type = viper.GetString("database.dir")
 	Database.Host = viper.GetString("database.host")
