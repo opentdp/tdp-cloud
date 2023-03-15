@@ -4,7 +4,8 @@ import (
 	"time"
 
 	"github.com/golang-jwt/jwt/v4"
-	"github.com/spf13/viper"
+
+	"tdp-cloud/cmd/args"
 )
 
 type UserInfo struct {
@@ -20,8 +21,6 @@ type UserClaims struct {
 
 func CreateToken(userInfo *UserInfo) (string, error) {
 
-	jwtkey := viper.GetString("server.jwtkey")
-
 	claims := UserClaims{
 		jwt.RegisteredClaims{
 			Issuer: "TDP Cloud",
@@ -34,6 +33,7 @@ func CreateToken(userInfo *UserInfo) (string, error) {
 
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
 
+	jwtkey := args.Server.JwtKey
 	return token.SignedString([]byte(jwtkey))
 
 }
@@ -43,7 +43,7 @@ func ParserToken(signToken string) (*UserClaims, error) {
 	var claims UserClaims
 
 	keyFunc := func(token *jwt.Token) (any, error) {
-		jwtkey := viper.GetString("server.jwtkey")
+		jwtkey := args.Server.JwtKey
 		return []byte(jwtkey), nil
 	}
 
