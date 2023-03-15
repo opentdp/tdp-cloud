@@ -23,7 +23,7 @@ func Router(api *gin.RouterGroup) {
 
 	{
 		rg.POST("/profile", profile)
-		rg.POST("/profile/update", profile_update)
+		rg.POST("/profile/update", profileUpdate)
 		rg.POST("/summary", summary)
 	}
 

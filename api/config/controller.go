@@ -120,7 +120,7 @@ func delete(c *gin.Context) {
 
 // 获取前端配置
 
-func ui_option(c *gin.Context) {
+func uiOption(c *gin.Context) {
 
 	option := gin.H{
 		"Version":  args.Version,

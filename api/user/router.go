@@ -10,9 +10,12 @@ func Router(api *gin.RouterGroup) {
 
 	rg := api.Group("/user")
 
-	// 管理员接口
+	// 需授权接口
 
 	rg.Use(midware.AuthGuard())
+
+	// 管理员接口
+
 	rg.Use(midware.AdminGuard())
 
 	{

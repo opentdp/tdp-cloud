@@ -5,30 +5,9 @@ import (
 	"github.com/spf13/cast"
 
 	"tdp-cloud/helper/command"
-	"tdp-cloud/helper/psutil"
 	"tdp-cloud/module/model/user"
 	"tdp-cloud/module/workhub"
 )
-
-// 主机信息
-
-func host(c *gin.Context) {
-
-	info := psutil.Detail()
-
-	c.Set("Payload", gin.H{"Stat": info})
-
-}
-
-// 主机IP
-
-func hostIp(c *gin.Context) {
-
-	ip := psutil.PublicIpAddress(false)
-
-	c.Set("Payload", gin.H{"Ip": ip})
-
-}
 
 // 节点列表
 
@@ -41,9 +20,9 @@ func list(c *gin.Context) {
 
 }
 
-// 获取状态
+// 节点状态
 
-func stat(c *gin.Context) {
+func detail(c *gin.Context) {
 
 	workerId := c.Param("id")
 	send := workhub.NewSender(workerId)
@@ -54,8 +33,8 @@ func stat(c *gin.Context) {
 	}
 
 	if id, err := send.Stat(); err == nil {
-		res := workhub.WaitResponse(id, 30)
-		c.Set("Payload", res)
+		info := workhub.WaitResponse(id, 30)
+		c.Set("Payload", gin.H{"Stat": info})
 	} else {
 		c.Set("Error", err)
 	}

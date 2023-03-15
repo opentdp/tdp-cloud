@@ -83,7 +83,7 @@ func profile(c *gin.Context) {
 
 // 修改资料
 
-func profile_update(c *gin.Context) {
+func profileUpdate(c *gin.Context) {
 
 	var rq *passport.ProfileUpdateParam
 

@@ -13,16 +13,16 @@ func dialector() gorm.Dialector {
 
 	switch args.Database.Type {
 	case "sqlite":
-		return use_sqlite()
+		return useSqlite()
 	case "mysql":
-		return use_mysql()
+		return useMysql()
 	default:
-		return use_cli()
+		return useCli()
 	}
 
 }
 
-func use_sqlite() gorm.Dialector {
+func useSqlite() gorm.Dialector {
 
 	dir := args.Dataset.Dir
 	name := args.Database.Name
@@ -38,7 +38,7 @@ func use_sqlite() gorm.Dialector {
 
 }
 
-func use_mysql() gorm.Dialector {
+func useMysql() gorm.Dialector {
 
 	host := args.Database.Host
 	user := args.Database.User
@@ -56,7 +56,7 @@ func use_mysql() gorm.Dialector {
 
 }
 
-func use_cli() gorm.Dialector {
+func useCli() gorm.Dialector {
 
 	dsn := args.Server.DSN
 

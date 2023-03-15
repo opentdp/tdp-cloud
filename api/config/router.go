@@ -13,7 +13,7 @@ func Router(api *gin.RouterGroup) {
 	// 匿名接口
 
 	{
-		rg.POST("/ui", ui_option)
+		rg.POST("/ui", uiOption)
 	}
 
 	// 需授权接口

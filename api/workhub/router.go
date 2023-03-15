@@ -16,7 +16,7 @@ func Router(api *gin.RouterGroup) {
 
 	{
 		rg.POST("/list", list)
-		rg.POST("/stat/:id", stat)
+		rg.POST("/detail/:id", detail)
 		rg.POST("/exec/:id", exec)
 	}
 
