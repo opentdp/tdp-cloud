@@ -3,6 +3,8 @@ package user
 import (
 	"github.com/gin-gonic/gin"
 
+	"tdp-cloud/cmd/args"
+	"tdp-cloud/helper/strutil"
 	"tdp-cloud/module/model/user"
 )
 
@@ -60,6 +62,9 @@ func create(c *gin.Context) {
 		return
 	}
 
+	rq.AppKey = strutil.Rand(32)
+	rq.StoreKey = args.Dataset.Secret
+
 	if id, err := user.Create(rq); err == nil {
 		c.Set("Payload", gin.H{"Id": id})
 		c.Set("Message", "添加成功")
@@ -84,6 +89,8 @@ func update(c *gin.Context) {
 		c.Set("Error", "参数错误")
 		return
 	}
+
+	rq.AppKey = "" //禁止修改
 
 	if err := user.Update(rq); err == nil {
 		c.Set("Message", "修改成功")

@@ -4,6 +4,7 @@ import (
 	"github.com/gin-gonic/gin"
 
 	"tdp-cloud/cmd/args"
+	"tdp-cloud/helper/strutil"
 	"tdp-cloud/module/model/passport"
 	"tdp-cloud/module/model/user"
 )
@@ -32,6 +33,8 @@ func register(c *gin.Context) {
 	}
 
 	rq.Level = 0 //防止逃逸
+	rq.AppKey = strutil.Rand(32)
+	rq.StoreKey = args.Dataset.Secret
 
 	if id, err := user.Create(rq); err == nil {
 		c.Set("Payload", gin.H{"Id": id})
@@ -93,7 +96,7 @@ func profileUpdate(c *gin.Context) {
 	}
 
 	rq.Id = c.GetUint("UserId")
-	rq.AppKey = c.GetString("AppKey")
+	rq.AppKey = "" //禁止修改
 
 	if err := passport.ProfileUpdate(rq); err == nil {
 		c.Set("Message", "修改成功")

@@ -6,6 +6,7 @@ import (
 	"tdp-cloud/helper/logman"
 	"tdp-cloud/module/dborm"
 	"tdp-cloud/module/model/certjob"
+	"tdp-cloud/module/model/user"
 	"tdp-cloud/module/model/vendor"
 )
 
@@ -33,12 +34,24 @@ func RunJobs() {
 
 func NewByJob(job *dborm.Certjob) error {
 
+	user, err := user.Fetch(&user.FetchParam{
+		Id:       job.UserId,
+		StoreKey: args.Dataset.Secret,
+	})
+
+	if err != nil || user.AppKey == "" {
+		logman.Error("Failed to get AppKey for", job.Domain)
+		return err
+	}
+
 	vd, err := vendor.Fetch(&vendor.FetchParam{
-		Id: job.VendorId, UserId: job.UserId,
+		Id:       job.VendorId,
+		UserId:   job.UserId,
+		StoreKey: user.AppKey,
 	})
 
 	if err != nil || vd.Id == 0 {
-		logman.Error("Certjob Ignore Domain:", job.Domain)
+		logman.Error("Failed to get VendorKey for", job.Domain)
 		return err
 	}
 

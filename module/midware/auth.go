@@ -2,6 +2,8 @@ package midware
 
 import (
 	"strings"
+	"tdp-cloud/cmd/args"
+	"tdp-cloud/helper/strutil"
 
 	"github.com/gin-gonic/gin"
 )
@@ -38,8 +40,17 @@ func AuthGuard() gin.HandlerFunc {
 			return
 		}
 
+		// 尝试解密 AppKey
+		appKey, err := strutil.Des3Encrypt(claims.AppKey, args.Dataset.Secret)
+		if err != nil {
+			c.Set("Error", gin.H{"Code": 401, "Message": "密钥异常, 请重新注册"})
+			c.Set("ExitCode", 401)
+			c.Abort()
+			return
+		}
+
 		// 存储到上下文
-		c.Set("AppKey", claims.AppKey)
+		c.Set("AppKey", appKey)
 		c.Set("UserId", claims.UserId)
 		c.Set("UserLevel", claims.UserLevel)
 

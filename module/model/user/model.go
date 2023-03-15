@@ -16,21 +16,32 @@ type CreateParam struct {
 	AppKey      string
 	Email       string `binding:"required"`
 	Description string
+	StoreKey    string // 存储密钥
 }
 
 func Create(data *CreateParam) (uint, error) {
 
-	pw, ak, err := CreateSecret(data.Password, "")
-	if err != nil {
-		return 0, err
+	if data.Password != "" {
+		pw, err := CreateSecret(data.Password)
+		if err != nil {
+			return 0, err
+		}
+		data.Password = pw
+	}
+
+	if data.AppKey != "" && data.StoreKey != "" {
+		secret, err := strutil.Des3Encrypt(data.AppKey, data.StoreKey)
+		if err == nil {
+			data.AppKey = secret
+		}
 	}
 
 	item := &dborm.User{
 		Username:    data.Username,
-		Password:    pw,
+		Password:    data.Password,
 		Level:       data.Level,
 		AppId:       uuid.NewString(),
-		AppKey:      ak,
+		AppKey:      data.AppKey,
 		Email:       data.Email,
 		Description: data.Description,
 	}
@@ -51,13 +62,24 @@ type UpdateParam struct {
 	Email       string
 	AppKey      string
 	Description string
+	StoreKey    string // 存储密钥
 }
 
 func Update(data *UpdateParam) error {
 
-	pw, ak, err := UpdateSecret(data.Password, data.AppKey)
-	if err != nil {
-		return err
+	if data.Password != "" {
+		pw, err := CreateSecret(data.Password)
+		if err != nil {
+			return err
+		}
+		data.Password = pw
+	}
+
+	if data.AppKey != "" && data.StoreKey != "" {
+		secret, err := strutil.Des3Encrypt(data.AppKey, data.StoreKey)
+		if err == nil {
+			data.AppKey = secret
+		}
 	}
 
 	result := dborm.Db.
@@ -66,10 +88,10 @@ func Update(data *UpdateParam) error {
 		}).
 		Updates(dborm.User{
 			Username:    data.Username,
-			Password:    pw,
+			Password:    data.Password,
 			Level:       data.Level,
 			Email:       data.Email,
-			AppKey:      ak,
+			AppKey:      data.AppKey,
 			Description: data.Description,
 		})
 

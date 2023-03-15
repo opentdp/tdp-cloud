@@ -2,6 +2,7 @@ package passport
 
 import (
 	"errors"
+	"fmt"
 
 	"tdp-cloud/module/midware"
 	"tdp-cloud/module/model/user"
@@ -27,27 +28,27 @@ func Login(data *LoginParam) (*LoginResult, error) {
 
 	item, _ := user.Fetch(&user.FetchParam{
 		Username: data.Username,
-		StoreKey: data.Password,
 	})
 
 	// 验证账号
 
+	fmt.Println(item.Password, data.Password)
+
 	if item.Id == 0 {
 		return nil, errors.New("账号错误")
 	}
-	if !user.CheckSecret(item, data.Password, "") {
+	if !user.CheckSecret(item.Password, data.Password) {
 		return nil, errors.New("密码错误")
 	}
 
-	// 迁移密钥
+	// 自动迁移密钥
 	// TODO: v1.0.0 时删除兼容代码
 
-	if len(item.AppKey) == 0 {
-		if user, err := SecretMigrator(item.Id, data.Password); err != nil {
-			return nil, err
-		} else {
-			item = user
-		}
+	// item.Password = data.Password
+	if temp, err := secretMigrator(item); err != nil {
+		return nil, err
+	} else {
+		item = temp
 	}
 
 	// 创建令牌
@@ -91,7 +92,7 @@ func ProfileUpdate(data *ProfileUpdateParam) error {
 	if item.Id == 0 {
 		return errors.New("账号错误")
 	}
-	if !user.CheckSecret(item, data.OldPassword, data.AppKey) {
+	if !user.CheckSecret(item.Password, data.OldPassword) {
 		return errors.New("密码错误")
 	}
 	if err := user.CheckUserinfo(data.Username, data.Password, data.Email); err != nil {

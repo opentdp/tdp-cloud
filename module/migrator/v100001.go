@@ -1,6 +1,8 @@
 package migrator
 
 import (
+	"tdp-cloud/cmd/args"
+	"tdp-cloud/helper/strutil"
 	"tdp-cloud/module/model/user"
 )
 
@@ -23,8 +25,10 @@ func v100001AddUser() error {
 	_, err := user.Create(&user.CreateParam{
 		Username: "admin",
 		Password: "123456",
-		Email:    "admin@tdp.icu",
 		Level:    1,
+		AppKey:   strutil.Rand(32),
+		Email:    "admin@tdp.icu",
+		StoreKey: args.Dataset.Secret,
 	})
 
 	return err
