@@ -1,6 +1,7 @@
 package passport
 
 import (
+	"tdp-cloud/module/model/certjob"
 	"tdp-cloud/module/model/domain"
 	"tdp-cloud/module/model/keypair"
 	"tdp-cloud/module/model/machine"
@@ -12,6 +13,7 @@ import (
 
 func Summary(userId uint) map[string]any {
 
+	certjobCount, _ := certjob.Count(&certjob.FetchAllParam{UserId: userId})
 	domainCount, _ := domain.Count(&domain.FetchAllParam{UserId: userId})
 	keypairCount, _ := keypair.Count(&keypair.FetchAllParam{UserId: userId})
 	machineCount, _ := machine.Count(&machine.FetchAllParam{UserId: userId})
@@ -19,6 +21,7 @@ func Summary(userId uint) map[string]any {
 	vendorCount, _ := vendor.Count(&vendor.FetchAllParam{UserId: userId})
 
 	return map[string]any{
+		"Certjob": certjobCount,
 		"Domain":  domainCount,
 		"Keypair": keypairCount,
 		"Machine": machineCount,
