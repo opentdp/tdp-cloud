@@ -73,16 +73,16 @@ func exec(c *gin.Context) {
 
 func register(c *gin.Context) {
 
-	u, err := user.Fetch(&user.FetchParam{
+	ur, err := user.Fetch(&user.FetchParam{
 		AppId: c.Param("auth"),
 	})
 
-	if err != nil || u.Id == 0 {
+	if err != nil || ur.Id == 0 {
 		c.Set("Error", "授权失败")
 		return
 	}
 
-	c.Set("UserId", u.Id)
+	c.Set("UserId", ur.Id)
 	c.Set("MachineId", cast.ToUint(c.Param("mid")))
 
 	if err := workhub.Register(c); err != nil {

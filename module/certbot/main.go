@@ -34,12 +34,12 @@ func RunJobs() {
 
 func NewByJob(job *dborm.Certjob) error {
 
-	user, err := user.Fetch(&user.FetchParam{
+	ur, err := user.Fetch(&user.FetchParam{
 		Id:       job.UserId,
 		StoreKey: args.Dataset.Secret,
 	})
 
-	if err != nil || user.AppKey == "" {
+	if err != nil || ur.AppKey == "" {
 		logman.Error("Failed to get AppKey for", job.Domain)
 		return err
 	}
@@ -47,7 +47,7 @@ func NewByJob(job *dborm.Certjob) error {
 	vd, err := vendor.Fetch(&vendor.FetchParam{
 		Id:       job.VendorId,
 		UserId:   job.UserId,
-		StoreKey: user.AppKey,
+		StoreKey: ur.AppKey,
 	})
 
 	if err != nil || vd.SecretKey == "" {

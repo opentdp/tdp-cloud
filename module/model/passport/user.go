@@ -2,7 +2,6 @@ package passport
 
 import (
 	"errors"
-	"fmt"
 
 	"tdp-cloud/module/midware"
 	"tdp-cloud/module/model/user"
@@ -26,37 +25,35 @@ type LoginResult struct {
 
 func Login(data *LoginParam) (*LoginResult, error) {
 
-	item, _ := user.Fetch(&user.FetchParam{
+	ur, _ := user.Fetch(&user.FetchParam{
 		Username: data.Username,
 	})
 
 	// 验证账号
 
-	fmt.Println(item.Password, data.Password)
-
-	if item.Id == 0 {
+	if ur.Id == 0 {
 		return nil, errors.New("账号错误")
 	}
-	if !user.CheckSecret(item.Password, data.Password) {
+	if !user.CheckSecret(ur.Password, data.Password) {
 		return nil, errors.New("密码错误")
 	}
 
 	// 自动迁移密钥
 	// TODO: v1.0.0 时删除兼容代码
 
-	// item.Password = data.Password
-	if temp, err := secretMigrator(item); err != nil {
+	ur.Password = data.Password
+	if temp, err := secretMigrator(ur); err != nil {
 		return nil, err
 	} else {
-		item = temp
+		ur = temp
 	}
 
 	// 创建令牌
 
 	token, err := midware.CreateToken(&midware.UserInfo{
-		AppKey:    item.AppKey,
-		UserId:    item.Id,
-		UserLevel: item.Level,
+		AppKey:    ur.AppKey,
+		UserId:    ur.Id,
+		UserLevel: ur.Level,
 	})
 
 	if err != nil {
@@ -66,9 +63,9 @@ func Login(data *LoginParam) (*LoginResult, error) {
 	// 返回结果
 
 	res := &LoginResult{
-		Username: item.Username,
-		AppId:    item.AppId,
-		Email:    item.Email,
+		Username: ur.Username,
+		AppId:    ur.AppId,
+		Email:    ur.Email,
 		Token:    token,
 	}
 
@@ -85,14 +82,14 @@ type ProfileUpdateParam struct {
 
 func ProfileUpdate(data *ProfileUpdateParam) error {
 
-	item, _ := user.Fetch(&user.FetchParam{Id: data.Id})
+	ur, _ := user.Fetch(&user.FetchParam{Id: data.Id})
 
 	// 验证账号
 
-	if item.Id == 0 {
+	if ur.Id == 0 {
 		return errors.New("账号错误")
 	}
-	if !user.CheckSecret(item.Password, data.OldPassword) {
+	if !user.CheckSecret(ur.Password, data.OldPassword) {
 		return errors.New("密码错误")
 	}
 	if err := user.CheckUserinfo(data.Username, data.Password, data.Email); err != nil {

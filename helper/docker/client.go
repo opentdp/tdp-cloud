@@ -11,7 +11,7 @@ type DockerClient struct {
 func New(ops ...client.Opt) (*DockerClient, error) {
 
 	ops = append(ops, client.WithAPIVersionNegotiation())
-	client, err := client.NewClientWithOpts(ops...)
-	return &DockerClient{client}, err
+	c, err := client.NewClientWithOpts(ops...)
+	return &DockerClient{c}, err
 
 }

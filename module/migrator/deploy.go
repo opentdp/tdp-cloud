@@ -30,8 +30,8 @@ func isMigrated(k string) bool {
 
 	q := &config.FetchParam{Name: k}
 
-	if item, err := config.Fetch(q); err == nil {
-		return item.Id > 0
+	if ur, err := config.Fetch(q); err == nil {
+		return ur.Id > 0
 	}
 
 	return false
