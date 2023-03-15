@@ -50,8 +50,8 @@ func NewByJob(job *dborm.Certjob) error {
 		StoreKey: user.AppKey,
 	})
 
-	if err != nil || vd.Id == 0 {
-		logman.Error("Failed to get VendorKey for", job.Domain)
+	if err != nil || vd.SecretKey == "" {
+		logman.Error("Failed to get SecretKey for", job.Domain)
 		return err
 	}
 
