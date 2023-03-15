@@ -18,6 +18,7 @@ type LoginParam struct {
 
 type LoginResult struct {
 	Username string
+	Level    uint
 	AppId    string
 	Email    string
 	Token    string
@@ -51,9 +52,9 @@ func Login(data *LoginParam) (*LoginResult, error) {
 	// 创建令牌
 
 	token, err := midware.CreateToken(&midware.UserInfo{
-		AppKey:    ur.AppKey,
-		UserId:    ur.Id,
-		UserLevel: ur.Level,
+		Id:     ur.Id,
+		Level:  ur.Level,
+		AppKey: ur.AppKey,
 	})
 
 	if err != nil {
@@ -64,6 +65,7 @@ func Login(data *LoginParam) (*LoginResult, error) {
 
 	res := &LoginResult{
 		Username: ur.Username,
+		Level:    ur.Level,
 		AppId:    ur.AppId,
 		Email:    ur.Email,
 		Token:    token,

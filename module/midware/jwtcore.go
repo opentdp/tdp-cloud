@@ -9,9 +9,9 @@ import (
 )
 
 type UserInfo struct {
-	AppKey    string
-	UserId    uint
-	UserLevel uint
+	Id     uint
+	Level  uint
+	AppKey string
 }
 
 type UserClaims struct {
