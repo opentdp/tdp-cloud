@@ -2,10 +2,11 @@ package midware
 
 import (
 	"strings"
-	"tdp-cloud/cmd/args"
-	"tdp-cloud/helper/strutil"
 
 	"github.com/gin-gonic/gin"
+
+	"tdp-cloud/cmd/args"
+	"tdp-cloud/helper/strutil"
 )
 
 func AuthGuard() gin.HandlerFunc {

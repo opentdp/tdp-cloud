@@ -2,11 +2,12 @@ package dborm
 
 import (
 	"strings"
-	"tdp-cloud/cmd/args"
 
 	"github.com/glebarez/sqlite"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
+
+	"tdp-cloud/cmd/args"
 )
 
 func dialector() gorm.Dialector {

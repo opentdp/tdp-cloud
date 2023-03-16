@@ -2,9 +2,10 @@ package initd
 
 import (
 	"log"
-	"tdp-cloud/cmd/args"
 
 	"github.com/spf13/viper"
+
+	"tdp-cloud/cmd/args"
 )
 
 var ViperFile = ""
