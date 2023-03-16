@@ -18,6 +18,8 @@ func Router(api *gin.RouterGroup) {
 		rg.POST("/detail", detail)
 		rg.POST("/update", update)
 		rg.POST("/delete", delete)
+
+		rg.POST("/keygen", keygen)
 	}
 
 }
