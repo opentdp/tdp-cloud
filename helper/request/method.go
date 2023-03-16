@@ -23,7 +23,7 @@ func TextGet(url string, headers H) (string, error) {
 
 }
 
-func SimpleGet(url string, timeout int64) string {
+func SimpleGet(url string, headers H, timeout int64) string {
 
 	c := Client{"GET", url, "", H{}, time.Duration(timeout) * time.Second}
 

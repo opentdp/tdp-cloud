@@ -20,8 +20,8 @@ func host(c *gin.Context) {
 
 func hostIp(c *gin.Context) {
 
-	ip := psutil.PublicIpAddress(false)
+	ipv4, ipv6 := psutil.PublicAddress()
 
-	c.Set("Payload", gin.H{"Ip": ip})
+	c.Set("Payload", gin.H{"Ipv4List": ipv4, "Ipv6List": ipv6})
 
 }

@@ -17,7 +17,8 @@ type SummaryStat struct {
 	CpuPercent   []float64
 	MemoryTotal  uint64
 	MemoryUsed   uint64
-	IpAddress    string
+	Ipv4List     []string
+	Ipv6List     []string
 }
 
 type DetailStat struct {

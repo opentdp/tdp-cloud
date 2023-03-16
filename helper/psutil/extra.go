@@ -7,57 +7,92 @@ import (
 	"tdp-cloud/helper/request"
 )
 
-// 内网 IP
+// 设备 IP
 
-func PrivateIpAddress() string {
+func InterfaceAddrs() ([]string, []string) {
 
-	res := []string{}
+	ipv4 := []string{}
+	ipv6 := []string{}
+
 	addrs, _ := net.InterfaceAddrs()
 
 	for _, ip := range addrs {
-		if ipnet, ok := ip.(*net.IPNet); ok && ipnet.IP.IsPrivate() {
-			res = append(res, ipnet.IP.String())
+		if ipnet, ok := ip.(*net.IPNet); ok && ipnet.IP.IsGlobalUnicast() {
+			if ipnet.IP.To4() != nil {
+				ipv4 = append(ipv4, ipnet.IP.String())
+			} else {
+				ipv6 = append(ipv6, ipnet.IP.String())
+			}
 		}
 	}
 
-	return strings.Join(res, ", ")
+	return ipv4, ipv6
 
 }
 
 // 公网 IP
 
-var publicIpAddr string
+func PublicAddress() ([]string, []string) {
 
-func PublicIpAddress(f bool) string {
+	v4 := request.SimpleGet("http://ipv4.rehi.org/ip", request.H{}, 10)
+	v6 := request.SimpleGet("http://ipv6.rehi.org/ip", request.H{}, 10)
 
-	if f || publicIpAddr == "" {
-		ip := request.SimpleGet("https://ipip.rehi.org/ip", 10)
-		publicIpAddr = strings.TrimSpace(ip)
-	}
+	ipv4 := strings.Split(strings.TrimSpace(v4), ",")
+	ipv6 := strings.Split(strings.TrimSpace(v6), ",")
 
-	return publicIpAddr
+	return ipv4, ipv6
 
 }
 
 // 云实例 Id
 
-const alibabaUrl = "http://100.100.100.200/latest/meta-data"
-const tencentUrl = "http://metadata.tencentyun.com/latest/meta-data"
-
 func CloudInstanceId() string {
 
-	var id string
+	var url string
+	var res string
 
-	id = request.SimpleGet(alibabaUrl+`/instance-id`, 3)
-	if id != "" {
-		return strings.TrimSpace(id)
+	// alibaba
+	url = "http://100.100.100.200/latest/meta-data/instance-id"
+	res = request.SimpleGet(url, request.H{}, 3)
+	if res != "" {
+		return strings.TrimSpace(res)
 	}
 
-	id = request.SimpleGet(tencentUrl+`/instance-id`, 3)
-	if id != "" {
-		return strings.TrimSpace(id)
+	// tencent
+	url = "http://metadata.tencentyun.com/latest/meta-data/instance-id"
+	res = request.SimpleGet(url, request.H{}, 3)
+	if res != "" {
+		return strings.TrimSpace(res)
 	}
 
-	return id
+	// aws baidu huawei
+	url = "http://169.254.169.254/latest/meta-data/instance-id"
+	res = request.SimpleGet(url, request.H{}, 3)
+	if res != "" {
+		return strings.TrimSpace(res)
+	}
+
+	// azure
+	url = "http://169.254.169.254/metadata/instance/compute/vmId?api-version=2021-01-01"
+	res = request.SimpleGet(url, request.H{"Metadata": "true"}, 3)
+	if res != "" {
+		return strings.TrimSpace(res)
+	}
+
+	// google
+	url = "http://metadata.google.internal/computeMetadata/v1/instance/id"
+	res = request.SimpleGet(url, request.H{"Metadata-Flavor": "Google"}, 3)
+	if res != "" {
+		return strings.TrimSpace(res)
+	}
+
+	// digitalocean
+	url = "http://169.254.169.254/metadata/v1/id"
+	res = request.SimpleGet(url, request.H{}, 3)
+	if res != "" {
+		return strings.TrimSpace(res)
+	}
+
+	return res
 
 }

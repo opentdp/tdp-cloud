@@ -11,8 +11,7 @@ func (pod *SendPod) Ping() (uint, error) {
 
 	logman.Info("Ping:send", "SummaryStat")
 
-	info := psutil.Summary()
-	info.IpAddress = psutil.PublicIpAddress(false)
+	info := psutil.Summary(false)
 
 	rq := &SocketData{
 		Method:  "Ping",

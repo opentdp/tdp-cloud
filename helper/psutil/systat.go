@@ -11,7 +11,7 @@ import (
 	"github.com/shirou/gopsutil/v3/net"
 )
 
-func Summary() *SummaryStat {
+func Summary(remote bool) *SummaryStat {
 
 	hi, _ := host.Info()
 	cl, _ := cpu.Counts(true)
@@ -19,7 +19,7 @@ func Summary() *SummaryStat {
 	cp, _ := cpu.Percent(time.Second, false)
 	mv, _ := mem.VirtualMemory()
 
-	return &SummaryStat{
+	stat := &SummaryStat{
 		CreateAt:     time.Now().Unix(),
 		HostId:       hi.HostID,
 		HostName:     hi.Hostname,
@@ -32,8 +32,15 @@ func Summary() *SummaryStat {
 		CpuPercent:   cp,
 		MemoryTotal:  mv.Total,
 		MemoryUsed:   mv.Used,
-		IpAddress:    PrivateIpAddress(),
 	}
+
+	if remote {
+		stat.Ipv4List, stat.Ipv6List = PublicAddress()
+	} else {
+		stat.Ipv4List, stat.Ipv6List = InterfaceAddrs()
+	}
+
+	return stat
 
 }
 
@@ -85,7 +92,7 @@ func Detail() *DetailStat {
 	}
 
 	return &DetailStat{
-		Summary(),
+		Summary(false),
 		cpuModel,
 		netInterface,
 		netBytesRecv,
