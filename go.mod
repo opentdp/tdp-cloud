@@ -3,6 +3,8 @@ module tdp-cloud
 go 1.18
 
 require (
+	// 加解密
+	github.com/forgoer/openssl v1.5.0
 	// 生成 UUID
 	github.com/google/uuid v1.3.0
 	// 服务管理

@@ -3,7 +3,7 @@ package user
 import (
 	"github.com/google/uuid"
 
-	"tdp-cloud/helper/strutil"
+	"tdp-cloud/helper/secure"
 	"tdp-cloud/module/dborm"
 )
 
@@ -30,7 +30,7 @@ func Create(data *CreateParam) (uint, error) {
 	}
 
 	if data.AppKey != "" && data.StoreKey != "" {
-		secret, err := strutil.Des3Encrypt(data.AppKey, data.StoreKey)
+		secret, err := secure.Des3Encrypt(data.AppKey, data.StoreKey)
 		if err == nil {
 			data.AppKey = secret
 		}
@@ -76,7 +76,7 @@ func Update(data *UpdateParam) error {
 	}
 
 	if data.AppKey != "" && data.StoreKey != "" {
-		secret, err := strutil.Des3Encrypt(data.AppKey, data.StoreKey)
+		secret, err := secure.Des3Encrypt(data.AppKey, data.StoreKey)
 		if err == nil {
 			data.AppKey = secret
 		}
@@ -145,7 +145,7 @@ func Fetch(data *FetchParam) (*dborm.User, error) {
 		First(&item)
 
 	if item.AppKey != "" && data.StoreKey != "" {
-		item.AppKey, _ = strutil.Des3Decrypt(item.AppKey, data.StoreKey)
+		item.AppKey, _ = secure.Des3Decrypt(item.AppKey, data.StoreKey)
 	}
 
 	return item, result.Error

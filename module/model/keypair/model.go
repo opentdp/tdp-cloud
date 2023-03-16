@@ -1,7 +1,7 @@
 package keypair
 
 import (
-	"tdp-cloud/helper/strutil"
+	"tdp-cloud/helper/secure"
 	"tdp-cloud/module/dborm"
 )
 
@@ -21,7 +21,7 @@ type CreateParam struct {
 func Create(data *CreateParam) (uint, error) {
 
 	if data.PrivateKey != "" && data.StoreKey != "" {
-		secret, err := strutil.Des3Encrypt(data.PrivateKey, data.StoreKey)
+		secret, err := secure.Des3Encrypt(data.PrivateKey, data.StoreKey)
 		if err == nil {
 			data.PrivateKey = secret
 			data.Cipher = "appkey"
@@ -61,7 +61,7 @@ type UpdateParam struct {
 func Update(data *UpdateParam) error {
 
 	if data.PrivateKey != "" && data.StoreKey != "" {
-		secret, err := strutil.Des3Encrypt(data.PrivateKey, data.StoreKey)
+		secret, err := secure.Des3Encrypt(data.PrivateKey, data.StoreKey)
 		if err == nil {
 			data.PrivateKey = secret
 			data.Cipher = "appkey"
@@ -126,7 +126,7 @@ func Fetch(data *FetchParam) (*dborm.Keypair, error) {
 		First(&item)
 
 	if item.Cipher != "" && data.StoreKey != "" {
-		item.PrivateKey, _ = strutil.Des3Decrypt(item.PrivateKey, data.StoreKey)
+		item.PrivateKey, _ = secure.Des3Decrypt(item.PrivateKey, data.StoreKey)
 	}
 
 	return item, result.Error

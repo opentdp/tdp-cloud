@@ -6,7 +6,7 @@ import (
 	"github.com/gin-gonic/gin"
 
 	"tdp-cloud/cmd/args"
-	"tdp-cloud/helper/strutil"
+	"tdp-cloud/helper/secure"
 )
 
 func AuthGuard() gin.HandlerFunc {
@@ -42,7 +42,7 @@ func AuthGuard() gin.HandlerFunc {
 		}
 
 		// 尝试解密 AppKey
-		appKey, err := strutil.Des3Decrypt(claims.AppKey, args.Dataset.Secret)
+		appKey, err := secure.Des3Decrypt(claims.AppKey, args.Dataset.Secret)
 		if err != nil {
 			c.Set("Error", gin.H{"Code": 401, "Message": "密钥异常, 请重新注册"})
 			c.Set("ExitCode", 401)

@@ -6,15 +6,14 @@ import (
 	"strings"
 
 	"github.com/caddyserver/certmagic"
-
-	"tdp-cloud/helper/crypto"
+	"github.com/forgoer/openssl"
 )
 
 var magicPool = map[string]*certmagic.Config{}
 
 func Manage(rq *ReqeustParam) error {
 
-	skey := crypto.Md5ToString(rq.Email + rq.SecretKey + rq.CaType)
+	skey := openssl.Md5ToString(rq.Email + rq.SecretKey + rq.CaType)
 
 	magic, ok := magicPool[skey]
 

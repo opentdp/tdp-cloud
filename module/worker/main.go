@@ -3,8 +3,9 @@ package worker
 import (
 	"net/http"
 
+	"github.com/forgoer/openssl"
+
 	"tdp-cloud/cmd/args"
-	"tdp-cloud/helper/crypto"
 	"tdp-cloud/helper/logman"
 	"tdp-cloud/helper/psutil"
 	"tdp-cloud/helper/socket"
@@ -36,7 +37,7 @@ func Daemon() error {
 	info := psutil.Summary(true)
 
 	cloudId := psutil.CloudInstanceId()
-	workerId := crypto.Md5ToString(info.HostId)
+	workerId := openssl.Md5ToString(info.HostId)
 
 	header := http.Header{}
 	header.Add("TDP-Cloud-Id", cloudId)

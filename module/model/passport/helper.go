@@ -2,6 +2,7 @@ package passport
 
 import (
 	"tdp-cloud/cmd/args"
+	"tdp-cloud/helper/secure"
 	"tdp-cloud/helper/strutil"
 	"tdp-cloud/module/dborm"
 	"tdp-cloud/module/model/user"
@@ -13,11 +14,11 @@ func secretMigrator(u *dborm.User) (*dborm.User, error) {
 
 	if u.AppKey != "" {
 		// 新版密钥
-		if _, err := strutil.Des3Decrypt(u.AppKey, args.Dataset.Secret); err == nil {
+		if _, err := secure.Des3Decrypt(u.AppKey, args.Dataset.Secret); err == nil {
 			return u, nil
 		}
 		// 旧版密钥
-		if ak, err := strutil.Des3Decrypt(u.AppKey, u.Password); err == nil {
+		if ak, err := secure.Des3Decrypt(u.AppKey, u.Password); err == nil {
 			user.Update(&user.UpdateParam{
 				Id:       u.Id,
 				AppKey:   ak,
