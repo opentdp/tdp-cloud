@@ -1,6 +1,8 @@
 package args
 
 import (
+	"log"
+
 	"github.com/spf13/viper"
 
 	"tdp-cloud/helper/strutil"
@@ -20,7 +22,7 @@ func init() {
 
 }
 
-func Sync() {
+func Load() {
 
 	Debug = viper.GetBool("debug")
 
@@ -45,5 +47,13 @@ func Sync() {
 	Server.Register = viper.GetBool("server.register")
 
 	Worker.Remote = viper.GetString("worker.remote")
+
+}
+
+func MustSave() {
+
+	if err := viper.WriteConfig(); err != nil {
+		log.Fatal(err)
+	}
 
 }

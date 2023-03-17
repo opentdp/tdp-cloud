@@ -2,6 +2,7 @@ package initd
 
 import (
 	"log"
+	"os"
 
 	"github.com/spf13/viper"
 
@@ -12,32 +13,27 @@ var ViperFile = ""
 
 func Viper() {
 
-	defer args.Sync()
-
-	if ViperFile == "" {
-		log.Fatal("Configuration file must be specified")
-	}
+	defer args.Load()
 
 	// 环境变量
 
 	viper.SetEnvPrefix("TDP")
 	viper.AutomaticEnv()
 
-	// 安全写入
+	// 配置文件
+
+	if ViperFile == "" {
+		log.Fatal("Config file must be specified")
+	}
 
 	viper.SetConfigFile(ViperFile)
-	viper.SafeWriteConfigAs(ViperFile)
 
 	// 读取配置
 
-	if err := viper.ReadInConfig(); err != nil {
-		log.Fatal(err)
-	}
-
-	// 强制更新
-
-	if err := viper.WriteConfig(); err != nil {
-		log.Fatal(err)
+	if _, err := os.Stat(ViperFile); err == nil {
+		if err := viper.ReadInConfig(); err != nil {
+			log.Fatal(err)
+		}
 	}
 
 }

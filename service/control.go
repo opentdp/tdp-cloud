@@ -5,6 +5,7 @@ import (
 
 	"github.com/kardianos/service"
 
+	"tdp-cloud/cmd/args"
 	"tdp-cloud/helper/logman"
 	"tdp-cloud/service/server"
 	"tdp-cloud/service/worker"
@@ -20,7 +21,7 @@ func Control(name, act string) {
 
 	var svc service.Service
 
-	// 获取服务抽象类
+	// 获取抽象类
 
 	switch name {
 	case "server":
@@ -29,6 +30,12 @@ func Control(name, act string) {
 		svc = worker.Service(cliArgs())
 	default:
 		logman.Fatal("Unknown service:", name)
+	}
+
+	// 强制保存配置
+
+	if act == "" || act == "start" {
+		args.MustSave()
 	}
 
 	// 执行服务动作
