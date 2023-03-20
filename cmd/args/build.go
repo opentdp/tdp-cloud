@@ -6,7 +6,7 @@ import (
 
 var Efs *embed.FS
 
-const Version = "0.10.2"
+const Version = "0.10.3"
 const BuildVersion = "202303"
 
 const ReadmeText = `土豆片控制面板
