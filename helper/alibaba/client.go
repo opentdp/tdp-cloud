@@ -48,12 +48,18 @@ func newClient(rq *ReqeustParam) (map[string]any, error) {
 		AuthType:    at.String("AK"),
 		Style:       at.String("RPC"),
 		ReqBodyType: at.String("json"),
-		BodyType:    at.String("json"),
 	}
 
-	request := &ac.OpenApiRequest{
-		Query: au.Query(rq.Query),
-		Body:  rq.Payload,
+	request := &ac.OpenApiRequest{}
+
+	if rq.Query != nil {
+		params.BodyType = at.String("form")
+		request.Query = au.Query(rq.Query)
+	}
+
+	if rq.Payload != nil {
+		params.BodyType = at.String("json")
+		request.Body = rq.Payload
 	}
 
 	runtime := &as.RuntimeOptions{}
