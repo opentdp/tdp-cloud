@@ -7,7 +7,7 @@
 - 支持管理多个云账号资源
 
   - **腾讯云**（*含国际版*）：DNSPod、CVM、Lighthouse
-  - **阿里云**（*含国际版*）：AliDNS (*doing*)、ECS、SWAS
+  - **阿里云**（*含国际版*）：AliDNS、ECS、SWAS
   - **CloudFlare**：DNS、Custom Hostnames
 
 - 支持添加子节点 (`TDP Worker`)
@@ -81,6 +81,8 @@ go env -w GOPROXY=https://goproxy.cn,direct
 ```
 
 ## 微信交流群
+
+扫码添加开发者好友（请备注 `TDP Cloud`，不备注可能无法通过好友申请）
 
 ![](./docs/weixin-qr.jpg)
 
