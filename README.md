@@ -20,7 +20,7 @@
 - 支持自动签发`SSL证书`，CA对比参见[使用指引](#使用指引)
 
   - **Let's Encrypt**
-  - **Bubpass**
+  - **Buypass**
   - **Googel Public**
   - **SSL.com**
   - **ZeroSSL**
