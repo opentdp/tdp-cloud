@@ -56,16 +56,16 @@
 ### 提交代码时请使用下面标识
 
 - `feat` 新功能（feature）
-- `fix` 修补bug
-- `docs` 文档（documentation）
-- `style` 格式（不影响代码运行的变动）
+- `fix` 错误修复
+- `docs` 文档更改（documentation）
+- `style` 格式（不影响代码含义的更改，空格、格式、缺少分号等）
 - `refactor` 重构（即不是新功能，也不是修补bug的代码变动）
-- `perf` 优化
-- `test` 增加测试
+- `perf` 优化（提高性能的代码更改）
+- `test` 测试（添加缺失的测试或更正现有测试）
 - `chore` 构建过程或辅助工具的变动
-- `revert` 撤销某次操作
+- `revert` 还原以前的提交
 
-> 此项要求自 **v0.5.0** 起实施，所有 `git commit` 描述需要使用 **标识+半角冒号+空格** 开头，即 `<type>: <subject>`
+> 自 **v0.5.0** 起，`git commit` 描述请以 **标识+半角冒号+空格** 开头，即 `<type>: <subject>`
 
 ### 编译为二进制
 
