@@ -108,7 +108,7 @@ type DeleteParam struct {
 
 func Delete(data *DeleteParam) error {
 
-	var item *dborm.Taskline
+	var item *dborm.User
 
 	result := dborm.Db.
 		Where(&dborm.User{
