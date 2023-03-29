@@ -3,10 +3,14 @@ package migrator
 import (
 	"tdp-cloud/cmd/args"
 	"tdp-cloud/helper/strutil"
+	"tdp-cloud/module/model/config"
 	"tdp-cloud/module/model/user"
 )
 
 func v100001() error {
+
+	// TODO: 临时处理
+	v100000MigrateLog()
 
 	if isMigrated("v100001") {
 		return nil
@@ -32,5 +36,16 @@ func v100001AddUser() error {
 	})
 
 	return err
+
+}
+
+func v100000MigrateLog() {
+
+	res, err := config.Fetch(&config.FetchParam{Name: "v100001"})
+
+	if err == nil && res.Id > 0 {
+		config.Delete(&config.DeleteParam{Id: res.Id})
+		addMigration("v100001", "添加默认账号")
+	}
 
 }
