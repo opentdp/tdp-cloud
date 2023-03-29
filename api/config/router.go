@@ -20,6 +20,10 @@ func Router(api *gin.RouterGroup) {
 
 	rg.Use(midware.AuthGuard())
 
+	// 管理员接口
+
+	rg.Use(midware.AdminGuard())
+
 	{
 		rg.POST("/list", list)
 		rg.POST("/create", create)
