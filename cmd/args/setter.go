@@ -44,7 +44,6 @@ func Load() {
 	Server.DSN = viper.GetString("server.dsn")
 	Server.Listen = viper.GetString("server.listen")
 	Server.JwtKey = viper.GetString("server.jwtkey")
-	Server.Register = viper.GetBool("server.register")
 
 	Worker.Remote = viper.GetString("worker.remote")
 

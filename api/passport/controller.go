@@ -5,6 +5,7 @@ import (
 
 	"tdp-cloud/cmd/args"
 	"tdp-cloud/helper/strutil"
+	"tdp-cloud/module/model/config"
 	"tdp-cloud/module/model/passport"
 	"tdp-cloud/module/model/user"
 )
@@ -21,7 +22,7 @@ func register(c *gin.Context) {
 	}
 
 	// 是否禁止注册
-	if !args.Server.Register {
+	if config.ValueOf("registrable") != "true" {
 		c.Set("Error", "抱歉，已关闭注册功能")
 		return
 	}

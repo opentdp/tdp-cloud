@@ -24,10 +24,9 @@ var Logger struct {
 }
 
 var Server struct {
-	DSN      string
-	Listen   string
-	JwtKey   string
-	Register bool
+	DSN    string
+	Listen string
+	JwtKey string
 }
 
 var Worker struct {
