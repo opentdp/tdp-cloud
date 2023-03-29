@@ -82,7 +82,7 @@ go env -w GOPROXY=https://goproxy.cn,direct
 
 ## 微信交流群
 
-扫码添加开发者好友（请备注 `TDP Cloud`，不备注可能无法通过好友申请）
+扫码添加开发者好友（请备注 `Open TDP`，不备注可能无法通过好友申请）
 
 ![](./docs/weixin-qr.jpg)
 
@@ -90,4 +90,4 @@ go env -w GOPROXY=https://goproxy.cn,direct
 
 License [GPL-3.0](https://www.gnu.org/licenses/gpl-3.0.txt)
 
-Copyright (c) 2022 - 2023 TDP Cloud
+Copyright (c) 2022 - 2023 Open TDP
