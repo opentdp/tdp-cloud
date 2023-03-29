@@ -39,16 +39,6 @@ func Login(data *LoginParam) (*LoginResult, error) {
 		return nil, errors.New("密码错误")
 	}
 
-	// 自动迁移密钥
-	// TODO: v1.0.0 时删除兼容代码
-
-	ur.Password = data.Password
-	if temp, err := secretMigrator(ur); err != nil {
-		return nil, err
-	} else {
-		ur = temp
-	}
-
 	// 创建令牌
 
 	token, err := midware.CreateToken(&midware.UserInfo{
