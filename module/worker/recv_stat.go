@@ -12,7 +12,7 @@ func (pod *RecvPod) Stat(rs *SocketData) error {
 	rq := &SocketData{
 		Method:  "Stat:resp",
 		TaskId:  rs.TaskId,
-		Payload: psutil.Detail(),
+		Payload: psutil.Detail(true),
 	}
 
 	return pod.Write(rq)

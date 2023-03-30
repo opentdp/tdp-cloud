@@ -17,8 +17,8 @@ type SummaryStat struct {
 	CpuPercent   []float64
 	MemoryTotal  uint64
 	MemoryUsed   uint64
-	Ipv4List     []string
-	Ipv6List     []string
+	PublicIpv4   string
+	PublicIpv6   string
 }
 
 type DetailStat struct {
@@ -48,6 +48,8 @@ type NetInterface struct {
 	BytesSent uint64
 	Dropin    uint64
 	Dropout   uint64
+	Ipv4List  []string
+	Ipv6List  []string
 }
 
 func (p *SummaryStat) From(s string) {

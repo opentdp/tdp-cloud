@@ -11,7 +11,7 @@ import (
 	"github.com/shirou/gopsutil/v3/net"
 )
 
-func Summary(remote bool) *SummaryStat {
+func Summary(withAddr bool) *SummaryStat {
 
 	hi, _ := host.Info()
 	cl, _ := cpu.Counts(true)
@@ -34,42 +34,54 @@ func Summary(remote bool) *SummaryStat {
 		MemoryUsed:   mv.Used,
 	}
 
-	if remote {
-		stat.Ipv4List, stat.Ipv6List = PublicAddress()
-	} else {
-		stat.Ipv4List, stat.Ipv6List = InterfaceAddrs()
+	if withAddr {
+		ipv4, ipv6 := PublicAddress(false)
+		stat.PublicIpv4 = ipv4
+		stat.PublicIpv6 = ipv6
 	}
 
 	return stat
 
 }
 
-func Detail() *DetailStat {
+func Detail(withAddr bool) *DetailStat {
 
 	ci, _ := cpu.Info()
 	ni, _ := net.IOCounters(true)
 	dp, _ := disk.Partitions(false)
 	sw, _ := mem.SwapMemory()
 
+	// CPU 信息
+
 	cpuModel := []string{}
 	for _, info := range ci {
 		cpuModel = append(cpuModel, info.ModelName)
 	}
+
+	// 网络信息
 
 	netInterface := []NetInterface{}
 	netBytesRecv := uint64(0)
 	netBytesSent := uint64(0)
 	for _, nio := range ni {
 		if nio.BytesRecv > 0 || nio.BytesSent > 0 {
-			netInterface = append(netInterface, NetInterface{
-				nio.Name,
-				nio.BytesRecv, nio.BytesSent,
-				nio.Dropin, nio.Dropout,
-			})
+			ift := NetInterface{
+				Name:      nio.Name,
+				BytesRecv: nio.BytesRecv,
+				BytesSent: nio.BytesSent,
+				Dropin:    nio.Dropin,
+				Dropout:   nio.Dropout,
+			}
+			if withAddr {
+				ift.Ipv4List, ift.Ipv6List = InterfaceAddrs(nio.Name)
+			}
+			netInterface = append(netInterface, ift)
 		}
 		netBytesRecv += nio.BytesRecv
 		netBytesSent += nio.BytesSent
 	}
+
+	// 硬盘信息
 
 	diskPartition := []DiskPartition{}
 	diskTotaled := ","
@@ -91,8 +103,10 @@ func Detail() *DetailStat {
 		}
 	}
 
+	// 汇总信息
+
 	return &DetailStat{
-		Summary(false),
+		Summary(withAddr),
 		cpuModel,
 		netInterface,
 		netBytesRecv,

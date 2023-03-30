@@ -23,9 +23,9 @@ func TextGet(url string, headers H) (string, error) {
 
 }
 
-func SimpleGet(url string, headers H, timeout int64) string {
+func TimingGet(url string, headers H, timeout int64) string {
 
-	c := Client{"GET", url, "", H{}, time.Duration(timeout) * time.Second}
+	c := Client{"GET", url, "", headers, time.Duration(timeout) * time.Second}
 
 	if res, err := c.TextRequest(); err == nil && res != "" {
 		return res

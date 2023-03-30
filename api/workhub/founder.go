@@ -10,7 +10,7 @@ import (
 
 func host(c *gin.Context) {
 
-	info := psutil.Detail()
+	info := psutil.Detail(false)
 
 	c.Set("Payload", gin.H{"Stat": info})
 
@@ -20,8 +20,8 @@ func host(c *gin.Context) {
 
 func hostIp(c *gin.Context) {
 
-	ipv4, ipv6 := psutil.PublicAddress()
+	ipv4, ipv6 := psutil.PublicAddress(false)
 
-	c.Set("Payload", gin.H{"Ipv4List": ipv4, "Ipv6List": ipv6})
+	c.Set("Payload", gin.H{"Ipv4": ipv4, "Ipv6": ipv6})
 
 }
