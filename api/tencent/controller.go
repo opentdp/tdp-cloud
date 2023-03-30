@@ -38,7 +38,7 @@ func apiProxy(c *gin.Context) {
 		SecretKey: vd.SecretKey,
 	}
 
-	if err = c.ShouldBindJSON(param); err != nil {
+	if err = c.ShouldBind(param); err != nil {
 		c.Set("Error", err)
 		return
 	}
