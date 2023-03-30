@@ -2,6 +2,7 @@ package httpd
 
 import (
 	"io/fs"
+	"mime"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -42,5 +43,13 @@ func Engine() *gin.Engine {
 	})
 
 	return engine
+
+}
+
+func init() {
+
+	// 重写文件类型
+	mime.AddExtensionType(".css", "text/css; charset=utf-8")
+	mime.AddExtensionType(".js", "text/javascript; charset=utf-8")
 
 }
