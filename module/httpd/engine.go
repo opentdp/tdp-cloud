@@ -37,6 +37,9 @@ func Engine() *gin.Engine {
 	ui, _ := fs.Sub(args.Efs, "front")
 	engine.StaticFS("/ui", http.FS(ui))
 
+	// 上传文件路由
+	engine.Static("/upload", args.Dataset.Dir+"/upload")
+
 	// 默认首页路由
 	engine.GET("/", func(c *gin.Context) {
 		c.Redirect(302, "/ui/")
