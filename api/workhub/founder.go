@@ -10,7 +10,14 @@ import (
 
 func host(c *gin.Context) {
 
-	info := psutil.Detail(false)
+	var rq *HostInfoParam
+
+	if err := c.ShouldBind(&rq); err != nil {
+		c.Set("Error", err)
+		return
+	}
+
+	info := psutil.Detail(rq.WithAddr)
 
 	c.Set("Payload", gin.H{"Stat": info})
 
@@ -20,8 +27,22 @@ func host(c *gin.Context) {
 
 func hostIp(c *gin.Context) {
 
-	ipv4, ipv6 := psutil.PublicAddress(false)
+	var rq *HostInfoParam
+
+	if err := c.ShouldBind(&rq); err != nil {
+		c.Set("Error", err)
+		return
+	}
+
+	ipv4, ipv6 := psutil.PublicAddress(rq.Force)
 
 	c.Set("Payload", gin.H{"Ipv4": ipv4, "Ipv6": ipv6})
 
+}
+
+// 请求参数
+
+type HostInfoParam struct {
+	Force    bool
+	WithAddr bool
 }
