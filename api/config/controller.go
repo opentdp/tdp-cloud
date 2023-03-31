@@ -122,16 +122,10 @@ func delete(c *gin.Context) {
 
 func uiOption(c *gin.Context) {
 
-	items := config.ValuesOf("system")
+	option := config.ValuesOf("front")
 
-	option := gin.H{
-		"Version":     args.Version,
-		"Registrable": items["Registrable"],
-		"Copytext":    items["Copytext"],
-		"Copylink":    items["Copylink"],
-		"Analytics":   items["Analytics"],
-		"IcpCode":     items["IcpCode"],
-	}
+	option["Registrable"] = config.ValueOf("Registrable")
+	option["Version"] = args.Version
 
 	c.Set("Payload", option)
 

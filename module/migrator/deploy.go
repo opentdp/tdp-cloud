@@ -49,6 +49,10 @@ func doMigrate() error {
 		return err
 	}
 
+	if err := v100003(); err != nil {
+		return err
+	}
+
 	return nil
 
 }
