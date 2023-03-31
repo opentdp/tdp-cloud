@@ -15,11 +15,12 @@ type SocketData struct {
 
 type Worker struct {
 	*socket.JsonPod
-	UserId     uint
-	MachineId  uint
-	CloudId    string
-	WorkerId   string
-	WorkerMeta *psutil.SummaryStat
+	UserId        uint
+	MachineId     uint
+	CloudId       string
+	WorkerId      string
+	WorkerMeta    *psutil.SummaryStat
+	WorkerVersion string
 }
 
 type RecvPod struct {

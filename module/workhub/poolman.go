@@ -30,7 +30,8 @@ func Register(c *gin.Context) error {
 		c.GetUint("MachineId"),
 		c.GetHeader("TDP-Cloud-id"),
 		c.GetHeader("TDP-Worker-Id"),
-		&psutil.SummaryStat{},
+		&psutil.SummaryStat{}, // 初始化
+		c.GetHeader("TDP-Worker-Version"),
 	}
 
 	worker.WorkerMeta.From(c.GetHeader("TDP-Worker-Meta"))

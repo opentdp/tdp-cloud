@@ -43,6 +43,7 @@ func Daemon() error {
 	header.Add("TDP-Cloud-Id", cloudId)
 	header.Add("TDP-Worker-Id", workerId)
 	header.Add("TDP-Worker-Meta", info.String())
+	header.Add("TDP-Worker-Version", args.Version)
 
 	logman.Warn("Connecting", ws, header)
 	pod, err := socket.NewJsonPodClient(ws, header)
