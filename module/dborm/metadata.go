@@ -22,6 +22,7 @@ type Config struct {
 	Id          uint   `gorm:"primaryKey"`
 	Name        string `gorm:"uniqueIndex:idx_config"`
 	Value       string
+	Type        string `gorm:"default:string"`
 	Module      string `gorm:"uniqueIndex:idx_config"`
 	Description string
 	CreatedAt   int64

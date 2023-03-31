@@ -9,6 +9,7 @@ import (
 type CreateParam struct {
 	Name        string `binding:"required"`
 	Value       string `binding:"required"`
+	Type        string
 	Module      string
 	Description string
 }
@@ -18,6 +19,7 @@ func Create(data *CreateParam) (uint, error) {
 	item := &dborm.Config{
 		Name:        data.Name,
 		Value:       data.Value,
+		Type:        data.Type,
 		Module:      data.Module,
 		Description: data.Description,
 	}
@@ -34,6 +36,7 @@ type UpdateParam struct {
 	Id          uint
 	Name        string
 	Value       string
+	Type        string
 	Module      string
 	Description string
 }
@@ -47,6 +50,7 @@ func Update(data *UpdateParam) error {
 		Updates(dborm.Config{
 			Name:        data.Name,
 			Value:       data.Value,
+			Type:        data.Type,
 			Module:      data.Module,
 			Description: data.Description,
 		})
