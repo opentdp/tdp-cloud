@@ -23,12 +23,9 @@ func WithServer() *cobra.Command {
 	serverCmd.Flags().MarkHidden("help")
 
 	serverCmd.Flags().StringVarP(&serverAct, "service", "s", "", "管理系统服务")
-
 	serverCmd.Flags().StringP("listen", "l", ":7800", "服务端监听的IP地址和端口")
-	serverCmd.Flags().StringP("dsn", "d", "server.db", "数据源名称，支持MySQL和SQLite")
 
 	viper.BindPFlag("server.listen", serverCmd.Flags().Lookup("listen"))
-	viper.BindPFlag("server.dsn", serverCmd.Flags().Lookup("dsn"))
 
 	return serverCmd
 

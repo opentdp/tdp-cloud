@@ -18,6 +18,9 @@ func init() {
 	viper.SetDefault("logger.stdout", true)
 	viper.SetDefault("logger.tofile", false)
 
+	viper.SetDefault("server.type", "sqlite")
+	viper.SetDefault("server.name", "server.db")
+
 	viper.SetDefault("server.jwtkey", strutil.Rand(32))
 
 }
@@ -29,7 +32,7 @@ func Load() {
 	Dataset.Dir = viper.GetString("dataset.dir")
 	Dataset.Secret = viper.GetString("dataset.secret")
 
-	Database.Type = viper.GetString("database.dir")
+	Database.Type = viper.GetString("database.type")
 	Database.Host = viper.GetString("database.host")
 	Database.User = viper.GetString("database.user")
 	Database.Passwd = viper.GetString("database.passwd")
@@ -41,7 +44,6 @@ func Load() {
 	Logger.Stdout = viper.GetBool("logger.stdout")
 	Logger.ToFile = viper.GetBool("logger.tofile")
 
-	Server.DSN = viper.GetString("server.dsn")
 	Server.Listen = viper.GetString("server.listen")
 	Server.JwtKey = viper.GetString("server.jwtkey")
 

@@ -23,7 +23,6 @@ func WithWorker() *cobra.Command {
 	workerCmd.Flags().MarkHidden("help")
 
 	workerCmd.Flags().StringVarP(&workerAct, "service", "s", "", "管理系统服务")
-
 	workerCmd.Flags().StringP("remote", "r", "", "注册地址 (e.g. ws://{domain}/wsi/{appid}/worker)")
 
 	viper.BindPFlag("worker.remote", workerCmd.Flags().Lookup("remote"))

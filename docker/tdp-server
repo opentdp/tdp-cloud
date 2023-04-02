@@ -14,7 +14,6 @@ logger:
     dir: /var/log/tdp-cloud
     level: info
 server:
-    dsn: server.db
     listen: :7800
 EOF
 
