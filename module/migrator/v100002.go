@@ -20,7 +20,7 @@ func v100002() error {
 
 func v100002AddConfig() error {
 
-	list := []config.CreateParam{
+	items := []config.CreateParam{
 		{
 			Name:        "Registrable",
 			Value:       "true",
@@ -30,9 +30,8 @@ func v100002AddConfig() error {
 		},
 	}
 
-	for _, item := range list {
-		_, err := config.Create(&item)
-		if err != nil {
+	for _, item := range items {
+		if _, err := config.Create(&item); err != nil {
 			return err
 		}
 	}

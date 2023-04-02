@@ -7,11 +7,7 @@ import (
 
 func v100000() error {
 
-	if err := v100000AutoMigrate(); err != nil {
-		return err
-	}
-
-	return nil
+	return v100000AutoMigrate()
 
 }
 

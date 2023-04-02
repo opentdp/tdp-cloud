@@ -37,20 +37,17 @@ func isMigrated(k string) bool {
 
 func doMigrate() error {
 
-	if err := v100000(); err != nil {
-		return err
+	funcs := []func() error{
+		v100000,
+		v100001,
+		v100002,
+		v100003,
 	}
 
-	if err := v100001(); err != nil {
-		return err
-	}
-
-	if err := v100002(); err != nil {
-		return err
-	}
-
-	if err := v100003(); err != nil {
-		return err
+	for _, fn := range funcs {
+		if err := fn(); err != nil {
+			return err
+		}
 	}
 
 	return nil

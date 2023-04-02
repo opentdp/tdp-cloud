@@ -20,7 +20,7 @@ func v100003() error {
 
 func v100003AddConfig() error {
 
-	list := []config.CreateParam{
+	items := []config.CreateParam{
 		{
 			Name:        "SiteName",
 			Value:       "",
@@ -72,9 +72,8 @@ func v100003AddConfig() error {
 		},
 	}
 
-	for _, item := range list {
-		_, err := config.Create(&item)
-		if err != nil {
+	for _, item := range items {
+		if _, err := config.Create(&item); err != nil {
 			return err
 		}
 	}
