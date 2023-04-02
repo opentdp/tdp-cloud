@@ -18,7 +18,7 @@ type LogWrap struct {
 	logger *zap.Logger
 }
 
-func NewLogger() logger.Interface {
+func newLogger() logger.Interface {
 
 	logger.Default = &LogWrap{
 		logger: logman.Named("gorm"),

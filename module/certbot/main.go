@@ -4,7 +4,7 @@ import (
 	"tdp-cloud/cmd/args"
 	"tdp-cloud/helper/certmagic"
 	"tdp-cloud/helper/logman"
-	"tdp-cloud/module/dborm"
+	"tdp-cloud/module/model"
 	"tdp-cloud/module/model/certjob"
 	"tdp-cloud/module/model/user"
 	"tdp-cloud/module/model/vendor"
@@ -32,7 +32,7 @@ func RunJobs() {
 
 }
 
-func NewByJob(job *dborm.Certjob) error {
+func NewByJob(job *model.Certjob) error {
 
 	ur, err := user.Fetch(&user.FetchParam{
 		Id:       job.UserId,

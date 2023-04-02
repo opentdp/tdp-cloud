@@ -2,6 +2,7 @@ package machine
 
 import (
 	"tdp-cloud/module/dborm"
+	"tdp-cloud/module/model"
 )
 
 // 创建主机
@@ -24,7 +25,7 @@ type CreateParam struct {
 
 func Create(data *CreateParam) (uint, error) {
 
-	item := &dborm.Machine{
+	item := &model.Machine{
 		UserId:      data.UserId,
 		VendorId:    data.VendorId,
 		HostName:    data.HostName,
@@ -68,11 +69,11 @@ type UpdateParam struct {
 func Update(data *UpdateParam) error {
 
 	result := dborm.Db.
-		Where(&dborm.Machine{
+		Where(&model.Machine{
 			Id:     data.Id,
 			UserId: data.UserId,
 		}).
-		Updates(dborm.Machine{
+		Updates(model.Machine{
 			VendorId:    data.VendorId,
 			HostName:    data.HostName,
 			IpAddress:   data.IpAddress,
@@ -101,11 +102,11 @@ type DeleteParam struct {
 func Delete(data *DeleteParam) error {
 
 	result := dborm.Db.
-		Where(&dborm.Machine{
+		Where(&model.Machine{
 			Id:     data.Id,
 			UserId: data.UserId,
 		}).
-		Delete(&dborm.Machine{})
+		Delete(&model.Machine{})
 
 	return result.Error
 
@@ -120,12 +121,12 @@ type FetchParam struct {
 	WorkerId string
 }
 
-func Fetch(data *FetchParam) (*dborm.Machine, error) {
+func Fetch(data *FetchParam) (*model.Machine, error) {
 
-	var item *dborm.Machine
+	var item *model.Machine
 
 	result := dborm.Db.
-		Where(&dborm.Machine{
+		Where(&model.Machine{
 			Id:       data.Id,
 			UserId:   data.UserId,
 			CloudId:  data.CloudId,
@@ -144,12 +145,12 @@ type FetchAllParam struct {
 	VendorId uint
 }
 
-func FetchAll(data *FetchAllParam) ([]*dborm.Machine, error) {
+func FetchAll(data *FetchAllParam) ([]*model.Machine, error) {
 
-	var items []*dborm.Machine
+	var items []*model.Machine
 
 	result := dborm.Db.
-		Where(&dborm.Machine{
+		Where(&model.Machine{
 			UserId:   data.UserId,
 			VendorId: data.VendorId,
 		}).
@@ -166,8 +167,8 @@ func Count(data *FetchAllParam) (int64, error) {
 	var count int64
 
 	result := dborm.Db.
-		Model(&dborm.Machine{}).
-		Where(&dborm.Machine{
+		Model(&model.Machine{}).
+		Where(&model.Machine{
 			UserId:   data.UserId,
 			VendorId: data.VendorId,
 		}).

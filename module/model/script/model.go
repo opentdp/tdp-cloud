@@ -2,6 +2,7 @@ package script
 
 import (
 	"tdp-cloud/module/dborm"
+	"tdp-cloud/module/model"
 )
 
 // 创建脚本
@@ -19,7 +20,7 @@ type CreateParam struct {
 
 func Create(data *CreateParam) (uint, error) {
 
-	item := &dborm.Script{
+	item := &model.Script{
 		UserId:        data.UserId,
 		Name:          data.Name,
 		CommandType:   data.CommandType,
@@ -53,11 +54,11 @@ type UpdateParam struct {
 func Update(data *UpdateParam) error {
 
 	result := dborm.Db.
-		Where(&dborm.Script{
+		Where(&model.Script{
 			Id:     data.Id,
 			UserId: data.UserId,
 		}).
-		Updates(dborm.Script{
+		Updates(model.Script{
 			Name:          data.Name,
 			CommandType:   data.CommandType,
 			Username:      data.Username,
@@ -81,11 +82,11 @@ type DeleteParam struct {
 func Delete(data *DeleteParam) error {
 
 	result := dborm.Db.
-		Where(&dborm.Script{
+		Where(&model.Script{
 			Id:     data.Id,
 			UserId: data.UserId,
 		}).
-		Delete(&dborm.Script{})
+		Delete(&model.Script{})
 
 	return result.Error
 
@@ -98,12 +99,12 @@ type FetchParam struct {
 	UserId uint
 }
 
-func Fetch(data *FetchParam) (*dborm.Script, error) {
+func Fetch(data *FetchParam) (*model.Script, error) {
 
-	var item *dborm.Script
+	var item *model.Script
 
 	result := dborm.Db.
-		Where(&dborm.Script{
+		Where(&model.Script{
 			Id:     data.Id,
 			UserId: data.UserId,
 		}).
@@ -120,12 +121,12 @@ type FetchAllParam struct {
 	CommandType string
 }
 
-func FetchAll(data *FetchAllParam) ([]*dborm.Script, error) {
+func FetchAll(data *FetchAllParam) ([]*model.Script, error) {
 
-	var items []*dborm.Script
+	var items []*model.Script
 
 	result := dborm.Db.
-		Where(&dborm.Script{
+		Where(&model.Script{
 			UserId:      data.UserId,
 			CommandType: data.CommandType,
 		}).
@@ -142,8 +143,8 @@ func Count(data *FetchAllParam) (int64, error) {
 	var count int64
 
 	result := dborm.Db.
-		Model(&dborm.Script{}).
-		Where(&dborm.Script{
+		Model(&model.Script{}).
+		Where(&model.Script{
 			UserId:      data.UserId,
 			CommandType: data.CommandType,
 		}).

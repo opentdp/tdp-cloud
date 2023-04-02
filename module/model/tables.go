@@ -1,4 +1,4 @@
-package dborm
+package model
 
 // 域名证书
 

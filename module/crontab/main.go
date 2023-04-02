@@ -3,7 +3,7 @@ package crontab
 import (
 	cron "github.com/robfig/cron/v3"
 
-	"tdp-cloud/module/dborm"
+	"tdp-cloud/module/model"
 	"tdp-cloud/module/model/cronjob"
 )
 
@@ -45,7 +45,7 @@ func RedoById(id uint) {
 
 }
 
-func NewByJob(job *dborm.Cronjob) error {
+func NewByJob(job *model.Cronjob) error {
 
 	// TODO
 	return nil

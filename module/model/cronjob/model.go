@@ -2,6 +2,7 @@ package cronjob
 
 import (
 	"tdp-cloud/module/dborm"
+	"tdp-cloud/module/model"
 )
 
 // 创建计划
@@ -24,7 +25,7 @@ type CreateParam struct {
 
 func Create(data *CreateParam) (uint, error) {
 
-	item := &dborm.Cronjob{
+	item := &model.Cronjob{
 		UserId:     data.UserId,
 		Name:       data.Name,
 		Type:       data.Type,
@@ -68,11 +69,11 @@ type UpdateParam struct {
 func Update(data *UpdateParam) error {
 
 	result := dborm.Db.
-		Where(&dborm.Cronjob{
+		Where(&model.Cronjob{
 			Id:     data.Id,
 			UserId: data.UserId,
 		}).
-		Updates(dborm.Cronjob{
+		Updates(model.Cronjob{
 			Name:       data.Name,
 			Type:       data.Type,
 			Content:    data.Content,
@@ -101,11 +102,11 @@ type DeleteParam struct {
 func Delete(data *DeleteParam) error {
 
 	result := dborm.Db.
-		Where(&dborm.Cronjob{
+		Where(&model.Cronjob{
 			Id:     data.Id,
 			UserId: data.UserId,
 		}).
-		Delete(&dborm.Cronjob{})
+		Delete(&model.Cronjob{})
 
 	return result.Error
 
@@ -118,12 +119,12 @@ type FetchParam struct {
 	UserId uint
 }
 
-func Fetch(data *FetchParam) (*dborm.Cronjob, error) {
+func Fetch(data *FetchParam) (*model.Cronjob, error) {
 
-	var item *dborm.Cronjob
+	var item *model.Cronjob
 
 	result := dborm.Db.
-		Where(&dborm.Cronjob{
+		Where(&model.Cronjob{
 			Id:     data.Id,
 			UserId: data.UserId,
 		}).
@@ -140,12 +141,12 @@ type FetchAllParam struct {
 	VendorId uint
 }
 
-func FetchAll(data *FetchAllParam) ([]*dborm.Cronjob, error) {
+func FetchAll(data *FetchAllParam) ([]*model.Cronjob, error) {
 
-	var items []*dborm.Cronjob
+	var items []*model.Cronjob
 
 	result := dborm.Db.
-		Where(&dborm.Cronjob{
+		Where(&model.Cronjob{
 			UserId: data.UserId,
 		}).
 		Find(&items)
@@ -161,8 +162,8 @@ func Count(data *FetchAllParam) (int64, error) {
 	var count int64
 
 	result := dborm.Db.
-		Model(&dborm.Cronjob{}).
-		Where(&dborm.Cronjob{
+		Model(&model.Cronjob{}).
+		Where(&model.Cronjob{
 			UserId: data.UserId,
 		}).
 		Count(&count)

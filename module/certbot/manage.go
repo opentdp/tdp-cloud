@@ -2,7 +2,7 @@ package certbot
 
 import (
 	"tdp-cloud/helper/certmagic"
-	"tdp-cloud/module/dborm"
+	"tdp-cloud/module/model"
 	"tdp-cloud/module/model/certjob"
 )
 
@@ -37,7 +37,7 @@ func RedoById(userId, id uint) {
 
 }
 
-func CertById(userId, id uint) (*dborm.Certjob, *certmagic.Certificate, error) {
+func CertById(userId, id uint) (*model.Certjob, *certmagic.Certificate, error) {
 
 	job, err := certjob.Fetch(&certjob.FetchParam{Id: id, UserId: userId})
 

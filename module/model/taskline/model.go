@@ -2,6 +2,7 @@ package taskline
 
 import (
 	"tdp-cloud/module/dborm"
+	"tdp-cloud/module/model"
 )
 
 // 创建任务
@@ -18,7 +19,7 @@ type CreateParam struct {
 
 func Create(data *CreateParam) (uint, error) {
 
-	item := &dborm.Taskline{
+	item := &model.Taskline{
 		UserId:   data.UserId,
 		Subject:  data.Subject,
 		HostName: data.HostName,
@@ -50,11 +51,11 @@ type UpdateParam struct {
 func Update(data *UpdateParam) error {
 
 	result := dborm.Db.
-		Where(&dborm.Taskline{
+		Where(&model.Taskline{
 			Id:     data.Id,
 			UserId: data.UserId,
 		}).
-		Updates(dborm.Taskline{
+		Updates(model.Taskline{
 			Subject:  data.Subject,
 			HostName: data.HostName,
 			WorkerId: data.WorkerId,
@@ -76,10 +77,10 @@ type DeleteParam struct {
 
 func Delete(data *DeleteParam) error {
 
-	var item *dborm.Taskline
+	var item *model.Taskline
 
 	result := dborm.Db.
-		Where(&dborm.Taskline{
+		Where(&model.Taskline{
 			Id:     data.Id,
 			UserId: data.UserId,
 		}).
@@ -96,12 +97,12 @@ type FetchParam struct {
 	UserId uint
 }
 
-func Fetch(data *FetchParam) (*dborm.Taskline, error) {
+func Fetch(data *FetchParam) (*model.Taskline, error) {
 
-	var item *dborm.Taskline
+	var item *model.Taskline
 
 	result := dborm.Db.
-		Where(&dborm.Taskline{
+		Where(&model.Taskline{
 			Id:     data.Id,
 			UserId: data.UserId,
 		}).
@@ -120,9 +121,9 @@ type FetchAllParam struct {
 	Order    string
 }
 
-func FetchAll(data *FetchAllParam) ([]*dborm.Taskline, error) {
+func FetchAll(data *FetchAllParam) ([]*model.Taskline, error) {
 
-	var items []*dborm.Taskline
+	var items []*model.Taskline
 
 	offset := 0
 	if data.Page > 1 {
@@ -134,7 +135,7 @@ func FetchAll(data *FetchAllParam) ([]*dborm.Taskline, error) {
 	}
 
 	result := dborm.Db.
-		Where(&dborm.Taskline{
+		Where(&model.Taskline{
 			UserId:   data.UserId,
 			WorkerId: data.WorkerId,
 		}).
@@ -153,8 +154,8 @@ func Count(data *FetchAllParam) (int64, error) {
 	var count int64
 
 	result := dborm.Db.
-		Model(&dborm.Taskline{}).
-		Where(&dborm.Taskline{
+		Model(&model.Taskline{}).
+		Where(&model.Taskline{
 			UserId:   data.UserId,
 			WorkerId: data.WorkerId,
 		}).

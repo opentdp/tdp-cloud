@@ -5,6 +5,7 @@ import (
 
 	"tdp-cloud/helper/secure"
 	"tdp-cloud/module/dborm"
+	"tdp-cloud/module/model"
 )
 
 // 创建用户
@@ -36,7 +37,7 @@ func Create(data *CreateParam) (uint, error) {
 		}
 	}
 
-	item := &dborm.User{
+	item := &model.User{
 		Username:    data.Username,
 		Password:    data.Password,
 		Level:       data.Level,
@@ -83,10 +84,10 @@ func Update(data *UpdateParam) error {
 	}
 
 	result := dborm.Db.
-		Where(&dborm.User{
+		Where(&model.User{
 			Id: data.Id,
 		}).
-		Updates(dborm.User{
+		Updates(model.User{
 			Username:    data.Username,
 			Password:    data.Password,
 			Level:       data.Level,
@@ -108,10 +109,10 @@ type DeleteParam struct {
 
 func Delete(data *DeleteParam) error {
 
-	var item *dborm.User
+	var item *model.User
 
 	result := dborm.Db.
-		Where(&dborm.User{
+		Where(&model.User{
 			Id:       data.Id,
 			Username: data.Username,
 		}).
@@ -131,12 +132,12 @@ type FetchParam struct {
 	StoreKey string // 存储密钥
 }
 
-func Fetch(data *FetchParam) (*dborm.User, error) {
+func Fetch(data *FetchParam) (*model.User, error) {
 
-	var item *dborm.User
+	var item *model.User
 
 	result := dborm.Db.
-		Where(&dborm.User{
+		Where(&model.User{
 			Id:       data.Id,
 			Username: data.Username,
 			AppId:    data.AppId,
@@ -158,12 +159,12 @@ type FetchAllParam struct {
 	Level uint
 }
 
-func FetchAll(data *FetchAllParam) ([]*dborm.User, error) {
+func FetchAll(data *FetchAllParam) ([]*model.User, error) {
 
-	var items []*dborm.User
+	var items []*model.User
 
 	result := dborm.Db.
-		Where(&dborm.User{
+		Where(&model.User{
 			Level: data.Level,
 		}).
 		Find(&items)
@@ -179,8 +180,8 @@ func Count(data *FetchAllParam) (int64, error) {
 	var count int64
 
 	result := dborm.Db.
-		Model(&dborm.User{}).
-		Where(&dborm.User{
+		Model(&model.User{}).
+		Where(&model.User{
 			Level: data.Level,
 		}).
 		Count(&count)

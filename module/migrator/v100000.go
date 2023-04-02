@@ -2,6 +2,7 @@ package migrator
 
 import (
 	"tdp-cloud/module/dborm"
+	"tdp-cloud/module/model"
 )
 
 func v100000() error {
@@ -17,17 +18,17 @@ func v100000() error {
 func v100000AutoMigrate() error {
 
 	return dborm.Db.AutoMigrate(
-		&dborm.Certjob{},
-		&dborm.Config{},
-		&dborm.Cronjob{},
-		&dborm.Domain{},
-		&dborm.Keypair{},
-		&dborm.Machine{},
-		&dborm.Migration{},
-		&dborm.Script{},
-		&dborm.Taskline{},
-		&dborm.User{},
-		&dborm.Vendor{},
+		&model.Certjob{},
+		&model.Config{},
+		&model.Cronjob{},
+		&model.Domain{},
+		&model.Keypair{},
+		&model.Machine{},
+		&model.Migration{},
+		&model.Script{},
+		&model.Taskline{},
+		&model.User{},
+		&model.Vendor{},
 	)
 
 }

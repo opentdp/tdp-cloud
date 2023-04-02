@@ -3,6 +3,7 @@ package keypair
 import (
 	"tdp-cloud/helper/secure"
 	"tdp-cloud/module/dborm"
+	"tdp-cloud/module/model"
 )
 
 // 创建密钥
@@ -28,7 +29,7 @@ func Create(data *CreateParam) (uint, error) {
 		}
 	}
 
-	item := &dborm.Keypair{
+	item := &model.Keypair{
 		UserId:      data.UserId,
 		PublicKey:   data.PublicKey,
 		PrivateKey:  data.PrivateKey,
@@ -69,11 +70,11 @@ func Update(data *UpdateParam) error {
 	}
 
 	result := dborm.Db.
-		Where(&dborm.Keypair{
+		Where(&model.Keypair{
 			Id:     data.Id,
 			UserId: data.UserId,
 		}).
-		Updates(dborm.Keypair{
+		Updates(model.Keypair{
 			PublicKey:   data.PublicKey,
 			PrivateKey:  data.PrivateKey,
 			KeyType:     data.KeyType,
@@ -96,11 +97,11 @@ type DeleteParam struct {
 func Delete(data *DeleteParam) error {
 
 	result := dborm.Db.
-		Where(&dborm.Keypair{
+		Where(&model.Keypair{
 			Id:     data.Id,
 			UserId: data.UserId,
 		}).
-		Delete(&dborm.Keypair{})
+		Delete(&model.Keypair{})
 
 	return result.Error
 
@@ -114,12 +115,12 @@ type FetchParam struct {
 	StoreKey string // 存储密钥
 }
 
-func Fetch(data *FetchParam) (*dborm.Keypair, error) {
+func Fetch(data *FetchParam) (*model.Keypair, error) {
 
-	var item *dborm.Keypair
+	var item *model.Keypair
 
 	result := dborm.Db.
-		Where(&dborm.Keypair{
+		Where(&model.Keypair{
 			Id:     data.Id,
 			UserId: data.UserId,
 		}).
@@ -140,12 +141,12 @@ type FetchAllParam struct {
 	KeyType string
 }
 
-func FetchAll(data *FetchAllParam) ([]*dborm.Keypair, error) {
+func FetchAll(data *FetchAllParam) ([]*model.Keypair, error) {
 
-	var items []*dborm.Keypair
+	var items []*model.Keypair
 
 	result := dborm.Db.
-		Where(&dborm.Keypair{
+		Where(&model.Keypair{
 			UserId:  data.UserId,
 			KeyType: data.KeyType,
 		}).
@@ -162,8 +163,8 @@ func Count(data *FetchAllParam) (int64, error) {
 	var count int64
 
 	result := dborm.Db.
-		Model(&dborm.Keypair{}).
-		Where(&dborm.Keypair{
+		Model(&model.Keypair{}).
+		Where(&model.Keypair{
 			UserId:  data.UserId,
 			KeyType: data.KeyType,
 		}).

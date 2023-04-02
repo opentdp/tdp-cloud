@@ -2,6 +2,7 @@ package certjob
 
 import (
 	"tdp-cloud/module/dborm"
+	"tdp-cloud/module/model"
 )
 
 // 创建计划
@@ -18,7 +19,7 @@ type CreateParam struct {
 
 func Create(data *CreateParam) (uint, error) {
 
-	item := &dborm.Certjob{
+	item := &model.Certjob{
 		UserId:    data.UserId,
 		VendorId:  data.VendorId,
 		Email:     data.Email,
@@ -51,12 +52,12 @@ type UpdateParam struct {
 func Update(data *UpdateParam) error {
 
 	result := dborm.Db.
-		Where(&dborm.Certjob{
+		Where(&model.Certjob{
 			Id:     data.Id,
 			UserId: data.UserId,
 			Domain: data.Domain,
 		}).
-		Updates(dborm.Certjob{
+		Updates(model.Certjob{
 			VendorId:  data.VendorId,
 			Email:     data.Email,
 			Domain:    data.Domain,
@@ -81,11 +82,11 @@ type DeleteParam struct {
 func Delete(data *DeleteParam) error {
 
 	result := dborm.Db.
-		Where(&dborm.Certjob{
+		Where(&model.Certjob{
 			Id:     data.Id,
 			UserId: data.UserId,
 		}).
-		Delete(&dborm.Certjob{})
+		Delete(&model.Certjob{})
 
 	return result.Error
 
@@ -99,12 +100,12 @@ type FetchParam struct {
 	Domain string
 }
 
-func Fetch(data *FetchParam) (*dborm.Certjob, error) {
+func Fetch(data *FetchParam) (*model.Certjob, error) {
 
-	var item *dborm.Certjob
+	var item *model.Certjob
 
 	result := dborm.Db.
-		Where(&dborm.Certjob{
+		Where(&model.Certjob{
 			Id:     data.Id,
 			UserId: data.UserId,
 		}).
@@ -121,12 +122,12 @@ type FetchAllParam struct {
 	VendorId uint
 }
 
-func FetchAll(data *FetchAllParam) ([]*dborm.Certjob, error) {
+func FetchAll(data *FetchAllParam) ([]*model.Certjob, error) {
 
-	var items []*dborm.Certjob
+	var items []*model.Certjob
 
 	result := dborm.Db.
-		Where(&dborm.Certjob{
+		Where(&model.Certjob{
 			UserId:   data.UserId,
 			VendorId: data.VendorId,
 		}).
@@ -143,8 +144,8 @@ func Count(data *FetchAllParam) (int64, error) {
 	var count int64
 
 	result := dborm.Db.
-		Model(&dborm.Certjob{}).
-		Where(&dborm.Certjob{
+		Model(&model.Certjob{}).
+		Where(&model.Certjob{
 			UserId:   data.UserId,
 			VendorId: data.VendorId,
 		}).

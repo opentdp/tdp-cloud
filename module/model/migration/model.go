@@ -2,6 +2,7 @@ package migration
 
 import (
 	"tdp-cloud/module/dborm"
+	"tdp-cloud/module/model"
 )
 
 // 创建配置
@@ -13,7 +14,7 @@ type CreateParam struct {
 
 func Create(data *CreateParam) (uint, error) {
 
-	item := &dborm.Migration{
+	item := &model.Migration{
 		Version:     data.Version,
 		Description: data.Description,
 	}
@@ -35,10 +36,10 @@ type UpdateParam struct {
 func Update(data *UpdateParam) error {
 
 	result := dborm.Db.
-		Where(&dborm.Migration{
+		Where(&model.Migration{
 			Id: data.Id,
 		}).
-		Updates(dborm.Migration{
+		Updates(model.Migration{
 			Version:     data.Version,
 			Description: data.Description,
 		})
@@ -57,11 +58,11 @@ type DeleteParam struct {
 func Delete(data *DeleteParam) error {
 
 	result := dborm.Db.
-		Where(&dborm.Migration{
+		Where(&model.Migration{
 			Id:      data.Id,
 			Version: data.Version,
 		}).
-		Delete(&dborm.Migration{})
+		Delete(&model.Migration{})
 
 	return result.Error
 
@@ -74,12 +75,12 @@ type FetchParam struct {
 	Version string
 }
 
-func Fetch(data *FetchParam) (*dborm.Migration, error) {
+func Fetch(data *FetchParam) (*model.Migration, error) {
 
-	var item *dborm.Migration
+	var item *model.Migration
 
 	result := dborm.Db.
-		Where(&dborm.Migration{
+		Where(&model.Migration{
 			Id:      data.Id,
 			Version: data.Version,
 		}).

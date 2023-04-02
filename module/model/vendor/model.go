@@ -3,6 +3,7 @@ package vendor
 import (
 	"tdp-cloud/helper/secure"
 	"tdp-cloud/module/dborm"
+	"tdp-cloud/module/model"
 )
 
 // 创建厂商
@@ -28,7 +29,7 @@ func Create(data *CreateParam) (uint, error) {
 		}
 	}
 
-	item := &dborm.Vendor{
+	item := &model.Vendor{
 		UserId:      data.UserId,
 		SecretId:    data.SecretId,
 		SecretKey:   data.SecretKey,
@@ -69,11 +70,11 @@ func Update(data *UpdateParam) error {
 	}
 
 	result := dborm.Db.
-		Where(&dborm.Vendor{
+		Where(&model.Vendor{
 			Id:     data.Id,
 			UserId: data.UserId,
 		}).
-		Updates(dborm.Vendor{
+		Updates(model.Vendor{
 			SecretId:    data.SecretId,
 			SecretKey:   data.SecretKey,
 			Provider:    data.Provider,
@@ -95,10 +96,10 @@ type DeleteParam struct {
 
 func Delete(data *DeleteParam) error {
 
-	var item *dborm.Vendor
+	var item *model.Vendor
 
 	result := dborm.Db.
-		Where(&dborm.Vendor{
+		Where(&model.Vendor{
 			Id:     data.Id,
 			UserId: data.UserId,
 		}).
@@ -116,12 +117,12 @@ type FetchParam struct {
 	StoreKey string // 存储密钥
 }
 
-func Fetch(data *FetchParam) (*dborm.Vendor, error) {
+func Fetch(data *FetchParam) (*model.Vendor, error) {
 
-	var item *dborm.Vendor
+	var item *model.Vendor
 
 	result := dborm.Db.
-		Where(&dborm.Vendor{
+		Where(&model.Vendor{
 			Id:     data.Id,
 			UserId: data.UserId,
 		}).
@@ -142,12 +143,12 @@ type FetchAllParam struct {
 	Provider string
 }
 
-func FetchAll(data *FetchAllParam) ([]*dborm.Vendor, error) {
+func FetchAll(data *FetchAllParam) ([]*model.Vendor, error) {
 
-	var items []*dborm.Vendor
+	var items []*model.Vendor
 
 	result := dborm.Db.
-		Where(&dborm.Vendor{
+		Where(&model.Vendor{
 			UserId:   data.UserId,
 			Provider: data.Provider,
 		}).
@@ -164,8 +165,8 @@ func Count(data *FetchAllParam) (int64, error) {
 	var count int64
 
 	result := dborm.Db.
-		Model(&dborm.Vendor{}).
-		Where(&dborm.Vendor{
+		Model(&model.Vendor{}).
+		Where(&model.Vendor{
 			UserId:   data.UserId,
 			Provider: data.Provider,
 		}).

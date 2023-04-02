@@ -2,6 +2,7 @@ package domain
 
 import (
 	"tdp-cloud/module/dborm"
+	"tdp-cloud/module/model"
 )
 
 // 创建域名
@@ -20,7 +21,7 @@ type CreateParam struct {
 
 func Create(data *CreateParam) (uint, error) {
 
-	item := &dborm.Domain{
+	item := &model.Domain{
 		UserId:      data.UserId,
 		VendorId:    data.VendorId,
 		Name:        data.Name,
@@ -56,11 +57,11 @@ type UpdateParam struct {
 func Update(data *UpdateParam) error {
 
 	result := dborm.Db.
-		Where(&dborm.Domain{
+		Where(&model.Domain{
 			Id:     data.Id,
 			UserId: data.UserId,
 		}).
-		Updates(dborm.Domain{
+		Updates(model.Domain{
 			VendorId:    data.VendorId,
 			Name:        data.Name,
 			NSList:      data.NSList,
@@ -85,11 +86,11 @@ type DeleteParam struct {
 func Delete(data *DeleteParam) error {
 
 	result := dborm.Db.
-		Where(&dborm.Domain{
+		Where(&model.Domain{
 			Id:     data.Id,
 			UserId: data.UserId,
 		}).
-		Delete(&dborm.Domain{})
+		Delete(&model.Domain{})
 
 	return result.Error
 
@@ -102,12 +103,12 @@ type FetchParam struct {
 	UserId uint
 }
 
-func Fetch(data *FetchParam) (*dborm.Domain, error) {
+func Fetch(data *FetchParam) (*model.Domain, error) {
 
-	var item *dborm.Domain
+	var item *model.Domain
 
 	result := dborm.Db.
-		Where(&dborm.Domain{
+		Where(&model.Domain{
 			Id:     data.Id,
 			UserId: data.UserId,
 		}).
@@ -124,12 +125,12 @@ type FetchAllParam struct {
 	VendorId uint
 }
 
-func FetchAll(data *FetchAllParam) ([]*dborm.Domain, error) {
+func FetchAll(data *FetchAllParam) ([]*model.Domain, error) {
 
-	var items []*dborm.Domain
+	var items []*model.Domain
 
 	result := dborm.Db.
-		Where(&dborm.Domain{
+		Where(&model.Domain{
 			UserId:   data.UserId,
 			VendorId: data.VendorId,
 		}).
@@ -146,8 +147,8 @@ func Count(data *FetchAllParam) (int64, error) {
 	var count int64
 
 	result := dborm.Db.
-		Model(&dborm.Domain{}).
-		Where(&dborm.Domain{
+		Model(&model.Domain{}).
+		Where(&model.Domain{
 			UserId:   data.UserId,
 			VendorId: data.VendorId,
 		}).

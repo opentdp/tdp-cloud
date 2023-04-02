@@ -12,7 +12,7 @@ var Db *gorm.DB
 func Connect() {
 
 	config := &gorm.Config{
-		Logger: NewLogger(),
+		Logger: newLogger(),
 		NamingStrategy: schema.NamingStrategy{
 			SingularTable: true,
 		},

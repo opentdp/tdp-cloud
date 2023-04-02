@@ -2,6 +2,7 @@ package config
 
 import (
 	"tdp-cloud/module/dborm"
+	"tdp-cloud/module/model"
 )
 
 // 创建配置
@@ -16,7 +17,7 @@ type CreateParam struct {
 
 func Create(data *CreateParam) (uint, error) {
 
-	item := &dborm.Config{
+	item := &model.Config{
 		Name:        data.Name,
 		Value:       data.Value,
 		Type:        data.Type,
@@ -44,10 +45,10 @@ type UpdateParam struct {
 func Update(data *UpdateParam) error {
 
 	result := dborm.Db.
-		Where(&dborm.Config{
+		Where(&model.Config{
 			Id: data.Id,
 		}).
-		Updates(dborm.Config{
+		Updates(model.Config{
 			Name:        data.Name,
 			Value:       data.Value,
 			Type:        data.Type,
@@ -69,11 +70,11 @@ type DeleteParam struct {
 func Delete(data *DeleteParam) error {
 
 	result := dborm.Db.
-		Where(&dborm.Config{
+		Where(&model.Config{
 			Id:   data.Id,
 			Name: data.Name,
 		}).
-		Delete(&dborm.Config{})
+		Delete(&model.Config{})
 
 	return result.Error
 
@@ -86,12 +87,12 @@ type FetchParam struct {
 	Name string
 }
 
-func Fetch(data *FetchParam) (*dborm.Config, error) {
+func Fetch(data *FetchParam) (*model.Config, error) {
 
-	var item *dborm.Config
+	var item *model.Config
 
 	result := dborm.Db.
-		Where(&dborm.Config{
+		Where(&model.Config{
 			Id:   data.Id,
 			Name: data.Name,
 		}).
@@ -107,12 +108,12 @@ type FetchAllParam struct {
 	Module string
 }
 
-func FetchAll(data *FetchAllParam) ([]*dborm.Config, error) {
+func FetchAll(data *FetchAllParam) ([]*model.Config, error) {
 
-	var items []*dborm.Config
+	var items []*model.Config
 
 	result := dborm.Db.
-		Where(&dborm.Config{
+		Where(&model.Config{
 			Module: data.Module,
 		}).
 		Find(&items)
@@ -128,8 +129,8 @@ func Count(data *FetchAllParam) (int64, error) {
 	var count int64
 
 	result := dborm.Db.
-		Model(&dborm.Config{}).
-		Where(&dborm.Config{
+		Model(&model.Config{}).
+		Where(&model.Config{
 			Module: data.Module,
 		}).
 		Count(&count)
