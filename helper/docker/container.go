@@ -13,12 +13,12 @@ import (
 
 // 创建容器
 
-type ContainerCreateParams struct {
+type ContainerCreateParam struct {
 	Name  string
 	Image string
 }
 
-func (dc *DockerClient) ContainerCreate(rq *ContainerCreateParams) (string, error) {
+func (dc *DockerClient) ContainerCreate(rq *ContainerCreateParam) (string, error) {
 
 	ctx := context.Background()
 
