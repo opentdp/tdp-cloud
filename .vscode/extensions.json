@@ -1,7 +1,7 @@
 {
     "recommendations": [
-        "DavidAnson.vscode-markdownlint",
+        "davidanson.vscode-markdownlint",
         "golang.go",
-        "humao.rest-client"
+        "rangav.vscode-thunder-client"
     ]
 }
