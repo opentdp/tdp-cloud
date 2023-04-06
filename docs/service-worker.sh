@@ -42,7 +42,12 @@ if [ -z "$TDP_BINARY" ]; then
 fi
 
 if [ -z "$TDP_PACKAGE" ]; then
-    TDP_PACKAGE=http://tdp.icu/build/tdp-cloud-${TDP_PLATFORM}-${TDP_ARCHITECTURE}.gz
+    TDP_PACKAGE=http://cloud.opentdp.org/files/tdp-cloud-${TDP_PLATFORM}-${TDP_ARCHITECTURE}.gz
+fi
+
+if [ "$TDP_SERVICE" = "install" ] && [ -z "$TDP_REMOTE_URL" ]; then
+    echo "[ERROR] Missing environment variable \$TDP_REMOTE_URL"
+    exit 1
 fi
 
 # --- download binary ---
@@ -75,7 +80,7 @@ install() {
     echo "[TDP] Install ..."
 
     mkdir -p /etc/tdp-cloud
-    config=/etc/tdp-cloud/server.yml
+    config=/etc/tdp-cloud/worker.yml
 
     cat <<EOF >$config
 dataset:
@@ -83,11 +88,11 @@ dataset:
 logger:
     dir: /var/log/tdp-cloud
     level: info
-server:
-    listen: :7800
+worker:
+  remote: $TDP_REMOTE_URL
 EOF
 
-    $TDP_BINARY server -s install -c $config
+    $TDP_BINARY worker -s install -c $config
 
     if [ $? -ne 0 ]; then
         echo "[TDP] Install failed"
@@ -104,7 +109,7 @@ uninstall() {
 
     echo "[TDP] Uninstall ..."
 
-    $TDP_BINARY server -s uninstall
+    $TDP_BINARY worker -s uninstall
 
     rm -rf /var/*/tdp-cloud
     rm -rf /etc/tdp-cloud
@@ -120,8 +125,8 @@ start () {
 
     echo "[TDP] Start ..."
 
-    $TDP_BINARY server -s start
-    $TDP_BINARY server -s status
+    $TDP_BINARY worker -s start
+    $TDP_BINARY worker -s status
 
 }
 
@@ -129,8 +134,8 @@ stop () {
 
     echo "[TDP] Stop ..."
 
-    $TDP_BINARY server -s stop
-    $TDP_BINARY server -s status
+    $TDP_BINARY worker -s stop
+    $TDP_BINARY worker -s status
 
 }
 

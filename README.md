@@ -39,13 +39,13 @@
 
 ## 使用指引
 
-内容较多，请参考文档 <https://apps.rehiy.com/tdp-cloud/docs>
+内容较多，请参考文档 <https://cloud.opentdp.org/docs>
 
 ## 功能预览
 
 - 功能支持和开发进度，请参阅 [Issues #1](https://github.com/open-tdp/tdp-cloud/issues/1)
 
-- 在线体验开发版功能，请进入 [演示站点](https://apps.rehiy.com/tdp-cloud/preview)，自行注册账号后登录
+- 在线体验开发版功能，请进入 [演示站点](https://cloud.opentdp.org/preview)，自行注册账号后登录
 
 ## 开发说明
 
@@ -69,7 +69,7 @@
 
 ### 编译为二进制
 
-在项目目录运行 `build.bat` 或 `./build.sh`。你还可以下载 [稳定版](https://apps.rehiy.com/tdp-cloud/release) 或 [午夜构建版](https://apps.rehiy.com/tdp-cloud/nightly)
+在项目目录运行 `build.bat` 或 `./build.sh`。你还可以下载 [稳定版](https://cloud.opentdp.org/files)
 
 ### 额外参数设置
 
