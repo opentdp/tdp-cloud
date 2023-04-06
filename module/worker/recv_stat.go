@@ -9,12 +9,12 @@ func (pod *RecvPod) Stat(rs *SocketData) error {
 
 	logman.Info("Stat:recv Id", rs.TaskId)
 
-	rq := &SocketData{
+	err := pod.WriteJson(&SocketData{
 		Method:  "Stat:resp",
 		TaskId:  rs.TaskId,
 		Payload: psutil.Detail(true),
-	}
+	})
 
-	return pod.Write(rq)
+	return err
 
 }

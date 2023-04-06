@@ -1,15 +1,22 @@
 package worker
 
 import (
-	"net/http"
-
-	"github.com/forgoer/openssl"
-
 	"tdp-cloud/cmd/args"
 	"tdp-cloud/helper/logman"
-	"tdp-cloud/helper/psutil"
 	"tdp-cloud/helper/socket"
 )
+
+type RecvPod struct {
+	*socket.WsConn
+}
+
+type RespPod struct {
+	*socket.WsConn
+}
+
+type SendPod struct {
+	*socket.WsConn
+}
 
 type SocketData struct {
 	Method  string
@@ -18,35 +25,12 @@ type SocketData struct {
 	Payload any
 }
 
-type RecvPod struct {
-	*socket.JsonPod
-}
+func Connect() error {
 
-type RespPod struct {
-	*socket.JsonPod
-}
+	url := args.Worker.Remote
 
-type SendPod struct {
-	*socket.JsonPod
-}
-
-func Daemon() error {
-
-	ws := args.Worker.Remote
-
-	info := psutil.Summary(true)
-
-	cloudId := psutil.CloudInstanceId()
-	workerId := openssl.Md5ToString(info.HostId)
-
-	header := http.Header{}
-	header.Add("TDP-Cloud-Id", cloudId)
-	header.Add("TDP-Worker-Id", workerId)
-	header.Add("TDP-Worker-Meta", info.String())
-	header.Add("TDP-Worker-Version", args.Version)
-
-	logman.Warn("Connecting", ws, header)
-	pod, err := socket.NewJsonPodClient(ws, header)
+	logman.Warn("Connecting", url)
+	pod, err := socket.NewWsClient(url, "", "")
 
 	if err != nil {
 		return err
@@ -54,34 +38,41 @@ func Daemon() error {
 
 	defer pod.Close()
 
-	go PingLoop(&SendPod{pod})
+	// 注册节点
+
+	send := &SendPod{pod}
+	go send.Register()
+
+	// 接收数据
 
 	return Receiver(pod)
 
 }
 
-func Receiver(pod *socket.JsonPod) error {
+func Receiver(pod *socket.WsConn) error {
 
 	recv := &RecvPod{pod}
 	resp := &RespPod{pod}
 
 	for {
-		var rs *SocketData
+		var rq *SocketData
 
-		if err := pod.Read(&rs); err != nil {
+		if err := pod.ReadJson(&rq); err != nil {
 			logman.Error("Read:error", err)
 			return err
 		}
 
-		switch rs.Method {
+		switch rq.Method {
 		case "Exec":
-			recv.Exec(rs)
+			recv.Exec(rq)
 		case "Stat":
-			recv.Stat(rs)
+			recv.Stat(rq)
 		case "Ping:resp":
-			resp.Ping(rs)
+			resp.Ping(rq)
+		case "Register:resp":
+			resp.Register(rq)
 		default:
-			logman.Warn("Task:unknown", rs)
+			logman.Warn("Task:unknown", rq)
 		}
 	}
 

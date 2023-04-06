@@ -1,20 +1,15 @@
 package workhub
 
 import (
+	"golang.org/x/net/websocket"
+
 	"tdp-cloud/helper/logman"
 	"tdp-cloud/helper/psutil"
 	"tdp-cloud/helper/socket"
 )
 
-type SocketData struct {
-	Method  string
-	TaskId  uint
-	Success bool
-	Payload any
-}
-
 type Worker struct {
-	*socket.JsonPod
+	*socket.WsConn
 	UserId        uint
 	MachineId     uint
 	CloudId       string
@@ -35,9 +30,29 @@ type SendPod struct {
 	*Worker
 }
 
-func Daemon(worker *Worker) error {
+type SocketData struct {
+	Method  string
+	TaskId  uint
+	Success bool
+	Payload any
+}
 
-	return Receiver(worker)
+type ConnectParam struct {
+	UserId    uint
+	MachineId uint
+}
+
+func Connect(ws *websocket.Conn, rq *ConnectParam) error {
+
+	pod := socket.NewWsConn(ws)
+
+	defer pod.Close()
+
+	// 接收数据
+
+	return Receiver(&Worker{
+		pod, rq.UserId, rq.MachineId, "", "", nil, "",
+	})
 
 }
 
@@ -46,21 +61,25 @@ func Receiver(worker *Worker) error {
 	recv := &RecvPod{worker}
 	resp := &RespPod{worker}
 
+	defer delete(workerPool, worker.WorkerId)
+
 	for {
 		var rq *SocketData
 
-		if err := worker.Read(&rq); err != nil {
+		if err := worker.ReadJson(&rq); err != nil {
 			logman.Error("Read:error", err)
 			return err
 		}
 
 		switch rq.Method {
+		case "Register":
+			recv.Register(rq)
+		case "Ping":
+			recv.Ping(rq)
 		case "Exec:resp":
 			resp.Exec(rq)
 		case "Stat:resp":
 			resp.Stat(rq)
-		case "Ping":
-			recv.Ping(rq)
 		default:
 			logman.Warn("Task:unknown", rq)
 		}

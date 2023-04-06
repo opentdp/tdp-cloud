@@ -31,7 +31,7 @@ func (p *program) run() {
 
 	defer p.timer()
 
-	if err := worker.Daemon(); err != nil {
+	if err := worker.Connect(); err != nil {
 		svclog.Error(err)
 	}
 

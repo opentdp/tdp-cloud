@@ -3,6 +3,7 @@ package workhub
 import (
 	"github.com/gin-gonic/gin"
 	"github.com/spf13/cast"
+	"golang.org/x/net/websocket"
 
 	"tdp-cloud/helper/command"
 	"tdp-cloud/module/model/user"
@@ -33,8 +34,8 @@ func detail(c *gin.Context) {
 	}
 
 	if id, err := send.Stat(); err == nil {
-		info := workhub.WaitResponse(id, 30)
-		c.Set("Payload", gin.H{"Stat": info})
+		stat := workhub.WaitResponse(id, 30)
+		c.Set("Payload", gin.H{"Stat": stat})
 	} else {
 		c.Set("Error", err)
 	}
@@ -85,9 +86,18 @@ func register(c *gin.Context) {
 	c.Set("UserId", ur.Id)
 	c.Set("MachineId", cast.ToUint(c.Param("mid")))
 
-	if err := workhub.Register(c); err != nil {
+	// 创建 Worker 会话
+
+	h := websocket.Handler(func(ws *websocket.Conn) {
+		err := workhub.Connect(ws, &workhub.ConnectParam{
+			UserId:    c.GetUint("UserId"),
+			MachineId: c.GetUint("MachineId"),
+		})
 		c.Set("Error", err)
-		return
-	}
+	})
+
+	h.ServeHTTP(c.Writer, c.Request)
+
+	c.Set("Payload", "连接已关闭")
 
 }

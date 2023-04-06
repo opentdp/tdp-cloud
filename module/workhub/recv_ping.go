@@ -4,20 +4,24 @@ import (
 	"github.com/mitchellh/mapstructure"
 
 	"tdp-cloud/helper/logman"
+	"tdp-cloud/helper/psutil"
 )
 
 func (pod *RecvPod) Ping(rq *SocketData) error {
 
-	logman.Info("Ping:recv By", pod.WorkerMeta.HostName)
+	logman.Info("Ping:recv By", pod.Conn.RemoteAddr())
 
-	mapstructure.Decode(rq.Payload, &pod.WorkerMeta)
+	stat := &psutil.SummaryStat{}
+	if mapstructure.Decode(rq.Payload, stat) == nil {
+		pod.WorkerMeta = stat
+	}
 
-	rs := &SocketData{
+	err := pod.WriteJson(&SocketData{
 		Method:  "Ping:resp",
 		TaskId:  rq.TaskId,
 		Payload: "OK",
-	}
+	})
 
-	return pod.Write(rs)
+	return err
 
 }

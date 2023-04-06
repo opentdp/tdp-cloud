@@ -10,12 +10,14 @@ func (pod *SendPod) Stat() (uint, error) {
 
 	logman.Info("Stat:send To", pod.WorkerMeta.HostName)
 
-	rq := &SocketData{
-		Method: "Stat",
-		TaskId: uint(time.Now().Unix()),
-	}
+	taskId := uint(time.Now().Unix())
 
-	return rq.TaskId, pod.Write(rq)
+	err := pod.WriteJson(&SocketData{
+		Method: "Stat",
+		TaskId: taskId,
+	})
+
+	return taskId, err
 
 }
 

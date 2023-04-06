@@ -2,52 +2,16 @@ package workhub
 
 import (
 	"time"
-
-	"github.com/gin-gonic/gin"
-
-	"tdp-cloud/helper/psutil"
-	"tdp-cloud/helper/socket"
 )
 
 var workerResp = map[uint]any{}
 var workerPool = map[string]*Worker{}
 
-func Register(c *gin.Context) error {
+func DeleteWorker(Worker *Worker) {
 
-	pod, err := socket.NewJsonPod(c.Writer, c.Request)
-
-	if err != nil {
-		return err
+	if Worker.WorkerId != "" {
+		delete(workerPool, Worker.WorkerId)
 	}
-
-	defer pod.Close()
-
-	// 节点信息
-
-	worker := &Worker{
-		pod,
-		c.GetUint("UserId"),
-		c.GetUint("MachineId"),
-		c.GetHeader("TDP-Cloud-id"),
-		c.GetHeader("TDP-Worker-Id"),
-		&psutil.SummaryStat{}, // 初始化
-		c.GetHeader("TDP-Worker-Version"),
-	}
-
-	worker.WorkerMeta.From(c.GetHeader("TDP-Worker-Meta"))
-
-	// 注册主机
-
-	workerPool[worker.WorkerId] = worker
-	defer delete(workerPool, worker.WorkerId)
-
-	if err = updateMachine(worker); err != nil {
-		return err
-	}
-
-	// 启动服务
-
-	return Daemon(worker)
 
 }
 

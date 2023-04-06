@@ -17,9 +17,9 @@ func host(c *gin.Context) {
 		return
 	}
 
-	info := psutil.Detail(rq.WithAddr)
+	stat := psutil.Detail(rq.WithAddr)
 
-	c.Set("Payload", gin.H{"Stat": info})
+	c.Set("Payload", gin.H{"Stat": stat})
 
 }
 

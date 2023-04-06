@@ -12,8 +12,10 @@ func updateMachine(worker *Worker) error {
 
 	// 尝试查找 MachineId
 	if worker.MachineId == 0 && worker.CloudId != "" {
-		rq := &machine.FetchParam{CloudId: worker.CloudId}
-		if item, err := machine.Fetch(rq); err == nil && item.Id > 0 {
+		item, err := machine.Fetch(&machine.FetchParam{
+			CloudId: worker.CloudId,
+		})
+		if err == nil && item.Id > 0 {
 			worker.MachineId = item.Id
 		}
 	}

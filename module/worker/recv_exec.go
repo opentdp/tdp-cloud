@@ -31,7 +31,7 @@ func (pod *RecvPod) Exec(rs *SocketData) error {
 		logman.Info("Exec:done", data.Name)
 	}
 
-	rq := &SocketData{
+	err = pod.WriteJson(&SocketData{
 		Method:  "Exec:resp",
 		TaskId:  rs.TaskId,
 		Success: err == nil,
@@ -39,7 +39,7 @@ func (pod *RecvPod) Exec(rs *SocketData) error {
 			"Output": ret,
 			"Error":  err,
 		},
-	}
+	})
 
-	return pod.Write(rq)
+	return err
 }
