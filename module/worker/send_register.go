@@ -48,11 +48,12 @@ func (pod *RespPod) Register(rs *SocketData) {
 func KeepAlive(pod *SendPod) error {
 
 	for {
+		time.Sleep(25 * time.Second)
+
 		if _, err := pod.Ping(); err != nil {
 			logman.Error("Ping:fail", err)
 			return err
 		}
-		time.Sleep(25 * time.Second)
 	}
 
 }
