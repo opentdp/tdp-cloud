@@ -1,67 +1,44 @@
 package webssh
 
 import (
-	"io"
-	"net/http"
 	"os"
 
 	"golang.org/x/crypto/ssh"
+	"golang.org/x/net/websocket"
 	"golang.org/x/term"
-
-	"tdp-cloud/helper/socket"
 )
 
-type ConnectParam struct {
-	Request *http.Request
-	Writer  http.ResponseWriter
-	Option  *SSHClientOption
-}
+func Connect(ws *websocket.Conn, opt *SSHClientOption) error {
 
-func Connect(p *ConnectParam) error {
+	defer ws.Close()
 
-	pod, err := socket.NewIOPod(p.Writer, p.Request)
+	// 创建客户端
+
+	client, err := NewSSHClient(opt)
 
 	if err != nil {
-		return err
-	}
-
-	defer pod.Close()
-
-	// 创建 SSH 连接
-
-	client, err := NewSSHClient(p.Option)
-
-	if err != nil {
-		pod.Write([]byte("> " + err.Error() + "\r\n"))
+		ws.Write([]byte("> " + err.Error() + "\r\n"))
 		return err
 	}
 
 	defer client.Close()
 
+	// 打开新会话
+
 	session, err := client.NewSession()
 
 	if err != nil {
-		pod.Write([]byte(err.Error() + "\r\n"))
+		ws.Write([]byte(err.Error() + "\r\n"))
 		return err
 	}
 
 	defer session.Close()
 
-	pod.OnClose(session.Close)
-
-	// 代理 SSH 会话
-
-	return sshProxy(session, pod)
-
-}
-
-func sshProxy(session *ssh.Session, rw io.ReadWriter) error {
-
 	// 绑定输入输出
 
-	session.Stdin = rw
-	session.Stdout = rw
-	session.Stderr = rw
+	session.Stdin = ws
+	session.Stdout = ws
+	session.Stderr = ws
 
 	// 创建模拟终端
 
@@ -75,17 +52,17 @@ func sshProxy(session *ssh.Session, rw io.ReadWriter) error {
 	}
 
 	if err := session.RequestPty("xterm", height, width, modes); err != nil {
-		rw.Write([]byte(err.Error() + "\r\n"))
+		ws.Write([]byte(err.Error() + "\r\n"))
 		return err
 	}
 
 	if err := session.Shell(); err != nil {
-		rw.Write([]byte(err.Error() + "\r\n"))
+		ws.Write([]byte(err.Error() + "\r\n"))
 		return err
 	}
 
 	if err := session.Wait(); err != nil {
-		rw.Write([]byte(err.Error() + "\r\n"))
+		ws.Write([]byte(err.Error() + "\r\n"))
 		return err
 	}
 

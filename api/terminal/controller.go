@@ -3,6 +3,7 @@ package terminal
 import (
 	"github.com/gin-gonic/gin"
 	"github.com/spf13/cast"
+	"golang.org/x/net/websocket"
 
 	"tdp-cloud/helper/webssh"
 	"tdp-cloud/module/model/keypair"
@@ -34,15 +35,13 @@ func ssh(c *gin.Context) {
 
 	// 创建 SSH 连接
 
-	err := webssh.Connect(&webssh.ConnectParam{
-		Request: c.Request,
-		Writer:  c.Writer,
-		Option:  rq,
+	h := websocket.Handler(func(ws *websocket.Conn) {
+		err := webssh.Connect(ws, rq)
+		c.Set("Error", err)
 	})
 
-	if err != nil {
-		c.Set("Error", err)
-		return
-	}
+	h.ServeHTTP(c.Writer, c.Request)
+
+	c.Set("Payload", "连接已关闭")
 
 }

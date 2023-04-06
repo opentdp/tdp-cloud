@@ -23,12 +23,11 @@ require (
 	github.com/spf13/viper v1.15.0
 	// 日志输出
 	go.uber.org/zap v1.24.0
-	// 加密扩充库
+	// 官方扩展库
 	golang.org/x/crypto v0.6.0
-	// 终端和控制台支持
 	golang.org/x/term v0.5.0
-	// 文本操作
 	golang.org/x/text v0.7.0
+	golang.org/x/net v0.7.0
 	// 日志切割
 	gopkg.in/natefinch/lumberjack.v2 v2.2.1
 )
@@ -147,7 +146,6 @@ require (
 	go.uber.org/multierr v1.9.0 // indirect
 	golang.org/x/arch v0.2.0 // indirect
 	golang.org/x/mod v0.8.0 // indirect
-	golang.org/x/net v0.7.0 // indirect
 	golang.org/x/sys v0.5.0 // indirect
 	golang.org/x/tools v0.6.0 // indirect
 	google.golang.org/protobuf v1.28.1 // indirect
