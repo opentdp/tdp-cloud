@@ -28,9 +28,7 @@ type SocketData struct {
 func Connect() error {
 
 	url := args.Worker.Remote
-
-	logman.Warn("Connecting", url)
-	pod, err := socket.NewWsClient(url, "", "")
+	pod, err := socket.NewWsClient(url, "", "http://localhost")
 
 	if err != nil {
 		return err
@@ -58,7 +56,7 @@ func Receiver(pod *socket.WsConn) error {
 		var rq *SocketData
 
 		if err := pod.ReadJson(&rq); err != nil {
-			logman.Error("Read:error", err)
+			logman.Error("Read json failed", "Error", err)
 			return err
 		}
 
@@ -72,7 +70,7 @@ func Receiver(pod *socket.WsConn) error {
 		case "Register:resp":
 			resp.Register(rq)
 		default:
-			logman.Warn("Task:unknown", rq)
+			logman.Warn("Unknown task", "SocketData", rq)
 		}
 	}
 

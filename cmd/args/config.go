@@ -19,8 +19,7 @@ var Database struct {
 var Logger struct {
 	Dir    string
 	Level  string
-	Stdout bool
-	ToFile bool
+	Target string
 }
 
 var Server struct {

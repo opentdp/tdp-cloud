@@ -40,7 +40,7 @@ func NewByJob(job *model.Certjob) error {
 	})
 
 	if err != nil || ur.AppKey == "" {
-		logman.Error("Failed to get AppKey for", job.Domain)
+		logman.Error("Get AppKey failed", logman.String("domain", job.Domain))
 		return err
 	}
 
@@ -51,7 +51,7 @@ func NewByJob(job *model.Certjob) error {
 	})
 
 	if err != nil || vd.SecretKey == "" {
-		logman.Error("Failed to get SecretKey for", job.Domain)
+		logman.Error("Get SecretKey failed", logman.String("domain", job.Domain))
 		return err
 	}
 

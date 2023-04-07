@@ -15,8 +15,7 @@ func init() {
 
 	viper.SetDefault("logger.dir", ".")
 	viper.SetDefault("logger.level", "info")
-	viper.SetDefault("logger.stdout", true)
-	viper.SetDefault("logger.tofile", false)
+	viper.SetDefault("logger.target", "stdout")
 
 	viper.SetDefault("server.type", "sqlite")
 	viper.SetDefault("server.name", "server.db")
@@ -41,8 +40,7 @@ func Load() {
 
 	Logger.Dir = viper.GetString("logger.dir")
 	Logger.Level = viper.GetString("logger.level")
-	Logger.Stdout = viper.GetBool("logger.stdout")
-	Logger.ToFile = viper.GetBool("logger.tofile")
+	Logger.Target = viper.GetString("logger.target")
 
 	Server.Listen = viper.GetString("server.listen")
 	Server.JwtKey = viper.GetString("server.jwtkey")

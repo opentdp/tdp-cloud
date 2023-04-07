@@ -8,7 +8,7 @@ import (
 
 func (pod *SendPod) Stat() (uint, error) {
 
-	logman.Info("Stat:send To", pod.WorkerMeta.HostName)
+	logman.Info("Stat:send", "To", pod.WorkerMeta.HostName)
 
 	taskId := uint(time.Now().Unix())
 
@@ -23,7 +23,7 @@ func (pod *SendPod) Stat() (uint, error) {
 
 func (pod *RespPod) Stat(rq *SocketData) {
 
-	logman.Info("Stat:resp By", pod.WorkerMeta.HostName)
+	logman.Info("Stat:resp", "From", pod.WorkerMeta.HostName)
 
 	workerResp[rq.TaskId] = rq.Payload
 

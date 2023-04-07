@@ -19,7 +19,7 @@ func Connect() {
 	}
 
 	if db, err := gorm.Open(dialector(), config); err != nil {
-		logman.Fatal("Connect to databse error:", err)
+		logman.Fatal("Connect to databse failed", "Error", err)
 	} else {
 		Db = db
 	}

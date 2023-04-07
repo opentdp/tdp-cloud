@@ -39,9 +39,9 @@ func (p *program) run() {
 
 func (p *program) timer() {
 
-	svclog.Warning("Connection disconnected, retry in 5 seconds.")
+	svclog.Warning("Connection disconnected, retry in 15 seconds.")
 
-	time.Sleep(5 * time.Second)
+	time.Sleep(15 * time.Second)
 	p.run()
 
 }

@@ -5,7 +5,6 @@ import (
 	"strings"
 
 	"github.com/caddyserver/certmagic"
-	"go.uber.org/zap"
 
 	"tdp-cloud/cmd/args"
 	"tdp-cloud/helper/logman"
@@ -16,7 +15,6 @@ var CertEvent func(evt string, data map[string]any)
 func newMagic(iss certmagic.ACMEIssuer) *certmagic.Config {
 
 	config := certmagic.Config{
-		Logger: logman.Named("cert.magic"),
 		Storage: &certmagic.FileStorage{
 			Path: args.Dataset.Dir + "/certmagic",
 		},
@@ -26,9 +24,8 @@ func newMagic(iss certmagic.ACMEIssuer) *certmagic.Config {
 		certmagic.NewACMEIssuer(&config, iss),
 	}
 
-	evtlog := logman.Named("cert.event")
 	config.OnEvent = func(ctx context.Context, evt string, data map[string]any) error {
-		evtlog.Warn(evt, zap.Any("data", data))
+		logman.Named("cert.event").Warn(evt, logman.Any("data", data))
 		if CertEvent != nil {
 			switch evt {
 			case "cert_obtaining", "cert_failed", "cert_obtained":
@@ -45,7 +42,6 @@ func newMagic(iss certmagic.ACMEIssuer) *certmagic.Config {
 		GetConfigForCert: func(cert certmagic.Certificate) (*certmagic.Config, error) {
 			return &config, nil
 		},
-		Logger: logman.Named("cert.cache"),
 	})
 
 	return certmagic.New(cache, config)

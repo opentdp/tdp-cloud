@@ -6,8 +6,6 @@ import (
 	"github.com/libdns/cloudflare"
 	"github.com/libdns/tencentcloud"
 	"github.com/mholt/acmez/acme"
-
-	"tdp-cloud/helper/logman"
 )
 
 func newIssuer(rq *ReqeustParam) certmagic.ACMEIssuer {
@@ -17,7 +15,6 @@ func newIssuer(rq *ReqeustParam) certmagic.ACMEIssuer {
 		DisableHTTPChallenge:    true,
 		DisableTLSALPNChallenge: true,
 		Email:                   rq.Email,
-		Logger:                  logman.Named("cert.issuer"),
 	}
 
 	// Ref: https://github.com/acmesh-official/acme.sh/wiki/Server

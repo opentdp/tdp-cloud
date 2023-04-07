@@ -17,19 +17,19 @@ func Service(param []string) service.Service {
 		Description: "TDP Control Panel Worker",
 		Option: service.KeyValue{
 			"LogDirectory": args.Logger.Dir,
-			"LogOutput":    args.Logger.ToFile,
+			"LogOutput":    args.Logger.Target == "file",
 		},
 		Arguments: param,
 	}
 
 	svc, err := service.New(&program{}, config)
 	if err != nil {
-		logman.Fatal("Init service error:", err)
+		logman.Fatal("Init service failed", "Error", err)
 	}
 
 	svclog, err = svc.Logger(nil)
 	if err != nil {
-		logman.Fatal("Init service error:", err)
+		logman.Fatal("Init service failed", "Error", err)
 	}
 
 	return svc

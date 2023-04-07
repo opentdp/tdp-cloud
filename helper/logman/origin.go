@@ -1,55 +1,32 @@
 package logman
 
 import (
-	"go.uber.org/zap"
+	"os"
+
+	"golang.org/x/exp/slog"
 )
 
-var origin *zap.SugaredLogger
-
-func Debug(args ...any) {
-	origin.Debugln(args...)
+func Named(n string) *Logger {
+	return NewLogger(n)
 }
 
-func Debugf(tpl string, args ...any) {
-	origin.Debugf(tpl, args...)
+func Debug(msg string, args ...any) {
+	slog.Debug(msg, args...)
 }
 
-func Info(args ...any) {
-	origin.Infoln(args...)
+func Info(msg string, args ...any) {
+	slog.Info(msg, args...)
 }
 
-func Infof(tpl string, args ...any) {
-	origin.Infof(tpl, args...)
+func Warn(msg string, args ...any) {
+	slog.Warn(msg, args...)
 }
 
-func Warn(args ...any) {
-	origin.Warnln(args...)
+func Error(msg string, args ...any) {
+	slog.Error(msg, args...)
 }
 
-func Warnf(tpl string, args ...any) {
-	origin.Warnf(tpl, args...)
-}
-
-func Error(args ...any) {
-	origin.Errorln(args...)
-}
-
-func Errorf(tpl string, args ...any) {
-	origin.Errorf(tpl, args...)
-}
-
-func Panic(args ...any) {
-	origin.Panicln(args...)
-}
-
-func Panicf(tpl string, args ...any) {
-	origin.Panicf(tpl, args...)
-}
-
-func Fatal(args ...any) {
-	origin.Fatalln(args...)
-}
-
-func Fatalf(tpl string, args ...any) {
-	origin.Fatalf(tpl, args...)
+func Fatal(msg string, args ...any) {
+	slog.Error(msg, args...)
+	os.Exit(1)
 }

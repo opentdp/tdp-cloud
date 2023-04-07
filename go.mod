@@ -6,9 +6,10 @@ go 1.18
 
 require (
 	golang.org/x/crypto v0.7.0
-	golang.org/x/net v0.8.0
+	golang.org/x/exp v0.0.0-20230321023759-10a507213a29
+	golang.org/x/net v0.9.0
 	golang.org/x/term v0.7.0
-	golang.org/x/text v0.8.0
+	golang.org/x/text v0.9.0
 )
 
 // 三方依赖包
@@ -32,8 +33,6 @@ require (
 	github.com/spf13/cobra v1.7.0
 	// 配置文件读取
 	github.com/spf13/viper v1.15.0
-	// 日志输出
-	go.uber.org/zap v1.24.0
 	// 日志切割
 	gopkg.in/natefinch/lumberjack.v2 v2.2.1
 )
@@ -86,7 +85,7 @@ require (
 	github.com/alibabacloud-go/tea v1.1.20
 	github.com/alibabacloud-go/tea-utils/v2 v2.0.1
 	// 腾讯云 SDK
-	github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/common v1.0.632
+	github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/common v1.0.633
 )
 
 // 间接依赖包
@@ -149,6 +148,7 @@ require (
 	github.com/yusufpapurcu/wmi v1.2.2 // indirect
 	go.uber.org/atomic v1.10.0 // indirect
 	go.uber.org/multierr v1.11.0 // indirect
+	go.uber.org/zap v1.24.0 // indirect
 	golang.org/x/arch v0.3.0 // indirect
 	golang.org/x/mod v0.10.0 // indirect
 	golang.org/x/sys v0.7.0 // indirect

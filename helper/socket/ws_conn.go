@@ -2,10 +2,16 @@ package socket
 
 import (
 	"golang.org/x/net/websocket"
+
+	"tdp-cloud/helper/logman"
 )
 
 type WsConn struct {
 	*websocket.Conn
+}
+
+func NewWsConn(ws *websocket.Conn) *WsConn {
+	return &WsConn{ws}
 }
 
 func (pod *WsConn) Read(v []byte) error {
@@ -33,21 +39,18 @@ func (pod *WsConn) Die(r string) {
 	pod.Conn.Close()
 }
 
-// 创建连接
-
-func NewWsConn(ws *websocket.Conn) *WsConn {
-
-	return &WsConn{ws}
-
-}
+// 创建客户端连接
 
 func NewWsClient(u, p, o string) (*WsConn, error) {
 
+	logman.Info("Connecting to server", logman.String("url", u))
+
 	ws, err := websocket.Dial(u, p, o)
-	if err != nil {
-		return nil, err
+	if err == nil {
+		return &WsConn{ws}, nil
 	}
 
-	return &WsConn{ws}, nil
+	logman.Error("Connect failed", logman.Any("Error", err))
+	return nil, err
 
 }

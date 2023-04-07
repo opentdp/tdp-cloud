@@ -17,7 +17,7 @@ func dialector() gorm.Dialector {
 	case "mysql":
 		return useMysql()
 	default:
-		logman.Fatal("Database Type error:", args.Database.Type)
+		logman.Fatal("Database type error", logman.String("type", args.Database.Type))
 	}
 
 	return nil
