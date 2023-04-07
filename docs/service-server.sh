@@ -134,7 +134,7 @@ stop () {
 
 }
 
-# --- run ---
+# --- run task ---
 
 case "$TDP_SERVICE" in
   install)
@@ -153,4 +153,6 @@ case "$TDP_SERVICE" in
     ;;
 esac
 
-TDP_SERVICE=
+# --- tidy ---
+
+export TDP_SERVICE=
