@@ -23,9 +23,9 @@ func Server(addr string, engine http.Handler) {
 	// 以协程方式启用监听，防止阻塞后续的中断信号处理
 	go func() {
 		if err := server.ListenAndServe(); err == nil {
-			logman.Warn("Server started", "Address", addr)
+			logman.Warn("Server started", "address", addr)
 		} else {
-			logman.Fatal("Server start failed", "Error", err)
+			logman.Fatal("Server start failed", "error", err)
 		}
 	}()
 
@@ -46,7 +46,7 @@ func Server(addr string, engine http.Handler) {
 
 	// 优雅地关闭服务器而不中断任何活动连接
 	if err := server.Shutdown(ctx); err != nil {
-		logman.Fatal("Server forced to shutdown", "Error", err)
+		logman.Fatal("Server forced to shutdown", "error", err)
 	}
 
 	logman.Warn("Server exiting...")

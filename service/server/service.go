@@ -24,12 +24,12 @@ func Service(param []string) service.Service {
 
 	svc, err := service.New(&program{}, config)
 	if err != nil {
-		logman.Fatal("Init service failed", "Error", err)
+		logman.Fatal("Init service failed", "error", err)
 	}
 
 	svclog, err = svc.Logger(nil)
 	if err != nil {
-		logman.Fatal("Init service failed", "Error", err)
+		logman.Fatal("Init service failed", "error", err)
 	}
 
 	return svc

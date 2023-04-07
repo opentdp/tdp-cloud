@@ -29,7 +29,7 @@ func Control(name, act string) {
 	case "worker":
 		svc = worker.Service(cliArgs())
 	default:
-		logman.Fatal("Unknown service", "Name", name)
+		logman.Fatal("Unknown service", "name", name)
 	}
 
 	// 强制保存配置
@@ -43,17 +43,17 @@ func Control(name, act string) {
 	switch act {
 	case "": // 直接运行
 		if err := svc.Run(); err != nil {
-			logman.Fatal(svc.String()+" run failed", "Error", err)
+			logman.Fatal(svc.String(), "run", "failed", "error", err)
 		}
 	case "status": // 查看状态
 		if sta, err := svc.Status(); err != nil {
-			logman.Fatal(svc.String()+" "+act+" failed", "Error", err)
+			logman.Fatal(svc.String(), act, "failed", "error", err)
 		} else {
-			logman.Warn(svc.String(), "Status", statusMap[sta])
+			logman.Warn(svc.String(), "status", statusMap[sta])
 		}
 	default: // 其他动作
 		if err := service.Control(svc, act); err != nil {
-			logman.Fatal(svc.String()+" "+act+" failed", "Error", err)
+			logman.Fatal(svc.String(), act, "failed", "error", err)
 		}
 	}
 

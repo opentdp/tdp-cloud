@@ -8,7 +8,7 @@ import (
 
 func (pod *RecvPod) Register(rq *SocketData) error {
 
-	logman.Info("Register:recv", "From", pod.Conn.RemoteAddr())
+	logman.Info("Register:recv", "from", pod.Conn.RemoteAddr())
 
 	// 注册主机
 

@@ -37,7 +37,7 @@ func (pod *SendPod) Register() (uint, error) {
 
 func (pod *RespPod) Register(rs *SocketData) {
 
-	logman.Info("Register:resp", "Payload", rs.Payload)
+	logman.Info("Register:resp", "payload", rs.Payload)
 
 	go KeepAlive(&SendPod{pod.WsConn})
 
@@ -51,7 +51,7 @@ func KeepAlive(pod *SendPod) error {
 		time.Sleep(25 * time.Second)
 
 		if _, err := pod.Ping(); err != nil {
-			logman.Error("Ping:fail", "Error", err)
+			logman.Error("Ping:fail", "error", err)
 			return err
 		}
 	}

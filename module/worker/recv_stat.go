@@ -7,7 +7,7 @@ import (
 
 func (pod *RecvPod) Stat(rs *SocketData) error {
 
-	logman.Info("Stat:recv", "TaskId", rs.TaskId)
+	logman.Info("Stat:recv", "taskId", rs.TaskId)
 
 	err := pod.WriteJson(&SocketData{
 		Method:  "Stat:resp",

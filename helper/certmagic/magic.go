@@ -25,7 +25,7 @@ func newMagic(iss certmagic.ACMEIssuer) *certmagic.Config {
 	}
 
 	config.OnEvent = func(ctx context.Context, evt string, data map[string]any) error {
-		logman.Named("cert.event").Warn(evt, logman.Any("data", data))
+		logman.Named("cert.event").Warn(evt, "data", data)
 		if CertEvent != nil {
 			switch evt {
 			case "cert_obtaining", "cert_failed", "cert_obtained":

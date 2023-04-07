@@ -6,10 +6,6 @@ import (
 	"golang.org/x/exp/slog"
 )
 
-func Named(n string) *Logger {
-	return NewLogger(n)
-}
-
 func Debug(msg string, args ...any) {
 	slog.Debug(msg, args...)
 }

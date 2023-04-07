@@ -40,19 +40,19 @@ func (lw LogWrap) LogMode(level logger.LogLevel) logger.Interface {
 
 func (lw LogWrap) Info(ctx context.Context, msg string, args ...any) {
 
-	lw.logger.Info(msg, logman.Any("data", args))
+	lw.logger.Info(msg, "data", args)
 
 }
 
 func (lw LogWrap) Warn(ctx context.Context, msg string, args ...any) {
 
-	lw.logger.Warn(msg, logman.Any("data", args))
+	lw.logger.Warn(msg, "data", args)
 
 }
 
 func (lw LogWrap) Error(ctx context.Context, msg string, args ...any) {
 
-	lw.logger.Error(msg, logman.Any("data", args))
+	lw.logger.Error(msg, "data", args)
 
 }
 
@@ -62,18 +62,14 @@ func (lw LogWrap) Trace(ctx context.Context, begin time.Time, fc func() (string,
 	sql, rows := fc()
 	elapsed := time.Since(begin)
 
-	sqlF := logman.String("sql", sql)
-	rowsF := logman.Int64("rows", rows)
-	elapsedF := logman.Duration("elapsed", elapsed)
-
 	switch {
 	case err != nil && (!errors.Is(err, gorm.ErrRecordNotFound) || !cfg.IgnoreRecordNotFoundError):
-		lw.logger.Error("trace error", logman.Any("error", err), sqlF, rowsF, elapsedF)
+		lw.logger.Error("trace error", "error", err, "sql", sql, "rows", rows, "elapsed", elapsed)
 	case elapsed > cfg.SlowThreshold && cfg.SlowThreshold != 0:
 		slow := fmt.Sprintf("trace slow sql >= %v", cfg.SlowThreshold)
-		lw.logger.Warn(slow, sqlF, rowsF, elapsedF)
+		lw.logger.Warn(slow, "sql", sql, "rows", rows, "elapsed", elapsed)
 	default:
-		lw.logger.Info("trace query", sqlF, rowsF, elapsedF)
+		lw.logger.Info("trace query", "sql", sql, "rows", rows, "elapsed", elapsed)
 	}
 
 }

@@ -23,6 +23,6 @@ func (pod *SendPod) Ping() (uint, error) {
 
 func (pod *RespPod) Ping(rs *SocketData) {
 
-	logman.Info("Ping:resp", "Payload", rs.Payload)
+	logman.Info("Ping:resp", "payload", rs.Payload)
 
 }

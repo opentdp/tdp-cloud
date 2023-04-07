@@ -67,7 +67,7 @@ func Receiver(worker *Worker) error {
 		var rq *SocketData
 
 		if err := worker.ReadJson(&rq); err != nil {
-			logman.Error("Read:error", "Error", err)
+			logman.Error("Read:error", "error", err)
 			return err
 		}
 
@@ -81,7 +81,7 @@ func Receiver(worker *Worker) error {
 		case "Stat:resp":
 			resp.Stat(rq)
 		default:
-			logman.Warn("Unknown task", "Request", rq)
+			logman.Warn("Unknown task", "request", rq)
 		}
 	}
 

@@ -38,8 +38,8 @@ func Recovery(stack bool) gin.HandlerFunc {
 				if brokenPipe {
 					logger.Error(
 						c.Request.URL.Path,
-						logman.Any("error", err),
-						logman.String("request", string(httpRequest)),
+						"error", err,
+						"request", string(httpRequest),
 					)
 					// If the connection is dead, we can't write a status to it.
 					c.Error(err.(error)) // nolint: errcheck
@@ -50,15 +50,15 @@ func Recovery(stack bool) gin.HandlerFunc {
 				if stack {
 					logger.Error(
 						"[Recovery from panic]",
-						logman.Any("error", err),
-						logman.String("request", string(httpRequest)),
-						logman.String("stack", string(debug.Stack())),
+						"error", err,
+						"request", string(httpRequest),
+						"stack", string(debug.Stack()),
 					)
 				} else {
 					logger.Error(
 						"[Recovery from panic]",
-						logman.Any("error", err),
-						logman.String("request", string(httpRequest)),
+						"error", err,
+						"request", string(httpRequest),
 					)
 				}
 
