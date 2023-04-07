@@ -1,6 +1,6 @@
 module tdp-cloud
 
-go 1.18
+go 1.19
 
 // 官方依赖包
 
@@ -65,6 +65,7 @@ require (
 	// DNS 厂商适配
 	github.com/libdns/alidns v1.0.2
 	github.com/libdns/cloudflare v0.1.0
+	github.com/libdns/libdns v0.2.1
 	github.com/libdns/tencentcloud v1.0.0
 	github.com/mholt/acmez v1.1.0
 )
@@ -121,7 +122,6 @@ require (
 	github.com/json-iterator/go v1.1.12 // indirect
 	github.com/klauspost/cpuid/v2 v2.2.4 // indirect
 	github.com/leodido/go-urn v1.2.3 // indirect
-	github.com/libdns/libdns v0.2.1 // indirect
 	github.com/lufia/plan9stats v0.0.0-20230326075908-cb1d2100619a // indirect
 	github.com/magiconair/properties v1.8.7 // indirect
 	github.com/mattn/go-isatty v0.0.18 // indirect
