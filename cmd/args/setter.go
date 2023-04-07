@@ -13,12 +13,12 @@ func init() {
 	viper.SetDefault("dataset.dir", ".")
 	viper.SetDefault("dataset.secret", strutil.Rand(32))
 
+	viper.SetDefault("database.type", "sqlite")
+	viper.SetDefault("database.name", "server.db")
+
 	viper.SetDefault("logger.dir", ".")
 	viper.SetDefault("logger.level", "info")
 	viper.SetDefault("logger.target", "stdout")
-
-	viper.SetDefault("server.type", "sqlite")
-	viper.SetDefault("server.name", "server.db")
 
 	viper.SetDefault("server.jwtkey", strutil.Rand(32))
 
