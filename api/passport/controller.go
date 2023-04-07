@@ -22,7 +22,7 @@ func register(c *gin.Context) {
 	}
 
 	// 是否禁止注册
-	if config.ValueOf("registrable") != "true" {
+	if config.ValueOf("Registrable") != "true" {
 		c.Set("Error", "抱歉，已关闭注册功能")
 		return
 	}
