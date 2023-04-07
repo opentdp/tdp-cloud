@@ -1,6 +1,7 @@
 package worker
 
 import (
+	"os"
 	"tdp-cloud/cmd/args"
 	"tdp-cloud/helper/logman"
 	"tdp-cloud/helper/socket"
@@ -28,7 +29,8 @@ type SocketData struct {
 func Connect() error {
 
 	url := args.Worker.Remote
-	pod, err := socket.NewWsClient(url, "", "http://localhost")
+	hostname, _ := os.Hostname() // 获取主机名
+	pod, err := socket.NewWsClient(url, "", "tdp://"+hostname)
 
 	if err != nil {
 		return err
