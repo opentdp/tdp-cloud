@@ -23,7 +23,7 @@ func CreateToken(userInfo *UserInfo) (string, error) {
 
 	claims := UserClaims{
 		jwt.RegisteredClaims{
-			Issuer: "TDP Cloud",
+			Issuer: args.AppName,
 			ExpiresAt: &jwt.NumericDate{
 				Time: time.Now().Add(7 * time.Hour),
 			},

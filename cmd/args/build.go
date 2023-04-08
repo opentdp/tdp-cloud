@@ -9,6 +9,9 @@ var Efs *embed.FS
 const Version = "0.12.1"
 const BuildVersion = "230401"
 
+const AppName = "TDP CLoud"
+const AppSummary = "土豆片控制面板"
+
 const ReadmeText = `土豆片控制面板
 
 开源项目 https://github.com/open-tdp/tdp-cloud

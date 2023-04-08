@@ -12,7 +12,7 @@ import (
 
 var rcmd = &cobra.Command{
 	Use:     "tdp-cloud",
-	Short:   "TDP Cloud",
+	Short:   args.AppName,
 	Long:    args.ReadmeText,
 	Version: args.Version,
 }
