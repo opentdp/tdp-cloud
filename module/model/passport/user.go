@@ -17,6 +17,7 @@ type LoginParam struct {
 }
 
 type LoginResult struct {
+	UserId   uint
 	Username string
 	Level    uint
 	AppId    string
@@ -54,6 +55,7 @@ func Login(data *LoginParam) (*LoginResult, error) {
 	// 返回结果
 
 	res := &LoginResult{
+		UserId:   ur.Id,
 		Username: ur.Username,
 		Level:    ur.Level,
 		AppId:    ur.AppId,
