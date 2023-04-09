@@ -9,7 +9,7 @@ import (
 	"tdp-cloud/helper/secure"
 )
 
-func AuthGuard() gin.HandlerFunc {
+func JwtGuard() gin.HandlerFunc {
 
 	return func(c *gin.Context) {
 
@@ -26,27 +26,21 @@ func AuthGuard() gin.HandlerFunc {
 
 		// 找不到有效 Token
 		if signToken == "" {
-			c.Set("Error", gin.H{"Code": 401, "Message": "请登录后重试"})
-			c.Set("ExitCode", 401)
-			c.Abort()
+			c.Set("JwtError", "请登录后重试")
 			return
 		}
 
 		// 解析并校验 Token
 		claims, err := ParserToken(signToken)
 		if err != nil {
-			c.Set("Error", gin.H{"Code": 401, "Message": "会话无效，请重新登录"})
-			c.Set("ExitCode", 401)
-			c.Abort()
+			c.Set("JwtError", "会话无效，请重新登录")
 			return
 		}
 
 		// 尝试解密 AppKey
 		appKey, err := secure.Des3Decrypt(claims.AppKey, args.Dataset.Secret)
 		if err != nil {
-			c.Set("Error", gin.H{"Code": 401, "Message": "密钥异常, 请重新注册"})
-			c.Set("ExitCode", 401)
-			c.Abort()
+			c.Set("JwtError", "密钥异常, 请重新注册")
 			return
 		}
 
@@ -54,6 +48,23 @@ func AuthGuard() gin.HandlerFunc {
 		c.Set("AppKey", appKey)
 		c.Set("UserId", claims.Id)
 		c.Set("UserLevel", claims.Level)
+
+	}
+
+}
+
+func AuthGuard() gin.HandlerFunc {
+
+	return func(c *gin.Context) {
+
+		msg := c.GetString("JwtError")
+
+		if msg != "" {
+			c.Set("Error", gin.H{"Code": 401, "Message": msg})
+			c.Set("ExitCode", 401)
+			c.Abort()
+			return
+		}
 
 	}
 

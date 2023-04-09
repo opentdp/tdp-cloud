@@ -31,6 +31,7 @@ func Router(engine *gin.Engine) {
 	api := engine.Group("/api")
 
 	api.Use(midware.OutputHandle())
+	api.Use(midware.JwtGuard())
 
 	{
 		certbot.Router(api)
@@ -56,6 +57,7 @@ func Router(engine *gin.Engine) {
 	wsi := engine.Group("/wsi/:auth")
 
 	wsi.Use(midware.SocketHandle())
+	wsi.Use(midware.JwtGuard())
 
 	{
 		terminal.Socket(wsi)
