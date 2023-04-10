@@ -33,7 +33,7 @@ func Engine() *gin.Engine {
 	// 接口路由
 	api.Router(engine)
 
-	// 静态文件路由
+	// 前端文件路由
 	ui, _ := fs.Sub(args.Efs, "front")
 	engine.StaticFS("/ui", http.FS(ui))
 

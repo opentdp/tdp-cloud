@@ -26,7 +26,6 @@ func dialector() gorm.Dialector {
 
 func useSqlite() gorm.Dialector {
 
-	dir := args.Dataset.Dir
 	name := args.Database.Name
 
 	option := args.Database.Option
@@ -34,7 +33,7 @@ func useSqlite() gorm.Dialector {
 		option = "?_pragma=busy_timeout=5000&_pragma=journa_mode(WAL)"
 	}
 
-	return sqlite.Open(dir + "/" + name + option)
+	return sqlite.Open(name + option)
 
 }
 
