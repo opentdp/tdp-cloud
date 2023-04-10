@@ -39,13 +39,13 @@
 
 ## 使用指引
 
-内容较多，请参考文档 <https://cloud.opentdp.org/docs>
+内容较多，请参考文档 <https://docs.opentdp.org>
 
 ## 功能预览
 
 - 功能支持和开发进度，请参阅 [Issues #1](https://github.com/open-tdp/tdp-cloud/issues/1)
 
-- 在线体验开发版功能，请进入 [演示站点](https://cloud.opentdp.org/preview)，自行注册账号后登录
+- 在线体验开发版功能，请进入 [演示站点](https://cloud.opentdp.org)，自行注册账号后登录
 
 ## 开发说明
 
@@ -84,7 +84,7 @@ go env -w GOPROXY=https://goproxy.cn,direct
 
 扫码添加开发者好友（请备注 `Open TDP`，不备注可能无法通过好友申请）
 
-![](./docs/weixin-qr.jpg)
+![](http://docs.opentdp.org/static/weixin-qr.jpg)
 
 ## 其他
 

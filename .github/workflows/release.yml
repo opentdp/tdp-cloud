@@ -32,7 +32,7 @@ jobs:
         uses: softprops/action-gh-release@v1
         if: startsWith(github.ref, 'refs/tags/')
         with:
-          body_path: docs/RELEASE.md
+          body_path: RELEASE.md
           draft: false
           prerelease: false
           files: |
