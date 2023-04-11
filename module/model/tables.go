@@ -11,7 +11,7 @@ type Certjob struct {
 	CaType    string `gorm:"size:32"`
 	EabKeyId  string `gorm:"size:128"`
 	EabMacKey string `gorm:"size:128"`
-	History   any    `gorm:"size:65535;serializer:json"`
+	History   any    `gorm:"serializer:json"`
 	CreatedAt int64
 	UpdatedAt int64
 }
@@ -36,7 +36,7 @@ type Cronjob struct {
 	UserId     uint   `gorm:"index"`
 	Name       string `gorm:"size:128"`
 	Type       string `gorm:"size:32"`
-	Content    string `gorm:"size:65535"`
+	Content    string `gorm:"type:text"`
 	Second     string `gorm:"size:32"`
 	Minute     string `gorm:"size:32"`
 	Hour       string `gorm:"size:32"`
@@ -60,7 +60,7 @@ type Domain struct {
 	NSList      string `gorm:"size:1024"`
 	Model       string `gorm:"size:32"`
 	CloudId     string `gorm:"size:64;uniqueIndex"`
-	CloudMeta   any    `gorm:"size:65535;serializer:json"`
+	CloudMeta   any    `gorm:"serializer:json"`
 	Status      string `gorm:"size:32"`
 	Description string `gorm:"size:1024"`
 	CreatedAt   int64
@@ -72,8 +72,8 @@ type Domain struct {
 type Keypair struct {
 	Id          uint   `gorm:"primaryKey"`
 	UserId      uint   `gorm:"index"`
-	PublicKey   string `gorm:"size:4096"`
-	PrivateKey  string `gorm:"size:65535" json:"-"`
+	PublicKey   string `gorm:"size:1024"`
+	PrivateKey  string `gorm:"type:text" json:"-"`
 	KeyType     string `gorm:"size:32;index"`
 	Cipher      string `gorm:"size:64"`
 	Status      string `gorm:"size:32"`
@@ -94,9 +94,9 @@ type Machine struct {
 	Region      string `gorm:"size:64"`
 	Model       string `gorm:"size:32"`
 	CloudId     string `gorm:"size:64;uniqueIndex;default:null"`
-	CloudMeta   any    `gorm:"size:65535;serializer:json"`
+	CloudMeta   any    `gorm:"serializer:json"`
 	WorkerId    string `gorm:"size:64;uniqueIndex;default:null"`
-	WorkerMeta  any    `gorm:"size:65535;serializer:json"`
+	WorkerMeta  any    `gorm:"serializer:json"`
 	Status      string `gorm:"size:32"`
 	Description string `gorm:"size:1024"`
 	CreatedAt   int64
@@ -121,8 +121,8 @@ type Script struct {
 	Name          string `gorm:"size:128"`
 	CommandType   string `gorm:"size:32"`
 	Username      string `gorm:"size:64"`
-	WorkDirectory string `gorm:"size:1024"`
-	Content       string `gorm:"size:65535"`
+	WorkDirectory string `gorm:"size:256"`
+	Content       string `gorm:"type:text"`
 	Timeout       uint
 	Description   string `gorm:"size:1024"`
 	CreatedAt     int64
@@ -137,8 +137,8 @@ type Taskline struct {
 	Subject   string `gorm:"size:128"`
 	HostName  string `gorm:"size:128"`
 	WorkerId  string `gorm:"size:64;index"`
-	Request   any    `gorm:"size:65535;serializer:json"`
-	Response  any    `gorm:"size:65535;serializer:json"`
+	Request   any    `gorm:"serializer:json"`
+	Response  any    `gorm:"serializer:json"`
 	Status    string `gorm:"size:32"`
 	CreatedAt int64
 	UpdatedAt int64
