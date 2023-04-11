@@ -3,15 +3,15 @@ package model
 // 域名证书
 
 type Certjob struct {
-	Id        uint `gorm:"primaryKey"`
-	UserId    uint `gorm:"index"`
-	VendorId  uint `gorm:"index"`
-	Email     string
-	Domain    string `gorm:"uniqueIndex"`
-	CaType    string
-	EabKeyId  string
-	EabMacKey string
-	History   any `gorm:"serializer:json"`
+	Id        uint   `gorm:"primaryKey"`
+	UserId    uint   `gorm:"index"`
+	VendorId  uint   `gorm:"index"`
+	Email     string `gorm:"size:255"`
+	Domain    string `gorm:"size:255;uniqueIndex"`
+	CaType    string `gorm:"size:32"`
+	EabKeyId  string `gorm:"size:128"`
+	EabMacKey string `gorm:"size:128"`
+	History   any    `gorm:"size:65535;serializer:json"`
 	CreatedAt int64
 	UpdatedAt int64
 }
@@ -20,11 +20,11 @@ type Certjob struct {
 
 type Config struct {
 	Id          uint   `gorm:"primaryKey"`
-	Name        string `gorm:"uniqueIndex:idx_config"`
-	Value       string
-	Type        string `gorm:"default:string"`
-	Module      string `gorm:"uniqueIndex:idx_config"`
-	Description string
+	Name        string `gorm:"size:32;uniqueIndex:idx_config"`
+	Value       string `gorm:"size:1024"`
+	Type        string `gorm:"size:32;default:string"`
+	Module      string `gorm:"size:32;uniqueIndex:idx_config"`
+	Description string `gorm:"size:1024"`
 	CreatedAt   int64
 	UpdatedAt   int64
 }
@@ -32,18 +32,18 @@ type Config struct {
 // 计划任务
 
 type Cronjob struct {
-	Id         uint `gorm:"primaryKey"`
-	UserId     uint `gorm:"index"`
-	Name       string
-	Type       string
-	Content    string
-	Second     string
-	Minute     string
-	Hour       string
-	DayofMonth string
-	Month      string
-	DayofWeek  string
-	Location   string
+	Id         uint   `gorm:"primaryKey"`
+	UserId     uint   `gorm:"index"`
+	Name       string `gorm:"size:128"`
+	Type       string `gorm:"size:32"`
+	Content    string `gorm:"size:65535"`
+	Second     string `gorm:"size:32"`
+	Minute     string `gorm:"size:32"`
+	Hour       string `gorm:"size:32"`
+	DayofMonth string `gorm:"size:32"`
+	Month      string `gorm:"size:32"`
+	DayofWeek  string `gorm:"size:32"`
+	Location   string `gorm:"size:1024"`
 	PrevTime   int64
 	NextTime   int64
 	CreatedAt  int64
@@ -53,16 +53,16 @@ type Cronjob struct {
 // 域名资源
 
 type Domain struct {
-	Id          uint `gorm:"primaryKey"`
-	UserId      uint `gorm:"index"`
-	VendorId    uint `gorm:"index"`
-	Name        string
-	NSList      string
-	Model       string
-	CloudId     string `gorm:"uniqueIndex"`
-	CloudMeta   any    `gorm:"serializer:json"`
-	Status      string
-	Description string
+	Id          uint   `gorm:"primaryKey"`
+	UserId      uint   `gorm:"index"`
+	VendorId    uint   `gorm:"index"`
+	Name        string `gorm:"size:255"`
+	NSList      string `gorm:"size:1024"`
+	Model       string `gorm:"size:32"`
+	CloudId     string `gorm:"size:64;uniqueIndex"`
+	CloudMeta   any    `gorm:"size:65535;serializer:json"`
+	Status      string `gorm:"size:32"`
+	Description string `gorm:"size:1024"`
 	CreatedAt   int64
 	UpdatedAt   int64
 }
@@ -70,14 +70,14 @@ type Domain struct {
 // 密钥对
 
 type Keypair struct {
-	Id          uint `gorm:"primaryKey"`
-	UserId      uint `gorm:"index"`
-	PublicKey   string
-	PrivateKey  string `json:"-"`
-	KeyType     string `gorm:"index"`
-	Cipher      string
-	Status      string
-	Description string
+	Id          uint   `gorm:"primaryKey"`
+	UserId      uint   `gorm:"index"`
+	PublicKey   string `gorm:"size:4096"`
+	PrivateKey  string `gorm:"size:65535" json:"-"`
+	KeyType     string `gorm:"size:32;index"`
+	Cipher      string `gorm:"size:64"`
+	Status      string `gorm:"size:32"`
+	Description string `gorm:"size:1024"`
 	CreatedAt   int64
 	UpdatedAt   int64
 }
@@ -85,20 +85,20 @@ type Keypair struct {
 // 主机资源
 
 type Machine struct {
-	Id          uint `gorm:"primaryKey"`
-	UserId      uint `gorm:"index"`
-	VendorId    uint `gorm:"index"`
-	HostName    string
-	IpAddress   string
-	OSType      string
-	Region      string
-	Model       string
-	CloudId     string `gorm:"uniqueIndex,default:null"`
-	CloudMeta   any    `gorm:"serializer:json"`
-	WorkerId    string `gorm:"uniqueIndex,default:null"`
-	WorkerMeta  any    `gorm:"serializer:json"`
-	Status      string
-	Description string
+	Id          uint   `gorm:"primaryKey"`
+	UserId      uint   `gorm:"index"`
+	VendorId    uint   `gorm:"index"`
+	HostName    string `gorm:"size:255"`
+	IpAddress   string `gorm:"size:1024"`
+	OSType      string `gorm:"size:32"`
+	Region      string `gorm:"size:64"`
+	Model       string `gorm:"size:32"`
+	CloudId     string `gorm:"size:64;uniqueIndex;default:null"`
+	CloudMeta   any    `gorm:"size:65535;serializer:json"`
+	WorkerId    string `gorm:"size:64;uniqueIndex;default:null"`
+	WorkerMeta  any    `gorm:"size:65535;serializer:json"`
+	Status      string `gorm:"size:32"`
+	Description string `gorm:"size:1024"`
 	CreatedAt   int64
 	UpdatedAt   int64
 }
@@ -107,8 +107,8 @@ type Machine struct {
 
 type Migration struct {
 	Id          uint   `gorm:"primaryKey"`
-	Version     string `gorm:"uniqueIndex"`
-	Description string
+	Version     string `gorm:"size:64;uniqueIndex"`
+	Description string `gorm:"size:1024"`
 	CreatedAt   int64
 	UpdatedAt   int64
 }
@@ -116,15 +116,15 @@ type Migration struct {
 // 命令脚本
 
 type Script struct {
-	Id            uint `gorm:"primaryKey"`
-	UserId        uint `gorm:"index"`
-	Name          string
-	CommandType   string
-	Username      string
-	WorkDirectory string
-	Content       string
+	Id            uint   `gorm:"primaryKey"`
+	UserId        uint   `gorm:"index"`
+	Name          string `gorm:"size:128"`
+	CommandType   string `gorm:"size:32"`
+	Username      string `gorm:"size:64"`
+	WorkDirectory string `gorm:"size:1024"`
+	Content       string `gorm:"size:65535"`
 	Timeout       uint
-	Description   string
+	Description   string `gorm:"size:1024"`
 	CreatedAt     int64
 	UpdatedAt     int64
 }
@@ -132,14 +132,14 @@ type Script struct {
 // 任务记录
 
 type Taskline struct {
-	Id        uint `gorm:"primaryKey"`
-	UserId    uint `gorm:"index"`
-	Subject   string
-	HostName  string
-	WorkerId  string `gorm:"index"`
-	Request   any    `gorm:"serializer:json"`
-	Response  any    `gorm:"serializer:json"`
-	Status    string
+	Id        uint   `gorm:"primaryKey"`
+	UserId    uint   `gorm:"index"`
+	Subject   string `gorm:"size:128"`
+	HostName  string `gorm:"size:128"`
+	WorkerId  string `gorm:"size:64;index"`
+	Request   any    `gorm:"size:65535;serializer:json"`
+	Response  any    `gorm:"size:65535;serializer:json"`
+	Status    string `gorm:"size:32"`
 	CreatedAt int64
 	UpdatedAt int64
 }
@@ -148,13 +148,13 @@ type Taskline struct {
 
 type User struct {
 	Id          uint     `gorm:"primaryKey"`
-	Username    string   `gorm:"uniqueIndex"`
-	Password    string   `json:"-"`
+	Username    string   `gorm:"size:64;uniqueIndex"`
+	Password    string   `gorm:"size:128" json:"-"`
 	Level       uint     `gorm:"default:5"`
-	AppId       string   `gorm:"uniqueIndex"`
-	AppKey      string   `json:"-"`
-	Email       string   `gorm:"uniqueIndex,default:null"`
-	Description string   `gorm:"default:挥一挥手"`
+	AppId       string   `gorm:"size:128;uniqueIndex"`
+	AppKey      string   `gorm:"size:128" json:"-"`
+	Email       string   `gorm:"size:255;uniqueIndex"`
+	Description string   `gorm:"size:1024;default:挥一挥手"`
 	Vendors     []Vendor `json:",omitempty"`
 	CreatedAt   int64
 	UpdatedAt   int64
@@ -163,14 +163,14 @@ type User struct {
 // 厂商
 
 type Vendor struct {
-	Id          uint   `gorm:"primaryKey"`
-	UserId      uint   `gorm:"index"`
-	SecretId    string `gorm:"uniqueIndex"`
-	SecretKey   string `json:"-"`
-	Provider    string
-	Cipher      string
-	Status      string
-	Description string
+	Id          uint      `gorm:"primaryKey"`
+	UserId      uint      `gorm:"index"`
+	SecretId    string    `gorm:"size:128;uniqueIndex"`
+	SecretKey   string    `gorm:"size:128" json:"-"`
+	Provider    string    `gorm:"size:32"`
+	Cipher      string    `gorm:"size:64"`
+	Status      string    `gorm:"size:32"`
+	Description string    `gorm:"size:1024"`
 	Certjobs    []Certjob `json:",omitempty"`
 	Domains     []Domain  `json:",omitempty"`
 	Machines    []Machine `json:",omitempty"`
