@@ -1,6 +1,11 @@
 #!/bin/sh
 #
 
+set -e
+set -o noglob
+
+###########################################
+
 export CGO_ENABLED=0
 export GO111MODULE=on
 
