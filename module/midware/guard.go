@@ -4,9 +4,9 @@ import (
 	"strings"
 
 	"github.com/gin-gonic/gin"
+	"github.com/open-tdp/go-helper/secure"
 
 	"tdp-cloud/cmd/args"
-	"tdp-cloud/helper/secure"
 )
 
 func JwtGuard() gin.HandlerFunc {

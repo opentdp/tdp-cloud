@@ -4,7 +4,7 @@ import (
 	"github.com/gin-gonic/gin"
 
 	"tdp-cloud/cmd/args"
-	"tdp-cloud/module/model/config"
+	"tdp-cloud/model/config"
 )
 
 // 配置列表

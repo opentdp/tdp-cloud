@@ -6,10 +6,9 @@ import (
 	"fmt"
 	"time"
 
+	"github.com/open-tdp/go-helper/logman"
 	"gorm.io/gorm"
 	"gorm.io/gorm/logger"
-
-	"tdp-cloud/helper/logman"
 )
 
 type LogWrap struct {

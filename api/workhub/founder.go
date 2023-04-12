@@ -2,8 +2,7 @@ package workhub
 
 import (
 	"github.com/gin-gonic/gin"
-
-	"tdp-cloud/helper/psutil"
+	"github.com/open-tdp/go-helper/psutil"
 )
 
 // 主机信息

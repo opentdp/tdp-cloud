@@ -3,8 +3,8 @@ package crontab
 import (
 	cron "github.com/robfig/cron/v3"
 
-	"tdp-cloud/module/model"
-	"tdp-cloud/module/model/cronjob"
+	"tdp-cloud/model"
+	"tdp-cloud/model/cronjob"
 )
 
 func Daemon() {

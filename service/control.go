@@ -4,9 +4,9 @@ import (
 	"os"
 
 	"github.com/kardianos/service"
+	"github.com/open-tdp/go-helper/logman"
 
 	"tdp-cloud/cmd/args"
-	"tdp-cloud/helper/logman"
 	"tdp-cloud/service/server"
 	"tdp-cloud/service/worker"
 )

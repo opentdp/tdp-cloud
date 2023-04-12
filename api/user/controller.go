@@ -2,10 +2,10 @@ package user
 
 import (
 	"github.com/gin-gonic/gin"
+	"github.com/open-tdp/go-helper/strutil"
 
 	"tdp-cloud/cmd/args"
-	"tdp-cloud/helper/strutil"
-	"tdp-cloud/module/model/user"
+	"tdp-cloud/model/user"
 )
 
 // 用户列表

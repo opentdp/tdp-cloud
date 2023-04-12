@@ -3,8 +3,8 @@ package certbot
 import (
 	"github.com/gin-gonic/gin"
 
+	"tdp-cloud/model/certjob"
 	"tdp-cloud/module/certbot"
-	"tdp-cloud/module/model/certjob"
 )
 
 // 计划列表

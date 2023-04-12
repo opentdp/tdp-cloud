@@ -1,7 +1,7 @@
 package migrator
 
 import (
-	"tdp-cloud/module/model/config"
+	"tdp-cloud/model/config"
 )
 
 func v100002() error {

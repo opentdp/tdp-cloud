@@ -3,7 +3,7 @@ package script
 import (
 	"github.com/gin-gonic/gin"
 
-	"tdp-cloud/module/model/script"
+	"tdp-cloud/model/script"
 )
 
 // 脚本列表

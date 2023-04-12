@@ -3,7 +3,7 @@ package vendor
 import (
 	"github.com/gin-gonic/gin"
 
-	"tdp-cloud/module/model/vendor"
+	"tdp-cloud/model/vendor"
 )
 
 // 厂商列表

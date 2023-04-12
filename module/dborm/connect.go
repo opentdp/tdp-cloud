@@ -1,11 +1,11 @@
 package dborm
 
 import (
+	"github.com/open-tdp/go-helper/logman"
 	"gorm.io/gorm"
 	"gorm.io/gorm/schema"
 
 	"tdp-cloud/cmd/args"
-	"tdp-cloud/helper/logman"
 )
 
 var Db *gorm.DB

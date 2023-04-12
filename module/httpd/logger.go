@@ -4,8 +4,7 @@ import (
 	"time"
 
 	"github.com/gin-gonic/gin"
-
-	"tdp-cloud/helper/logman"
+	"github.com/open-tdp/go-helper/logman"
 )
 
 // 接收框架默认的日志

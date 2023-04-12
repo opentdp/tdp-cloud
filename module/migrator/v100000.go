@@ -1,8 +1,8 @@
 package migrator
 
 import (
+	"tdp-cloud/model"
 	"tdp-cloud/module/dborm"
-	"tdp-cloud/module/model"
 )
 
 func v100000() error {

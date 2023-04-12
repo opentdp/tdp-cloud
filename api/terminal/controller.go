@@ -2,11 +2,11 @@ package terminal
 
 import (
 	"github.com/gin-gonic/gin"
+	"github.com/open-tdp/go-helper/webssh"
 	"github.com/spf13/cast"
 	"golang.org/x/net/websocket"
 
-	"tdp-cloud/helper/webssh"
-	"tdp-cloud/module/model/keypair"
+	"tdp-cloud/model/keypair"
 )
 
 func ssh(c *gin.Context) {

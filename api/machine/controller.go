@@ -3,7 +3,7 @@ package machine
 import (
 	"github.com/gin-gonic/gin"
 
-	"tdp-cloud/module/model/machine"
+	"tdp-cloud/model/machine"
 )
 
 // 主机列表

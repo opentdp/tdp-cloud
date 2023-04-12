@@ -1,13 +1,14 @@
 package certbot
 
 import (
+	"github.com/open-tdp/go-helper/certmagic"
+	"github.com/open-tdp/go-helper/logman"
+
 	"tdp-cloud/cmd/args"
-	"tdp-cloud/helper/certmagic"
-	"tdp-cloud/helper/logman"
-	"tdp-cloud/module/model"
-	"tdp-cloud/module/model/certjob"
-	"tdp-cloud/module/model/user"
-	"tdp-cloud/module/model/vendor"
+	"tdp-cloud/model"
+	"tdp-cloud/model/certjob"
+	"tdp-cloud/model/user"
+	"tdp-cloud/model/vendor"
 )
 
 func Daemon() {
@@ -60,14 +61,15 @@ func NewByJob(job *model.Certjob) error {
 	}
 
 	return certmagic.Manage(&certmagic.ReqeustParam{
-		Email:     job.Email,
-		Domain:    job.Domain,
-		CaType:    job.CaType,
-		Provider:  vd.Provider,
-		SecretId:  vd.SecretId,
-		SecretKey: vd.SecretKey,
-		EabKeyId:  job.EabKeyId,
-		EabMacKey: job.EabMacKey,
+		Email:       job.Email,
+		Domain:      job.Domain,
+		CaType:      job.CaType,
+		Provider:    vd.Provider,
+		SecretId:    vd.SecretId,
+		SecretKey:   vd.SecretKey,
+		EabKeyId:    job.EabKeyId,
+		EabMacKey:   job.EabMacKey,
+		StoragePath: args.Dataset.Dir + "/certmagic",
 	})
 
 }

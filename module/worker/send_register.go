@@ -4,10 +4,10 @@ import (
 	"time"
 
 	"github.com/forgoer/openssl"
+	"github.com/open-tdp/go-helper/logman"
+	"github.com/open-tdp/go-helper/psutil"
 
 	"tdp-cloud/cmd/args"
-	"tdp-cloud/helper/logman"
-	"tdp-cloud/helper/psutil"
 )
 
 func (pod *SendPod) Register() (uint, error) {

@@ -1,9 +1,10 @@
 package workhub
 
 import (
-	"tdp-cloud/helper/command"
-	"tdp-cloud/module/model/machine"
-	"tdp-cloud/module/model/taskline"
+	"github.com/open-tdp/go-helper/command"
+
+	"tdp-cloud/model/machine"
+	"tdp-cloud/model/taskline"
 )
 
 // 更新主机

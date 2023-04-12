@@ -1,11 +1,10 @@
 package workhub
 
 import (
+	"github.com/open-tdp/go-helper/logman"
+	"github.com/open-tdp/go-helper/psutil"
+	"github.com/open-tdp/go-helper/socket"
 	"golang.org/x/net/websocket"
-
-	"tdp-cloud/helper/logman"
-	"tdp-cloud/helper/psutil"
-	"tdp-cloud/helper/socket"
 )
 
 type Worker struct {

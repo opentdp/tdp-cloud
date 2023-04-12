@@ -2,8 +2,7 @@ package keypair
 
 import (
 	"github.com/gin-gonic/gin"
-
-	"tdp-cloud/helper/secure"
+	"github.com/open-tdp/go-helper/secure"
 )
 
 func keygen(c *gin.Context) {

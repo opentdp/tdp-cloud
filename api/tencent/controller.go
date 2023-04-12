@@ -5,10 +5,11 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
+	"github.com/open-tdp/go-helper/tencent"
 	"github.com/spf13/cast"
 
-	"tdp-cloud/helper/tencent"
-	"tdp-cloud/module/model/vendor"
+	"tdp-cloud/cmd/args"
+	"tdp-cloud/model/vendor"
 )
 
 func apiProxy(c *gin.Context) {
@@ -36,6 +37,7 @@ func apiProxy(c *gin.Context) {
 	param := &tencent.ReqeustParam{
 		SecretId:  vd.SecretId,
 		SecretKey: vd.SecretKey,
+		Debug:     args.Debug,
 	}
 
 	if err = c.ShouldBind(param); err != nil {

@@ -1,8 +1,9 @@
 package migrator
 
 import (
-	"tdp-cloud/helper/logman"
-	"tdp-cloud/module/model/migration"
+	"github.com/open-tdp/go-helper/logman"
+
+	"tdp-cloud/model/migration"
 )
 
 func Deploy() {

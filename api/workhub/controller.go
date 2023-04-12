@@ -2,11 +2,11 @@ package workhub
 
 import (
 	"github.com/gin-gonic/gin"
+	"github.com/open-tdp/go-helper/command"
 	"github.com/spf13/cast"
 	"golang.org/x/net/websocket"
 
-	"tdp-cloud/helper/command"
-	"tdp-cloud/module/model/user"
+	"tdp-cloud/model/user"
 	"tdp-cloud/module/workhub"
 )
 

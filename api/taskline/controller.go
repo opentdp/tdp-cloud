@@ -3,7 +3,7 @@ package taskline
 import (
 	"github.com/gin-gonic/gin"
 
-	"tdp-cloud/module/model/taskline"
+	"tdp-cloud/model/taskline"
 )
 
 // 记录列表

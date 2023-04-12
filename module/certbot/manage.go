@@ -1,9 +1,10 @@
 package certbot
 
 import (
-	"tdp-cloud/helper/certmagic"
-	"tdp-cloud/module/model"
-	"tdp-cloud/module/model/certjob"
+	"github.com/open-tdp/go-helper/certmagic"
+
+	"tdp-cloud/model"
+	"tdp-cloud/model/certjob"
 )
 
 func NewById(userId, id uint) {

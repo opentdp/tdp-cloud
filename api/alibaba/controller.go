@@ -2,10 +2,10 @@ package alibaba
 
 import (
 	"github.com/gin-gonic/gin"
+	"github.com/open-tdp/go-helper/alibaba"
 	"github.com/spf13/cast"
 
-	"tdp-cloud/helper/alibaba"
-	"tdp-cloud/module/model/vendor"
+	"tdp-cloud/model/vendor"
 )
 
 func apiProxy(c *gin.Context) {

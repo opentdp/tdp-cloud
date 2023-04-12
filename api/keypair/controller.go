@@ -3,7 +3,7 @@ package keypair
 import (
 	"github.com/gin-gonic/gin"
 
-	"tdp-cloud/module/model/keypair"
+	"tdp-cloud/model/keypair"
 )
 
 // 密钥列表

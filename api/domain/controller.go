@@ -3,7 +3,7 @@ package domain
 import (
 	"github.com/gin-gonic/gin"
 
-	"tdp-cloud/module/model/domain"
+	"tdp-cloud/model/domain"
 )
 
 // 域名列表
