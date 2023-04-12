@@ -6,8 +6,8 @@ import (
 
 var Efs *embed.FS
 
-const Version = "0.12.2"
-const BuildVersion = "230402"
+const Version = "0.12.4"
+const BuildVersion = "230403"
 
 const AppName = "TDP CLoud"
 const AppSummary = "土豆片控制面板"
