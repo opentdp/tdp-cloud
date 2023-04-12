@@ -13,7 +13,10 @@ func v100000() error {
 
 func v100000AutoMigrate() error {
 
+	// NOTE: 有外键的表需要先导入
 	return dborm.Db.AutoMigrate(
+		&model.User{},
+		&model.Vendor{},
 		&model.Certjob{},
 		&model.Config{},
 		&model.Cronjob{},
@@ -23,8 +26,6 @@ func v100000AutoMigrate() error {
 		&model.Migration{},
 		&model.Script{},
 		&model.Taskline{},
-		&model.User{},
-		&model.Vendor{},
 	)
 
 }
