@@ -12,7 +12,6 @@ func (pod *RecvPod) Register(rq *SocketData) error {
 	// 注册主机
 
 	worker := pod.Worker
-	workerPool[worker.WorkerId] = worker
 
 	if err := mapstructure.Decode(rq.Payload, worker); err != nil {
 		pod.Die("Register:error " + err.Error())
@@ -22,12 +21,14 @@ func (pod *RecvPod) Register(rq *SocketData) error {
 		pod.Die("Register:error " + err.Error())
 	}
 
+	workerPool[worker.WorkerId] = worker
+
 	// 返回结果
 
 	err := pod.WriteJson(&SocketData{
 		Method:  "Register:resp",
 		TaskId:  rq.TaskId,
-		Payload: "OK",
+		Payload: "OK, Id: " + worker.WorkerId,
 	})
 
 	return err
