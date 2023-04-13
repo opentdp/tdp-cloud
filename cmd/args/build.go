@@ -1,11 +1,5 @@
 package args
 
-import (
-	"embed"
-)
-
-var Efs *embed.FS
-
 const Version = "0.12.0"
 const BuildVersion = "230403"
 
