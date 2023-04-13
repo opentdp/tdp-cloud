@@ -1,8 +1,9 @@
 package domain
 
 import (
+	"github.com/open-tdp/go-helper/dborm"
+
 	"tdp-cloud/model"
-	"tdp-cloud/module/dborm"
 )
 
 // 创建域名

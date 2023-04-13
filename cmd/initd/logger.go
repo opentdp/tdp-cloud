@@ -16,10 +16,10 @@ func Logger() {
 		os.MkdirAll(logdir, 0755)
 	}
 
-	logman.SetDefault(&logman.Param{
+	logman.SetDefault(&logman.Config{
 		Level:    args.Logger.Level,
 		Target:   args.Logger.Target,
-		Filename: logdir + "/" + args.Logger.Level + ".log",
+		Filename: logdir + "/global.log",
 	})
 
 }

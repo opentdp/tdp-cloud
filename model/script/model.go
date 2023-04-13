@@ -1,8 +1,9 @@
 package script
 
 import (
+	"github.com/open-tdp/go-helper/dborm"
+
 	"tdp-cloud/model"
-	"tdp-cloud/module/dborm"
 )
 
 // 创建脚本

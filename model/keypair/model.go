@@ -1,10 +1,10 @@
 package keypair
 
 import (
+	"github.com/open-tdp/go-helper/dborm"
 	"github.com/open-tdp/go-helper/secure"
 
 	"tdp-cloud/model"
-	"tdp-cloud/module/dborm"
 )
 
 // 创建密钥

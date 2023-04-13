@@ -9,18 +9,18 @@ require (
 	github.com/forgoer/openssl v1.5.0
 	// WEB 框架
 	github.com/gin-gonic/gin v1.9.0
-	// SQLite 驱动
-	github.com/glebarez/sqlite v1.7.0
 	// JWT 认证支持
 	github.com/golang-jwt/jwt/v4 v4.5.0
 	// 生成 UUID
 	github.com/google/uuid v1.3.0
 	// 服务管理
 	github.com/kardianos/service v1.2.2
+	// 自动升级
+	github.com/minio/selfupdate v0.6.0
 	// Map 转结构体
 	github.com/mitchellh/mapstructure v1.5.0
 	// 辅助类库
-	github.com/open-tdp/go-helper v0.0.1
+	github.com/open-tdp/go-helper v0.0.3
 	// 计划任务
 	github.com/robfig/cron/v3 v3.0.1
 	// 类型转换
@@ -29,18 +29,15 @@ require (
 	github.com/spf13/cobra v1.7.0
 	// 配置文件读取
 	github.com/spf13/viper v1.15.0
-	// 官方模块
+	// Go 官方模块
 	golang.org/x/crypto v0.8.0
 	golang.org/x/net v0.9.0
-	// MySQL 驱动
-	gorm.io/driver/mysql v1.4.7
-	// ORM 核心
-	gorm.io/gorm v1.24.6
 )
 
 // 间接依赖包
 
 require (
+	aead.dev/minisign v0.2.0 // indirect
 	github.com/alibabacloud-go/alibabacloud-gateway-spi v0.0.4 // indirect
 	github.com/alibabacloud-go/darabonba-openapi/v2 v2.0.4 // indirect
 	github.com/alibabacloud-go/debug v0.0.0-20190504072949-9472017b5c68 // indirect
@@ -58,6 +55,7 @@ require (
 	github.com/fsnotify/fsnotify v1.6.0 // indirect
 	github.com/gin-contrib/sse v0.1.0 // indirect
 	github.com/glebarez/go-sqlite v1.21.1 // indirect
+	github.com/glebarez/sqlite v1.8.0 // indirect
 	github.com/go-ole/go-ole v1.2.6 // indirect
 	github.com/go-playground/locales v0.14.1 // indirect
 	github.com/go-playground/universal-translator v0.18.1 // indirect
@@ -112,6 +110,8 @@ require (
 	gopkg.in/ini.v1 v1.67.0 // indirect
 	gopkg.in/natefinch/lumberjack.v2 v2.2.1 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
+	gorm.io/driver/mysql v1.5.0 // indirect
+	gorm.io/gorm v1.25.0 // indirect
 	modernc.org/libc v1.22.3 // indirect
 	modernc.org/mathutil v1.5.0 // indirect
 	modernc.org/memory v1.5.0 // indirect

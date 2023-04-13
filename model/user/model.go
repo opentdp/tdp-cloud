@@ -2,10 +2,10 @@ package user
 
 import (
 	"github.com/google/uuid"
+	"github.com/open-tdp/go-helper/dborm"
 	"github.com/open-tdp/go-helper/secure"
 
 	"tdp-cloud/model"
-	"tdp-cloud/module/dborm"
 )
 
 // 创建用户
