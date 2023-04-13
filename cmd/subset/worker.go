@@ -15,8 +15,8 @@ var workerCmd = &cobra.Command{
 	Short: "子节点管理",
 	Run: func(cmd *cobra.Command, rq []string) {
 		args.SubCommand.Name = cmd.Name()
-		args.SubCommand.Action = serverAct
-		service.Control(args.SubCommand.Name, serverAct)
+		args.SubCommand.Action = workerAct
+		service.Control(args.SubCommand.Name, workerAct)
 	},
 }
 

@@ -1,6 +1,7 @@
 package midware
 
 import (
+	"errors"
 	"time"
 
 	"github.com/golang-jwt/jwt/v4"
@@ -40,19 +41,19 @@ func CreateToken(userInfo *UserInfo) (string, error) {
 
 func ParserToken(signToken string) (*UserClaims, error) {
 
-	var claims UserClaims
+	claims := &UserClaims{}
 
 	keyFunc := func(token *jwt.Token) (any, error) {
 		jwtkey := args.Server.JwtKey
 		return []byte(jwtkey), nil
 	}
 
-	token, err := jwt.ParseWithClaims(signToken, &claims, keyFunc)
+	token, err := jwt.ParseWithClaims(signToken, claims, keyFunc)
 
-	if token.Valid {
-		return &claims, nil
+	if err != nil || !token.Valid {
+		return nil, errors.New("invalid token")
 	}
 
-	return nil, err
+	return claims, nil
 
 }
