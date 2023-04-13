@@ -1,10 +1,10 @@
 package args
 
 import (
-	"log"
 	"path"
 	"path/filepath"
 
+	"github.com/open-tdp/go-helper/logman"
 	"github.com/open-tdp/go-helper/strutil"
 	"github.com/spf13/viper"
 )
@@ -63,7 +63,7 @@ func Load() {
 func MustSave() {
 
 	if err := viper.WriteConfig(); err != nil {
-		log.Fatal(err)
+		logman.Fatal("Write config error", err)
 	}
 
 }
