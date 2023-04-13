@@ -261,8 +261,8 @@ github.com/modern-go/reflect2 v1.0.2 h1:xBagoLtFs94CBntxluKeaWgTMpvLxC4ur3nMaC9G
 github.com/modern-go/reflect2 v1.0.2/go.mod h1:yWuevngMOJpCy52FWWMvUC8ws7m/LJsjYzDa0/r8luk=
 github.com/niemeyer/pretty v0.0.0-20200227124842-a10e7caefd8e h1:fD57ERR4JtEqsWbfPhv4DMiApHyliiK5xCTNVSPiaAs=
 github.com/niemeyer/pretty v0.0.0-20200227124842-a10e7caefd8e/go.mod h1:zD1mROLANZcx1PVRCS0qkT7pwLkGfwJo4zjcN/Tysno=
-github.com/open-tdp/go-helper v0.0.3 h1:VeYU/3P9SkvbtQRZvoxgb/bgRL41GUKiXTJeAoZ6TFM=
-github.com/open-tdp/go-helper v0.0.3/go.mod h1:HKEuWcxcmAw/CwxnANEribER2Tx7W0ysKHXhgDiny9I=
+github.com/open-tdp/go-helper v0.0.4 h1:i76kP3bS96ig/OVbnQjY5ysa0ukvkrT6/eeMoIUKegU=
+github.com/open-tdp/go-helper v0.0.4/go.mod h1:vHrPl9BIobeO+LiutYQkj8411DOmoTT9Lh7RhPHqJOY=
 github.com/pelletier/go-toml/v2 v2.0.7 h1:muncTPStnKRos5dpVKULv2FVd4bMOhNePj9CjgDb8Us=
 github.com/pelletier/go-toml/v2 v2.0.7/go.mod h1:eumQOmlWiOPt5WriQQqoM5y18pDHwha2N+QD+EUNTek=
 github.com/pkg/errors v0.9.1 h1:FEBLx1zS214owpjy7qsBeixbURkuhQAwrK5UwLGTwt4=
