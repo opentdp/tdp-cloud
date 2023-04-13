@@ -39,19 +39,22 @@ func (lw LogWrap) LogMode(level logger.LogLevel) logger.Interface {
 
 func (lw LogWrap) Info(ctx context.Context, msg string, args ...any) {
 
-	lw.logger.Info(msg, "data", args)
+	msg = fmt.Sprintf(msg, args...)
+	lw.logger.Info(msg)
 
 }
 
 func (lw LogWrap) Warn(ctx context.Context, msg string, args ...any) {
 
-	lw.logger.Warn(msg, "data", args)
+	msg = fmt.Sprintf(msg, args...)
+	lw.logger.Warn(msg)
 
 }
 
 func (lw LogWrap) Error(ctx context.Context, msg string, args ...any) {
 
-	lw.logger.Error(msg, "data", args)
+	msg = fmt.Sprintf(msg, args...)
+	lw.logger.Error(msg)
 
 }
 
