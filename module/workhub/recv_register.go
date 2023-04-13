@@ -17,6 +17,10 @@ func (pod *RecvPod) Register(rq *SocketData) error {
 		pod.Die("Register:error " + err.Error())
 	}
 
+	if worker.WorkerId == "" {
+		pod.Die("Register:error WorkerId is empty")
+	}
+
 	if err := updateMachine(worker); err != nil {
 		pod.Die("Register:error " + err.Error())
 	}
