@@ -46,20 +46,16 @@ func Recovery(stack bool) gin.HandlerFunc {
 					return
 				}
 
-				if stack {
-					logger.Error(
-						"[Recovery from panic]",
-						"error", err,
-						"request", string(httpRequest),
-						"stack", string(debug.Stack()),
-					)
-				} else {
-					logger.Error(
-						"[Recovery from panic]",
-						"error", err,
-						"request", string(httpRequest),
-					)
+				errlog := []any{
+					"error", err,
+					"request", string(httpRequest),
+					"stack", string(debug.Stack()),
 				}
+				if stack {
+					errlog = append(errlog, "stack", string(debug.Stack()))
+				}
+
+				logger.Error("Recovery from panic", errlog...)
 
 				c.AbortWithStatus(http.StatusInternalServerError)
 			}
