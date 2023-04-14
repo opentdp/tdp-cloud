@@ -1,16 +1,19 @@
 package args
 
-import (
-	"github.com/open-tdp/go-helper/dborm"
-)
-
 // 调试模式
 
 var Debug bool
 
 // 数据库参数
 
-var Database = dborm.Config{}
+var Database struct {
+	Type   string
+	Host   string
+	User   string
+	Passwd string
+	Name   string
+	Option string
+}
 
 // 数据集参数
 
