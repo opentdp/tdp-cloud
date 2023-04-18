@@ -7,10 +7,10 @@ import (
 
 func (pod *RecvPod) Stat(rs *SocketData) error {
 
-	logman.Info("Stat:recv", "taskId", rs.TaskId)
+	logman.Info("stat:recv", "taskId", rs.TaskId)
 
 	err := pod.WriteJson(&SocketData{
-		Method:  "Stat:resp",
+		Method:  "stat:resp",
 		TaskId:  rs.TaskId,
 		Payload: psutil.Detail(true),
 	})

@@ -16,7 +16,7 @@ func (pod *RecvPod) Exec(rs *SocketData) error {
 		data *command.ExecPayload
 	)
 
-	logman.Info("Exec:recv", "payload", rs.Payload)
+	logman.Info("exec:recv", "payload", rs.Payload)
 
 	if mapstructure.Decode(rs.Payload, &data) == nil {
 		ret, err = command.Exec(data)
@@ -25,9 +25,9 @@ func (pod *RecvPod) Exec(rs *SocketData) error {
 	}
 
 	if err != nil {
-		logman.Error("Exec:fail", "error", err)
+		logman.Error("exec:fail", "error", err)
 	} else {
-		logman.Info("Exec:done", "name", data.Name)
+		logman.Info("exec:done", "name", data.Name)
 	}
 
 	err = pod.WriteJson(&SocketData{

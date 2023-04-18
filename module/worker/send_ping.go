@@ -7,7 +7,7 @@ import (
 
 func (pod *SendPod) Ping() (uint, error) {
 
-	logman.Info("Ping:send")
+	logman.Info("ping:send")
 
 	stat := psutil.Summary(true)
 
@@ -23,6 +23,6 @@ func (pod *SendPod) Ping() (uint, error) {
 
 func (pod *RespPod) Ping(rs *SocketData) {
 
-	logman.Info("Ping:resp", "payload", rs.Payload)
+	logman.Info("ping:resp", "payload", rs.Payload)
 
 }

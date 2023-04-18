@@ -60,7 +60,7 @@ func Receiver(pod *socket.WsConn) error {
 		var rq *SocketData
 
 		if err := pod.ReadJson(&rq); err != nil {
-			logman.Error("Read json failed", "error", err)
+			logman.Error("read json failed", "error", err)
 			return err
 		}
 
@@ -74,7 +74,7 @@ func Receiver(pod *socket.WsConn) error {
 		case "Register:resp":
 			resp.Register(rq)
 		default:
-			logman.Warn("Unknown task", "request", rq)
+			logman.Warn("unknown task", "request", rq)
 		}
 	}
 

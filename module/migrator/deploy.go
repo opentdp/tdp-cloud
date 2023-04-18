@@ -9,7 +9,7 @@ import (
 func Deploy() {
 
 	if err := doMigrate(); err != nil {
-		logman.Fatal("Migrate database failed", "error", err)
+		logman.Fatal("migrate database failed", "error", err)
 	}
 
 }

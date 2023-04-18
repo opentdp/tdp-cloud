@@ -8,7 +8,7 @@ import (
 
 func (pod *RecvPod) Ping(rq *SocketData) error {
 
-	logman.Info("Ping:recv", "from", pod.Conn.RemoteAddr())
+	logman.Info("ping:recv", "from", pod.Conn.RemoteAddr())
 
 	stat := &psutil.SummaryStat{}
 	if mapstructure.Decode(rq.Payload, stat) == nil {

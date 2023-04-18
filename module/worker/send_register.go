@@ -12,7 +12,7 @@ import (
 
 func (pod *SendPod) Register() (uint, error) {
 
-	logman.Info("Register:send")
+	logman.Info("register:send")
 
 	stat := psutil.Summary(true)
 	cloudId := psutil.CloudInstanceId()
@@ -37,7 +37,7 @@ func (pod *SendPod) Register() (uint, error) {
 
 func (pod *RespPod) Register(rs *SocketData) {
 
-	logman.Info("Register:resp", "payload", rs.Payload)
+	logman.Info("register:resp", "payload", rs.Payload)
 
 	go KeepAlive(&SendPod{pod.WsConn})
 
@@ -51,7 +51,7 @@ func KeepAlive(pod *SendPod) error {
 		time.Sleep(25 * time.Second)
 
 		if _, err := pod.Ping(); err != nil {
-			logman.Error("Ping:fail", "error", err)
+			logman.Error("ping:fail", "error", err)
 			return err
 		}
 	}

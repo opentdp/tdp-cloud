@@ -7,7 +7,7 @@ import (
 
 func (pod *SendPod) Exec(data *command.ExecPayload) (uint, error) {
 
-	logman.Info("Exec:send", "to", pod.WorkerMeta.HostName)
+	logman.Info("exec:send", "to", pod.WorkerMeta.HostName)
 
 	taskId := createHistory(pod, data)
 
@@ -23,7 +23,7 @@ func (pod *SendPod) Exec(data *command.ExecPayload) (uint, error) {
 
 func (pod *RespPod) Exec(rq *SocketData) {
 
-	logman.Info("Exec:resp", "from", pod.WorkerMeta.HostName)
+	logman.Info("exec:resp", "from", pod.WorkerMeta.HostName)
 
 	updateHistory(pod, rq)
 
