@@ -33,12 +33,12 @@ func (p *program) run() {
 
 	// 连接数据库
 	dborm.Connect(&dborm.Config{
-		Type:   args.Database.Type,
-		Host:   args.Database.Host,
-		Name:   args.Database.Name,
-		User:   args.Database.User,
-		Passwd: args.Database.Passwd,
-		Option: args.Database.Option,
+		Type:     args.Database.Type,
+		Host:     args.Database.Host,
+		User:     args.Database.User,
+		Password: args.Database.Passwd,
+		DbName:   args.Database.Name,
+		Option:   args.Database.Option,
 	})
 
 	// 实施自动迁移
