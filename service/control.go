@@ -6,7 +6,6 @@ import (
 	"github.com/kardianos/service"
 	"github.com/open-tdp/go-helper/logman"
 
-	"tdp-cloud/cmd/args"
 	"tdp-cloud/service/server"
 	"tdp-cloud/service/worker"
 )
@@ -32,16 +31,10 @@ func Control(name, act string) {
 		logman.Fatal("unknown service", "name", name)
 	}
 
-	// 强制保存配置
-
-	if act == "" || act == "start" {
-		args.MustSave()
-	}
-
 	// 执行服务动作
 
 	switch act {
-	case "": // 直接运行
+	case "":
 		if err := svc.Run(); err != nil {
 			logman.Fatal(svc.String(), "run", "failed", "error", err)
 		}

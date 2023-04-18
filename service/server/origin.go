@@ -31,6 +31,8 @@ func (p *program) Stop(s service.Service) error {
 
 func (p *program) run() {
 
+	args.WriteConfig()
+
 	// 连接数据库
 	dborm.Connect(&dborm.Config{
 		Type:     args.Database.Type,
