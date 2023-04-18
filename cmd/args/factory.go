@@ -2,7 +2,6 @@ package args
 
 import (
 	"path"
-	"path/filepath"
 
 	"github.com/open-tdp/go-helper/logman"
 	"github.com/open-tdp/go-helper/strutil"
@@ -50,11 +49,11 @@ func Load() {
 
 	// 转换相对路径为 Dataset.Dir 开头的路径
 
-	if Database.Type == "sqlite" && !filepath.IsAbs(Database.Name) {
+	if Database.Type == "sqlite" && !path.IsAbs(Database.Name) {
 		Database.Name = path.Join(Dataset.Dir, Database.Name)
 	}
 
-	if !filepath.IsAbs(Logger.Dir) {
+	if !path.IsAbs(Logger.Dir) {
 		Logger.Dir = path.Join(Dataset.Dir, Logger.Dir)
 	}
 

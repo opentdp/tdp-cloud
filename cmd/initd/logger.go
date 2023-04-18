@@ -19,7 +19,8 @@ func Logger() {
 	logman.SetDefault(&logman.Config{
 		Level:    args.Logger.Level,
 		Target:   args.Logger.Target,
-		Filename: logdir + "/global.log",
+		Storage:  logdir,
+		Filename: "global",
 	})
 
 }
