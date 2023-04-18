@@ -4,11 +4,13 @@ const Version = "0.12.8"
 const BuildVersion = "230405"
 
 const AppName = "TDP CLoud"
-const AppSummary = "土豆片控制面板"
+const AppSummary = "土豆片云面板"
 
 const UpdateUrl = "https://cloud.opentdp.org/update"
 
-const ReadmeText = `土豆片控制面板
+const ReadmeText = AppSummary + `
 
-开源项目 https://github.com/open-tdp/tdp-cloud
-问题提交 https://github.com/open-tdp/tdp-cloud/issues`
+可以跨平台部署的云资源管理面板
+
+TDP Website: https://www.opentdp.org
+Open Source: https://github.com/open-tdp`

@@ -12,7 +12,8 @@ var workerAct string
 
 var workerCmd = &cobra.Command{
 	Use:   "worker",
-	Short: "子节点管理",
+	Short: "Manage the worker",
+	Long:  "TDP Cloud Worker Management",
 	Run: func(cmd *cobra.Command, rq []string) {
 		args.SubCommand.Name = cmd.Name()
 		args.SubCommand.Action = workerAct
@@ -22,11 +23,8 @@ var workerCmd = &cobra.Command{
 
 func WithWorker() *cobra.Command {
 
-	workerCmd.Flags().BoolP("help", "h", false, "查看帮助")
-	workerCmd.Flags().MarkHidden("help")
-
-	workerCmd.Flags().StringVarP(&workerAct, "service", "s", "", "管理系统服务")
-	workerCmd.Flags().StringP("remote", "r", "", "注册地址 (e.g. ws://{domain}/wsi/{appid}/worker)")
+	workerCmd.Flags().StringVarP(&workerAct, "service", "s", "", "management worker service")
+	workerCmd.Flags().StringP("remote", "r", "", "register URL (e.g. ws://{domain}/wsi/{appid}/worker)")
 
 	viper.BindPFlag("worker.remote", workerCmd.Flags().Lookup("remote"))
 

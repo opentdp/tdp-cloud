@@ -9,17 +9,14 @@ import (
 
 var updateCmd = &cobra.Command{
 	Use:   "update",
-	Short: "下载更新包",
-	Long:  "下载完成后，请重启服务完成更新",
+	Short: "Update assistant",
+	Long:  "TDP Cloud Update Assistant",
 	Run: func(cmd *cobra.Command, rq []string) {
 		ExecUpdate()
 	},
 }
 
 func WithUpdate() *cobra.Command {
-
-	updateCmd.Flags().BoolP("help", "h", false, "查看帮助")
-	updateCmd.Flags().MarkHidden("help")
 
 	return updateCmd
 
