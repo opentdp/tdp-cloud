@@ -13,6 +13,7 @@ import (
 	"tdp-cloud/api/script"
 	"tdp-cloud/api/taskline"
 	"tdp-cloud/api/terminal"
+	"tdp-cloud/api/upgrade"
 	"tdp-cloud/api/user"
 	"tdp-cloud/api/vendor"
 	"tdp-cloud/api/workhub"
@@ -43,6 +44,7 @@ func Router(engine *gin.Engine) {
 		passport.Router(api)
 		script.Router(api)
 		taskline.Router(api)
+		upgrade.Router(api)
 		user.Router(api)
 		vendor.Router(api)
 		workhub.Router(api)
