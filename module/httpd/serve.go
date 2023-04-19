@@ -2,10 +2,10 @@ package httpd
 
 import (
 	"io/fs"
-	"mime"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
+	"github.com/open-tdp/go-helper/httpd"
 
 	"tdp-cloud/api"
 	"tdp-cloud/cmd/args"
@@ -13,22 +13,8 @@ import (
 
 func Daemon() {
 
-	if args.Debug {
-		gin.SetMode(gin.DebugMode)
-	} else {
-		gin.SetMode(gin.ReleaseMode)
-	}
-
-	Server(args.Server.Listen, Engine())
-
-}
-
-func Engine() *gin.Engine {
-
 	// 初始化
-	engine := gin.New()
-	engine.Use(Logger())
-	engine.Use(Recovery(true))
+	engine := httpd.Engine(args.Debug)
 
 	// 接口路由
 	api.Router(engine)
@@ -45,14 +31,6 @@ func Engine() *gin.Engine {
 		c.Redirect(302, "/ui/")
 	})
 
-	return engine
-
-}
-
-func init() {
-
-	// 重写文件类型
-	mime.AddExtensionType(".css", "text/css; charset=utf-8")
-	mime.AddExtensionType(".js", "text/javascript; charset=utf-8")
+	httpd.Server(args.Server.Listen, engine)
 
 }
