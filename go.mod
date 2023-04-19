@@ -16,7 +16,7 @@ require (
 	// Map 转结构体
 	github.com/mitchellh/mapstructure v1.5.0
 	// 辅助类库
-	github.com/open-tdp/go-helper v0.0.7
+	github.com/open-tdp/go-helper v0.0.8
 	// 计划任务
 	github.com/robfig/cron/v3 v3.0.1
 	// 类型转换

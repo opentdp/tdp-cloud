@@ -12,8 +12,8 @@ import (
 func check(c *gin.Context) {
 
 	rq := &upgrade.RequesParam{
-		UpdateUrl: args.UpdateUrl,
-		Version:   args.Version,
+		Server:  args.UpdateUrl,
+		Version: args.Version,
 	}
 
 	if res, err := upgrade.CheckVersion(rq); err == nil {
@@ -29,8 +29,8 @@ func check(c *gin.Context) {
 func apply(c *gin.Context) {
 
 	rq := &upgrade.RequesParam{
-		UpdateUrl: args.UpdateUrl,
-		Version:   args.Version,
+		Server:  args.UpdateUrl,
+		Version: args.Version,
 	}
 
 	if err := upgrade.Apply(rq); err == nil {

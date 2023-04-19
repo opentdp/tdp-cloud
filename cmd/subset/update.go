@@ -25,8 +25,8 @@ func WithUpdate() *cobra.Command {
 func ExecUpdate() error {
 
 	err := upgrade.Apply(&upgrade.RequesParam{
-		UpdateUrl: args.UpdateUrl,
-		Version:   args.Version,
+		Server:  args.UpdateUrl,
+		Version: args.Version,
 	})
 
 	return err
