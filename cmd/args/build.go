@@ -6,7 +6,7 @@ const BuildVersion = "230406"
 const AppName = "TDP CLoud"
 const AppSummary = "土豆片云面板"
 
-const UpdateUrl = "https://cloud.opentdp.org/update"
+const UpdateUrl = "https://cloud.opentdp.org/update/"
 
 const ReadmeText = AppSummary + `
 
