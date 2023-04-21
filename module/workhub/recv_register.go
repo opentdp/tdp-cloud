@@ -14,15 +14,15 @@ func (pod *RecvPod) Register(rq *SocketData) error {
 	worker := pod.Worker
 
 	if err := mapstructure.Decode(rq.Payload, worker); err != nil {
-		pod.Die("Register:error " + err.Error())
+		pod.Die("register:error " + err.Error())
 	}
 
 	if worker.WorkerId == "" {
-		pod.Die("Register:error WorkerId is empty")
+		pod.Die("register:error WorkerId is empty")
 	}
 
 	if err := updateMachine(worker); err != nil {
-		pod.Die("Register:error " + err.Error())
+		pod.Die("register:error " + err.Error())
 	}
 
 	workerPool[worker.WorkerId] = worker
