@@ -35,7 +35,8 @@ func UintPathname(id uint) string {
 		uid = fmt.Sprintf("%012s", uid)
 	}
 
-	name := uid[0:4] + "/"
+	name := "/"
+	name += uid[0:4] + "/"
 	name += uid[4:8] + "/"
 	name += uid[8:12] + "/"
 	name += strconv.FormatInt(time.Now().Unix(), 10)
