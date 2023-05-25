@@ -11,6 +11,8 @@ import (
 	"tdp-cloud/cmd/args"
 )
 
+const UploadDir = "/upload"
+
 func TimePathname(rand uint) string {
 
 	base := time.Now().Format("/2006/0102/1504/05")
@@ -25,7 +27,7 @@ func TimePathname(rand uint) string {
 
 func SaveBase64Image(filePath, base64Image string) error {
 
-	filePath = args.Dataset.Dir + "/upload" + filePath
+	filePath = args.Dataset.Dir + UploadDir + filePath
 	os.MkdirAll(path.Dir(filePath), 0755) // 递归创建目录
 
 	imageBytes, err := base64.StdEncoding.DecodeString(base64Image)
