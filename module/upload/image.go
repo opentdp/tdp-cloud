@@ -2,8 +2,11 @@ package upload
 
 import (
 	"encoding/base64"
+	"fmt"
 	"os"
 	"path"
+	"strconv"
+	"strings"
 	"time"
 
 	"github.com/open-tdp/go-helper/strutil"
@@ -11,23 +14,43 @@ import (
 	"tdp-cloud/cmd/args"
 )
 
-const UploadDir = "/upload"
+const BaseDir = "/upload"
 
 func TimePathname(rand uint) string {
 
-	base := time.Now().Format("/2006/0102/1504/05")
+	name := time.Now().Format("/2006/0102/1504/05")
 
 	if rand > 0 {
-		base += strutil.Rand(rand)
+		name += strutil.Rand(rand)
 	}
 
-	return base
+	return name
+
+}
+
+func UintPathname(id uint) string {
+
+	uid := strconv.FormatUint(uint64(id), 10)
+	for len(uid) < 12 {
+		uid = fmt.Sprintf("%012s", uid)
+	}
+
+	name := uid[0:4] + "/"
+	name += uid[4:8] + "/"
+	name += uid[8:12] + "/"
+	name += strconv.FormatInt(time.Now().Unix(), 10)
+
+	return name
 
 }
 
 func SaveBase64Image(filePath, base64Image string) error {
 
-	filePath = args.Dataset.Dir + UploadDir + filePath
+	if !strings.HasPrefix(filePath, BaseDir) {
+		filePath = BaseDir + filePath
+	}
+
+	filePath = args.Dataset.Dir + filePath
 	os.MkdirAll(path.Dir(filePath), 0755) // 递归创建目录
 
 	imageBytes, err := base64.StdEncoding.DecodeString(base64Image)
