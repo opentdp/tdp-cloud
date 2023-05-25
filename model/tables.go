@@ -154,6 +154,7 @@ type User struct {
 	AppId       string   `gorm:"size:128;uniqueIndex"`
 	AppKey      string   `gorm:"size:128" json:"-"`
 	Email       string   `gorm:"size:255;uniqueIndex"`
+	Avatar      string   `gorm:"size:255;default:/assets/image/avatar.jpg"`
 	Description string   `gorm:"size:1024;default:挥一挥手"`
 	Vendors     []Vendor `json:",omitempty"`
 	CreatedAt   int64

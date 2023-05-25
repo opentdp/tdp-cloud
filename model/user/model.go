@@ -16,6 +16,7 @@ type CreateParam struct {
 	Level       uint
 	AppKey      string
 	Email       string `binding:"required"`
+	Avatar      string
 	Description string
 	StoreKey    string // 存储密钥
 }
@@ -44,6 +45,7 @@ func Create(data *CreateParam) (uint, error) {
 		AppId:       uuid.NewString(),
 		AppKey:      data.AppKey,
 		Email:       data.Email,
+		Avatar:      data.Avatar,
 		Description: data.Description,
 	}
 
@@ -62,6 +64,7 @@ type UpdateParam struct {
 	Level       uint
 	Email       string
 	AppKey      string
+	Avatar      string
 	Description string
 	StoreKey    string // 存储密钥
 }
@@ -93,6 +96,7 @@ func Update(data *UpdateParam) error {
 			Level:       data.Level,
 			Email:       data.Email,
 			AppKey:      data.AppKey,
+			Avatar:      data.Avatar,
 			Description: data.Description,
 		})
 

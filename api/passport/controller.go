@@ -107,6 +107,28 @@ func profileUpdate(c *gin.Context) {
 
 }
 
+// 修改头像
+
+func avatarUpdate(c *gin.Context) {
+
+	var rq *passport.AvatarUpdateParam
+
+	if err := c.ShouldBind(&rq); err != nil {
+		c.Set("Error", err)
+		return
+	}
+
+	rq.UserId = c.GetUint("UserId")
+
+	if url, err := passport.AvatarUpdate(rq); err == nil {
+		c.Set("Message", "修改成功")
+		c.Set("Payload", gin.H{"Avatar": url})
+	} else {
+		c.Set("Error", err)
+	}
+
+}
+
 // 统计信息
 
 func summary(c *gin.Context) {

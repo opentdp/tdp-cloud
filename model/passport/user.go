@@ -19,6 +19,7 @@ type LoginParam struct {
 type LoginResult struct {
 	UserId   uint
 	Username string
+	Avatar   string
 	Level    uint
 	AppId    string
 	Email    string
@@ -57,6 +58,7 @@ func Login(data *LoginParam) (*LoginResult, error) {
 	res := &LoginResult{
 		UserId:   ur.Id,
 		Username: ur.Username,
+		Avatar:   ur.Avatar,
 		Level:    ur.Level,
 		AppId:    ur.AppId,
 		Email:    ur.Email,
@@ -93,5 +95,51 @@ func ProfileUpdate(data *ProfileUpdateParam) error {
 	// 更新信息
 
 	return user.Update(&data.UpdateParam)
+
+}
+
+// 更新头像
+
+type AvatarUpdateParam struct {
+	UserId      uint
+	Base64Image string `binding:"required"`
+}
+
+func AvatarUpdate(rq *AvatarUpdateParam) (string, error) {
+
+	filePath := AvatarFile(rq.UserId)
+
+	if err := upload.SaveBase64Image(filePath, rq.Base64Image); err != nil {
+		return "", err
+	}
+
+	uu := &user.UpdateParam{
+		Id:     rq.UserId,
+		Avatar: filePath,
+	}
+	if err := user.Update(uu); err != nil {
+		return "", err
+	}
+
+	return filePath, nil
+
+}
+
+func AvatarFile(userId uint) string {
+
+	uid := strconv.FormatUint(uint64(userId), 10)
+	for len(uid) < 12 {
+		uid = fmt.Sprintf("%012s", uid)
+	}
+
+	filePath := "/avatar/"
+	filePath += uid[0:4] + "/"
+	filePath += uid[4:8] + "/"
+	filePath += uid[8:12] + "/"
+
+	timestamp := strconv.FormatInt(time.Now().Unix(), 10)
+	filePath += timestamp + ".png"
+
+	return filePath
 
 }
