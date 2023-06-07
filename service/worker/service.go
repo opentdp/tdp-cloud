@@ -24,7 +24,7 @@ func Service(param []string) service.Service {
 		Arguments: param,
 	}
 
-	svc, err := service.New(&program{}, config)
+	svc, err := service.New(&origin{}, config)
 	if err != nil {
 		logman.Fatal("init service failed", "error", err)
 	}
