@@ -18,7 +18,7 @@ func inlet() {
 
 	certbot.Daemon()
 
-	httpdServer()
+	httpServer()
 
 }
 
@@ -39,7 +39,7 @@ func dbConnect() {
 
 }
 
-func httpdServer() {
+func httpServer() {
 
 	// 初始化
 	engine := httpd.Engine(args.Debug)
