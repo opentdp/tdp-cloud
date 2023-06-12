@@ -61,7 +61,7 @@ func newPayload(data any, msg, token string) gin.H {
 	}
 
 	if token != "" {
-		payload["Token"] = msg
+		payload["Token"] = token
 	}
 
 	return payload
