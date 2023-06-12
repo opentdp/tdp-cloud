@@ -11,8 +11,6 @@ var svclog service.Logger
 
 func Service(param []string) service.Service {
 
-	args.WriteConfig()
-
 	config := &service.Config{
 		Name:        "tdp-worker",
 		DisplayName: "TDP Cloud Worker",
