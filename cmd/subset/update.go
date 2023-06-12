@@ -1,6 +1,7 @@
 package subset
 
 import (
+	"github.com/open-tdp/go-helper/logman"
 	"github.com/open-tdp/go-helper/upgrade"
 	"github.com/spf13/cobra"
 
@@ -28,6 +29,10 @@ func ExecUpdate() error {
 		Server:  args.UpdateUrl,
 		Version: args.Version,
 	})
+
+	if err == nil {
+		logman.Info("Update Success")
+	}
 
 	return err
 
