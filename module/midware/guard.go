@@ -2,6 +2,7 @@ package midware
 
 import (
 	"strings"
+	"time"
 
 	"github.com/gin-gonic/gin"
 	"github.com/open-tdp/go-helper/secure"
@@ -42,6 +43,14 @@ func JwtGuard() gin.HandlerFunc {
 		if err != nil {
 			c.Set("JwtError", "密钥异常, 请重新注册")
 			return
+		}
+
+		// 自动更新 Token
+		if claims.ExpiresAt.Time.Sub(time.Now()) < 30*time.Minute {
+			newToken, err := UpdateToken(signToken)
+			if err != nil {
+				c.Set("JwtToken", newToken)
+			}
 		}
 
 		// 存储到上下文

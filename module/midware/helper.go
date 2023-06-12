@@ -52,12 +52,18 @@ func newErrorMessage(data any) gin.H {
 
 // 构造结构数据
 
-func newPayload(data any, msg string) gin.H {
+func newPayload(data any, msg, token string) gin.H {
+
+	payload := gin.H{"Payload": data}
 
 	if msg != "" {
-		return gin.H{"Payload": data, "Message": msg}
+		payload["Message"] = msg
 	}
 
-	return gin.H{"Payload": data}
+	if token != "" {
+		payload["Token"] = msg
+	}
+
+	return payload
 
 }

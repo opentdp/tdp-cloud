@@ -21,8 +21,9 @@ func OutputHandle() gin.HandlerFunc {
 
 		msg := c.GetString("Message")
 
-		if res, exists := c.Get("Payload"); msg != "" || exists {
-			c.AbortWithStatusJSON(exitCode(c, 200), newPayload(res, msg))
+		if res, exists := c.Get("Payload"); exists || msg != "" {
+			payload := newPayload(res, msg, c.GetString("JwtToken"))
+			c.AbortWithStatusJSON(exitCode(c, 200), payload)
 			return
 		}
 

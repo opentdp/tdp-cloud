@@ -39,6 +39,22 @@ func CreateToken(userInfo *UserInfo) (string, error) {
 
 }
 
+func UpdateToken(signToken string) (string, error) {
+
+	claims, err := ParserToken(signToken)
+	if err != nil {
+		return "", err
+	}
+
+	claims.ExpiresAt.Time = time.Now().Add(7 * time.Hour)
+
+	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
+
+	jwtkey := args.Server.JwtKey
+	return token.SignedString([]byte(jwtkey))
+
+}
+
 func ParserToken(signToken string) (*UserClaims, error) {
 
 	claims := &UserClaims{}
