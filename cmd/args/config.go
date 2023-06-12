@@ -4,6 +4,13 @@ package args
 
 var Debug bool
 
+// 数据存储
+
+var Dataset struct {
+	Dir    string
+	Secret string
+}
+
 // 数据库参数
 
 var Database struct {
@@ -13,13 +20,6 @@ var Database struct {
 	Passwd string
 	Name   string
 	Option string
-}
-
-// 数据集参数
-
-var Dataset struct {
-	Dir    string
-	Secret string
 }
 
 // 日志参数
