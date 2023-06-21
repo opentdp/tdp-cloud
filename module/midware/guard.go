@@ -46,7 +46,7 @@ func JwtGuard() gin.HandlerFunc {
 		}
 
 		// 自动更新 Token
-		if claims.ExpiresAt.Time.Sub(time.Now()) < 30*time.Minute {
+		if claims.ExpiresAt.Time.Sub(time.Now()) < 1*time.Hour {
 			newToken, err := UpdateToken(signToken)
 			if err == nil {
 				c.Set("JwtToken", newToken)

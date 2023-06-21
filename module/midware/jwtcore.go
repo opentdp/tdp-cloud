@@ -26,7 +26,7 @@ func CreateToken(userInfo *UserInfo) (string, error) {
 		jwt.RegisteredClaims{
 			Issuer: args.AppName,
 			ExpiresAt: &jwt.NumericDate{
-				Time: time.Now().Add(7 * time.Hour),
+				Time: time.Now().Add(3 * time.Hour),
 			},
 		},
 		userInfo,
@@ -46,7 +46,7 @@ func UpdateToken(signToken string) (string, error) {
 		return "", err
 	}
 
-	claims.ExpiresAt.Time = time.Now().Add(7 * time.Hour)
+	claims.ExpiresAt.Time = time.Now().Add(3 * time.Hour)
 
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
 
