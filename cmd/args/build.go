@@ -1,12 +1,12 @@
 package args
 
-const Version = "0.14.2"
-const BuildVersion = "230601"
+const Version = "0.14.3"
+const BuildVersion = "230602"
 
 const AppName = "TDP CLoud"
 const AppSummary = "土豆片云面板"
 
-const UpdateUrl = "https://cloud.opentdp.org/update/"
+const UpdateUrl = "https://get.opentdp.org/update/cloud"
 
 const ReadmeText = AppSummary + `
 
