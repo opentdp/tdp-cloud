@@ -2,7 +2,7 @@ package workhub
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/open-tdp/go-helper/command"
+	"github.com/opentdp/go-helper/command"
 	"github.com/spf13/cast"
 	"golang.org/x/net/websocket"
 

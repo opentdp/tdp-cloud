@@ -2,7 +2,7 @@ package cloudflare
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/open-tdp/go-helper/cloudflare"
+	"github.com/opentdp/go-helper/cloudflare"
 	"github.com/spf13/cast"
 
 	"tdp-cloud/model/vendor"

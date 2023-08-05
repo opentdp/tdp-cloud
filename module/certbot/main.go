@@ -1,8 +1,8 @@
 package certbot
 
 import (
-	"github.com/open-tdp/go-helper/certmagic"
-	"github.com/open-tdp/go-helper/logman"
+	"github.com/opentdp/go-helper/certmagic"
+	"github.com/opentdp/go-helper/logman"
 
 	"tdp-cloud/cmd/args"
 	"tdp-cloud/model"

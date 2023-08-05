@@ -1,8 +1,8 @@
 package workhub
 
 import (
-	"github.com/open-tdp/go-helper/command"
-	"github.com/open-tdp/go-helper/logman"
+	"github.com/opentdp/go-helper/command"
+	"github.com/opentdp/go-helper/logman"
 )
 
 func (pod *SendPod) Exec(data *command.ExecPayload) (uint, error) {

@@ -1,8 +1,8 @@
 package subset
 
 import (
-	"github.com/open-tdp/go-helper/logman"
-	"github.com/open-tdp/go-helper/upgrade"
+	"github.com/opentdp/go-helper/logman"
+	"github.com/opentdp/go-helper/upgrade"
 	"github.com/spf13/cobra"
 
 	"tdp-cloud/cmd/args"

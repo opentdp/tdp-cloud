@@ -2,7 +2,7 @@ package terminal
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/open-tdp/go-helper/webssh"
+	"github.com/opentdp/go-helper/webssh"
 	"github.com/spf13/cast"
 	"golang.org/x/net/websocket"
 

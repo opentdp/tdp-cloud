@@ -13,4 +13,4 @@ const ReadmeText = AppSummary + `
 可以跨平台部署的云资源管理面板
 
 TDP Website: https://www.opentdp.org
-Open Source: https://github.com/open-tdp`
+Open Source: https://github.com/opentdp`

@@ -3,7 +3,7 @@ package workhub
 import (
 	"time"
 
-	"github.com/open-tdp/go-helper/logman"
+	"github.com/opentdp/go-helper/logman"
 )
 
 func (pod *SendPod) Stat() (uint, error) {

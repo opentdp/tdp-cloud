@@ -1,8 +1,8 @@
 package vendor
 
 import (
-	"github.com/open-tdp/go-helper/dborm"
-	"github.com/open-tdp/go-helper/secure"
+	"github.com/opentdp/go-helper/dborm"
+	"github.com/opentdp/go-helper/secure"
 
 	"tdp-cloud/model"
 )

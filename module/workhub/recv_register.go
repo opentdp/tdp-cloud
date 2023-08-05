@@ -2,7 +2,7 @@ package workhub
 
 import (
 	"github.com/mitchellh/mapstructure"
-	"github.com/open-tdp/go-helper/logman"
+	"github.com/opentdp/go-helper/logman"
 )
 
 func (pod *RecvPod) Register(rq *SocketData) error {

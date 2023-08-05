@@ -4,8 +4,8 @@ import (
 	"errors"
 
 	"github.com/mitchellh/mapstructure"
-	"github.com/open-tdp/go-helper/command"
-	"github.com/open-tdp/go-helper/logman"
+	"github.com/opentdp/go-helper/command"
+	"github.com/opentdp/go-helper/logman"
 )
 
 func (pod *RecvPod) Exec(rs *SocketData) error {

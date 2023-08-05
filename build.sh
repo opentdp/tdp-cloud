@@ -17,7 +17,7 @@ build() {
 
 ####################################################################
 
-releases_url=https://api.github.com/repos/open-tdp/tdp-cloud-ui/releases/latest
+releases_url=https://api.github.com/repos/opentdp/tdp-cloud-ui/releases/latest
 download_url=`wget -qO- $releases_url | grep releases/download | cut -f4 -d "\""`
 
 wget -O cloud-ui.tar.gz $download_url

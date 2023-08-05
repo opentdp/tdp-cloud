@@ -1,7 +1,7 @@
 package domain
 
 import (
-	"github.com/open-tdp/go-helper/dborm"
+	"github.com/opentdp/go-helper/dborm"
 
 	"tdp-cloud/model"
 )

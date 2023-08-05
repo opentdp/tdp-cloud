@@ -5,7 +5,7 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
-	"github.com/open-tdp/go-helper/tencent"
+	"github.com/opentdp/go-helper/tencent"
 	"github.com/spf13/cast"
 
 	"tdp-cloud/cmd/args"

@@ -3,7 +3,7 @@ package initd
 import (
 	"os"
 
-	"github.com/open-tdp/go-helper/logman"
+	"github.com/opentdp/go-helper/logman"
 
 	"tdp-cloud/cmd/args"
 )

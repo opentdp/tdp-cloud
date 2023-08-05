@@ -2,7 +2,7 @@ package alibaba
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/open-tdp/go-helper/alibaba"
+	"github.com/opentdp/go-helper/alibaba"
 	"github.com/spf13/cast"
 
 	"tdp-cloud/model/vendor"

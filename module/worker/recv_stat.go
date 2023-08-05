@@ -1,8 +1,8 @@
 package worker
 
 import (
-	"github.com/open-tdp/go-helper/logman"
-	"github.com/open-tdp/go-helper/psutil"
+	"github.com/opentdp/go-helper/logman"
+	"github.com/opentdp/go-helper/psutil"
 )
 
 func (pod *RecvPod) Stat(rs *SocketData) error {

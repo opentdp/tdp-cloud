@@ -9,7 +9,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/open-tdp/go-helper/strutil"
+	"github.com/opentdp/go-helper/strutil"
 
 	"tdp-cloud/cmd/args"
 )

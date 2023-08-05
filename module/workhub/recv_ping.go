@@ -2,8 +2,8 @@ package workhub
 
 import (
 	"github.com/mitchellh/mapstructure"
-	"github.com/open-tdp/go-helper/logman"
-	"github.com/open-tdp/go-helper/psutil"
+	"github.com/opentdp/go-helper/logman"
+	"github.com/opentdp/go-helper/psutil"
 )
 
 func (pod *RecvPod) Ping(rq *SocketData) error {

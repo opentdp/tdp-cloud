@@ -5,7 +5,7 @@ import (
 	"time"
 
 	"github.com/gin-gonic/gin"
-	"github.com/open-tdp/go-helper/secure"
+	"github.com/opentdp/go-helper/secure"
 
 	"tdp-cloud/cmd/args"
 )

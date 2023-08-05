@@ -1,6 +1,6 @@
 # 土豆片控制面板
 
-[![TDP Cloud Builder](https://github.com/open-tdp/tdp-cloud/actions/workflows/release.yml/badge.svg)](https://github.com/open-tdp/tdp-cloud/actions/workflows/release.yml)
+[![TDP Cloud Builder](https://github.com/opentdp/tdp-cloud/actions/workflows/release.yml/badge.svg)](https://github.com/opentdp/tdp-cloud/actions/workflows/release.yml)
 
 可以跨平台部署的云资源管理面板
 
@@ -43,7 +43,7 @@
 
 ## 功能预览
 
-- 功能支持和开发进度，请参阅 [Issues #1](https://github.com/open-tdp/tdp-cloud/issues/1)
+- 功能支持和开发进度，请参阅 [Issues #1](https://github.com/opentdp/tdp-cloud/issues/1)
 
 - 在线体验开发版功能，请进入 [演示站点](https://cloud.opentdp.org)，自行注册账号后登录
 

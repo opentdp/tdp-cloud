@@ -1,7 +1,7 @@
 package workhub
 
 import (
-	"github.com/open-tdp/go-helper/command"
+	"github.com/opentdp/go-helper/command"
 
 	"tdp-cloud/model/machine"
 	"tdp-cloud/model/taskline"

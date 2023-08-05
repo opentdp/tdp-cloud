@@ -2,7 +2,7 @@ package upgrade
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/open-tdp/go-helper/upgrade"
+	"github.com/opentdp/go-helper/upgrade"
 
 	"tdp-cloud/cmd/args"
 )

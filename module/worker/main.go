@@ -3,8 +3,8 @@ package worker
 import (
 	"os"
 
-	"github.com/open-tdp/go-helper/logman"
-	"github.com/open-tdp/go-helper/socket"
+	"github.com/opentdp/go-helper/logman"
+	"github.com/opentdp/go-helper/socket"
 
 	"tdp-cloud/cmd/args"
 )

@@ -1,8 +1,8 @@
 package server
 
 import (
-	"github.com/open-tdp/go-helper/dborm"
-	"github.com/open-tdp/go-helper/httpd"
+	"github.com/opentdp/go-helper/dborm"
+	"github.com/opentdp/go-helper/httpd"
 
 	"tdp-cloud/api"
 	"tdp-cloud/cmd/args"

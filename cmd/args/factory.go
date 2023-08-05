@@ -3,8 +3,8 @@ package args
 import (
 	"path"
 
-	"github.com/open-tdp/go-helper/logman"
-	"github.com/open-tdp/go-helper/strutil"
+	"github.com/opentdp/go-helper/logman"
+	"github.com/opentdp/go-helper/strutil"
 	"github.com/spf13/viper"
 )
 
