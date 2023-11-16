@@ -12,20 +12,23 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
 
       - name: Setup go
-        uses: actions/setup-go@v3
+        uses: actions/setup-go@v4
         with:
-          go-version: 1.19
+          go-version: 1.21
 
-      - name: Build go binary
-        run: sh build.sh
+      - name: Build binary
+        run: |
+          sh build.sh
 
       - name: Create github release
         uses: softprops/action-gh-release@v1
         if: startsWith(github.ref, 'refs/tags/')
         with:
-          body_path: RELEASE.md
+          body_path: ./RELEASE.md
           draft: false
           prerelease: false
           files: |
