@@ -10,7 +10,7 @@ func Socket(wsi *gin.RouterGroup) {
 
 	rg := wsi.Group("/terminal")
 
-	rg.Use(midware.AuthGuard())
+	rg.Use(midware.AuthGuard)
 
 	{
 		rg.GET("/ssh/:id", ssh)

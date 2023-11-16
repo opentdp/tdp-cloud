@@ -12,7 +12,7 @@ func Router(api *gin.RouterGroup) {
 
 	// 需授权接口
 
-	rg.Use(midware.AuthGuard())
+	rg.Use(midware.AuthGuard)
 
 	{
 		rg.POST("/list", list)
@@ -22,7 +22,7 @@ func Router(api *gin.RouterGroup) {
 
 	// 管理员接口
 
-	rg.Use(midware.AdminGuard())
+	rg.Use(midware.AdminGuard)
 
 	{
 		rg.POST("/host", host)

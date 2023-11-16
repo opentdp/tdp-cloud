@@ -10,7 +10,7 @@ func Router(api *gin.RouterGroup) {
 
 	rg := api.Group("/taskline")
 
-	rg.Use(midware.AuthGuard())
+	rg.Use(midware.AuthGuard)
 
 	{
 		rg.POST("/list", list)
