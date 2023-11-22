@@ -20,6 +20,14 @@ build() {
 
 ####################################################################
 
+releases_url=https://api.github.com/repos/opentdp/tdp-cloud-ui/releases/latest
+download_url=`wget -qO- $releases_url | grep releases/download | cut -f4 -d "\""`
+
+wget -O cloud-ui.tar.gz $download_url
+tar xvf cloud-ui.tar.gz --strip-components 2 -C front
+
+####################################################################
+
 build android arm64
 
 build darwin amd64
@@ -32,23 +40,14 @@ build freebsd arm64
 build linux 386
 build linux amd64
 build linux arm64
-build linux mips
-build linux mipsle
-build linux mips64
-build linux mips64le
-build linux ppc64
 build linux ppc64le
 build linux s390x
 
-build netbsd 386
 build netbsd amd64
-build netbsd arm64
 
-build openbsd 386
 build openbsd amd64
 build openbsd arm64
 
-build windows 386
 build windows amd64
 build windows arm64
 

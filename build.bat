@@ -18,23 +18,14 @@ CALL :build freebsd arm64
 CALL :build linux 386
 CALL :build linux amd64
 CALL :build linux arm64
-CALL :build linux mips
-CALL :build linux mipsle
-CALL :build linux mips64
-CALL :build linux mips64le
-CALL :build linux ppc64
 CALL :build linux ppc64le
 CALL :build linux s390x
 
-CALL :build netbsd 386
 CALL :build netbsd amd64
-CALL :build netbsd arm64
 
-CALL :build openbsd 386
 CALL :build openbsd amd64
 CALL :build openbsd arm64
 
-CALL :build windows 386
 CALL :build windows amd64
 CALL :build windows arm64
 
