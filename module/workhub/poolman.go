@@ -2,12 +2,16 @@ package workhub
 
 import (
 	"time"
+
+	"github.com/opentdp/go-helper/logman"
 )
 
 var workerResp = map[uint]any{}
 var workerPool = map[string]*Worker{}
 
 func DeleteWorker(Worker *Worker) {
+
+	logman.Info("Worker disconnect", "Id", Worker.WorkerId)
 
 	if Worker.WorkerId != "" {
 		delete(workerPool, Worker.WorkerId)

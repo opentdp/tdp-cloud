@@ -57,10 +57,10 @@ func Connect(ws *websocket.Conn, rq *ConnectParam) error {
 
 func Receiver(worker *Worker) error {
 
+	defer DeleteWorker(worker)
+
 	recv := &RecvPod{worker}
 	resp := &RespPod{worker}
-
-	defer delete(workerPool, worker.WorkerId)
 
 	for {
 		var rq *SocketData
