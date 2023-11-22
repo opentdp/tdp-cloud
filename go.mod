@@ -1,6 +1,6 @@
 module tdp-cloud
 
-go 1.19
+go 1.21
 
 require (
 	// 加解密
@@ -16,7 +16,7 @@ require (
 	// Map 转结构体
 	github.com/mitchellh/mapstructure v1.5.0
 	// 辅助类库
-	github.com/opentdp/go-helper v0.2.6
+	github.com/opentdp/go-helper v0.3.0
 	// 计划任务
 	github.com/robfig/cron/v3 v3.0.1
 	// 类型转换
@@ -41,7 +41,7 @@ require (
 	github.com/alibabacloud-go/tea-utils v1.4.5 // indirect
 	github.com/alibabacloud-go/tea-utils/v2 v2.0.4 // indirect
 	github.com/alibabacloud-go/tea-xml v1.1.3 // indirect
-	github.com/aliyun/credentials-go v1.3.1 // indirect
+	github.com/aliyun/credentials-go v1.3.2 // indirect
 	github.com/bytedance/sonic v1.10.2 // indirect
 	github.com/caddyserver/certmagic v0.19.2 // indirect
 	github.com/chenzhuoyu/base64x v0.0.0-20230717121745-296ad89f973d // indirect
@@ -88,7 +88,7 @@ require (
 	github.com/spf13/afero v1.10.0 // indirect
 	github.com/spf13/pflag v1.0.5 // indirect
 	github.com/subosito/gotenv v1.6.0 // indirect
-	github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/common v1.0.795 // indirect
+	github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/common v1.0.800 // indirect
 	github.com/tjfoc/gmsm v1.4.1 // indirect
 	github.com/tklauser/go-sysconf v0.3.12 // indirect
 	github.com/tklauser/numcpus v0.6.1 // indirect
@@ -111,7 +111,7 @@ require (
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 	gorm.io/driver/mysql v1.5.2 // indirect
 	gorm.io/gorm v1.25.5 // indirect
-	modernc.org/libc v1.34.4 // indirect
+	modernc.org/libc v1.34.9 // indirect
 	modernc.org/mathutil v1.6.0 // indirect
 	modernc.org/memory v1.7.2 // indirect
 	modernc.org/sqlite v1.27.0 // indirect
