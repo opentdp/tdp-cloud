@@ -1,7 +1,7 @@
 package args
 
-const Version = "0.14.3"
-const BuildVersion = "230602"
+const Version = "0.14.5"
+const BuildVersion = "231125"
 
 const AppName = "TDP CLoud"
 const AppSummary = "土豆片云面板"
