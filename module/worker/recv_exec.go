@@ -2,6 +2,7 @@ package worker
 
 import (
 	"errors"
+	"strings"
 
 	"github.com/mitchellh/mapstructure"
 	"github.com/opentdp/go-helper/command"
@@ -35,10 +36,11 @@ func (pod *RecvPod) Exec(rs *SocketData) error {
 		TaskId:  rs.TaskId,
 		Success: err == nil,
 		Payload: map[string]any{
-			"Output": ret,
+			"Output": strings.TrimSpace(ret),
 			"Error":  err,
 		},
 	})
 
 	return err
+
 }
