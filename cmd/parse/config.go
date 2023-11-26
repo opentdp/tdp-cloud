@@ -39,7 +39,6 @@ func (c *Config) Server() {
 
 	// 读取默认配置
 	df := map[string]any{
-		"debug":    args.Debug,
 		"dataset":  args.Dataset,
 		"logger":   args.Logger,
 		"database": args.Database,
@@ -50,7 +49,6 @@ func (c *Config) Server() {
 	// 读取配置文件
 	if YamlFile != "" {
 		c.ReadYaml()
-		args.Debug = c.Koanf.Bool("debug")
 		c.Koanf.Unmarshal("dataset", &args.Dataset)
 		c.Koanf.Unmarshal("logger", &args.Logger)
 		c.Koanf.Unmarshal("database", &args.Database)
@@ -65,7 +63,6 @@ func (c *Config) Worker() {
 
 	// 读取默认配置
 	df := map[string]any{
-		"debug":   args.Debug,
 		"dataset": args.Dataset,
 		"logger":  args.Logger,
 		"worker":  args.Worker,
@@ -75,7 +72,6 @@ func (c *Config) Worker() {
 	// 读取配置文件
 	if YamlFile != "" {
 		c.ReadYaml()
-		args.Debug = c.Koanf.Bool("debug")
 		c.Koanf.Unmarshal("dataset", &args.Dataset)
 		c.Koanf.Unmarshal("logger", &args.Logger)
 		c.Koanf.Unmarshal("worker", &args.Worker)

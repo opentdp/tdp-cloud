@@ -10,6 +10,11 @@ import (
 
 func RuntimeFix() {
 
+	// debug mode
+
+	debug := os.Getenv("TDP_DEBUG")
+	args.Debug = debug == "1" || debug == "true"
+
 	// init dataset
 
 	if args.Dataset.Dir != "" && args.Dataset.Dir != "." {
