@@ -5,8 +5,8 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
+	"github.com/opentdp/go-helper/strutil"
 	"github.com/opentdp/go-helper/tencent"
-	"github.com/spf13/cast"
 
 	"tdp-cloud/cmd/args"
 	"tdp-cloud/model/vendor"
@@ -15,7 +15,7 @@ import (
 func apiProxy(c *gin.Context) {
 
 	rq := &vendor.FetchParam{
-		Id:       cast.ToUint(c.Param("id")),
+		Id:       strutil.ToUint(c.Param("id")),
 		UserId:   c.GetUint("UserId"),
 		StoreKey: c.GetString("AppKey"),
 	}

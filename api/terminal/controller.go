@@ -2,8 +2,8 @@ package terminal
 
 import (
 	"github.com/gin-gonic/gin"
+	"github.com/opentdp/go-helper/strutil"
 	"github.com/opentdp/go-helper/webssh"
-	"github.com/spf13/cast"
 	"golang.org/x/net/websocket"
 
 	"tdp-cloud/model/keypair"
@@ -20,7 +20,7 @@ func ssh(c *gin.Context) {
 		return
 	}
 
-	if id := cast.ToUint(c.Param("id")); id > 0 {
+	if id := strutil.ToUint(c.Param("id")); id > 0 {
 		kp, err := keypair.Fetch(&keypair.FetchParam{
 			Id:       id,
 			UserId:   c.GetUint("UserId"),

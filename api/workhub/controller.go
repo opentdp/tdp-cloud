@@ -3,7 +3,7 @@ package workhub
 import (
 	"github.com/gin-gonic/gin"
 	"github.com/opentdp/go-helper/command"
-	"github.com/spf13/cast"
+	"github.com/opentdp/go-helper/strutil"
 	"golang.org/x/net/websocket"
 
 	"tdp-cloud/model/user"
@@ -84,7 +84,7 @@ func register(c *gin.Context) {
 	}
 
 	c.Set("UserId", ur.Id)
-	c.Set("MachineId", cast.ToUint(c.Param("mid")))
+	c.Set("MachineId", strutil.ToUint(c.Param("mid")))
 
 	// 创建 Worker 会话
 

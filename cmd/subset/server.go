@@ -1,33 +1,40 @@
 package subset
 
 import (
-	"github.com/spf13/cobra"
-	"github.com/spf13/viper"
+	"flag"
 
-	"tdp-cloud/cmd/args"
+	"tdp-cloud/cmd/parse"
 	"tdp-cloud/service"
 )
 
-var serverAct string
+func serverFlag() *FlagSet {
 
-var serverCmd = &cobra.Command{
-	Use:   "server",
-	Short: "Manage the server",
-	Long:  "TDP Cloud Server Management",
-	Run: func(cmd *cobra.Command, rq []string) {
-		args.SubCommand.Name = cmd.Name()
-		args.SubCommand.Action = serverAct
-		service.Control(args.SubCommand.Name, serverAct)
-	},
+	var action string
+
+	command := &FlagSet{
+		FlagSet: flag.NewFlagSet("server", flag.ExitOnError),
+		Comment: "TDP Cloud Server Management",
+		Execute: func() {
+			serverExec(action)
+		},
+	}
+
+	command.StringVar(&action, "s", "", "management server service")
+	command.StringVar(&parse.YamlFile, "c", "config.yml", "config file path")
+
+	return command
+
 }
 
-func WithServer() *cobra.Command {
+func serverExec(act string) {
 
-	serverCmd.Flags().StringVarP(&serverAct, "service", "s", "", "management server service")
-	serverCmd.Flags().StringP("listen", "l", ":7800", "server listens to ip addresse and port")
+	c := parse.NewConfig()
+	c.Server()
 
-	viper.BindPFlag("server.listen", serverCmd.Flags().Lookup("listen"))
+	if act == "" || act == "start" {
+		c.WriteYaml(false)
+	}
 
-	return serverCmd
+	service.Control("server", act)
 
 }

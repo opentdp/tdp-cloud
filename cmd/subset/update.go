@@ -1,29 +1,32 @@
 package subset
 
 import (
+	"flag"
+
 	"github.com/opentdp/go-helper/logman"
 	"github.com/opentdp/go-helper/upgrade"
-	"github.com/spf13/cobra"
 
 	"tdp-cloud/cmd/args"
+	"tdp-cloud/cmd/parse"
 )
 
-var updateCmd = &cobra.Command{
-	Use:   "update",
-	Short: "Update assistant",
-	Long:  "TDP Cloud Update Assistant",
-	Run: func(cmd *cobra.Command, rq []string) {
-		ExecUpdate()
-	},
+func updateFlag() *FlagSet {
+
+	command := &FlagSet{
+		FlagSet: flag.NewFlagSet("update", flag.ExitOnError),
+		Comment: "TDP Cloud Update Management",
+		Execute: func() {
+			updateExec()
+		},
+	}
+
+	command.StringVar(&parse.YamlFile, "c", "config.yml", "config file path")
+
+	return command
+
 }
 
-func WithUpdate() *cobra.Command {
-
-	return updateCmd
-
-}
-
-func ExecUpdate() error {
+func updateExec() {
 
 	err := upgrade.Apply(&upgrade.RequesParam{
 		Server:  args.UpdateUrl,
@@ -33,7 +36,5 @@ func ExecUpdate() error {
 	if err == nil {
 		logman.Info("Update Success")
 	}
-
-	return err
 
 }

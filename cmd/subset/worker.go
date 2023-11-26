@@ -1,33 +1,40 @@
 package subset
 
 import (
-	"github.com/spf13/cobra"
-	"github.com/spf13/viper"
+	"flag"
 
-	"tdp-cloud/cmd/args"
+	"tdp-cloud/cmd/parse"
 	"tdp-cloud/service"
 )
 
-var workerAct string
+func workerFlag() *FlagSet {
 
-var workerCmd = &cobra.Command{
-	Use:   "worker",
-	Short: "Manage the worker",
-	Long:  "TDP Cloud Worker Management",
-	Run: func(cmd *cobra.Command, rq []string) {
-		args.SubCommand.Name = cmd.Name()
-		args.SubCommand.Action = workerAct
-		service.Control(args.SubCommand.Name, workerAct)
-	},
+	var action string
+
+	command := &FlagSet{
+		FlagSet: flag.NewFlagSet("worker", flag.ExitOnError),
+		Comment: "TDP Cloud Worker Management",
+		Execute: func() {
+			workerExec(action)
+		},
+	}
+
+	command.StringVar(&action, "s", "", "management worker service")
+	command.StringVar(&parse.YamlFile, "c", "config.yml", "config file path")
+
+	return command
+
 }
 
-func WithWorker() *cobra.Command {
+func workerExec(act string) {
 
-	workerCmd.Flags().StringVarP(&workerAct, "service", "s", "", "management worker service")
-	workerCmd.Flags().StringP("remote", "r", "", "register URL (e.g. ws://{domain}/wsi/{appid}/worker)")
+	c := parse.NewConfig()
+	c.Worker()
 
-	viper.BindPFlag("worker.remote", workerCmd.Flags().Lookup("remote"))
+	if act == "" || act == "start" {
+		c.WriteYaml(false)
+	}
 
-	return workerCmd
+	service.Control("worker", act)
 
 }

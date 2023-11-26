@@ -1,16 +1,19 @@
 package args
 
+// 版本信息
+
 const Version = "0.14.5"
 const BuildVersion = "231125"
 
-const AppName = "TDP CLoud"
-const AppSummary = "土豆片云面板"
+// 更新地址
 
 const UpdateUrl = "https://get.opentdp.org/update/cloud"
 
-const ReadmeText = AppSummary + `
+// 应用描述
 
-可以跨平台部署的云资源管理面板
+const AppName = "TDP CLoud"
+const AppSummary = "可以跨平台部署的云资源管理面板"
 
+const ReadmeText = `
 TDP Website: https://www.opentdp.org
 Open Source: https://github.com/opentdp`

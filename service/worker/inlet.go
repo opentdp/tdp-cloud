@@ -3,15 +3,12 @@ package worker
 import (
 	"time"
 
-	"tdp-cloud/cmd/args"
 	"tdp-cloud/module/worker"
 )
 
 func inlet() {
 
 	defer timer()
-
-	args.WriteConfig()
 
 	if err := worker.Connect(); err != nil {
 		svclog.Error(err)
