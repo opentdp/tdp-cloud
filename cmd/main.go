@@ -12,14 +12,14 @@ func Execute() {
 
 	// 设置子命令集
 
-	commands := subset.NewFlagSets()
+	flagsets := subset.NewFlagSets()
 
 	// 尝试解析子命令
 
 	if len(os.Args) > 1 {
-		if cmd := commands[os.Args[1]]; cmd != nil {
-			cmd.Parse(os.Args[2:])
-			cmd.Execute()
+		if sub := flagsets[os.Args[1]]; sub != nil {
+			sub.Parse(os.Args[2:])
+			sub.Execute()
 			return
 		}
 	}
@@ -27,7 +27,7 @@ func Execute() {
 	// 显示帮助信息
 
 	fmt.Printf("%s\n%s\n\n", args.AppName, args.AppSummary)
-	for k, v := range commands {
+	for k, v := range flagsets {
 		fmt.Printf("[%s] %s\n\n", k, v.Comment)
 		v.PrintDefaults()
 		fmt.Println()
