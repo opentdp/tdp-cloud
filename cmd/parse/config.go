@@ -7,6 +7,7 @@ import (
 	"github.com/knadh/koanf/providers/confmap"
 	"github.com/knadh/koanf/providers/file"
 	"github.com/knadh/koanf/v2"
+	"github.com/opentdp/go-helper/filer"
 	"github.com/opentdp/go-helper/logman"
 
 	"tdp-cloud/cmd/args"
@@ -100,8 +101,7 @@ func (c *Config) ReadYaml() {
 func (c *Config) WriteYaml(force bool) {
 
 	// 是否强制覆盖
-	_, err := os.Stat(YamlFile)
-	if !force && os.IsExist(err) {
+	if !force && filer.Exists(YamlFile) {
 		return
 	}
 

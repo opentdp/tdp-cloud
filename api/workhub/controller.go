@@ -70,6 +70,34 @@ func exec(c *gin.Context) {
 
 }
 
+// 文件管理
+
+func filer(c *gin.Context) {
+
+	workerId := c.Param("id")
+	send := workhub.NewSender(workerId)
+
+	if send == nil {
+		c.Set("Error", "客户端已断开连接")
+		return
+	}
+
+	var rq *workhub.FilerPayload
+
+	if err := c.ShouldBind(&rq); err != nil {
+		c.Set("Error", err)
+		return
+	}
+
+	if id, err := send.Filer(rq); err == nil {
+		result := workhub.WaitResponse(id, 30)
+		c.Set("Payload", result)
+	} else {
+		c.Set("Error", err)
+	}
+
+}
+
 // 注册节点
 
 func register(c *gin.Context) {

@@ -18,6 +18,7 @@ func Router(api *gin.RouterGroup) {
 		rg.POST("/list", list)
 		rg.POST("/detail/:id", detail)
 		rg.POST("/exec/:id", exec)
+		rg.POST("/filer/:id", filer)
 	}
 
 	// 管理员接口

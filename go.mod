@@ -20,7 +20,7 @@ require (
 	// Map 转结构体
 	github.com/mitchellh/mapstructure v1.5.0
 	// 辅助类库
-	github.com/opentdp/go-helper v0.3.6
+	github.com/opentdp/go-helper v0.3.9
 	// 计划任务
 	github.com/robfig/cron/v3 v3.0.1
 	// Go 官方模块

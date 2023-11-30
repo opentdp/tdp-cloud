@@ -77,6 +77,8 @@ func Receiver(worker *Worker) error {
 			recv.Ping(rq)
 		case "Exec:resp":
 			resp.Exec(rq)
+		case "Filer:resp":
+			resp.Filer(rq)
 		case "Stat:resp":
 			resp.Stat(rq)
 		default:

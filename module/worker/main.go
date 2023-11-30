@@ -69,6 +69,8 @@ func Receiver(pod *socket.WsConn) error {
 			recv.Exec(rq)
 		case "Stat":
 			recv.Stat(rq)
+		case "Filer":
+			recv.Filer(rq)
 		case "Ping:resp":
 			resp.Ping(rq)
 		case "Register:resp":
