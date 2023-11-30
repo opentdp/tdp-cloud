@@ -44,6 +44,7 @@ type ConnectParam struct {
 func Connect(ws *websocket.Conn, rq *ConnectParam) error {
 
 	pod := socket.NewWsConn(ws)
+	ws.MaxPayloadBytes = 200 << 20 // 200M
 
 	defer pod.Close()
 

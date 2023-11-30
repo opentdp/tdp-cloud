@@ -4,13 +4,14 @@ import (
 	"fmt"
 	"time"
 
+	"github.com/opentdp/go-helper/filer"
 	"github.com/opentdp/go-helper/logman"
 )
 
 type FilerPayload struct {
-	Action  string
-	Path    string
-	Content string
+	Action string
+	Path   string
+	File   filer.FileInfo
 }
 
 func (pod *SendPod) Filer(data *FilerPayload) (string, error) {
