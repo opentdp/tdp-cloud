@@ -58,7 +58,7 @@ func Router(engine *gin.Engine) {
 
 	wsi := engine.Group("/wsi/:auth")
 
-	wsi.Use(midware.SocketHandle())
+	wsi.Use(midware.SocketHandle)
 	wsi.Use(midware.JwtGuard)
 
 	{
