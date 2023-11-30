@@ -34,8 +34,12 @@ func detail(c *gin.Context) {
 	}
 
 	if id, err := send.Stat(); err == nil {
-		stat := workhub.WaitResponse(id, 30)
-		c.Set("Payload", gin.H{"Stat": stat})
+		rq := workhub.WaitResponse(id, 30)
+		if rq.Message != nil {
+			c.Set("Error", rq.Message)
+		} else {
+			c.Set("Payload", gin.H{"Stat": rq.Payload})
+		}
 	} else {
 		c.Set("Error", err)
 	}
@@ -90,8 +94,12 @@ func filer(c *gin.Context) {
 	}
 
 	if id, err := send.Filer(rq); err == nil {
-		result := workhub.WaitResponse(id, 30)
-		c.Set("Payload", result)
+		rq := workhub.WaitResponse(id, 30)
+		if rq.Message != nil {
+			c.Set("Error", rq.Message)
+		} else {
+			c.Set("Payload", rq.Payload)
+		}
 	} else {
 		c.Set("Error", err)
 	}

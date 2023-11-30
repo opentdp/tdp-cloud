@@ -60,15 +60,18 @@ func createHistory(pod *SendPod, data *command.ExecPayload) uint {
 func updateHistory(pod *RespPod, rq *SocketData) error {
 
 	status := "Failed"
-	if rq.Success {
+	if rq.Message == nil {
 		status = "Success"
 	}
 
 	item := &taskline.UpdateParam{
-		Id:       rq.TaskId,
-		UserId:   pod.UserId,
-		Response: rq.Payload,
-		Status:   status,
+		Id:     rq.TaskId,
+		UserId: pod.UserId,
+		Response: map[string]any{
+			"Payload": rq.Payload,
+			"Error":   rq.Message,
+		},
+		Status: status,
 	}
 
 	return taskline.Update(item)

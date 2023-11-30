@@ -28,6 +28,6 @@ func (pod *RespPod) Stat(rq *SocketData) {
 	logman.Info("stat:resp", "from", pod.WorkerMeta.HostName)
 
 	id := "stat" + fmt.Sprintf("%d", rq.TaskId)
-	workerResp[id] = rq.Payload
+	workerResp[id] = rq
 
 }

@@ -24,7 +24,7 @@ type SendPod struct {
 type SocketData struct {
 	Method  string
 	TaskId  uint
-	Success bool
+	Message error
 	Payload any
 }
 

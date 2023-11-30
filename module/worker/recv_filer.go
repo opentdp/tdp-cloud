@@ -29,11 +29,8 @@ func (pod *RecvPod) Filer(rs *SocketData) error {
 	err = pod.WriteJson(&SocketData{
 		Method:  "Filer:resp",
 		TaskId:  rs.TaskId,
-		Success: err == nil,
-		Payload: map[string]any{
-			"Output": ret,
-			"Error":  err,
-		},
+		Message: err,
+		Payload: ret,
 	})
 
 	return err

@@ -34,11 +34,8 @@ func (pod *RecvPod) Exec(rs *SocketData) error {
 	err = pod.WriteJson(&SocketData{
 		Method:  "Exec:resp",
 		TaskId:  rs.TaskId,
-		Success: err == nil,
-		Payload: map[string]any{
-			"Output": strings.TrimSpace(ret),
-			"Error":  err,
-		},
+		Message: err,
+		Payload: strings.TrimSpace(ret),
 	})
 
 	return err

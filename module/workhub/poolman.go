@@ -1,13 +1,14 @@
 package workhub
 
 import (
+	"errors"
 	"time"
 
 	"github.com/opentdp/go-helper/logman"
 )
 
 var workerPool = map[string]*Worker{}
-var workerResp = map[string]any{}
+var workerResp = map[string]*SocketData{}
 
 func DeleteWorker(Worker *Worker) {
 
@@ -43,7 +44,7 @@ func NewSender(id string) *SendPod {
 
 }
 
-func WaitResponse(id string, wait int) any {
+func WaitResponse(id string, wait int) *SocketData {
 
 	for i := 0; i < wait; i++ {
 		if res, ok := workerResp[id]; ok {
@@ -53,6 +54,8 @@ func WaitResponse(id string, wait int) any {
 		time.Sleep(300 * time.Millisecond)
 	}
 
-	return ""
+	return &SocketData{
+		Message: errors.New("请求超时"),
+	}
 
 }

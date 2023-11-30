@@ -35,6 +35,6 @@ func (pod *RespPod) Filer(rq *SocketData) {
 	logman.Info("filer:resp", "from", pod.WorkerMeta.HostName)
 
 	id := "filer" + fmt.Sprintf("%d", rq.TaskId)
-	workerResp[id] = rq.Payload
+	workerResp[id] = rq
 
 }
