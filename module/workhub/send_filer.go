@@ -1,6 +1,7 @@
 package workhub
 
 import (
+	"fmt"
 	"time"
 
 	"github.com/opentdp/go-helper/logman"
@@ -12,11 +13,11 @@ type FilerPayload struct {
 	Content string
 }
 
-func (pod *SendPod) Filer(data *FilerPayload) (uint, error) {
+func (pod *SendPod) Filer(data *FilerPayload) (string, error) {
 
 	logman.Info("filer:send", "to", pod.WorkerMeta.HostName)
 
-	taskId := uint(time.Now().Unix())
+	taskId := uint(time.Now().UnixNano())
 
 	err := pod.WriteJson(&SocketData{
 		Method:  "Filer",
@@ -24,7 +25,8 @@ func (pod *SendPod) Filer(data *FilerPayload) (uint, error) {
 		Payload: data,
 	})
 
-	return taskId, err
+	id := "filer" + fmt.Sprintf("%d", taskId)
+	return id, err
 
 }
 
@@ -32,6 +34,7 @@ func (pod *RespPod) Filer(rq *SocketData) {
 
 	logman.Info("filer:resp", "from", pod.WorkerMeta.HostName)
 
-	workerResp[rq.TaskId] = rq.Payload
+	id := "filer" + fmt.Sprintf("%d", rq.TaskId)
+	workerResp[id] = rq.Payload
 
 }

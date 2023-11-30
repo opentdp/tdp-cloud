@@ -6,8 +6,8 @@ import (
 	"github.com/opentdp/go-helper/logman"
 )
 
-var workerResp = map[uint]any{}
 var workerPool = map[string]*Worker{}
+var workerResp = map[string]any{}
 
 func DeleteWorker(Worker *Worker) {
 
@@ -43,7 +43,7 @@ func NewSender(id string) *SendPod {
 
 }
 
-func WaitResponse(id uint, wait int) any {
+func WaitResponse(id string, wait int) any {
 
 	for i := 0; i < wait; i++ {
 		if res, ok := workerResp[id]; ok {
