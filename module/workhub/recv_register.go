@@ -1,19 +1,22 @@
 package workhub
 
 import (
-	"github.com/mitchellh/mapstructure"
 	"github.com/opentdp/go-helper/logman"
+	"github.com/opentdp/go-helper/socket"
 )
 
-func (pod *RecvPod) Register(rq *SocketData) error {
+func (pod *RecvPod) Register(rq *socket.PlainData) error {
+
+	var (
+		err    error
+		worker = pod.Worker
+	)
 
 	logman.Info("register:recv", "from", pod.Conn.RemoteAddr())
 
 	// 注册主机
 
-	worker := pod.Worker
-
-	if err := mapstructure.Decode(rq.Payload, worker); err != nil {
+	if err = rq.GetPayload(worker); err != nil {
 		pod.Die("register:error " + err.Error())
 	}
 
@@ -21,7 +24,7 @@ func (pod *RecvPod) Register(rq *SocketData) error {
 		pod.Die("register:error WorkerId is empty")
 	}
 
-	if err := updateMachine(worker); err != nil {
+	if err = updateMachine(worker); err != nil {
 		pod.Die("register:error " + err.Error())
 	}
 
@@ -29,7 +32,7 @@ func (pod *RecvPod) Register(rq *SocketData) error {
 
 	// 返回结果
 
-	err := pod.WriteJson(&SocketData{
+	err = pod.WriteJson(&socket.PlainData{
 		Method:  "Register:resp",
 		TaskId:  rq.TaskId,
 		Success: true,

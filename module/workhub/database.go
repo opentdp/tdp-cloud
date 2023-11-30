@@ -2,6 +2,7 @@ package workhub
 
 import (
 	"github.com/opentdp/go-helper/command"
+	"github.com/opentdp/go-helper/socket"
 
 	"tdp-cloud/model/machine"
 	"tdp-cloud/model/taskline"
@@ -57,21 +58,20 @@ func createHistory(pod *SendPod, data *command.ExecPayload) uint {
 
 }
 
-func updateHistory(pod *RespPod, rq *SocketData) error {
-
-	status := "Failed"
-	if rq.Success {
-		status = "Success"
-	}
+func updateHistory(pod *RespPod, rq *socket.PlainData) error {
 
 	item := &taskline.UpdateParam{
 		Id:     rq.TaskId,
 		UserId: pod.UserId,
 		Response: map[string]any{
-			"Payload": rq.Payload,
-			"Error":   rq.Message,
+			"Output": rq.Payload,
+			"Error":  rq.Message,
 		},
-		Status: status,
+		Status: "Failed",
+	}
+
+	if rq.Success {
+		item.Status = "Success"
 	}
 
 	return taskline.Update(item)

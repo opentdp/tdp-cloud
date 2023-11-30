@@ -3,15 +3,18 @@ package worker
 import (
 	"github.com/opentdp/go-helper/logman"
 	"github.com/opentdp/go-helper/psutil"
+	"github.com/opentdp/go-helper/socket"
 )
 
-func (pod *RecvPod) Stat(rs *SocketData) error {
+func (pod *RecvPod) Stat(rq *socket.PlainData) error {
 
-	logman.Info("stat:recv", "taskId", rs.TaskId)
+	var err error
 
-	err := pod.WriteJson(&SocketData{
+	logman.Info("stat:recv", "taskId", rq.TaskId)
+
+	err = pod.WriteJson(&socket.PlainData{
 		Method:  "Stat:resp",
-		TaskId:  rs.TaskId,
+		TaskId:  rq.TaskId,
 		Success: true,
 		Payload: psutil.Detail(true),
 	})

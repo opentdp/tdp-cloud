@@ -6,11 +6,14 @@ import (
 	"github.com/forgoer/openssl"
 	"github.com/opentdp/go-helper/logman"
 	"github.com/opentdp/go-helper/psutil"
+	"github.com/opentdp/go-helper/socket"
 
 	"tdp-cloud/cmd/args"
 )
 
 func (pod *SendPod) Register() (uint, error) {
+
+	var err error
 
 	logman.Info("register:send")
 
@@ -18,24 +21,22 @@ func (pod *SendPod) Register() (uint, error) {
 	cloudId := psutil.CloudInstanceId()
 	workerId := openssl.Md5ToString(stat.HostId)
 
-	data := &map[string]any{
-		"CloudId":       cloudId,
-		"WorkerId":      workerId,
-		"WorkerMeta":    stat,
-		"WorkerVersion": args.Version,
-	}
-
-	err := pod.WriteJson(&SocketData{
-		Method:  "Register",
-		TaskId:  0,
-		Payload: data,
+	err = pod.WriteJson(&socket.PlainData{
+		Method: "Register",
+		TaskId: 0,
+		Payload: &map[string]any{
+			"CloudId":       cloudId,
+			"WorkerId":      workerId,
+			"WorkerMeta":    stat,
+			"WorkerVersion": args.Version,
+		},
 	})
 
 	return 0, err
 
 }
 
-func (pod *RespPod) Register(rs *SocketData) {
+func (pod *RespPod) Register(rs *socket.PlainData) {
 
 	logman.Info("register:resp", "payload", rs.Payload)
 

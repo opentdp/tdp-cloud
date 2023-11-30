@@ -5,15 +5,19 @@ import (
 	"time"
 
 	"github.com/opentdp/go-helper/logman"
+	"github.com/opentdp/go-helper/socket"
 )
 
 func (pod *SendPod) Stat() (string, error) {
 
+	var (
+		err    error
+		taskId = uint(time.Now().UnixNano())
+	)
+
 	logman.Info("stat:send", "to", pod.WorkerMeta.HostName)
 
-	taskId := uint(time.Now().UnixNano())
-
-	err := pod.WriteJson(&SocketData{
+	err = pod.WriteJson(&socket.PlainData{
 		Method: "Stat",
 		TaskId: taskId,
 	})
@@ -23,11 +27,11 @@ func (pod *SendPod) Stat() (string, error) {
 
 }
 
-func (pod *RespPod) Stat(rq *SocketData) {
+func (pod *RespPod) Stat(rs *socket.PlainData) {
 
 	logman.Info("stat:resp", "from", pod.WorkerMeta.HostName)
 
-	id := "stat" + fmt.Sprintf("%d", rq.TaskId)
-	workerResp[id] = rq
+	id := "stat" + fmt.Sprintf("%d", rs.TaskId)
+	workerResp[id] = rs
 
 }

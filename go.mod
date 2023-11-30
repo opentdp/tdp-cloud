@@ -17,10 +17,8 @@ require (
 	github.com/knadh/koanf/parsers/yaml v0.1.0
 	github.com/knadh/koanf/providers/file v0.1.0
 	github.com/knadh/koanf/v2 v2.0.1
-	// Map 转结构体
-	github.com/mitchellh/mapstructure v1.5.0
 	// 辅助类库
-	github.com/opentdp/go-helper v0.4.2
+	github.com/opentdp/go-helper v0.4.3
 	// 计划任务
 	github.com/robfig/cron/v3 v3.0.1
 	// Go 官方模块
@@ -79,6 +77,7 @@ require (
 	github.com/mholt/acmez v1.2.0 // indirect
 	github.com/miekg/dns v1.1.57 // indirect
 	github.com/mitchellh/copystructure v1.2.0 // indirect
+	github.com/mitchellh/mapstructure v1.5.0 // indirect
 	github.com/mitchellh/reflectwalk v1.0.2 // indirect
 	github.com/modern-go/concurrent v0.0.0-20180306012644-bacd9c7ef1dd // indirect
 	github.com/modern-go/reflect2 v1.0.2 // indirect

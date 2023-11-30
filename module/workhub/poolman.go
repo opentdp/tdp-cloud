@@ -4,10 +4,11 @@ import (
 	"time"
 
 	"github.com/opentdp/go-helper/logman"
+	"github.com/opentdp/go-helper/socket"
 )
 
 var workerPool = map[string]*Worker{}
-var workerResp = map[string]*SocketData{}
+var workerResp = map[string]*socket.PlainData{}
 
 func DeleteWorker(Worker *Worker) {
 
@@ -43,7 +44,7 @@ func NewSender(id string) *SendPod {
 
 }
 
-func WaitResponse(id string, wait int) *SocketData {
+func WaitResponse(id string, wait int) *socket.PlainData {
 
 	for i := 0; i < wait; i++ {
 		if res, ok := workerResp[id]; ok {
@@ -53,7 +54,7 @@ func WaitResponse(id string, wait int) *SocketData {
 		time.Sleep(300 * time.Millisecond)
 	}
 
-	return &SocketData{
+	return &socket.PlainData{
 		Success: false,
 		Message: "请求超时",
 	}

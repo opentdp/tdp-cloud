@@ -21,14 +21,6 @@ type SendPod struct {
 	*socket.WsConn
 }
 
-type SocketData struct {
-	Method  string
-	TaskId  uint
-	Success bool
-	Message string
-	Payload any
-}
-
 func Connect() error {
 
 	url := args.Worker.Remote
@@ -58,7 +50,7 @@ func Receiver(pod *socket.WsConn) error {
 	resp := &RespPod{pod}
 
 	for {
-		var rq *SocketData
+		var rq *socket.PlainData
 
 		if err := pod.ReadJson(&rq); err != nil {
 			logman.Error("read json failed", "error", err)

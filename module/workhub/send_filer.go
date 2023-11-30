@@ -6,21 +6,28 @@ import (
 
 	"github.com/opentdp/go-helper/filer"
 	"github.com/opentdp/go-helper/logman"
+	"github.com/opentdp/go-helper/socket"
 )
 
 type FilerPayload struct {
 	Action string
 	Path   string
-	File   filer.FileInfo
+	File   struct {
+		filer.FileInfo
+		RawData string // base64
+	}
 }
 
 func (pod *SendPod) Filer(data *FilerPayload) (string, error) {
 
+	var (
+		err    error
+		taskId = uint(time.Now().UnixNano())
+	)
+
 	logman.Info("filer:send", "to", pod.WorkerMeta.HostName)
 
-	taskId := uint(time.Now().UnixNano())
-
-	err := pod.WriteJson(&SocketData{
+	err = pod.WriteJson(&socket.PlainData{
 		Method:  "Filer",
 		TaskId:  taskId,
 		Payload: data,
@@ -31,11 +38,11 @@ func (pod *SendPod) Filer(data *FilerPayload) (string, error) {
 
 }
 
-func (pod *RespPod) Filer(rq *SocketData) {
+func (pod *RespPod) Filer(rs *socket.PlainData) {
 
 	logman.Info("filer:resp", "from", pod.WorkerMeta.HostName)
 
-	id := "filer" + fmt.Sprintf("%d", rq.TaskId)
-	workerResp[id] = rq
+	id := "filer" + fmt.Sprintf("%d", rs.TaskId)
+	workerResp[id] = rs
 
 }

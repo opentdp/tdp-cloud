@@ -1,21 +1,25 @@
 package workhub
 
 import (
-	"github.com/mitchellh/mapstructure"
 	"github.com/opentdp/go-helper/logman"
 	"github.com/opentdp/go-helper/psutil"
+	"github.com/opentdp/go-helper/socket"
 )
 
-func (pod *RecvPod) Ping(rq *SocketData) error {
+func (pod *RecvPod) Ping(rq *socket.PlainData) error {
+
+	var (
+		err  error
+		stat = psutil.SummaryStat{}
+	)
 
 	logman.Info("ping:recv", "from", pod.Conn.RemoteAddr())
 
-	stat := &psutil.SummaryStat{}
-	if mapstructure.Decode(rq.Payload, stat) == nil {
-		pod.WorkerMeta = stat
+	if rq.GetPayload(&stat) == nil {
+		pod.WorkerMeta = &stat
 	}
 
-	err := pod.WriteJson(&SocketData{
+	err = pod.WriteJson(&socket.PlainData{
 		Method:  "Ping:resp",
 		TaskId:  rq.TaskId,
 		Success: true,

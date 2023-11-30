@@ -4,14 +4,14 @@ import (
 	"errors"
 	"os"
 
-	"github.com/mitchellh/mapstructure"
 	"github.com/opentdp/go-helper/filer"
 	"github.com/opentdp/go-helper/logman"
+	"github.com/opentdp/go-helper/socket"
 
 	"tdp-cloud/module/workhub"
 )
 
-func (pod *RecvPod) Filer(rs *SocketData) error {
+func (pod *RecvPod) Filer(rq *socket.PlainData) error {
 
 	var (
 		err error
@@ -24,9 +24,9 @@ func (pod *RecvPod) Filer(rs *SocketData) error {
 		data workhub.FilerPayload
 	)
 
-	logman.Info("filer:recv", "taskId", rs.TaskId)
+	logman.Info("filer:recv", "taskId", rq.TaskId)
 
-	if mapstructure.Decode(rs.Payload, &data) == nil {
+	if err = rq.GetPayload(&data); err == nil {
 		switch data.Action {
 		case "ls":
 			ret.FileList, err = filer.List(data.Path)
@@ -45,17 +45,15 @@ func (pod *RecvPod) Filer(rs *SocketData) error {
 		default:
 			err = errors.New("无法识别的操作")
 		}
-	} else {
-		err = errors.New("无法解析请求参数")
 	}
 
 	if err != nil {
 		msg = err.Error()
 	}
 
-	err = pod.WriteJson(&SocketData{
+	err = pod.WriteJson(&socket.PlainData{
 		Method:  "Filer:resp",
-		TaskId:  rs.TaskId,
+		TaskId:  rq.TaskId,
 		Success: err == nil,
 		Message: msg,
 		Payload: ret,

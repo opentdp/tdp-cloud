@@ -29,14 +29,6 @@ type SendPod struct {
 	*Worker
 }
 
-type SocketData struct {
-	Method  string
-	TaskId  uint
-	Success bool
-	Message string
-	Payload any
-}
-
 type ConnectParam struct {
 	UserId    uint
 	MachineId uint
@@ -65,7 +57,7 @@ func Receiver(worker *Worker) error {
 	resp := &RespPod{worker}
 
 	for {
-		var rq *SocketData
+		var rq *socket.PlainData
 
 		if err := worker.ReadJson(&rq); err != nil {
 			logman.Error("read:error", "error", err)
