@@ -15,6 +15,7 @@ func (pod *RecvPod) Filer(rs *SocketData) error {
 
 	var (
 		err error
+		msg string
 		ret struct {
 			Success  bool
 			FileData []byte
@@ -48,12 +49,15 @@ func (pod *RecvPod) Filer(rs *SocketData) error {
 		err = errors.New("无法解析请求参数")
 	}
 
-	ret.Success = err == nil
+	if err != nil {
+		msg = err.Error()
+	}
 
 	err = pod.WriteJson(&SocketData{
 		Method:  "Filer:resp",
 		TaskId:  rs.TaskId,
-		Message: err,
+		Success: err == nil,
+		Message: msg,
 		Payload: ret,
 	})
 

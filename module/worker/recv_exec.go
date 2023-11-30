@@ -13,6 +13,7 @@ func (pod *RecvPod) Exec(rs *SocketData) error {
 
 	var (
 		err  error
+		msg  string
 		ret  string
 		data *command.ExecPayload
 	)
@@ -26,16 +27,19 @@ func (pod *RecvPod) Exec(rs *SocketData) error {
 	}
 
 	if err != nil {
+		msg = err.Error()
 		logman.Error("exec:fail", "error", err)
 	} else {
 		logman.Info("exec:done", "name", data.Name)
 	}
 
+	ret = strings.TrimSpace(ret)
 	err = pod.WriteJson(&SocketData{
 		Method:  "Exec:resp",
 		TaskId:  rs.TaskId,
-		Message: err,
-		Payload: strings.TrimSpace(ret),
+		Success: err == nil,
+		Message: msg,
+		Payload: ret,
 	})
 
 	return err

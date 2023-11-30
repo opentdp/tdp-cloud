@@ -1,7 +1,6 @@
 package workhub
 
 import (
-	"errors"
 	"time"
 
 	"github.com/opentdp/go-helper/logman"
@@ -55,7 +54,8 @@ func WaitResponse(id string, wait int) *SocketData {
 	}
 
 	return &SocketData{
-		Message: errors.New("请求超时"),
+		Success: false,
+		Message: "请求超时",
 	}
 
 }

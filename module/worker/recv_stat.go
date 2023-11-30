@@ -12,6 +12,7 @@ func (pod *RecvPod) Stat(rs *SocketData) error {
 	err := pod.WriteJson(&SocketData{
 		Method:  "Stat:resp",
 		TaskId:  rs.TaskId,
+		Success: true,
 		Payload: psutil.Detail(true),
 	})
 

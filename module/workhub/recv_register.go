@@ -32,6 +32,7 @@ func (pod *RecvPod) Register(rq *SocketData) error {
 	err := pod.WriteJson(&SocketData{
 		Method:  "Register:resp",
 		TaskId:  rq.TaskId,
+		Success: true,
 		Payload: "OK, Id: " + worker.WorkerId,
 	})
 

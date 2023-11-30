@@ -18,6 +18,7 @@ func (pod *RecvPod) Ping(rq *SocketData) error {
 	err := pod.WriteJson(&SocketData{
 		Method:  "Ping:resp",
 		TaskId:  rq.TaskId,
+		Success: true,
 		Payload: "OK",
 	})
 

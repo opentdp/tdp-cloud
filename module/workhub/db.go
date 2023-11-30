@@ -60,7 +60,7 @@ func createHistory(pod *SendPod, data *command.ExecPayload) uint {
 func updateHistory(pod *RespPod, rq *SocketData) error {
 
 	status := "Failed"
-	if rq.Message == nil {
+	if rq.Success {
 		status = "Success"
 	}
 
