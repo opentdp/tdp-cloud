@@ -11,6 +11,8 @@ import (
 	"tdp-cloud/module/workhub"
 )
 
+type FilerPayload = workhub.FilerPayload
+
 func (pod *RecvPod) Filer(rq *socket.PlainData) error {
 
 	var (
@@ -21,7 +23,7 @@ func (pod *RecvPod) Filer(rq *socket.PlainData) error {
 			FileData []byte
 			FileList []*filer.FileInfo
 		}
-		data workhub.FilerPayload
+		data FilerPayload
 	)
 
 	logman.Info("filer:recv", "taskId", rq.TaskId)
