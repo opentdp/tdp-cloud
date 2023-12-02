@@ -189,8 +189,8 @@ github.com/modern-go/reflect2 v1.0.2 h1:xBagoLtFs94CBntxluKeaWgTMpvLxC4ur3nMaC9G
 github.com/modern-go/reflect2 v1.0.2/go.mod h1:yWuevngMOJpCy52FWWMvUC8ws7m/LJsjYzDa0/r8luk=
 github.com/niemeyer/pretty v0.0.0-20200227124842-a10e7caefd8e h1:fD57ERR4JtEqsWbfPhv4DMiApHyliiK5xCTNVSPiaAs=
 github.com/niemeyer/pretty v0.0.0-20200227124842-a10e7caefd8e/go.mod h1:zD1mROLANZcx1PVRCS0qkT7pwLkGfwJo4zjcN/Tysno=
-github.com/opentdp/go-helper v0.4.3 h1:ugkkMTiHFjBokBSijjJj9tMcWw3We1lEBaTvAfzQh6I=
-github.com/opentdp/go-helper v0.4.3/go.mod h1:H3qhSAcclbDAQd3XlR4k109vAdypJL3thcW8XkMLhoQ=
+github.com/opentdp/go-helper v0.4.4 h1:evfOB+RxSp2bOcaEHI37O3CdHf2lym/Fbz0zEZjLNVY=
+github.com/opentdp/go-helper v0.4.4/go.mod h1:H3qhSAcclbDAQd3XlR4k109vAdypJL3thcW8XkMLhoQ=
 github.com/pelletier/go-toml/v2 v2.1.0 h1:FnwAJ4oYMvbT/34k9zzHuZNrhlz48GB3/s6at6/MHO4=
 github.com/pelletier/go-toml/v2 v2.1.0/go.mod h1:tJU2Z3ZkXwnxa4DPO899bsyIoywizdUvyaeZurnPPDc=
 github.com/pmezard/go-difflib v1.0.0/go.mod h1:iKH77koFhYxTK1pcRnkKkqfTogsbg7gZNVY4sRDYZ/4=
