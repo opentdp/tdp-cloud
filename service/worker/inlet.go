@@ -18,7 +18,7 @@ func inlet() {
 
 func timer() {
 
-	svclog.Warning("Connection disconnected, retry in 15 seconds.")
+	svclog.Warning("Connection disconnected, retry in 15 seconds")
 
 	time.Sleep(15 * time.Second)
 	inlet()

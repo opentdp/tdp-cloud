@@ -29,7 +29,7 @@ func Service(param []string) service.Service {
 
 	svclog, err = svc.Logger(nil)
 	if err != nil {
-		logman.Fatal("init service failed", "error", err)
+		logman.Fatal("init logger failed", "error", err)
 	}
 
 	return svc
