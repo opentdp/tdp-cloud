@@ -3,6 +3,7 @@ package worker
 import (
 	"errors"
 	"os"
+	"time"
 
 	"github.com/opentdp/go-helper/filer"
 	"github.com/opentdp/go-helper/logman"
@@ -38,6 +39,9 @@ func (pod *RecvPod) Filer(rq *socket.PlainData) error {
 			err = filer.Write(data.Path, data.File.Data)
 		case "chmod":
 			err = os.Chmod(data.Path, data.File.Mode)
+		case "chtime":
+			mtime := time.Unix(data.File.ModTime, 0)
+			os.Chtimes(data.Path, mtime, mtime)
 		case "mkdir":
 			err = os.MkdirAll(data.Path, 0755)
 		case "rm":

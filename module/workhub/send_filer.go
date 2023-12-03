@@ -12,10 +12,7 @@ import (
 type FilerPayload struct {
 	Action string
 	Path   string
-	File   struct {
-		filer.FileInfo
-		RawData string // base64
-	}
+	File   filer.FileInfo
 }
 
 func (pod *SendPod) Filer(data *FilerPayload) (string, error) {
