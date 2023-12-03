@@ -24,7 +24,7 @@ type Config struct {
 	Value       string `gorm:"size:1024"`
 	Type        string `gorm:"size:32;default:string"`
 	Module      string `gorm:"size:32;uniqueIndex:idx_config"`
-	Description string `gorm:"size:1024"`
+	Description string `gorm:"size:2048"`
 	CreatedAt   int64
 	UpdatedAt   int64
 }
@@ -55,14 +55,14 @@ type Cronjob struct {
 type Domain struct {
 	Id          uint   `gorm:"primaryKey"`
 	UserId      uint   `gorm:"index"`
-	VendorId    uint   `gorm:"index"`
+	VendorId    uint   `gorm:"index;default:null"`
 	Name        string `gorm:"size:255"`
 	NSList      string `gorm:"size:1024"`
 	Model       string `gorm:"size:32"`
 	CloudId     string `gorm:"size:64;uniqueIndex"`
 	CloudMeta   any    `gorm:"serializer:json"`
 	Status      string `gorm:"size:32"`
-	Description string `gorm:"size:1024"`
+	Description string `gorm:"size:2048"`
 	CreatedAt   int64
 	UpdatedAt   int64
 }
@@ -77,7 +77,7 @@ type Keypair struct {
 	KeyType     string `gorm:"size:32;index"`
 	Cipher      string `gorm:"size:64"`
 	Status      string `gorm:"size:32"`
-	Description string `gorm:"size:1024"`
+	Description string `gorm:"size:2048"`
 	CreatedAt   int64
 	UpdatedAt   int64
 }
@@ -87,7 +87,7 @@ type Keypair struct {
 type Machine struct {
 	Id          uint   `gorm:"primaryKey"`
 	UserId      uint   `gorm:"index"`
-	VendorId    uint   `gorm:"index"`
+	VendorId    uint   `gorm:"index;default:null"`
 	HostName    string `gorm:"size:255"`
 	IpAddress   string `gorm:"size:1024"`
 	OSType      string `gorm:"size:32"`
@@ -98,7 +98,7 @@ type Machine struct {
 	WorkerId    string `gorm:"size:64;uniqueIndex;default:null"`
 	WorkerMeta  any    `gorm:"serializer:json"`
 	Status      string `gorm:"size:32"`
-	Description string `gorm:"size:1024"`
+	Description string `gorm:"size:2048"`
 	CreatedAt   int64
 	UpdatedAt   int64
 }
@@ -108,7 +108,7 @@ type Machine struct {
 type Migration struct {
 	Id          uint   `gorm:"primaryKey"`
 	Version     string `gorm:"size:64;uniqueIndex"`
-	Description string `gorm:"size:1024"`
+	Description string `gorm:"size:2048"`
 	CreatedAt   int64
 	UpdatedAt   int64
 }
@@ -124,7 +124,7 @@ type Script struct {
 	WorkDirectory string `gorm:"size:256"`
 	Content       string `gorm:"type:text"`
 	Timeout       uint
-	Description   string `gorm:"size:1024"`
+	Description   string `gorm:"size:2048"`
 	CreatedAt     int64
 	UpdatedAt     int64
 }
@@ -155,7 +155,7 @@ type User struct {
 	AppKey      string   `gorm:"size:128" json:"-"`
 	Email       string   `gorm:"size:255;uniqueIndex"`
 	Avatar      string   `gorm:"size:255;default:assets/image/avatar.jpg"`
-	Description string   `gorm:"size:1024;default:挥一挥手"`
+	Description string   `gorm:"size:2048;default:挥一挥手"`
 	Vendors     []Vendor `json:",omitempty"`
 	CreatedAt   int64
 	UpdatedAt   int64
@@ -171,7 +171,7 @@ type Vendor struct {
 	Provider    string    `gorm:"size:32"`
 	Cipher      string    `gorm:"size:64"`
 	Status      string    `gorm:"size:32"`
-	Description string    `gorm:"size:1024"`
+	Description string    `gorm:"size:2048"`
 	Certjobs    []Certjob `json:",omitempty"`
 	Domains     []Domain  `json:",omitempty"`
 	Machines    []Machine `json:",omitempty"`
