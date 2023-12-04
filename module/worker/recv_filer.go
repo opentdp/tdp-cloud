@@ -21,7 +21,6 @@ func (pod *RecvPod) Filer(rq *socket.PlainData) error {
 		msg string
 		ret struct {
 			Success  bool
-			FileData []byte
 			FileList []*filer.FileInfo
 		}
 		data FilerPayload
@@ -34,9 +33,18 @@ func (pod *RecvPod) Filer(rq *socket.PlainData) error {
 		case "ls":
 			ret.FileList, err = filer.List(data.Path)
 		case "read":
-			ret.FileData, err = os.ReadFile(data.Path)
+			info := &filer.FileInfo{}
+			info, err = filer.Detail(data.Path, true)
+			ret.FileList = []*filer.FileInfo{info}
 		case "write":
 			err = filer.Write(data.Path, data.File.Data)
+			if data.File.Mode > 0 {
+				err = os.Chmod(data.Path, data.File.Mode)
+			}
+			if data.File.ModTime > 0 {
+				mtime := time.Unix(data.File.ModTime, 0)
+				os.Chtimes(data.Path, mtime, mtime)
+			}
 		case "chmod":
 			err = os.Chmod(data.Path, data.File.Mode)
 		case "chtime":
