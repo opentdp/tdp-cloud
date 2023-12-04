@@ -18,7 +18,7 @@ require (
 	github.com/knadh/koanf/providers/file v0.1.0
 	github.com/knadh/koanf/v2 v2.0.1
 	// 辅助类库
-	github.com/opentdp/go-helper v0.4.5
+	github.com/opentdp/go-helper v0.4.6
 	// 计划任务
 	github.com/robfig/cron/v3 v3.0.1
 	// Go 官方模块
