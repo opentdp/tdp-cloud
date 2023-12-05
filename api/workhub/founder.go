@@ -20,7 +20,7 @@ func host(c *gin.Context) {
 
 	c.Set("Payload", gin.H{
 		"Stat":         psutil.Detail(rq.WithAddr),
-		"MemStats":     psutil.GoMemory(),
+		"MemStat":      psutil.GoMemory(),
 		"NumGoroutine": runtime.NumGoroutine(),
 	})
 

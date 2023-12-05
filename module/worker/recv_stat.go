@@ -20,7 +20,7 @@ func (pod *RecvPod) Stat(rq *socket.PlainData) error {
 		Success: true,
 		Payload: map[string]any{
 			"Stat":         psutil.Detail(true),
-			"MemStats":     psutil.GoMemory(),
+			"MemStat":      psutil.GoMemory(),
 			"NumGoroutine": runtime.NumGoroutine(),
 		},
 	})
