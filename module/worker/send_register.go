@@ -40,20 +40,13 @@ func (pod *RespPod) Register(rs *socket.PlainData) {
 
 	logman.Info("register:resp", "payload", rs.Payload)
 
-	go KeepAlive(&SendPod{pod.WsConn})
-
-}
-
-//// 持续报送状态
-
-func KeepAlive(pod *SendPod) error {
+	send := &SendPod{pod.WsConn}
 
 	for {
 		time.Sleep(25 * time.Second)
-
-		if _, err := pod.Ping(); err != nil {
+		if _, err := send.Ping(); err != nil {
 			logman.Error("ping:fail", "error", err)
-			return err
+			return
 		}
 	}
 

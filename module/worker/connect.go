@@ -67,7 +67,7 @@ func Receiver(pod *socket.WsConn) error {
 		case "Ping:resp":
 			resp.Ping(rq)
 		case "Register:resp":
-			resp.Register(rq)
+			go resp.Register(rq)
 		default:
 			logman.Warn("unknown task", "request", rq)
 		}

@@ -29,8 +29,8 @@ func (pod *RespPod) Exec(rs *socket.PlainData) {
 
 	logman.Info("exec:resp", "from", pod.WorkerMeta.HostName)
 
-	err := updateHistory(pod, rs)
-
-	logman.Info("exec:save", "err", err)
+	if err := updateHistory(pod, rs); err != nil {
+		logman.Error("exec:resp", "error", err)
+	}
 
 }
