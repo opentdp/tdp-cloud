@@ -2,8 +2,8 @@ package args
 
 // 版本信息
 
-const Version = "0.15.0"
-const BuildVersion = "231203"
+const Version = "0.15.1"
+const BuildVersion = "231204"
 
 // 更新地址
 
