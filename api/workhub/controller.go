@@ -36,7 +36,7 @@ func detail(c *gin.Context) {
 	if id, err := send.Stat(); err == nil {
 		rq := workhub.WaitResponse(id, 30)
 		if rq.Success {
-			c.Set("Payload", gin.H{"Stat": rq.Payload})
+			c.Set("Payload", rq.Payload)
 		} else {
 			c.Set("Error", rq.Message)
 		}

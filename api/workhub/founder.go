@@ -1,6 +1,8 @@
 package workhub
 
 import (
+	"runtime"
+
 	"github.com/gin-gonic/gin"
 	"github.com/opentdp/go-helper/psutil"
 )
@@ -16,9 +18,11 @@ func host(c *gin.Context) {
 		return
 	}
 
-	stat := psutil.Detail(rq.WithAddr)
-
-	c.Set("Payload", gin.H{"Stat": stat})
+	c.Set("Payload", gin.H{
+		"Stat":         psutil.Detail(rq.WithAddr),
+		"MemStats":     psutil.GoMemory(),
+		"NumGoroutine": runtime.NumGoroutine(),
+	})
 
 }
 
