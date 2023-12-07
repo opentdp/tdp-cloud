@@ -34,12 +34,10 @@ func Connect() error {
 	defer pod.Close()
 
 	// 注册节点
-
 	send := &SendPod{pod}
 	go send.Register()
 
 	// 接收数据
-
 	return Receiver(pod)
 
 }
@@ -51,7 +49,6 @@ func Receiver(pod *socket.WsConn) error {
 
 	for {
 		var rq *socket.PlainData
-
 		if err := pod.ReadJson(&rq); err != nil {
 			logman.Error("read json failed", "error", err)
 			return err

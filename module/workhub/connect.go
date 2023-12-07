@@ -36,29 +36,28 @@ type ConnectParam struct {
 
 func Connect(ws *websocket.Conn, rq *ConnectParam) error {
 
-	pod := socket.NewWsConn(ws)
-	ws.MaxPayloadBytes = 200 << 20 // 200M
+	conn := &socket.WsConn{Conn: ws}
+	conn.MaxPayloadBytes = 200 << 20 // 200M
 
-	defer pod.Close()
+	worker := &Worker{
+		conn, rq.UserId, rq.MachineId, "", "", nil, "",
+	}
+
+	defer worker.Close()
+	defer DeleteWorker(worker)
 
 	// 接收数据
-
-	return Receiver(&Worker{
-		pod, rq.UserId, rq.MachineId, "", "", nil, "",
-	})
+	return Receiver(worker)
 
 }
 
 func Receiver(worker *Worker) error {
-
-	defer DeleteWorker(worker)
 
 	recv := &RecvPod{worker}
 	resp := &RespPod{worker}
 
 	for {
 		var rq *socket.PlainData
-
 		if err := worker.ReadJson(&rq); err != nil {
 			logman.Error("read:error", "error", err)
 			return err

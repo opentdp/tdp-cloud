@@ -26,7 +26,7 @@ func list(c *gin.Context) {
 func detail(c *gin.Context) {
 
 	workerId := c.Param("id")
-	send := workhub.NewSender(workerId)
+	send := workhub.GetSendPod(workerId)
 
 	if send == nil {
 		c.Set("Error", "客户端已断开连接")
@@ -51,7 +51,7 @@ func detail(c *gin.Context) {
 func exec(c *gin.Context) {
 
 	workerId := c.Param("id")
-	send := workhub.NewSender(workerId)
+	send := workhub.GetSendPod(workerId)
 
 	if send == nil {
 		c.Set("Error", "客户端已断开连接")
@@ -79,7 +79,7 @@ func exec(c *gin.Context) {
 func filer(c *gin.Context) {
 
 	workerId := c.Param("id")
-	send := workhub.NewSender(workerId)
+	send := workhub.GetSendPod(workerId)
 
 	if send == nil {
 		c.Set("Error", "客户端已断开连接")
@@ -110,25 +110,24 @@ func filer(c *gin.Context) {
 
 func register(c *gin.Context) {
 
-	ur, err := user.Fetch(&user.FetchParam{
+	usr, err := user.Fetch(&user.FetchParam{
 		AppId: c.Param("auth"),
 	})
 
-	if err != nil || ur.Id == 0 {
+	if err != nil || usr.Id == 0 {
 		c.Set("Error", "授权失败")
 		return
 	}
 
-	c.Set("UserId", ur.Id)
-	c.Set("MachineId", strutil.ToUint(c.Param("mid")))
+	rq := &workhub.ConnectParam{
+		UserId:    usr.Id,
+		MachineId: strutil.ToUint(c.Param("mid")),
+	}
 
 	// 创建 Worker 会话
 
 	h := websocket.Handler(func(ws *websocket.Conn) {
-		err := workhub.Connect(ws, &workhub.ConnectParam{
-			UserId:    c.GetUint("UserId"),
-			MachineId: c.GetUint("MachineId"),
-		})
+		err := workhub.Connect(ws, rq)
 		c.Set("Error", err)
 	})
 
