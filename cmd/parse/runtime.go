@@ -3,9 +3,11 @@ package parse
 import (
 	"os"
 	"path"
-	"tdp-cloud/cmd/args"
 
 	"github.com/opentdp/go-helper/logman"
+	"github.com/opentdp/go-helper/strutil"
+
+	"tdp-cloud/cmd/args"
 )
 
 func RuntimeFix() {
@@ -19,6 +21,10 @@ func RuntimeFix() {
 
 	if args.Dataset.Dir != "" && args.Dataset.Dir != "." {
 		os.MkdirAll(args.Dataset.Dir, 0755)
+	}
+
+	if args.Dataset.Secret == "" {
+		args.Dataset.Secret = strutil.Rand(32)
 	}
 
 	// init logger
@@ -37,5 +43,11 @@ func RuntimeFix() {
 		Storage:  args.Logger.Dir,
 		Filename: "global",
 	})
+
+	// init jwtkey
+
+	if args.Server.JwtKey == "" {
+		args.Server.JwtKey = strutil.Rand(32)
+	}
 
 }

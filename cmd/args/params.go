@@ -2,8 +2,6 @@ package args
 
 import (
 	"embed"
-
-	"github.com/opentdp/go-helper/strutil"
 )
 
 // 调试模式
@@ -22,8 +20,7 @@ type IDataset struct {
 }
 
 var Dataset = IDataset{
-	Dir:    "var",
-	Secret: strutil.Rand(32),
+	Dir: "var",
 }
 
 // 日志参数
@@ -65,7 +62,6 @@ type IServer struct {
 
 var Server = IServer{
 	Listen: ":7800",
-	JwtKey: strutil.Rand(32),
 }
 
 // 子节点参数

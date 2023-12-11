@@ -39,17 +39,18 @@ func NewConfig() *Config {
 func (c *Config) Server() {
 
 	// 读取默认配置
-	df := map[string]any{
+	mp := map[string]any{
 		"dataset":  args.Dataset,
 		"logger":   args.Logger,
 		"database": args.Database,
 		"server":   args.Server,
 	}
-	c.Koanf.Load(confmap.Provider(df, "."), nil)
+	c.Koanf.Load(confmap.Provider(mp, "."), nil)
 
 	// 读取配置文件
 	if YamlFile != "" {
 		c.ReadYaml()
+		// 使用配置文件中的参数覆盖默认值
 		c.Koanf.Unmarshal("dataset", &args.Dataset)
 		c.Koanf.Unmarshal("logger", &args.Logger)
 		c.Koanf.Unmarshal("database", &args.Database)
@@ -63,16 +64,17 @@ func (c *Config) Server() {
 func (c *Config) Worker() {
 
 	// 读取默认配置
-	df := map[string]any{
+	mp := map[string]any{
 		"dataset": args.Dataset,
 		"logger":  args.Logger,
 		"worker":  args.Worker,
 	}
-	c.Koanf.Load(confmap.Provider(df, "."), nil)
+	c.Koanf.Load(confmap.Provider(mp, "."), nil)
 
 	// 读取配置文件
 	if YamlFile != "" {
 		c.ReadYaml()
+		// 使用配置文件中的参数覆盖默认值
 		c.Koanf.Unmarshal("dataset", &args.Dataset)
 		c.Koanf.Unmarshal("logger", &args.Logger)
 		c.Koanf.Unmarshal("worker", &args.Worker)
