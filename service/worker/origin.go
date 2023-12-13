@@ -1,31 +1,28 @@
 package worker
 
 import (
-	"github.com/kardianos/service"
+	"time"
+
+	"github.com/opentdp/go-helper/logman"
+
+	"tdp-cloud/module/worker"
 )
 
-type origin struct{}
+func origin() {
 
-func (p *origin) Start(s service.Service) error {
+	defer timer()
 
-	svclog.Info("TDP Worker start")
-
-	return p.run()
-
-}
-
-func (p *origin) Stop(s service.Service) error {
-
-	svclog.Info("TDP Worker stop")
-
-	return nil
+	if err := worker.Connect(); err != nil {
+		logman.Error(err.Error())
+	}
 
 }
 
-func (p *origin) run() error {
+func timer() {
 
-	go inlet()
+	logman.Warn("Connection disconnected, retry in 15 seconds")
 
-	return nil
+	time.Sleep(15 * time.Second)
+	origin()
 
 }

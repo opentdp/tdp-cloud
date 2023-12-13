@@ -1,31 +1,64 @@
 package server
 
 import (
-	"github.com/kardianos/service"
+	"path"
+
+	"github.com/opentdp/go-helper/dborm"
+	"github.com/opentdp/go-helper/httpd"
+
+	"tdp-cloud/api"
+	"tdp-cloud/cmd/args"
+	"tdp-cloud/module/certbot"
+	"tdp-cloud/module/migrator"
 )
 
-type origin struct{}
+func origin() {
 
-func (p *origin) Start(s service.Service) error {
+	dbConnect()
 
-	svclog.Info("TDP Server start")
+	certbot.Daemon()
 
-	return p.run()
-
-}
-
-func (p *origin) Stop(s service.Service) error {
-
-	svclog.Info("TDP Server stop")
-
-	return nil
+	httpServer()
 
 }
 
-func (p *origin) run() error {
+func dbConnect() {
 
-	go inlet()
+	// 修正数据库文件
+	if args.Database.Type == "sqlite" && !path.IsAbs(args.Database.Name) {
+		args.Database.Name = path.Join(args.Dataset.Dir, args.Database.Name)
+	}
 
-	return nil
+	// 连接数据库
+	dborm.Connect(&dborm.Config{
+		Type:     args.Database.Type,
+		Host:     args.Database.Host,
+		User:     args.Database.User,
+		Password: args.Database.Passwd,
+		DbName:   args.Database.Name,
+		Option:   args.Database.Option,
+	})
+
+	// 实施自动迁移
+	migrator.Deploy()
+
+}
+
+func httpServer() {
+
+	// 初始化
+	engine := httpd.Engine(args.Debug)
+
+	// 接口路由
+	api.Router(engine)
+
+	// 上传文件路由
+	httpd.Static("/upload", args.Dataset.Dir+"/upload")
+
+	// 前端文件路由
+	httpd.StaticEmbed("/", "front", args.Efs)
+
+	// 启动服务
+	httpd.Server(args.Server.Listen)
 
 }

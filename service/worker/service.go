@@ -7,8 +7,6 @@ import (
 	"tdp-cloud/cmd/args"
 )
 
-var svclog service.Logger
-
 func Service(param []string) service.Service {
 
 	config := &service.Config{
@@ -22,16 +20,40 @@ func Service(param []string) service.Service {
 		Arguments: param,
 	}
 
-	svc, err := service.New(&origin{}, config)
+	svc, err := service.New(&program{}, config)
 	if err != nil {
 		logman.Fatal("init service failed", "error", err)
 	}
 
-	svclog, err = svc.Logger(nil)
-	if err != nil {
-		logman.Fatal("init logger failed", "error", err)
+	return svc
+
+}
+
+// service program
+
+type program struct{}
+
+func (p *program) Start(s service.Service) error {
+
+	if logger, err := s.Logger(nil); err == nil {
+		logger.Info("TDP Worker start")
+	} else {
+		logman.Info("TDP Worker start")
 	}
 
-	return svc
+	go origin()
+	return nil
+
+}
+
+func (p *program) Stop(s service.Service) error {
+
+	if logger, err := s.Logger(nil); err == nil {
+		logger.Info("TDP Worker stop")
+	} else {
+		logman.Info("TDP Worker stop")
+	}
+
+	return nil
 
 }

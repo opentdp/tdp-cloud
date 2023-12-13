@@ -10,12 +10,6 @@ import (
 	"tdp-cloud/service/worker"
 )
 
-var statusMap = map[service.Status]string{
-	0: "Unknown",
-	1: "Running",
-	2: "Stopped",
-}
-
 func Control(name, act string) {
 
 	var svc service.Service
@@ -24,14 +18,20 @@ func Control(name, act string) {
 
 	switch name {
 	case "server":
-		svc = server.Service(cliArgs())
+		svc = server.Service(clearArgs())
 	case "worker":
-		svc = worker.Service(cliArgs())
+		svc = worker.Service(clearArgs())
 	default:
 		logman.Fatal("unknown service", "name", name)
 	}
 
 	// 执行服务动作
+
+	statusMap := map[service.Status]string{
+		0: "Unknown",
+		1: "Running",
+		2: "Stopped",
+	}
 
 	switch act {
 	case "":
@@ -52,7 +52,7 @@ func Control(name, act string) {
 
 }
 
-func cliArgs() []string {
+func clearArgs() []string {
 
 	args := []string{}
 
