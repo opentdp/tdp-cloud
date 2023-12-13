@@ -49,9 +49,21 @@
 
 ## 开发说明
 
+### 初始化开发环境
+
+```shell
+go env -w GO111MODULE=on
+go env -w GOPROXY=https://goproxy.cn,direct
+go mod tidy
+```
+
 ### 启动开发服务
 
 在项目目录运行  `serve.bat` 或 `./serve.sh`
+
+### 编译为二进制
+
+在项目目录运行 `build.bat` 或 `./build.sh`。你还可以下载 [稳定版](https://cloud.opentdp.org/files)
 
 ### 提交代码时请使用下面标识
 
@@ -67,24 +79,11 @@
 
 > 自 **v0.5.0** 起，`git commit` 描述请以 **标识+半角冒号+空格** 开头，即 `<type>: <subject>`
 
-### 编译为二进制
-
-在项目目录运行 `build.bat` 或 `./build.sh`。你还可以下载 [稳定版](https://cloud.opentdp.org/files)
-
-### 额外参数设置
-
-如果项目无法运行或编译，请尝试设置系统环境变量或临时环境变量
-
-```shell
-go env -w GO111MODULE=on
-go env -w GOPROXY=https://goproxy.cn,direct
-```
-
 ## 微信交流群
 
 扫码添加开发者好友（请备注 `OpenTDP`，不备注可能无法通过好友申请）
 
-![](http://docs.opentdp.org/static/weixin-qr.jpg)
+![扫码加群](https://docs.opentdp.org/static/weixin-qr.jpg)
 
 ## 其他
 
