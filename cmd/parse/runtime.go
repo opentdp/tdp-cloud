@@ -10,21 +10,23 @@ import (
 	"tdp-cloud/cmd/args"
 )
 
-func RuntimeFix() {
-
-	// debug mode
+func preConfig() {
 
 	debug := os.Getenv("TDP_DEBUG")
 	args.Debug = debug == "1" || debug == "true"
 
-	// init dataset
+}
 
-	if args.Dataset.Dir != "" && args.Dataset.Dir != "." {
-		os.MkdirAll(args.Dataset.Dir, 0755)
-	}
+func postConfig() {
+
+	// init dataset
 
 	if args.Dataset.Secret == "" {
 		args.Dataset.Secret = strutil.Rand(32)
+	}
+
+	if args.Dataset.Dir != "" && args.Dataset.Dir != "." {
+		os.MkdirAll(args.Dataset.Dir, 0755)
 	}
 
 	// init logger
@@ -41,13 +43,7 @@ func RuntimeFix() {
 		Level:    args.Logger.Level,
 		Target:   args.Logger.Target,
 		Storage:  args.Logger.Dir,
-		Filename: "global",
+		Filename: "default",
 	})
-
-	// init jwtkey
-
-	if args.Server.JwtKey == "" {
-		args.Server.JwtKey = strutil.Rand(32)
-	}
 
 }

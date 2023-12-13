@@ -14,60 +14,49 @@ var Efs *embed.FS
 
 // 数据存储
 
-type IDataset struct {
+var Dataset = struct {
 	Dir    string
 	Secret string
-}
-
-var Dataset = IDataset{
+}{
 	Dir: "var",
 }
 
 // 日志参数
 
-type ILogger struct {
+var Logger = struct {
 	Dir    string
 	Level  string
 	Target string
-}
-
-var Logger = ILogger{
-	Dir:    ".",
+}{
 	Level:  "info",
 	Target: "stdout",
 }
 
-// 数据库参数
+// 数据库参数 - Server
 
-type IDatabase struct {
+var Database = struct {
 	Type   string
 	Host   string
 	User   string
 	Passwd string
 	Name   string
 	Option string
-}
-
-var Database = IDatabase{
+}{
 	Type: "sqlite",
 	Name: "server.db",
 }
 
-// 主节点参数
+// 主节点参数 - Server
 
-type IServer struct {
+var Server = struct {
 	Listen string
 	JwtKey string
-}
-
-var Server = IServer{
+}{
 	Listen: ":7800",
 }
 
-// 子节点参数
+// 子节点参数 - Worker
 
-type IWorker struct {
+var Worker = struct {
 	Remote string
-}
-
-var Worker = IWorker{}
+}{}

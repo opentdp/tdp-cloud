@@ -9,6 +9,7 @@ import (
 	"github.com/knadh/koanf/v2"
 	"github.com/opentdp/go-helper/filer"
 	"github.com/opentdp/go-helper/logman"
+	"github.com/opentdp/go-helper/strutil"
 
 	"tdp-cloud/cmd/args"
 )
@@ -26,6 +27,8 @@ type Config struct {
 
 func NewConfig() *Config {
 
+	preConfig()
+
 	var p = yaml.Parser()
 	var k = koanf.NewWithConf(koanf.Conf{
 		StrictMerge: true,
@@ -41,8 +44,8 @@ func (c *Config) Server() {
 	// 读取默认配置
 	mp := map[string]any{
 		"dataset":  args.Dataset,
-		"logger":   args.Logger,
 		"database": args.Database,
+		"logger":   args.Logger,
 		"server":   args.Server,
 	}
 	c.Koanf.Load(confmap.Provider(mp, "."), nil)
@@ -52,12 +55,15 @@ func (c *Config) Server() {
 		c.ReadYaml()
 		// 使用配置文件中的参数覆盖默认值
 		c.Koanf.Unmarshal("dataset", &args.Dataset)
-		c.Koanf.Unmarshal("logger", &args.Logger)
 		c.Koanf.Unmarshal("database", &args.Database)
+		c.Koanf.Unmarshal("logger", &args.Logger)
 		c.Koanf.Unmarshal("server", &args.Server)
 	}
 
-	RuntimeFix()
+	// 初始化 JwtKey
+	if args.Server.JwtKey == "" {
+		args.Server.JwtKey = strutil.Rand(32)
+	}
 
 }
 
@@ -80,8 +86,6 @@ func (c *Config) Worker() {
 		c.Koanf.Unmarshal("worker", &args.Worker)
 	}
 
-	RuntimeFix()
-
 }
 
 func (c *Config) ReadYaml() {
@@ -102,19 +106,21 @@ func (c *Config) ReadYaml() {
 
 func (c *Config) WriteYaml(force bool) {
 
+	postConfig()
+
 	// 是否强制覆盖
 	if !force && filer.Exists(YamlFile) {
 		return
 	}
 
 	// 序列化参数信息
-	b, err := c.Koanf.Marshal(c.Parser)
+	buf, err := c.Koanf.Marshal(c.Parser)
 	if err != nil {
 		logman.Fatal("write config error", "error", err)
 	}
 
 	// 将参数写入配置文件
-	err = os.WriteFile(YamlFile, b, 0644)
+	err = os.WriteFile(YamlFile, buf, 0644)
 	if err != nil {
 		logman.Fatal("write config error", "error", err)
 	}
