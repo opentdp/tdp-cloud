@@ -28,6 +28,18 @@ tar xvf cloud-ui.tar.gz --strip-components 2 -C front
 
 ####################################################################
 
+last_tag=`git tag | sort -V | tail -n 1`
+prev_tag=`git tag | sort -V | tail -n 2 | head -n 1`
+git log $last_tag..$prev_tag --pretty=format:"%s" | grep -v "^release" | sed 's/^/- /' | sort > RELEASE.md
+
+version=`echo $last_tag | sed 's/^v//'`
+sed -i "s/^const Version = \".*\"/const Version = \"$version\"/" cmd/args/build.go
+
+build_version=$((`grep -oP 'BuildVersion = "\K\d+' cmd/args/build.go` + $GITHUB_RUN_NUMBER))
+sed -i "s/^const BuildVersion = \".*\"/const BuildVersion = \"$build_version\"/" cmd/args/build.go
+
+####################################################################
+
 build android arm64
 
 build darwin amd64
