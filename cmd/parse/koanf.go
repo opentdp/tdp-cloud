@@ -15,13 +15,13 @@ import (
 // 配置文件路径
 
 var YamlFile string
-var ForceWrite bool
 
 // 配置信息操作类
 
 type Config struct {
-	Koanf  *koanf.Koanf
-	Parser *yaml.YAML
+	Koanf    *koanf.Koanf
+	Parser   *yaml.YAML
+	Override bool
 }
 
 func (c *Config) Init() *Config {
@@ -41,16 +41,15 @@ func (c *Config) Init() *Config {
 
 func (c *Config) ReadYaml() {
 
-	// 配置不存在则忽略
-	_, err := os.Stat(YamlFile)
-	if os.IsNotExist(err) {
+	// 不存在则忽略
+	if _, err := os.Stat(YamlFile); os.IsNotExist(err) {
 		return
 	}
 
-	// 从配置文件读取参数
-	err = c.Koanf.Load(file.Provider(YamlFile), c.Parser)
+	// 从文件读取参数
+	err := c.Koanf.Load(file.Provider(YamlFile), c.Parser)
 	if err != nil {
-		logman.Fatal("read config error", "error", err)
+		logman.Fatal("read config failed", "error", err)
 	}
 
 }
@@ -58,20 +57,20 @@ func (c *Config) ReadYaml() {
 func (c *Config) WriteYaml() {
 
 	// 是否强制覆盖
-	if !ForceWrite && filer.Exists(YamlFile) {
+	if !c.Override && filer.Exists(YamlFile) {
 		return
 	}
 
 	// 序列化参数信息
-	buf, err := c.Koanf.Marshal(c.Parser)
+	bytes, err := c.Koanf.Marshal(c.Parser)
 	if err != nil {
-		logman.Fatal("write config error", "error", err)
+		logman.Fatal("write config failed", "error", err)
 	}
 
 	// 将参数写入配置文件
-	err = os.WriteFile(YamlFile, buf, 0644)
+	err = os.WriteFile(YamlFile, bytes, 0644)
 	if err != nil {
-		logman.Fatal("write config error", "error", err)
+		logman.Fatal("write config failed", "error", err)
 	}
 
 }

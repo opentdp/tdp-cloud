@@ -26,7 +26,6 @@ func (c *Config) Worker() {
 
 	if YamlFile != "" {
 		c.ReadYaml()
-		// 使用配置文件中的参数覆盖默认值
 		c.Koanf.Unmarshal("dataset", &args.Dataset)
 		c.Koanf.Unmarshal("logger", &args.Logger)
 		c.Koanf.Unmarshal("worker", &args.Worker)
@@ -36,7 +35,7 @@ func (c *Config) Worker() {
 
 	if args.Dataset.Secret == "" {
 		args.Dataset.Secret = strutil.Rand(32)
-		ForceWrite = true
+		c.Override = true
 	}
 
 	if args.Dataset.Dir != "" && args.Dataset.Dir != "." {

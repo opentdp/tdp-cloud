@@ -27,7 +27,6 @@ func (c *Config) Server() {
 
 	if YamlFile != "" {
 		c.ReadYaml()
-		// 使用配置文件中的参数覆盖默认值
 		c.Koanf.Unmarshal("dataset", &args.Dataset)
 		c.Koanf.Unmarshal("database", &args.Database)
 		c.Koanf.Unmarshal("logger", &args.Logger)
@@ -38,7 +37,7 @@ func (c *Config) Server() {
 
 	if args.Dataset.Secret == "" {
 		args.Dataset.Secret = strutil.Rand(32)
-		ForceWrite = true
+		c.Override = true
 	}
 
 	if args.Dataset.Dir != "" && args.Dataset.Dir != "." {
@@ -66,7 +65,7 @@ func (c *Config) Server() {
 
 	if args.Server.JwtKey == "" {
 		args.Server.JwtKey = strutil.Rand(32)
-		ForceWrite = true
+		c.Override = true
 	}
 
 }
