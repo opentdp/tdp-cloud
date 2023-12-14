@@ -16,10 +16,10 @@ func (c *Config) Server() {
 	// 读取默认配置
 
 	mp := map[string]any{
-		"dataset":  args.Dataset,
-		"database": args.Database,
-		"logger":   args.Logger,
-		"server":   args.Server,
+		"dataset":  &args.Dataset,
+		"database": &args.Database,
+		"logger":   &args.Logger,
+		"server":   &args.Server,
 	}
 	c.Koanf.Load(confmap.Provider(mp, "."), nil)
 
@@ -27,10 +27,9 @@ func (c *Config) Server() {
 
 	if YamlFile != "" {
 		c.ReadYaml()
-		c.Koanf.Unmarshal("dataset", &args.Dataset)
-		c.Koanf.Unmarshal("database", &args.Database)
-		c.Koanf.Unmarshal("logger", &args.Logger)
-		c.Koanf.Unmarshal("server", &args.Server)
+		for k, v := range mp {
+			c.Koanf.Unmarshal(k, v)
+		}
 	}
 
 	// 初始化存储

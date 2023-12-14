@@ -16,9 +16,9 @@ func (c *Config) Worker() {
 	// 读取默认配置
 
 	mp := map[string]any{
-		"dataset": args.Dataset,
-		"logger":  args.Logger,
-		"worker":  args.Worker,
+		"dataset": &args.Dataset,
+		"logger":  &args.Logger,
+		"worker":  &args.Worker,
 	}
 	c.Koanf.Load(confmap.Provider(mp, "."), nil)
 
@@ -26,9 +26,9 @@ func (c *Config) Worker() {
 
 	if YamlFile != "" {
 		c.ReadYaml()
-		c.Koanf.Unmarshal("dataset", &args.Dataset)
-		c.Koanf.Unmarshal("logger", &args.Logger)
-		c.Koanf.Unmarshal("worker", &args.Worker)
+		for k, v := range mp {
+			c.Koanf.Unmarshal(k, v)
+		}
 	}
 
 	// 初始化存储
