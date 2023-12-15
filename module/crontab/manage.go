@@ -46,8 +46,8 @@ func GetEntries(jobs []*model.Cronjob) map[uint]any {
 		entry := crontab.Entry(cron.EntryID(job.EntryId))
 		list[job.Id] = map[string]any{
 			"EntryId":  entry.ID,
-			"NextTime": entry.Next,
-			"PrevTime": entry.Prev,
+			"NextTime": entry.Next.Unix(),
+			"PrevTime": entry.Prev.Unix(),
 		}
 	}
 
