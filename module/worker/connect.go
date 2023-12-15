@@ -25,31 +25,31 @@ func Connect() error {
 
 	url := args.Worker.Remote
 	hostname, _ := os.Hostname() // 获取主机名
-	pod, err := socket.NewWsClient(url, "", "tdp://"+hostname)
-
+	conn, err := socket.NewWsClient(url, "", "tdp://"+hostname)
 	if err != nil {
 		return err
 	}
 
-	defer pod.Close()
+	conn.MaxPayloadBytes = 200 << 20 // 200M
+	defer conn.Close()
 
 	// 注册节点
-	send := &SendPod{pod}
+	send := &SendPod{conn}
 	go send.Register()
 
 	// 接收数据
-	return Receiver(pod)
+	return Receiver(conn)
 
 }
 
-func Receiver(pod *socket.WsConn) error {
+func Receiver(conn *socket.WsConn) error {
 
-	recv := &RecvPod{pod}
-	resp := &RespPod{pod}
+	recv := &RecvPod{conn}
+	resp := &RespPod{conn}
 
 	for {
 		var rq *socket.PlainData
-		if err := pod.ReadJson(&rq); err != nil {
+		if err := conn.ReadJson(&rq); err != nil {
 			logman.Error("read json failed", "error", err)
 			return err
 		}
