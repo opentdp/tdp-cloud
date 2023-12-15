@@ -1,6 +1,7 @@
 package parse
 
 import (
+	"errors"
 	"os"
 
 	"github.com/knadh/koanf/parsers/yaml"
@@ -8,8 +9,6 @@ import (
 	"github.com/knadh/koanf/v2"
 	"github.com/opentdp/go-helper/filer"
 	"github.com/opentdp/go-helper/logman"
-
-	"tdp-cloud/cmd/args"
 )
 
 // 配置文件路径
@@ -24,26 +23,27 @@ type Config struct {
 	Override bool
 }
 
-func (c *Config) Init() *Config {
+func NewConfig() *Config {
 
-	debug := os.Getenv("TDP_DEBUG")
-	args.Debug = debug == "1" || debug == "true"
-
-	c.Parser = yaml.Parser()
-	c.Koanf = koanf.NewWithConf(koanf.Conf{
-		StrictMerge: true,
-		Delim:       ".",
-	})
-
-	return c
+	return &Config{
+		Parser: yaml.Parser(),
+		Koanf: koanf.NewWithConf(koanf.Conf{
+			StrictMerge: true,
+			Delim:       ".",
+		}),
+	}
 
 }
 
-func (c *Config) ReadYaml() {
+func (c *Config) ReadYaml() error {
+
+	if YamlFile == "" {
+		return errors.New("config file not set")
+	}
 
 	// 不存在则忽略
 	if _, err := os.Stat(YamlFile); os.IsNotExist(err) {
-		return
+		return err
 	}
 
 	// 从文件读取参数
@@ -52,13 +52,19 @@ func (c *Config) ReadYaml() {
 		logman.Fatal("read config failed", "error", err)
 	}
 
+	return err
+
 }
 
-func (c *Config) WriteYaml() {
+func (c *Config) WriteYaml() error {
+
+	if YamlFile == "" {
+		return errors.New("config file not set")
+	}
 
 	// 是否强制覆盖
 	if !c.Override && filer.Exists(YamlFile) {
-		return
+		return errors.New("config file not exist")
 	}
 
 	// 序列化参数信息
@@ -72,5 +78,7 @@ func (c *Config) WriteYaml() {
 	if err != nil {
 		logman.Fatal("write config failed", "error", err)
 	}
+
+	return err
 
 }

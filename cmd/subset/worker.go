@@ -28,8 +28,8 @@ func workerFlag() *FlagSet {
 
 func workerExec(act string) {
 
-	c := parse.Config{}
-	c.Init().Worker()
+	c := parse.NewConfig()
+	c.Worker()
 
 	if act == "" || act == "start" {
 		c.WriteYaml()

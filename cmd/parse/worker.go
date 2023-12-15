@@ -13,6 +13,9 @@ import (
 
 func (c *Config) Worker() {
 
+	debug := os.Getenv("TDP_DEBUG")
+	args.Debug = debug == "1" || debug == "true"
+
 	// 读取默认配置
 
 	mp := map[string]any{
@@ -24,8 +27,7 @@ func (c *Config) Worker() {
 
 	// 读取配置文件
 
-	if YamlFile != "" {
-		c.ReadYaml()
+	if c.ReadYaml() == nil {
 		for k, v := range mp {
 			c.Koanf.Unmarshal(k, v)
 		}

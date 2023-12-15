@@ -28,8 +28,8 @@ func serverFlag() *FlagSet {
 
 func serverExec(act string) {
 
-	c := parse.Config{}
-	c.Init().Server()
+	c := parse.NewConfig()
+	c.Server()
 
 	if act == "" || act == "start" {
 		c.WriteYaml()
