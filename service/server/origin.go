@@ -1,8 +1,6 @@
 package server
 
 import (
-	"path"
-
 	"github.com/opentdp/go-helper/dborm"
 	"github.com/opentdp/go-helper/httpd"
 
@@ -23,11 +21,6 @@ func origin() {
 }
 
 func dbConnect() {
-
-	// 修正数据库文件
-	if args.Database.Type == "sqlite" && !path.IsAbs(args.Database.Name) {
-		args.Database.Name = path.Join(args.Dataset.Dir, args.Database.Name)
-	}
 
 	// 连接数据库
 	dborm.Connect(&dborm.Config{

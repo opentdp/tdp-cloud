@@ -32,7 +32,7 @@ func (c *Config) Server() {
 		}
 	}
 
-	// 初始化存储
+	// 初始化存储目录
 
 	if args.Dataset.Secret == "" {
 		args.Dataset.Secret = strutil.Rand(32)
@@ -43,7 +43,13 @@ func (c *Config) Server() {
 		os.MkdirAll(args.Dataset.Dir, 0755)
 	}
 
-	// 初始化日志
+	// 修正数据库参数
+
+	if args.Database.Type == "sqlite" && !path.IsAbs(args.Database.Name) {
+		args.Database.Name = path.Join(args.Dataset.Dir, args.Database.Name)
+	}
+
+	// 初始化日志能力
 
 	if !path.IsAbs(args.Logger.Dir) {
 		args.Logger.Dir = path.Join(args.Dataset.Dir, args.Logger.Dir)
