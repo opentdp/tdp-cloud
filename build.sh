@@ -37,7 +37,7 @@ git log $prev_tag..$last_tag --pretty=format:"%s" | grep -v "^release" | sed 's/
 version=`echo $last_tag | sed 's/^v//'`
 sed -i "s/^const Version = \".*\"/const Version = \"$version\"/" cmd/args/build.go
 
-build_version=$((`grep -oP 'BuildVersion = "\K\d+' cmd/args/build.go` + ${GITHUB_RUN_NUMBER:-0}))
+build_version=$((`grep -oP 'BuildVersion = "\K\d+' cmd/args/build.go` + $RUN_NUMBER))
 sed -i "s/^const BuildVersion = \".*\"/const BuildVersion = \"$build_version\"/" cmd/args/build.go
 
 echo "build info - tag: $last_tag, version: $version, build: $build_version"
