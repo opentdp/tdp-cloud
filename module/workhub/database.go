@@ -44,7 +44,7 @@ func createHistory(pod *SendPod, data *command.ExecPayload) uint {
 
 	item := &taskline.CreateParam{
 		UserId:   pod.UserId,
-		Subject:  "Exec: " + data.Name,
+		Subject:  data.Name,
 		HostName: pod.WorkerMeta.HostName,
 		WorkerId: pod.WorkerId,
 		Request:  data,

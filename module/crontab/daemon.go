@@ -76,7 +76,7 @@ func NewByScriptJob(job *model.Cronjob) error {
 
 	entryId, err := crontab.AddFunc(spec, func() {
 		workhub.GetSendPod(mac.WorkerId).Exec(&command.ExecPayload{
-			Name:          she.Name,
+			Name:          "Cron: " + she.Name,
 			CommandType:   she.CommandType,
 			Username:      she.Username,
 			WorkDirectory: she.WorkDirectory,
