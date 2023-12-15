@@ -54,7 +54,7 @@ func CertById(userId, id uint) (*model.Certjob, *certmagic.Certificate, error) {
 
 }
 
-func SetHistory(evt string, data map[string]any) {
+func UpdateHistory(evt string, data map[string]any) {
 
 	data["event"] = evt
 

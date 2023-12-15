@@ -25,9 +25,9 @@ func apiProxy(c *gin.Context) {
 		return
 	}
 
-	vd, err := vendor.Fetch(rq)
+	vdr, err := vendor.Fetch(rq)
 
-	if err != nil || vd.Id == 0 {
+	if err != nil || vdr.Id == 0 {
 		c.Set("Error", "厂商不存在")
 		return
 	}
@@ -35,8 +35,8 @@ func apiProxy(c *gin.Context) {
 	// 构造参数
 
 	param := &tencent.ReqeustParam{
-		SecretId:  vd.SecretId,
-		SecretKey: vd.SecretKey,
+		SecretId:  vdr.SecretId,
+		SecretKey: vdr.SecretKey,
 		Debug:     args.Debug,
 	}
 

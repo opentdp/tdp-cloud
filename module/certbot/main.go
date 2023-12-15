@@ -13,9 +13,9 @@ import (
 
 func Daemon() {
 
-	certmagic.CertEvent = SetHistory
+	certmagic.CertEvent = UpdateHistory
 
-	go RunJobs()
+	RunJobs()
 
 }
 
@@ -45,13 +45,13 @@ func NewByJob(job *model.Certjob) error {
 		return err
 	}
 
-	vd, err := vendor.Fetch(&vendor.FetchParam{
+	vdr, err := vendor.Fetch(&vendor.FetchParam{
 		Id:       job.VendorId,
 		UserId:   job.UserId,
 		StoreKey: usr.AppKey,
 	})
 
-	if err != nil || vd.SecretKey == "" {
+	if err != nil || vdr.SecretKey == "" {
 		logman.Error("get SecretKey failed", "domain", job.Domain)
 		return err
 	}
@@ -64,9 +64,9 @@ func NewByJob(job *model.Certjob) error {
 		Email:       job.Email,
 		Domain:      job.Domain,
 		CaType:      job.CaType,
-		Provider:    vd.Provider,
-		SecretId:    vd.SecretId,
-		SecretKey:   vd.SecretKey,
+		Provider:    vdr.Provider,
+		SecretId:    vdr.SecretId,
+		SecretKey:   vdr.SecretKey,
 		EabKeyId:    job.EabKeyId,
 		EabMacKey:   job.EabMacKey,
 		StoragePath: args.Dataset.Dir + "/certmagic",

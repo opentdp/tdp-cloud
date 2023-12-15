@@ -21,8 +21,8 @@ func CreateSecret(p string) (string, error) {
 
 func CheckSecret(hash, p string) bool {
 
-	rs := bcrypt.CompareHashAndPassword([]byte(hash), []byte(p))
-	return rs == nil
+	ret := bcrypt.CompareHashAndPassword([]byte(hash), []byte(p))
+	return ret == nil
 
 }
 

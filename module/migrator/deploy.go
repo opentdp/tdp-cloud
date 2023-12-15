@@ -28,8 +28,8 @@ func isMigrated(k string) bool {
 
 	rq := &migration.FetchParam{Version: k}
 
-	if rs, err := migration.Fetch(rq); err == nil {
-		return rs.Id > 0
+	if ret, err := migration.Fetch(rq); err == nil {
+		return ret.Id > 0
 	}
 
 	return false

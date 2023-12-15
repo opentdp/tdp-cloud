@@ -16,9 +16,9 @@ func origin() {
 
 	dbConnect()
 
-	certbot.Daemon()
+	go certbot.Daemon()
 
-	httpServer()
+	go httpServer()
 
 }
 
