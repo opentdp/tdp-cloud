@@ -29,7 +29,7 @@ func detail(c *gin.Context) {
 	send := workhub.GetSendPod(workerId)
 
 	if send == nil {
-		c.Set("Error", "客户端已断开连接")
+		c.Set("Error", "客户端连接已断开")
 		return
 	}
 
@@ -54,7 +54,7 @@ func exec(c *gin.Context) {
 	send := workhub.GetSendPod(workerId)
 
 	if send == nil {
-		c.Set("Error", "客户端已断开连接")
+		c.Set("Error", "客户端连接已断开")
 		return
 	}
 
@@ -82,7 +82,7 @@ func filer(c *gin.Context) {
 	send := workhub.GetSendPod(workerId)
 
 	if send == nil {
-		c.Set("Error", "客户端已断开连接")
+		c.Set("Error", "客户端连接已断开")
 		return
 	}
 

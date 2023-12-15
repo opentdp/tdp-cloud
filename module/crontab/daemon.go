@@ -1,6 +1,8 @@
 package crontab
 
 import (
+	"log/slog"
+
 	"github.com/opentdp/go-helper/command"
 	"github.com/opentdp/go-helper/logman"
 	"github.com/opentdp/go-helper/strutil"
@@ -14,9 +16,11 @@ import (
 )
 
 var crontab *cron.Cron
+var logger *slog.Logger
 
 func Daemon() {
 
+	logger = logman.NewLogger("crontab")
 	crontab = cron.New(cron.WithSeconds())
 
 	RunJobs()
@@ -49,33 +53,41 @@ func NewByJob(job *model.Cronjob) {
 	}
 
 	if err != nil {
-		logman.Error("run jobs", "error", err)
+		logger.Error("run jobs", "error", err)
 	}
 
 }
 
 func NewByScriptJob(job *model.Cronjob) error {
 
-	she, err := script.Fetch(&script.FetchParam{
-		Id:     strutil.ToUint(job.Content),
-		UserId: job.UserId,
-	})
-	if err != nil {
-		return err
-	}
-
-	mac, err := machine.Fetch(&machine.FetchParam{
-		Id:     strutil.ToUint(job.Location),
-		UserId: job.UserId,
-	})
-	if err != nil {
-		return err
-	}
-
-	spec := job.Second + " " + job.Minute + " " + job.Hour + " " + job.DayofMonth + " " + job.Month + " " + job.DayofWeek
-
-	entryId, err := crontab.AddFunc(spec, func() {
-		workhub.GetSendPod(mac.WorkerId).Exec(&command.ExecPayload{
+	sepc := job.Second + " " + job.Minute + " " + job.Hour + " " + job.DayofMonth + " " + job.Month + " " + job.DayofWeek
+	entryId, err := crontab.AddFunc(sepc, func() {
+		// 找不到脚本
+		she, err := script.Fetch(&script.FetchParam{
+			Id:     strutil.ToUint(job.Content),
+			UserId: job.UserId,
+		})
+		if err != nil {
+			logger.Error("计划任务执行失败，找不到脚本", "error", err)
+			return
+		}
+		// 找不到目标
+		mac, err := machine.Fetch(&machine.FetchParam{
+			Id:     strutil.ToUint(job.Target),
+			UserId: job.UserId,
+		})
+		if err != nil {
+			logger.Error("计划任务执行失败，找不到目标", "error", err)
+			return
+		}
+		// 节点已断开
+		send := workhub.GetSendPod(mac.WorkerId)
+		if send == nil {
+			logger.Error("计划任务执行失败，节点已断开", "workerId", mac.WorkerId)
+			return
+		}
+		// 执行计划任务
+		send.Exec(&command.ExecPayload{
 			Name:          "Cron: " + she.Name,
 			CommandType:   she.CommandType,
 			Username:      she.Username,
@@ -84,6 +96,7 @@ func NewByScriptJob(job *model.Cronjob) error {
 			Timeout:       she.Timeout,
 		})
 	})
+
 	if err != nil {
 		return err
 	}

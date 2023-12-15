@@ -10,7 +10,7 @@ func (pod *SendPod) Exec(data *command.ExecPayload) (uint, error) {
 
 	var (
 		err    error
-		taskId = createHistory(pod, data)
+		taskId = createHistory(pod.Worker, data)
 	)
 
 	logman.Info("exec:send", "to", pod.WorkerMeta.HostName)
@@ -29,7 +29,7 @@ func (pod *RespPod) Exec(rs *socket.PlainData) {
 
 	logman.Info("exec:resp", "from", pod.WorkerMeta.HostName)
 
-	if err := updateHistory(pod, rs); err != nil {
+	if err := updateHistory(pod.Worker, rs); err != nil {
 		logman.Error("exec:resp", "error", err)
 	}
 

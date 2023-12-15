@@ -40,13 +40,13 @@ func updateMachine(worker *Worker) error {
 
 // 任务历史
 
-func createHistory(pod *SendPod, data *command.ExecPayload) uint {
+func createHistory(worker *Worker, data *command.ExecPayload) uint {
 
 	item := &taskline.CreateParam{
-		UserId:   pod.UserId,
+		UserId:   worker.UserId,
 		Subject:  data.Name,
-		HostName: pod.WorkerMeta.HostName,
-		WorkerId: pod.WorkerId,
+		HostName: worker.WorkerMeta.HostName,
+		WorkerId: worker.WorkerId,
 		Request:  data,
 		Response: "",
 		Status:   "Doing",
@@ -58,11 +58,11 @@ func createHistory(pod *SendPod, data *command.ExecPayload) uint {
 
 }
 
-func updateHistory(pod *RespPod, rq *socket.PlainData) error {
+func updateHistory(worker *Worker, rq *socket.PlainData) error {
 
 	item := &taskline.UpdateParam{
 		Id:     rq.TaskId,
-		UserId: pod.UserId,
+		UserId: worker.UserId,
 		Response: map[string]any{
 			"Output": rq.Payload,
 			"Error":  rq.Message,
