@@ -65,15 +65,15 @@ func Receiver(worker *Worker) error {
 
 		switch rq.Method {
 		case "Register":
-			recv.Register(rq)
+			go recv.Register(rq)
 		case "Ping":
-			recv.Ping(rq)
+			go recv.Ping(rq)
 		case "Exec:resp":
-			resp.Exec(rq)
+			go resp.Exec(rq)
 		case "Filer:resp":
-			resp.Filer(rq)
+			go resp.Filer(rq)
 		case "Stat:resp":
-			resp.Stat(rq)
+			go resp.Stat(rq)
 		default:
 			logman.Warn("unknown task", "request", rq)
 		}

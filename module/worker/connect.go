@@ -56,13 +56,13 @@ func Receiver(pod *socket.WsConn) error {
 
 		switch rq.Method {
 		case "Exec":
-			recv.Exec(rq)
+			go recv.Exec(rq)
 		case "Stat":
-			recv.Stat(rq)
+			go recv.Stat(rq)
 		case "Filer":
-			recv.Filer(rq)
+			go recv.Filer(rq)
 		case "Ping:resp":
-			resp.Ping(rq)
+			go resp.Ping(rq)
 		case "Register:resp":
 			go resp.Register(rq)
 		default:
