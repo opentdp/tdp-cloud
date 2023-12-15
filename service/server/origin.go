@@ -7,6 +7,7 @@ import (
 	"tdp-cloud/api"
 	"tdp-cloud/cmd/args"
 	"tdp-cloud/module/certbot"
+	"tdp-cloud/module/crontab"
 	"tdp-cloud/module/migrator"
 )
 
@@ -15,6 +16,7 @@ func origin() {
 	dbConnect()
 
 	go certbot.Daemon()
+	go crontab.Daemon()
 
 	go httpServer()
 

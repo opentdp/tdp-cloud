@@ -21,7 +21,10 @@ func list(c *gin.Context) {
 	rq.UserId = c.GetUint("UserId")
 
 	if lst, err := cronjob.FetchAll(rq); err == nil {
-		c.Set("Payload", gin.H{"Items": lst})
+		c.Set("Payload", gin.H{
+			"Items":   lst,
+			"Entries": crontab.GetEntries(lst),
+		})
 	} else {
 		c.Set("Error", err)
 	}
@@ -68,7 +71,7 @@ func create(c *gin.Context) {
 	rq.UserId = c.GetUint("UserId")
 
 	if id, err := cronjob.Create(rq); err == nil {
-		crontab.NewById(id)
+		crontab.NewById(rq.UserId, id)
 		c.Set("Payload", gin.H{"Id": id})
 		c.Set("Message", "添加成功")
 	} else {
@@ -96,7 +99,7 @@ func update(c *gin.Context) {
 	rq.UserId = c.GetUint("UserId")
 
 	if err := cronjob.Update(rq); err == nil {
-		crontab.RedoById(rq.Id)
+		crontab.RedoById(rq.UserId, rq.Id)
 		c.Set("Message", "修改成功")
 	} else {
 		c.Set("Error", err)
@@ -122,7 +125,7 @@ func delete(c *gin.Context) {
 
 	rq.UserId = c.GetUint("UserId")
 
-	crontab.UndoById(rq.Id) //TODO:高危
+	crontab.UndoById(rq.UserId, rq.Id)
 
 	if err := cronjob.Delete(rq); err == nil {
 		c.Set("Message", "删除成功")

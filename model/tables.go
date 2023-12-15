@@ -36,6 +36,7 @@ type Cronjob struct {
 	UserId     uint   `gorm:"index"`
 	Name       string `gorm:"size:128"`
 	Type       string `gorm:"size:32"`
+	Target     string `gorm:"size:32"`
 	Content    string `gorm:"type:text"`
 	Second     string `gorm:"size:32"`
 	Minute     string `gorm:"size:32"`
@@ -44,8 +45,7 @@ type Cronjob struct {
 	Month      string `gorm:"size:32"`
 	DayofWeek  string `gorm:"size:32"`
 	Location   string `gorm:"size:1024"`
-	PrevTime   int64
-	NextTime   int64
+	EntryId    int64  `gorm:"size:32;index"`
 	CreatedAt  int64
 	UpdatedAt  int64
 }

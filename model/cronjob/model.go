@@ -12,6 +12,7 @@ type CreateParam struct {
 	UserId     uint
 	Name       string `binding:"required"`
 	Type       string `binding:"required"`
+	Target     string `binding:"required"`
 	Content    string `binding:"required"`
 	Second     string `binding:"required"`
 	Minute     string `binding:"required"`
@@ -20,8 +21,7 @@ type CreateParam struct {
 	Month      string `binding:"required"`
 	DayofWeek  string `binding:"required"`
 	Location   string `binding:"required"`
-	PrevTime   int64  `binding:"required"`
-	NextTime   int64  `binding:"required"`
+	EntryId    int64
 }
 
 func Create(data *CreateParam) (uint, error) {
@@ -30,6 +30,7 @@ func Create(data *CreateParam) (uint, error) {
 		UserId:     data.UserId,
 		Name:       data.Name,
 		Type:       data.Type,
+		Target:     data.Target,
 		Content:    data.Content,
 		Second:     data.Second,
 		Minute:     data.Minute,
@@ -38,8 +39,7 @@ func Create(data *CreateParam) (uint, error) {
 		Month:      data.Month,
 		DayofWeek:  data.DayofWeek,
 		Location:   data.Location,
-		PrevTime:   data.PrevTime,
-		NextTime:   data.NextTime,
+		EntryId:    data.EntryId,
 	}
 
 	result := dborm.Db.Create(item)
@@ -55,6 +55,7 @@ type UpdateParam struct {
 	UserId     uint
 	Name       string
 	Type       string
+	Target     string
 	Content    string
 	Second     string
 	Minute     string
@@ -63,8 +64,7 @@ type UpdateParam struct {
 	Month      string
 	DayofWeek  string
 	Location   string
-	PrevTime   int64
-	NextTime   int64
+	EntryId    int64
 }
 
 func Update(data *UpdateParam) error {
@@ -77,6 +77,7 @@ func Update(data *UpdateParam) error {
 		Updates(model.Cronjob{
 			Name:       data.Name,
 			Type:       data.Type,
+			Target:     data.Target,
 			Content:    data.Content,
 			Second:     data.Second,
 			Minute:     data.Minute,
@@ -85,8 +86,7 @@ func Update(data *UpdateParam) error {
 			Month:      data.Month,
 			DayofWeek:  data.DayofWeek,
 			Location:   data.Location,
-			PrevTime:   data.PrevTime,
-			NextTime:   data.NextTime,
+			EntryId:    data.EntryId,
 		})
 
 	return result.Error
@@ -138,8 +138,7 @@ func Fetch(data *FetchParam) (*model.Cronjob, error) {
 // 获取计划列表
 
 type FetchAllParam struct {
-	UserId   uint
-	VendorId uint
+	UserId uint
 }
 
 func FetchAll(data *FetchAllParam) ([]*model.Cronjob, error) {
