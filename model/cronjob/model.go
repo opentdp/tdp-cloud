@@ -20,7 +20,7 @@ type CreateParam struct {
 	DayofMonth string `binding:"required"`
 	Month      string `binding:"required"`
 	DayofWeek  string `binding:"required"`
-	Location   string `binding:"required"`
+	Location   string
 	EntryId    int64
 }
 
