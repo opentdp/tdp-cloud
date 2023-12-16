@@ -22,7 +22,7 @@ func UndoById(userId, id uint) {
 	job, err := cronjob.Fetch(&cronjob.FetchParam{Id: id})
 
 	if err == nil && job.Id > 0 {
-		crontab.Remove(cron.EntryID(job.Id))
+		crontab.Remove(cron.EntryID(job.EntryId))
 	}
 
 }
@@ -32,7 +32,7 @@ func RedoById(userId, id uint) {
 	job, err := cronjob.Fetch(&cronjob.FetchParam{Id: id})
 
 	if err == nil && job.Id > 0 {
-		crontab.Remove(cron.EntryID(job.Id))
+		crontab.Remove(cron.EntryID(job.EntryId))
 		NewByScriptJob(job)
 	}
 
