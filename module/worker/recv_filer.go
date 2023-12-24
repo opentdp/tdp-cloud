@@ -38,12 +38,12 @@ func (pod *RecvPod) Filer(rq *socket.PlainData) error {
 			ret.FileList = []*filer.FileInfo{info}
 		case "write":
 			err = filer.Write(data.Path, data.File.Data)
-			if data.File.Mode > 0 {
+			if err == nil && data.File.Mode > 0 {
 				err = os.Chmod(data.Path, data.File.Mode)
 			}
-			if data.File.ModTime > 0 {
+			if err == nil && data.File.ModTime > 0 {
 				mtime := time.Unix(data.File.ModTime, 0)
-				os.Chtimes(data.Path, mtime, mtime)
+				err = os.Chtimes(data.Path, mtime, mtime)
 			}
 		case "chmod":
 			err = os.Chmod(data.Path, data.File.Mode)
