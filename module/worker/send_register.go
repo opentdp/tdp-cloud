@@ -43,7 +43,7 @@ func (pod *RespPod) Register(rs *socket.PlainData) {
 	send := &SendPod{pod.WsConn}
 
 	for {
-		time.Sleep(25 * time.Second)
+		time.Sleep(35 * time.Second)
 		if _, err := send.Ping(); err != nil {
 			logman.Error("ping:fail", "error", err)
 			return
