@@ -11,19 +11,16 @@ import (
 func (pod *RecvPod) Filer(rq *socket.PlainData) error {
 
 	var (
-		err error
-		msg string
-		ret struct {
-			Success  bool
-			FileList []*filer.FileInfo
-		}
+		err  error
+		msg  string
+		ret  []*filer.FileInfo
 		data fsadmin.FilerParam
 	)
 
 	logman.Info("filer:recv", "taskId", rq.TaskId)
 
 	if err = rq.GetPayload(&data); err == nil {
-		ret.FileList, err = fsadmin.Filer(&data)
+		ret, err = fsadmin.Filer(&data)
 	}
 
 	if err != nil {

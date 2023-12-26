@@ -14,7 +14,12 @@ type FilerParam struct {
 	File   filer.FileInfo
 }
 
-func Filer(data *FilerParam) (files []*filer.FileInfo, err error) {
+func Filer(data *FilerParam) ([]*filer.FileInfo, error) {
+
+	var (
+		err   error
+		files []*filer.FileInfo
+	)
 
 	switch data.Action {
 	case "ls":
