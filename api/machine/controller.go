@@ -6,9 +6,11 @@ import (
 	"tdp-cloud/model/machine"
 )
 
+type Controller struct{}
+
 // 主机列表
 
-func list(c *gin.Context) {
+func (*Controller) list(c *gin.Context) {
 
 	var rq *machine.FetchAllParam
 
@@ -29,7 +31,7 @@ func list(c *gin.Context) {
 
 // 获取主机
 
-func detail(c *gin.Context) {
+func (*Controller) detail(c *gin.Context) {
 
 	var rq *machine.FetchParam
 
@@ -55,7 +57,7 @@ func detail(c *gin.Context) {
 
 // 添加主机
 
-func create(c *gin.Context) {
+func (*Controller) create(c *gin.Context) {
 
 	var rq *machine.CreateParam
 
@@ -77,7 +79,7 @@ func create(c *gin.Context) {
 
 // 修改主机
 
-func update(c *gin.Context) {
+func (*Controller) update(c *gin.Context) {
 
 	var rq *machine.UpdateParam
 
@@ -103,7 +105,7 @@ func update(c *gin.Context) {
 
 // 删除主机
 
-func delete(c *gin.Context) {
+func (*Controller) delete(c *gin.Context) {
 
 	var rq *machine.DeleteParam
 

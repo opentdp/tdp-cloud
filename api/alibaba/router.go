@@ -6,6 +6,8 @@ import (
 	"tdp-cloud/module/midware"
 )
 
+var ctrl = &Controller{}
+
 func Router(api *gin.RouterGroup) {
 
 	rg := api.Group("/alibaba")
@@ -13,7 +15,7 @@ func Router(api *gin.RouterGroup) {
 	rg.Use(midware.AuthGuard)
 
 	{
-		rg.POST("/:id", apiProxy)
+		rg.POST("/:id", ctrl.apiProxy)
 	}
 
 }

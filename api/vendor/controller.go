@@ -6,9 +6,11 @@ import (
 	"tdp-cloud/model/vendor"
 )
 
+type Controller struct{}
+
 // 厂商列表
 
-func list(c *gin.Context) {
+func (*Controller) list(c *gin.Context) {
 
 	var rq *vendor.FetchAllParam
 
@@ -29,7 +31,7 @@ func list(c *gin.Context) {
 
 // 获取厂商
 
-func detail(c *gin.Context) {
+func (*Controller) detail(c *gin.Context) {
 
 	var rq *vendor.FetchParam
 
@@ -55,7 +57,7 @@ func detail(c *gin.Context) {
 
 // 添加厂商
 
-func create(c *gin.Context) {
+func (*Controller) create(c *gin.Context) {
 
 	var rq *vendor.CreateParam
 
@@ -78,7 +80,7 @@ func create(c *gin.Context) {
 
 // 修改厂商
 
-func update(c *gin.Context) {
+func (*Controller) update(c *gin.Context) {
 
 	var rq *vendor.UpdateParam
 
@@ -105,7 +107,7 @@ func update(c *gin.Context) {
 
 // 删除厂商
 
-func delete(c *gin.Context) {
+func (*Controller) delete(c *gin.Context) {
 
 	var rq *vendor.DeleteParam
 

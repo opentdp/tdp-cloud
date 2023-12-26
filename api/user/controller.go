@@ -8,9 +8,11 @@ import (
 	"tdp-cloud/model/user"
 )
 
+type Controller struct{}
+
 // 用户列表
 
-func list(c *gin.Context) {
+func (*Controller) list(c *gin.Context) {
 
 	var rq *user.FetchAllParam
 
@@ -29,7 +31,7 @@ func list(c *gin.Context) {
 
 // 获取用户
 
-func detail(c *gin.Context) {
+func (*Controller) detail(c *gin.Context) {
 
 	var rq *user.FetchParam
 
@@ -53,7 +55,7 @@ func detail(c *gin.Context) {
 
 // 创建用户
 
-func create(c *gin.Context) {
+func (*Controller) create(c *gin.Context) {
 
 	var rq *user.CreateParam
 
@@ -76,7 +78,7 @@ func create(c *gin.Context) {
 
 // 修改用户
 
-func update(c *gin.Context) {
+func (*Controller) update(c *gin.Context) {
 
 	var rq *user.UpdateParam
 
@@ -102,7 +104,7 @@ func update(c *gin.Context) {
 
 // 删除用户
 
-func delete(c *gin.Context) {
+func (*Controller) delete(c *gin.Context) {
 
 	var rq *user.DeleteParam
 

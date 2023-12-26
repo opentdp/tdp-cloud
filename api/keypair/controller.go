@@ -2,13 +2,16 @@ package keypair
 
 import (
 	"github.com/gin-gonic/gin"
+	"github.com/opentdp/go-helper/secure"
 
 	"tdp-cloud/model/keypair"
 )
 
+type Controller struct{}
+
 // 密钥列表
 
-func list(c *gin.Context) {
+func (*Controller) list(c *gin.Context) {
 
 	var rq *keypair.FetchAllParam
 
@@ -29,7 +32,7 @@ func list(c *gin.Context) {
 
 // 获取密钥
 
-func detail(c *gin.Context) {
+func (*Controller) detail(c *gin.Context) {
 
 	var rq *keypair.FetchParam
 
@@ -55,7 +58,7 @@ func detail(c *gin.Context) {
 
 // 添加密钥
 
-func create(c *gin.Context) {
+func (*Controller) create(c *gin.Context) {
 
 	var rq *keypair.CreateParam
 
@@ -78,7 +81,7 @@ func create(c *gin.Context) {
 
 // 修改密钥
 
-func update(c *gin.Context) {
+func (*Controller) update(c *gin.Context) {
 
 	var rq *keypair.UpdateParam
 
@@ -105,7 +108,7 @@ func update(c *gin.Context) {
 
 // 删除密钥
 
-func delete(c *gin.Context) {
+func (*Controller) delete(c *gin.Context) {
 
 	var rq *keypair.DeleteParam
 
@@ -123,6 +126,37 @@ func delete(c *gin.Context) {
 
 	if err := keypair.Delete(rq); err == nil {
 		c.Set("Message", "删除成功")
+	} else {
+		c.Set("Error", err)
+	}
+
+}
+
+// 生成密钥
+
+func (*Controller) keygen(c *gin.Context) {
+
+	var rq struct {
+		KeyType string
+	}
+
+	if err := c.ShouldBind(&rq); err != nil {
+		c.Set("Error", err)
+		return
+	}
+
+	var (
+		err                   error
+		privateKey, publicKey string
+	)
+
+	switch rq.KeyType {
+	case "ssh":
+		privateKey, publicKey, err = secure.NewSSHKeypair()
+	}
+
+	if err == nil {
+		c.Set("Payload", gin.H{"PrivateKey": privateKey, "PublicKey": publicKey})
 	} else {
 		c.Set("Error", err)
 	}

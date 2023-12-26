@@ -7,9 +7,11 @@ import (
 	"tdp-cloud/module/certbot"
 )
 
+type Controller struct{}
+
 // 计划列表
 
-func list(c *gin.Context) {
+func (*Controller) list(c *gin.Context) {
 
 	var rq *certjob.FetchAllParam
 
@@ -30,7 +32,7 @@ func list(c *gin.Context) {
 
 // 获取计划
 
-func detail(c *gin.Context) {
+func (*Controller) detail(c *gin.Context) {
 
 	var rq *certjob.FetchParam
 
@@ -56,7 +58,7 @@ func detail(c *gin.Context) {
 
 // 添加计划
 
-func create(c *gin.Context) {
+func (*Controller) create(c *gin.Context) {
 
 	var rq *certjob.CreateParam
 
@@ -79,7 +81,7 @@ func create(c *gin.Context) {
 
 // 修改计划
 
-func update(c *gin.Context) {
+func (*Controller) update(c *gin.Context) {
 
 	var rq *certjob.UpdateParam
 
@@ -106,7 +108,7 @@ func update(c *gin.Context) {
 
 // 删除计划
 
-func delete(c *gin.Context) {
+func (*Controller) delete(c *gin.Context) {
 
 	var rq *certjob.DeleteParam
 

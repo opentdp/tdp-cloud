@@ -7,9 +7,11 @@ import (
 	"tdp-cloud/module/crontab"
 )
 
+type Controller struct{}
+
 // 计划列表
 
-func list(c *gin.Context) {
+func (*Controller) list(c *gin.Context) {
 
 	var rq *cronjob.FetchAllParam
 
@@ -33,7 +35,7 @@ func list(c *gin.Context) {
 
 // 获取计划
 
-func detail(c *gin.Context) {
+func (*Controller) detail(c *gin.Context) {
 
 	var rq *cronjob.FetchParam
 
@@ -59,7 +61,7 @@ func detail(c *gin.Context) {
 
 // 添加计划
 
-func create(c *gin.Context) {
+func (*Controller) create(c *gin.Context) {
 
 	var rq *cronjob.CreateParam
 
@@ -82,7 +84,7 @@ func create(c *gin.Context) {
 
 // 修改计划
 
-func update(c *gin.Context) {
+func (*Controller) update(c *gin.Context) {
 
 	var rq *cronjob.UpdateParam
 
@@ -109,7 +111,7 @@ func update(c *gin.Context) {
 
 // 删除计划
 
-func delete(c *gin.Context) {
+func (*Controller) delete(c *gin.Context) {
 
 	var rq *cronjob.DeleteParam
 

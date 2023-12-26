@@ -6,6 +6,8 @@ import (
 	"tdp-cloud/module/midware"
 )
 
+var ctrl = &Controller{}
+
 func Router(api *gin.RouterGroup) {
 
 	rg := api.Group("/crontab")
@@ -13,11 +15,11 @@ func Router(api *gin.RouterGroup) {
 	rg.Use(midware.AuthGuard)
 
 	{
-		rg.POST("/list", list)
-		rg.POST("/create", create)
-		rg.POST("/detail", detail)
-		rg.POST("/update", update)
-		rg.POST("/delete", delete)
+		rg.POST("/list", ctrl.list)
+		rg.POST("/create", ctrl.create)
+		rg.POST("/detail", ctrl.detail)
+		rg.POST("/update", ctrl.update)
+		rg.POST("/delete", ctrl.delete)
 	}
 
 }

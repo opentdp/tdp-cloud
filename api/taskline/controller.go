@@ -6,9 +6,11 @@ import (
 	"tdp-cloud/model/taskline"
 )
 
+type Controller struct{}
+
 // 记录列表
 
-func list(c *gin.Context) {
+func (*Controller) list(c *gin.Context) {
 
 	var rq *taskline.FetchAllParam
 
@@ -29,7 +31,7 @@ func list(c *gin.Context) {
 
 // 获取记录
 
-func detail(c *gin.Context) {
+func (*Controller) detail(c *gin.Context) {
 
 	var rq *taskline.FetchParam
 
@@ -55,7 +57,7 @@ func detail(c *gin.Context) {
 
 // 添加记录
 
-func create(c *gin.Context) {
+func (*Controller) create(c *gin.Context) {
 
 	var rq *taskline.CreateParam
 
@@ -77,7 +79,7 @@ func create(c *gin.Context) {
 
 // 修改记录
 
-func update(c *gin.Context) {
+func (*Controller) update(c *gin.Context) {
 
 	var rq *taskline.UpdateParam
 
@@ -103,7 +105,7 @@ func update(c *gin.Context) {
 
 // 删除记录
 
-func delete(c *gin.Context) {
+func (*Controller) delete(c *gin.Context) {
 
 	var rq *taskline.DeleteParam
 

@@ -6,9 +6,11 @@ import (
 	"tdp-cloud/model/domain"
 )
 
+type Controller struct{}
+
 // 域名列表
 
-func list(c *gin.Context) {
+func (*Controller) list(c *gin.Context) {
 
 	var rq *domain.FetchAllParam
 
@@ -29,7 +31,7 @@ func list(c *gin.Context) {
 
 // 获取域名
 
-func detail(c *gin.Context) {
+func (*Controller) detail(c *gin.Context) {
 
 	var rq *domain.FetchParam
 
@@ -55,7 +57,7 @@ func detail(c *gin.Context) {
 
 // 添加域名
 
-func create(c *gin.Context) {
+func (*Controller) create(c *gin.Context) {
 
 	var rq *domain.CreateParam
 
@@ -77,7 +79,7 @@ func create(c *gin.Context) {
 
 // 修改域名
 
-func update(c *gin.Context) {
+func (*Controller) update(c *gin.Context) {
 
 	var rq *domain.UpdateParam
 
@@ -103,7 +105,7 @@ func update(c *gin.Context) {
 
 // 删除域名
 
-func delete(c *gin.Context) {
+func (*Controller) delete(c *gin.Context) {
 
 	var rq *domain.DeleteParam
 

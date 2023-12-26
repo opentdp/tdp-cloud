@@ -6,6 +6,8 @@ import (
 	"tdp-cloud/module/midware"
 )
 
+var ctrl = &Controller{}
+
 func Router(api *gin.RouterGroup) {
 
 	rg := api.Group("/passport")
@@ -13,8 +15,8 @@ func Router(api *gin.RouterGroup) {
 	// 匿名接口
 
 	{
-		rg.POST("/login", login)
-		rg.POST("/register", register)
+		rg.POST("/login", ctrl.login)
+		rg.POST("/register", ctrl.register)
 	}
 
 	// 需授权接口
@@ -22,10 +24,10 @@ func Router(api *gin.RouterGroup) {
 	rg.Use(midware.AuthGuard)
 
 	{
-		rg.POST("/profile", profile)
-		rg.POST("/profile/update", profileUpdate)
-		rg.POST("/avatar/update", avatarUpdate)
-		rg.POST("/summary", summary)
+		rg.POST("/profile", ctrl.profile)
+		rg.POST("/profile/update", ctrl.profileUpdate)
+		rg.POST("/avatar/update", ctrl.avatarUpdate)
+		rg.POST("/summary", ctrl.summary)
 	}
 
 }

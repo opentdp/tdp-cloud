@@ -6,6 +6,8 @@ import (
 	"tdp-cloud/module/midware"
 )
 
+var ctrl = &Controller{}
+
 func Router(api *gin.RouterGroup) {
 
 	rg := api.Group("/upgrade")
@@ -19,8 +21,8 @@ func Router(api *gin.RouterGroup) {
 	rg.Use(midware.AdminGuard)
 
 	{
-		rg.POST("/check", check)
-		rg.POST("/apply", apply)
+		rg.POST("/check", ctrl.check)
+		rg.POST("/apply", ctrl.apply)
 	}
 
 }

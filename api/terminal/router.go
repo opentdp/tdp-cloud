@@ -6,6 +6,8 @@ import (
 	"tdp-cloud/module/midware"
 )
 
+var ctrl = &Controller{}
+
 func Socket(wsi *gin.RouterGroup) {
 
 	rg := wsi.Group("/terminal")
@@ -13,7 +15,7 @@ func Socket(wsi *gin.RouterGroup) {
 	rg.Use(midware.AuthGuard)
 
 	{
-		rg.GET("/ssh/:id", ssh)
+		rg.GET("/ssh/:id", ctrl.ssh)
 	}
 
 }

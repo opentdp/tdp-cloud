@@ -10,9 +10,11 @@ import (
 	"tdp-cloud/model/user"
 )
 
+type Controller struct{}
+
 // 注册用户
 
-func register(c *gin.Context) {
+func (*Controller) register(c *gin.Context) {
 
 	var rq *user.CreateParam
 
@@ -48,7 +50,7 @@ func register(c *gin.Context) {
 
 // 登录账号
 
-func login(c *gin.Context) {
+func (*Controller) login(c *gin.Context) {
 
 	var rq *passport.LoginParam
 
@@ -71,7 +73,7 @@ func login(c *gin.Context) {
 
 // 获取资料
 
-func profile(c *gin.Context) {
+func (*Controller) profile(c *gin.Context) {
 
 	rq := &user.FetchParam{
 		Id: c.GetUint("UserId"),
@@ -87,7 +89,7 @@ func profile(c *gin.Context) {
 
 // 修改资料
 
-func profileUpdate(c *gin.Context) {
+func (*Controller) profileUpdate(c *gin.Context) {
 
 	var rq *passport.ProfileUpdateParam
 
@@ -109,7 +111,7 @@ func profileUpdate(c *gin.Context) {
 
 // 修改头像
 
-func avatarUpdate(c *gin.Context) {
+func (*Controller) avatarUpdate(c *gin.Context) {
 
 	var rq *passport.AvatarUpdateParam
 
@@ -131,7 +133,7 @@ func avatarUpdate(c *gin.Context) {
 
 // 统计信息
 
-func summary(c *gin.Context) {
+func (*Controller) summary(c *gin.Context) {
 
 	userId := c.GetUint("UserId")
 	res := passport.Summary(userId)

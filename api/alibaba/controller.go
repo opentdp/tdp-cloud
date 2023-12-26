@@ -8,7 +8,9 @@ import (
 	"tdp-cloud/model/vendor"
 )
 
-func apiProxy(c *gin.Context) {
+type Controller struct{}
+
+func (*Controller) apiProxy(c *gin.Context) {
 
 	rq := &vendor.FetchParam{
 		Id:       strutil.ToUint(c.Param("id")),

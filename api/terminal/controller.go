@@ -9,7 +9,9 @@ import (
 	"tdp-cloud/model/keypair"
 )
 
-func ssh(c *gin.Context) {
+type Controller struct{}
+
+func (*Controller) ssh(c *gin.Context) {
 
 	// 获取 SSH 参数
 

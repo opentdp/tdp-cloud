@@ -7,9 +7,11 @@ import (
 	"tdp-cloud/cmd/args"
 )
 
+type Controller struct{}
+
 // 检查升级
 
-func check(c *gin.Context) {
+func (*Controller) check(c *gin.Context) {
 
 	rq := &upgrade.RequesParam{
 		Server:  args.UpdateUrl,
@@ -26,7 +28,7 @@ func check(c *gin.Context) {
 
 // 执行升级
 
-func apply(c *gin.Context) {
+func (*Controller) apply(c *gin.Context) {
 
 	rq := &upgrade.RequesParam{
 		Server:  args.UpdateUrl,

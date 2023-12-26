@@ -6,6 +6,8 @@ import (
 	"tdp-cloud/module/midware"
 )
 
+var ctrl = &Controller{}
+
 func Router(api *gin.RouterGroup) {
 
 	rg := api.Group("/tencent")
@@ -13,7 +15,7 @@ func Router(api *gin.RouterGroup) {
 	// 匿名接口
 
 	{
-		rg.GET("/vnc", vncProxy)
+		rg.GET("/vnc", ctrl.vncProxy)
 	}
 
 	// 需授权接口
@@ -21,7 +23,7 @@ func Router(api *gin.RouterGroup) {
 	rg.Use(midware.AuthGuard)
 
 	{
-		rg.POST("/:id", apiProxy)
+		rg.POST("/:id", ctrl.apiProxy)
 	}
 
 }

@@ -7,9 +7,11 @@ import (
 	"tdp-cloud/model/config"
 )
 
+type Controller struct{}
+
 // 配置列表
 
-func list(c *gin.Context) {
+func (*Controller) list(c *gin.Context) {
 
 	var rq *config.FetchAllParam
 
@@ -28,7 +30,7 @@ func list(c *gin.Context) {
 
 // 获取配置
 
-func detail(c *gin.Context) {
+func (*Controller) detail(c *gin.Context) {
 
 	var rq *config.FetchParam
 
@@ -52,7 +54,7 @@ func detail(c *gin.Context) {
 
 // 添加配置
 
-func create(c *gin.Context) {
+func (*Controller) create(c *gin.Context) {
 
 	var rq *config.CreateParam
 
@@ -72,7 +74,7 @@ func create(c *gin.Context) {
 
 // 修改配置
 
-func update(c *gin.Context) {
+func (*Controller) update(c *gin.Context) {
 
 	var rq *config.UpdateParam
 
@@ -96,7 +98,7 @@ func update(c *gin.Context) {
 
 // 删除配置
 
-func delete(c *gin.Context) {
+func (*Controller) delete(c *gin.Context) {
 
 	var rq *config.DeleteParam
 
@@ -120,7 +122,7 @@ func delete(c *gin.Context) {
 
 // 获取前端配置
 
-func uiOption(c *gin.Context) {
+func (*Controller) uiOption(c *gin.Context) {
 
 	option := config.ValuesOf("front")
 	option["Registrable"] = config.ValueOf("Registrable")

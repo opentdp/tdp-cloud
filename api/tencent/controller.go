@@ -12,7 +12,9 @@ import (
 	"tdp-cloud/model/vendor"
 )
 
-func apiProxy(c *gin.Context) {
+type Controller struct{}
+
+func (*Controller) apiProxy(c *gin.Context) {
 
 	rq := &vendor.FetchParam{
 		Id:       strutil.ToUint(c.Param("id")),
@@ -55,7 +57,7 @@ func apiProxy(c *gin.Context) {
 
 }
 
-func vncProxy(c *gin.Context) {
+func (*Controller) vncProxy(c *gin.Context) {
 
 	resp, err := http.Get("https://img.qcloud.com/qcloud/app/active_vnc/index.html")
 
