@@ -6,6 +6,12 @@ import (
 	"tdp-cloud/module/midware"
 )
 
+var (
+	ctrl = &Controller{}
+	host = &HostController{}
+	node = &NodeController{}
+)
+
 func Router(api *gin.RouterGroup) {
 
 	rg := api.Group("/workhub")
@@ -15,10 +21,10 @@ func Router(api *gin.RouterGroup) {
 	rg.Use(midware.AuthGuard)
 
 	{
-		rg.POST("/list", list)
-		rg.POST("/detail/:id", detail)
-		rg.POST("/exec/:id", exec)
-		rg.POST("/filer/:id", filer)
+		rg.POST("/list", ctrl.list)
+		rg.POST("/detail/:id", node.detail)
+		rg.POST("/exec/:id", node.exec)
+		rg.POST("/filer/:id", node.filer)
 	}
 
 	// 管理员接口
@@ -26,7 +32,9 @@ func Router(api *gin.RouterGroup) {
 	rg.Use(midware.AdminGuard)
 
 	{
-		rg.POST("/detail", hostDetail)
+		rg.POST("/detail", host.detail)
+		rg.POST("/exec", host.exec)
+		rg.POST("/filer", host.filer)
 	}
 
 }
@@ -36,8 +44,8 @@ func Socket(wsi *gin.RouterGroup) {
 	rg := wsi.Group("/")
 
 	{
-		rg.GET("/workhub", register)
-		rg.GET("/workhub/:mid", register)
+		rg.GET("/workhub", ctrl.join)
+		rg.GET("/workhub/:mid", ctrl.join)
 	}
 
 }

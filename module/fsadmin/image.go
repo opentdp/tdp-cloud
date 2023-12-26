@@ -1,4 +1,4 @@
-package upload
+package fsadmin
 
 import (
 	"encoding/base64"
@@ -14,7 +14,7 @@ import (
 	"tdp-cloud/cmd/args"
 )
 
-const BaseDir = "/upload"
+const UploadDir = "/upload"
 
 func TimePathname(rand uint) string {
 
@@ -47,8 +47,8 @@ func UintPathname(id uint) string {
 
 func SaveBase64Image(filePath, base64Image string) error {
 
-	if !strings.HasPrefix(filePath, BaseDir) {
-		filePath = BaseDir + filePath
+	if !strings.HasPrefix(filePath, UploadDir) {
+		filePath = UploadDir + filePath
 	}
 
 	filePath = path.Join(args.Dataset.Dir, filePath)

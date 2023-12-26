@@ -4,18 +4,13 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/opentdp/go-helper/filer"
 	"github.com/opentdp/go-helper/logman"
 	"github.com/opentdp/go-helper/socket"
+
+	"tdp-cloud/module/fsadmin"
 )
 
-type FilerPayload struct {
-	Action string
-	Path   string
-	File   filer.FileInfo
-}
-
-func (pod *SendPod) Filer(data *FilerPayload) (string, error) {
+func (pod *SendPod) Filer(data *fsadmin.FilerParam) (string, error) {
 
 	var (
 		err    error

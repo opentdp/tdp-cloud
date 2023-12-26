@@ -4,8 +4,8 @@ import (
 	"errors"
 
 	"tdp-cloud/model/user"
+	"tdp-cloud/module/fsadmin"
 	"tdp-cloud/module/midware"
-	"tdp-cloud/module/upload"
 )
 
 // 登录账号
@@ -108,9 +108,9 @@ type AvatarUpdateParam struct {
 
 func AvatarUpdate(rq *AvatarUpdateParam) (string, error) {
 
-	filePath := upload.BaseDir + "/avatar" + upload.UintPathname(rq.UserId) + ".png"
+	filePath := fsadmin.UploadDir + "/avatar" + fsadmin.UintPathname(rq.UserId) + ".png"
 
-	if err := upload.SaveBase64Image(filePath, rq.Base64Image); err != nil {
+	if err := fsadmin.SaveBase64Image(filePath, rq.Base64Image); err != nil {
 		return "", err
 	}
 

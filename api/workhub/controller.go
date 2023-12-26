@@ -2,7 +2,6 @@ package workhub
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/opentdp/go-helper/command"
 	"github.com/opentdp/go-helper/strutil"
 	"golang.org/x/net/websocket"
 
@@ -10,9 +9,11 @@ import (
 	"tdp-cloud/module/workhub"
 )
 
+type Controller struct{}
+
 // 节点列表
 
-func list(c *gin.Context) {
+func (*Controller) list(c *gin.Context) {
 
 	userId := c.GetUint("UserId")
 	lst := workhub.WorkerOfUser(userId)
@@ -21,94 +22,9 @@ func list(c *gin.Context) {
 
 }
 
-// 节点状态
-
-func detail(c *gin.Context) {
-
-	workerId := c.Param("id")
-	send := workhub.GetSendPod(workerId)
-
-	if send == nil {
-		c.Set("Error", "客户端连接已断开")
-		return
-	}
-
-	if id, err := send.Stat(); err == nil {
-		rq := workhub.WaitResponse(id, 30)
-		if rq.Success {
-			c.Set("Payload", rq.Payload)
-		} else {
-			c.Set("Error", rq.Message)
-		}
-	} else {
-		c.Set("Error", err)
-	}
-
-}
-
-// 执行脚本
-
-func exec(c *gin.Context) {
-
-	workerId := c.Param("id")
-	send := workhub.GetSendPod(workerId)
-
-	if send == nil {
-		c.Set("Error", "客户端连接已断开")
-		return
-	}
-
-	var rq *command.ExecPayload
-
-	if err := c.ShouldBind(&rq); err != nil {
-		c.Set("Error", err)
-		return
-	}
-
-	if id, err := send.Exec(rq); err == nil {
-		c.Set("Payload", gin.H{"Id": id})
-		c.Set("Message", "下发完成")
-	} else {
-		c.Set("Error", err)
-	}
-
-}
-
-// 文件管理
-
-func filer(c *gin.Context) {
-
-	workerId := c.Param("id")
-	send := workhub.GetSendPod(workerId)
-
-	if send == nil {
-		c.Set("Error", "客户端连接已断开")
-		return
-	}
-
-	var rq *workhub.FilerPayload
-
-	if err := c.ShouldBind(&rq); err != nil {
-		c.Set("Error", err)
-		return
-	}
-
-	if id, err := send.Filer(rq); err == nil {
-		rq := workhub.WaitResponse(id, 30)
-		if rq.Success {
-			c.Set("Payload", rq.Payload)
-		} else {
-			c.Set("Error", rq.Message)
-		}
-	} else {
-		c.Set("Error", err)
-	}
-
-}
-
 // 注册节点
 
-func register(c *gin.Context) {
+func (*Controller) join(c *gin.Context) {
 
 	usr, err := user.Fetch(&user.FetchParam{
 		AppId: c.Param("auth"),
