@@ -26,8 +26,7 @@ func Router(api *gin.RouterGroup) {
 	rg.Use(midware.AdminGuard)
 
 	{
-		rg.POST("/host", host)
-		rg.POST("/host/ip", hostIp)
+		rg.POST("/detail", hostDetail)
 	}
 
 }
