@@ -1,7 +1,7 @@
 package tencent
 
 import (
-	"io/ioutil"
+	"io"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -66,7 +66,7 @@ func (*Controller) vncProxy(c *gin.Context) {
 		return
 	}
 
-	if res, err := ioutil.ReadAll(resp.Body); err == nil {
+	if res, err := io.ReadAll(resp.Body); err == nil {
 		c.Set("HTML", string(res))
 	} else {
 		c.Set("Error", err)

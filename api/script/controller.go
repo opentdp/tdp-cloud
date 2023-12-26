@@ -1,6 +1,8 @@
 package script
 
 import (
+	"strings"
+
 	"github.com/gin-gonic/gin"
 
 	"tdp-cloud/model/script"
@@ -67,6 +69,7 @@ func (*Controller) create(c *gin.Context) {
 	}
 
 	rq.UserId = c.GetUint("UserId")
+	rq.Content = strings.TrimSpace(rq.Content)
 
 	if id, err := script.Create(rq); err == nil {
 		c.Set("Payload", gin.H{"Id": id})
@@ -94,6 +97,7 @@ func (*Controller) update(c *gin.Context) {
 	}
 
 	rq.UserId = c.GetUint("UserId")
+	rq.Content = strings.TrimSpace(rq.Content)
 
 	if err := script.Update(rq); err == nil {
 		c.Set("Message", "更新成功")
