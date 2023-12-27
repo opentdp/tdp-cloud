@@ -36,7 +36,7 @@ func (*HostController) filer(c *gin.Context) {
 	}
 
 	if lst, err := fsadmin.Filer(rq); err == nil {
-		c.Set("Payload", lst)
+		c.Set("Payload", gin.H{"Items": lst})
 	} else {
 		c.Set("Error", err)
 	}
@@ -54,8 +54,8 @@ func (*HostController) exec(c *gin.Context) {
 		return
 	}
 
-	if lst, err := command.Exec(rq); err == nil {
-		c.Set("Payload", lst)
+	if ret, err := command.Exec(rq); err == nil {
+		c.Set("Payload", ret)
 	} else {
 		c.Set("Error", err)
 	}
