@@ -1,4 +1,4 @@
-package vendor
+package workhub
 
 import (
 	"github.com/gin-gonic/gin"
@@ -10,16 +10,14 @@ func Router(api *gin.RouterGroup) {
 
 	ctrl := &Controller{}
 
-	rg := api.Group("/vendor")
+	rg := api.Group("/worker/:id")
 
 	rg.Use(midware.AuthGuard)
 
 	{
-		rg.POST("/list", ctrl.list)
-		rg.POST("/create", ctrl.create)
 		rg.POST("/detail", ctrl.detail)
-		rg.POST("/update", ctrl.update)
-		rg.POST("/delete", ctrl.delete)
+		rg.POST("/exec", ctrl.exec)
+		rg.POST("/filer", ctrl.filer)
 	}
 
 }

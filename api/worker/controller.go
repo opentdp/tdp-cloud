@@ -8,11 +8,11 @@ import (
 	"tdp-cloud/module/workhub"
 )
 
-type NodeController struct{}
+type Controller struct{}
 
 // 节点状态
 
-func (*NodeController) detail(c *gin.Context) {
+func (*Controller) detail(c *gin.Context) {
 
 	workerId := c.Param("id")
 	send := workhub.GetSendPod(workerId)
@@ -37,7 +37,7 @@ func (*NodeController) detail(c *gin.Context) {
 
 // 管理文件
 
-func (*NodeController) filer(c *gin.Context) {
+func (*Controller) filer(c *gin.Context) {
 
 	workerId := c.Param("id")
 	send := workhub.GetSendPod(workerId)
@@ -69,7 +69,7 @@ func (*NodeController) filer(c *gin.Context) {
 
 // 执行脚本
 
-func (*NodeController) exec(c *gin.Context) {
+func (*Controller) exec(c *gin.Context) {
 
 	workerId := c.Param("id")
 	send := workhub.GetSendPod(workerId)

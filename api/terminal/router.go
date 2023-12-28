@@ -6,9 +6,9 @@ import (
 	"tdp-cloud/module/midware"
 )
 
-var ctrl = &Controller{}
-
 func Socket(wsi *gin.RouterGroup) {
+
+	ctrl := &Controller{}
 
 	rg := wsi.Group("/terminal")
 

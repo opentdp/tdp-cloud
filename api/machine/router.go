@@ -6,9 +6,9 @@ import (
 	"tdp-cloud/module/midware"
 )
 
-var ctrl = &Controller{}
-
 func Router(api *gin.RouterGroup) {
+
+	ctrl := &Controller{}
 
 	rg := api.Group("/machine")
 
