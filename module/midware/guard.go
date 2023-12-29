@@ -66,7 +66,6 @@ func AuthGuard(c *gin.Context) {
 		c.Set("Error", gin.H{"Code": 401, "Message": msg})
 		c.Set("ExitCode", 401)
 		c.Abort()
-		return
 	}
 
 }
@@ -79,7 +78,6 @@ func AdminGuard(c *gin.Context) {
 		c.Set("Error", gin.H{"Code": 403, "Message": "抱歉，无权进行此操作"})
 		c.Set("ExitCode", 403)
 		c.Abort()
-		return
 	}
 
 }
