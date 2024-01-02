@@ -16,6 +16,7 @@ import (
 	"tdp-cloud/api/upgrade"
 	"tdp-cloud/api/user"
 	"tdp-cloud/api/vendor"
+	"tdp-cloud/api/worker"
 	"tdp-cloud/api/workhub"
 
 	"tdp-cloud/api/alibaba"
@@ -47,6 +48,7 @@ func Router(engine *gin.Engine) {
 		upgrade.Router(api)
 		user.Router(api)
 		vendor.Router(api)
+		worker.Router(api)
 		workhub.Router(api)
 
 		alibaba.Router(api)

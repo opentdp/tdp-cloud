@@ -1,4 +1,4 @@
-package workhub
+package worker
 
 import (
 	"github.com/gin-gonic/gin"
