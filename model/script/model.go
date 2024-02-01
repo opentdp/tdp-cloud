@@ -144,7 +144,6 @@ func Count(data *FetchAllParam) (int64, error) {
 	var count int64
 
 	result := dborm.Db.
-		Model(&model.Script{}).
 		Where(&model.Script{
 			UserId:      data.UserId,
 			CommandType: data.CommandType,

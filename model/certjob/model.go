@@ -145,7 +145,6 @@ func Count(data *FetchAllParam) (int64, error) {
 	var count int64
 
 	result := dborm.Db.
-		Model(&model.Certjob{}).
 		Where(&model.Certjob{
 			UserId:   data.UserId,
 			VendorId: data.VendorId,

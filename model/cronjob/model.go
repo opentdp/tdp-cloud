@@ -162,7 +162,6 @@ func Count(data *FetchAllParam) (int64, error) {
 	var count int64
 
 	result := dborm.Db.
-		Model(&model.Cronjob{}).
 		Where(&model.Cronjob{
 			UserId: data.UserId,
 		}).
