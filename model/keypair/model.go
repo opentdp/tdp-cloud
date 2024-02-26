@@ -164,6 +164,7 @@ func Count(data *FetchAllParam) (int64, error) {
 	var count int64
 
 	result := dborm.Db.
+		Model(&model.Keypair{}).
 		Where(&model.Keypair{
 			UserId:  data.UserId,
 			KeyType: data.KeyType,
