@@ -14,49 +14,59 @@ var Efs *embed.FS
 
 // 数据存储
 
-var Dataset = struct {
-	Dir    string
-	Secret string
-}{
+type IDataset struct {
+	Dir    string `yaml:"dir"`
+	Secret string `yaml:"secret"`
+}
+
+var Dataset = &IDataset{
 	Dir: "var",
 }
 
 // 日志参数
 
-var Logger = struct {
-	Dir    string
-	Level  string
-	Target string
-}{
+type ILogger struct {
+	Dir    string `yaml:"dir"`
+	Level  string `yaml:"level"`
+	Target string `yaml:"target"`
+}
+
+var Logger = &ILogger{
 	Level:  "info",
 	Target: "stdout",
 }
 
 // 数据库参数 - Server
 
-var Database = struct {
-	Type   string
-	Host   string
-	User   string
-	Passwd string
-	Name   string
-	Option string
-}{
+type IDatabase struct {
+	Type   string `yaml:"type"`
+	Host   string `yaml:"host"`
+	User   string `yaml:"user"`
+	Passwd string `yaml:"passwd"`
+	Name   string `yaml:"name"`
+	Option string `yaml:"option"`
+}
+
+var Database = &IDatabase{
 	Type: "sqlite",
 	Name: "server.db",
 }
 
 // 主节点参数 - Server
 
-var Server = struct {
-	Listen string
-	JwtKey string
-}{
+type IServer struct {
+	Listen string `yaml:"listen"`
+	JwtKey string `yaml:"jwtkey"`
+}
+
+var Server = &IServer{
 	Listen: ":7800",
 }
 
 // 子节点参数 - Worker
 
-var Worker = struct {
-	Remote string
-}{}
+type IWorker struct {
+	Remote string `yaml:"remote"`
+}
+
+var Worker = &IWorker{}
