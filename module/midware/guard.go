@@ -37,7 +37,7 @@ func JwtGuard(c *gin.Context) {
 	}
 
 	// 尝试解密 AppKey
-	appKey, err := secure.Des3Decrypt(claims.AppKey, args.Dataset.Secret)
+	appKey, err := secure.Des3Decrypt(claims.AppKey, args.Assets.Secret)
 	if err != nil {
 		c.Set("JwtError", "密钥异常, 请重新注册")
 		return

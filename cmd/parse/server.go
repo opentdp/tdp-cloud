@@ -1,78 +1,52 @@
 package parse
 
 import (
-	"os"
-	"path"
-
-	"github.com/knadh/koanf/providers/confmap"
 	"github.com/opentdp/go-helper/logman"
 	"github.com/opentdp/go-helper/strutil"
 
 	"tdp-cloud/cmd/args"
 )
 
-func (c *Config) Server() {
+type ServerData struct {
+	Assets *args.IAssets `yaml:"dataset"`
+	Gormio *args.IGormio `yaml:"database"`
+	Logger *args.ILogger `yaml:"logger"`
+	Server *args.IServer `yaml:"server"`
+}
 
-	debug := os.Getenv("TDP_DEBUG")
-	args.Debug = debug == "1" || debug == "true"
+func ServerConfig(yaml string) *Config {
 
-	// 读取默认配置
+	args.SetDebug()
 
-	mp := map[string]any{
-		"dataset":  &args.Dataset,
-		"database": &args.Database,
-		"logger":   &args.Logger,
-		"server":   &args.Server,
-	}
-	c.Koanf.Load(confmap.Provider(mp, "."), nil)
-
-	// 读取配置文件
-
-	if c.ReadYaml() == nil {
-		for k, v := range mp {
-			c.Koanf.Unmarshal(k, v)
-		}
+	config := &Config{
+		File: yaml,
+		Data: &ServerData{
+			Assets: args.Assets,
+			Gormio: args.Gormio,
+			Logger: args.Logger,
+			Server: args.Server,
+		},
 	}
 
-	// 初始化存储目录
-
-	if args.Dataset.Secret == "" {
-		args.Dataset.Secret = strutil.Rand(32)
-		c.Override = true
+	if config.File == "" {
+		config.setYaml("server")
 	}
 
-	if args.Dataset.Dir != "" && args.Dataset.Dir != "." {
-		os.MkdirAll(args.Dataset.Dir, 0755)
+	if err := config.Load(); err != nil {
+		logman.Fatal("load config failed", "error", err)
 	}
 
-	// 修正数据库参数
-
-	if args.Database.Type == "sqlite" && !path.IsAbs(args.Database.Name) {
-		args.Database.Name = path.Join(args.Dataset.Dir, args.Database.Name)
+	if args.Gormio.Type == "sqlite" {
+		args.Gormio.Host = args.Assets.Dir
 	}
-
-	// 初始化日志能力
-
-	if !path.IsAbs(args.Logger.Dir) {
-		args.Logger.Dir = path.Join(args.Dataset.Dir, args.Logger.Dir)
-	}
-
-	if args.Logger.Dir != "" && args.Logger.Dir != "." {
-		os.MkdirAll(args.Logger.Dir, 0755)
-	}
-
-	logman.SetDefault(&logman.Config{
-		Level:    args.Logger.Level,
-		Target:   args.Logger.Target,
-		Storage:  args.Logger.Dir,
-		Filename: "server",
-	})
-
-	// 初始化 JwtKey
 
 	if args.Server.JwtKey == "" {
 		args.Server.JwtKey = strutil.Rand(32)
-		c.Override = true
 	}
+
+	args.SetAssets()
+	args.SetLogger()
+
+	return config
 
 }

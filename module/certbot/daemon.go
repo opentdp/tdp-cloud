@@ -37,7 +37,7 @@ func NewByJob(job *model.Certjob) error {
 
 	usr, err := user.Fetch(&user.FetchParam{
 		Id:       job.UserId,
-		StoreKey: args.Dataset.Secret,
+		StoreKey: args.Assets.Secret,
 	})
 
 	if err != nil || usr.AppKey == "" {
@@ -69,7 +69,7 @@ func NewByJob(job *model.Certjob) error {
 		SecretKey:   vdr.SecretKey,
 		EabKeyId:    job.EabKeyId,
 		EabMacKey:   job.EabMacKey,
-		StoragePath: args.Dataset.Dir + "/certmagic",
+		StoragePath: args.Assets.Dir + "/certmagic",
 	})
 
 }

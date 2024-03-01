@@ -7,6 +7,8 @@ import (
 	"tdp-cloud/service"
 )
 
+var workerYaml string
+
 func workerFlag() *FlagSet {
 
 	var action string
@@ -20,7 +22,7 @@ func workerFlag() *FlagSet {
 	}
 
 	command.StringVar(&action, "s", "", "management worker service")
-	command.StringVar(&parse.YamlFile, "c", "config.yml", "config file path")
+	command.StringVar(&workerYaml, "c", "", "config file path")
 
 	return command
 
@@ -28,11 +30,10 @@ func workerFlag() *FlagSet {
 
 func workerExec(act string) {
 
-	c := parse.NewConfig()
-	c.Worker()
+	c := parse.WorkerConfig(workerYaml)
 
 	if act == "" || act == "start" {
-		c.WriteYaml()
+		c.Save()
 	}
 
 	service.Control("worker", act)

@@ -7,6 +7,8 @@ import (
 	"tdp-cloud/service"
 )
 
+var serverYaml string
+
 func serverFlag() *FlagSet {
 
 	var action string
@@ -20,7 +22,7 @@ func serverFlag() *FlagSet {
 	}
 
 	command.StringVar(&action, "s", "", "management server service")
-	command.StringVar(&parse.YamlFile, "c", "config.yml", "config file path")
+	command.StringVar(&serverYaml, "c", "", "config file path")
 
 	return command
 
@@ -28,11 +30,10 @@ func serverFlag() *FlagSet {
 
 func serverExec(act string) {
 
-	c := parse.NewConfig()
-	c.Server()
+	c := parse.ServerConfig(serverYaml)
 
 	if act == "" || act == "start" {
-		c.WriteYaml()
+		c.Save()
 	}
 
 	service.Control("server", act)

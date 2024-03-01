@@ -7,7 +7,6 @@ import (
 	"github.com/opentdp/go-helper/upgrade"
 
 	"tdp-cloud/cmd/args"
-	"tdp-cloud/cmd/parse"
 )
 
 func updateFlag() *FlagSet {
@@ -19,8 +18,6 @@ func updateFlag() *FlagSet {
 			updateExec()
 		},
 	}
-
-	command.StringVar(&parse.YamlFile, "c", "config.yml", "config file path")
 
 	return command
 

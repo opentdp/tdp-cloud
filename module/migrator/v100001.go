@@ -29,7 +29,7 @@ func v100001AddUser() error {
 		Level:    1,
 		AppKey:   strutil.Rand(32),
 		Email:    "user@opentdp.org",
-		StoreKey: args.Dataset.Secret,
+		StoreKey: args.Assets.Secret,
 	})
 
 	return err

@@ -26,12 +26,12 @@ func dbConnect() {
 
 	// 连接数据库
 	dborm.Connect(&dborm.Config{
-		Type:     args.Database.Type,
-		Host:     args.Database.Host,
-		User:     args.Database.User,
-		Password: args.Database.Passwd,
-		DbName:   args.Database.Name,
-		Option:   args.Database.Option,
+		Type:     args.Gormio.Type,
+		Host:     args.Gormio.Host,
+		User:     args.Gormio.User,
+		Password: args.Gormio.Passwd,
+		DbName:   args.Gormio.Name,
+		Option:   args.Gormio.Option,
 	})
 
 	// 实施自动迁移
@@ -48,7 +48,7 @@ func httpServer() {
 	api.Router(engine)
 
 	// 上传文件路由
-	httpd.Static("/upload", args.Dataset.Dir+"/upload")
+	httpd.Static("/upload", args.Assets.Dir+"/upload")
 
 	// 前端文件路由
 	httpd.StaticEmbed("/", "front", args.Efs)

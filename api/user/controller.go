@@ -65,7 +65,7 @@ func (*Controller) create(c *gin.Context) {
 	}
 
 	rq.AppKey = strutil.Rand(32)
-	rq.StoreKey = args.Dataset.Secret
+	rq.StoreKey = args.Assets.Secret
 
 	if id, err := user.Create(rq); err == nil {
 		c.Set("Payload", gin.H{"Id": id})

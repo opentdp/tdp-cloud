@@ -51,7 +51,7 @@ func SaveBase64Image(filePath, base64Image string) error {
 		filePath = UploadDir + filePath
 	}
 
-	filePath = path.Join(args.Dataset.Dir, filePath)
+	filePath = path.Join(args.Assets.Dir, filePath)
 	os.MkdirAll(path.Dir(filePath), 0755) // 递归创建目录
 
 	imageBytes, err := base64.StdEncoding.DecodeString(base64Image)

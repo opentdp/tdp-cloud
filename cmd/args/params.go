@@ -14,16 +14,16 @@ var Efs *embed.FS
 
 // 数据存储
 
-type IDataset struct {
+type IAssets struct {
 	Dir    string `yaml:"dir"`
 	Secret string `yaml:"secret"`
 }
 
-var Dataset = &IDataset{
+var Assets = &IAssets{
 	Dir: "var",
 }
 
-// 日志参数
+// 日志参数 - Logger
 
 type ILogger struct {
 	Dir    string `yaml:"dir"`
@@ -38,7 +38,7 @@ var Logger = &ILogger{
 
 // 数据库参数 - Server
 
-type IDatabase struct {
+type IGormio struct {
 	Type   string `yaml:"type"`
 	Host   string `yaml:"host"`
 	User   string `yaml:"user"`
@@ -47,7 +47,7 @@ type IDatabase struct {
 	Option string `yaml:"option"`
 }
 
-var Database = &IDatabase{
+var Gormio = &IGormio{
 	Type: "sqlite",
 	Name: "server.db",
 }
