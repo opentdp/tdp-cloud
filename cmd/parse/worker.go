@@ -19,9 +19,7 @@ func WorkerConfig(yaml string) *Config {
 	config := &Config{
 		File: yaml,
 		Data: &WorkerData{
-			Assets: args.Assets,
-			Logger: args.Logger,
-			Worker: args.Worker,
+			args.Assets, args.Logger, args.Worker,
 		},
 	}
 

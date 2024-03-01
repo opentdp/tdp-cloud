@@ -9,7 +9,7 @@ import (
 	"github.com/opentdp/go-helper/strutil"
 )
 
-// 初始化调试模式
+// 调试模式
 
 func SetDebug() {
 
@@ -18,7 +18,7 @@ func SetDebug() {
 
 }
 
-// 初始化存储目录
+// 初始化存储
 
 func SetAssets() {
 
@@ -32,7 +32,7 @@ func SetAssets() {
 
 }
 
-// 初始化日志能力
+// 初始化日志
 
 func SetLogger() {
 

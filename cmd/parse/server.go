@@ -21,10 +21,7 @@ func ServerConfig(yaml string) *Config {
 	config := &Config{
 		File: yaml,
 		Data: &ServerData{
-			Assets: args.Assets,
-			Gormio: args.Gormio,
-			Logger: args.Logger,
-			Server: args.Server,
+			args.Assets, args.Gormio, args.Logger, args.Server,
 		},
 	}
 
