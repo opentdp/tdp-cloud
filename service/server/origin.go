@@ -34,11 +34,9 @@ func dbConnect() {
 		Option:   args.Gormio.Option,
 	})
 
-	// 设置默认参数
+	// 开启外键约束
 	if args.Gormio.Type == "sqlite" {
 		dborm.Db.Exec("PRAGMA foreign_keys=ON;")
-		dborm.Db.Exec("PRAGMA journal_mode=WAL;")
-		dborm.Db.Exec("PRAGMA busy_timeout=5000;")
 	}
 
 	// 实施自动迁移

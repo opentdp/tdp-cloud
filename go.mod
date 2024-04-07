@@ -18,7 +18,7 @@ require (
 	// 容器镜像
 	github.com/opencontainers/image-spec v1.1.0
 	// 辅助类库
-	github.com/opentdp/go-helper v0.7.2-0.20240401033254-82dada9d897b
+	github.com/opentdp/go-helper v0.7.2
 	// 计划任务
 	github.com/robfig/cron/v3 v3.0.1
 	// Go 官方模块

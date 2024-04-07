@@ -219,8 +219,8 @@ github.com/opencontainers/go-digest v1.0.0 h1:apOUWs51W5PlhuyGyz9FCeeBIOUDA/6nW8
 github.com/opencontainers/go-digest v1.0.0/go.mod h1:0JzlMkj0TRzQZfJkVvzbP0HBR3IKzErnv2BNG4W4MAM=
 github.com/opencontainers/image-spec v1.1.0 h1:8SG7/vwALn54lVB/0yZ/MMwhFrPYtpEHQb2IpWsCzug=
 github.com/opencontainers/image-spec v1.1.0/go.mod h1:W4s4sFTMaBeK1BQLXbG4AdM2szdn85PY75RI83NrTrM=
-github.com/opentdp/go-helper v0.7.2-0.20240401033254-82dada9d897b h1:qOmmQAQ0wp04kamUya1/MYFC0vLMRtBgd1DlNLjtzTM=
-github.com/opentdp/go-helper v0.7.2-0.20240401033254-82dada9d897b/go.mod h1:bRR6EpSuQNNNwgCSWwwuO90Lh1lUG+PnMa6PFS41mF8=
+github.com/opentdp/go-helper v0.7.2 h1:u0DGQ8JxbyApcNPYAurQ1CqOhdUyw7/sVXcDdJP3JQE=
+github.com/opentdp/go-helper v0.7.2/go.mod h1:bRR6EpSuQNNNwgCSWwwuO90Lh1lUG+PnMa6PFS41mF8=
 github.com/pelletier/go-toml/v2 v2.2.0 h1:QLgLl2yMN7N+ruc31VynXs1vhMZa7CeHHejIeBAsoHo=
 github.com/pelletier/go-toml/v2 v2.2.0/go.mod h1:1t835xjRzz80PqgE6HHgN2JOsmgYu/h4qDAS4n929Rs=
 github.com/pkg/diff v0.0.0-20210226163009-20ebb0f2a09e/go.mod h1:pJLUxLENpZxwdsKMEsNbx1VGcRFpLqf3715MtcvvzbA=
