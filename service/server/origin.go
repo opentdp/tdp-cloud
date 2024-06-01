@@ -34,13 +34,13 @@ func dbConnect() {
 		Option:   args.Gormio.Option,
 	})
 
+	// 实施自动迁移
+	migrator.Deploy()
+
 	// 开启外键约束
 	if args.Gormio.Type == "sqlite" {
 		dborm.Db.Exec("PRAGMA foreign_keys=ON;")
 	}
-
-	// 实施自动迁移
-	migrator.Deploy()
 
 }
 
